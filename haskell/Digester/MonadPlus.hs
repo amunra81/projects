@@ -16,13 +16,28 @@ import Data.Function(fix)
 import Data.Monoid
 
 
+
+-------------------
+ -- Monad Zero --
+-------------------
+
+class MonadPlus m => MonadZero m where
+    miszero :: m a -> Bool
+
+instance MonadZero [] where
+    miszero [] = True
+    miszero _ = False
+
+instance MonadZero Maybe where 
+    miszero Nothing = True
+    miszero _ = False
+
+---------------------------
+ -- Div types and utils --
+---------------------------
+
 type DivCont m a = ContT (Tree a) m (Tree a)
 type Div m a = Tree a -> DivCont m a
-
--- class ( Monoid m , Monad m ) => DivMonad m where
---     empty :: m (Tree a)
---     search :: (a -> m a) -> [a] -> m a
--- 
 
 findDiv ::  MonadPlus m => (b -> m a) -> [b] -> m a
 findDiv next xs = foldl (\acc n -> mplus acc (next n)) mzero xs
@@ -63,13 +78,13 @@ leftBrother node = ContT $
             [] -> mzero
 
 -- alternative paths
-alt :: (Eq (m (Tree a)), MonadPlus m) => Div m a -> Div  m a -> Div m a
+alt :: (MonadZero m) => Div m a -> Div  m a -> Div m a
 alt div1 div2 node =  ContT $ 
     \next -> let fst = runContT (div1 node) next 
-                 second = runContT (div2 node) next 
-             in  if fst == mzero then fst else second
+                 sec = runContT (div2 node) next 
+             in  if not (miszero fst) then fst else sec
 
-brother ::  (Eq (m (Tree a)), MonadPlus m) => Div m a
+brother ::  (MonadZero m) => Div m a
 brother = alt leftBrother rightBrother
 
 childOf ::  MonadPlus m => Div m a
@@ -86,19 +101,19 @@ subNodeOf node = ContT $ \next ->
     in
     findDiv next $ parents node
 
---first :: (Eq (m (Tree a)), MonadPlus m)=> Div m a
---first :: Div Maybe Integer
+-- here we don't have tail recursion , we should user the ContT monad for recursive application of the function
+first :: ( MonadZero m)=> Div m a
 first node = ContT $ 
-    \next -> fix (\cont n1 -> 
-                 let m = next n1
-                     n = case getChildren node of
-                          HasChildren xs -> 
-                             case find ((==) mzero) [cont x | x <- xs] of
-                             Just n -> n
-                             _ -> mzero
+    \next -> fix (\cont subNode -> 
+                 let m = next subNode
+                     n = case getChildren subNode of
+                          HasChildren xs ->                               
+                             case find (not . miszero) [cont x | x <- xs] of
+                              Just n -> n
+                              Nothing -> mzero
                           _ -> mzero
 
-                 in if m /= mzero then m else n) node
+                 in if not (miszero m) then m else n) node
 
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
 f ... g = \b -> (f b) >>= g 
