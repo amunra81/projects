@@ -12,7 +12,6 @@ ex2 = do
    b <- return 10
    return $ a+b
 
-
 ex3 = do
    a <- ContT (\fred -> fred 1)
    b <- ContT (\fred -> fred 10)
