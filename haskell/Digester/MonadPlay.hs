@@ -10,7 +10,7 @@ instance Show a => Show ([(Tree a)]) where
     show _ = "n/a"
 
 ((sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_),
- (mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_)) = map equal [1..]::[Div Maybe Integer],
+ (mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_)) = (map equal [1..]::[Div Maybe Integer],
                                                         map equal [1..]::[Div [] Integer])
 
 tree  = 
