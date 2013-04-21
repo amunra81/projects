@@ -14,13 +14,15 @@ import Control.Monad.Cont
 import Data.List
 import Data.Function(fix)
 import Data.Monoid
+import Data.Foldable(Foldable)
 
 -------------------
  -- Monad Zero --
 -------------------
 
-class MonadPlus m => MonadZero m where
+class (MonadPlus m,Foldable m) => MonadZero m where
     miszero :: m a -> Bool
+    
 
 instance MonadZero [] where
     miszero [] = True
