@@ -1,17 +1,17 @@
 {-# LANGUAGE FlexibleInstances #-} 
-{-# LANGUAGE TypeSynonymInstances, OverlappingInstances #-}
+{-# LANGUAGE  OverlappingInstances #-}
 
 import Tree
-import MonadPlus
+import Monad
 import Control.Monad.Cont
+import Prelude hiding (any)
                     
 instance Show a => Show ([(Tree a)]) where
     show (x:xs) = foldl (\acc x -> acc ++ "\n" ++ (show x)) (show x) xs   
     show _ = "n/a"
 
-((sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_),
- (mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_)) = (map equal [1..]::[Div Maybe Integer],
-                                                        map equal [1..]::[Div [] Integer])
+(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]::[Div [] Integer]
+(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_) = map equal [1..]::[Div Maybe Integer]
 
 tree  = 
     root 1 [
@@ -48,7 +48,7 @@ m11 =  mdiv1 ... parentOf ... mdiv2       -- one result
 s12 =  first ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
 m12 =  first ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
 
-s13 =  MonadPlus.any ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
-m13 =  MonadPlus.any ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
+s13 =  any ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
+m13 =  any ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
 
 ---- GHCi runDiv s11 tree 

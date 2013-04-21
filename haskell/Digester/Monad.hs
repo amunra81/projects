@@ -1,11 +1,11 @@
-{-# LANGUAGE ViewPatterns #-}
+
 module Monad(
 -- * Types
-DivCont,Div
+DivCont,MonadZero(miszero),Div
 -- * Utils
 ,runDiv
 -- * Div constructors
-,parentOf,equal,alt,first
+,parentOf,equal,alt,first,Monad.any
 ,(...)
 ) where
 
@@ -13,82 +13,114 @@ import Tree
 import Control.Monad.Cont
 import Data.List
 import Data.Function(fix)
+import Data.Monoid
 
+-------------------
+ -- Monad Zero --
+-------------------
 
-type DivCont a = ContT (Tree a) Maybe (Tree a)
-type Div a = Tree a -> DivCont a
+class MonadPlus m => MonadZero m where
+    miszero :: m a -> Bool
 
-runDiv ::  Div a -> Tree a -> Maybe (Tree a)
+instance MonadZero [] where
+    miszero [] = True
+    miszero _ = False
+
+instance MonadZero Maybe where 
+    miszero Nothing = True
+    miszero _ = False
+
+---------------------------
+ -- Div types and utils --
+---------------------------
+
+type DivCont m a = ContT (Tree a) m (Tree a)
+type Div m a = Tree a -> DivCont m a
+
+matchNodes ::  MonadPlus m => (b -> m a) -> [b] -> m a
+matchNodes next xs = foldl (\acc n -> mplus acc (next n)) mzero xs
+
+runDiv ::  MonadPlus m => Div m a -> Tree a -> m (Tree a)
 runDiv comp node = runContT (do x <- return node 
-                                comp x) $ Just
+                                comp x) $ return
 
-equal :: Eq a => a ->  Div a
+equal :: (Eq a, MonadPlus m) => a -> Div m a
 equal val node = ContT $ \next ->
-                       if getVal node == val then next node 
-                                             else Nothing
-parentOf ::  Div a
+                        if getVal node == val then next node 
+                                              else mzero
+
+parentOf :: MonadPlus m => Div m a
 parentOf node =  ContT $ 
     \next -> case getChildren node of
-             HasChildren xs  -> findDiv next xs
-             _               -> Nothing
+             HasChildren xs  -> matchNodes next xs
+             _               -> mzero
 
-specificChildAt :: Int -> Div a
+specificChildAt :: MonadPlus m => Int -> Div m a
 specificChildAt pos node = ContT $ 
     \next -> case getChildren node of
             HasChildren xs  -> 
                 if pos < length xs then next $ xs !! pos 
-                else Nothing
-            _               -> Nothing
+                else mzero
+            _               -> mzero
 
-rightBrother :: Div a
+rightBrother :: MonadPlus m => Div m a
 rightBrother node = ContT $ 
     \next -> case getRightBrothers node of
-            x:xs -> findDiv next (x:xs)
-            [] -> Nothing
+            x:xs -> matchNodes next (x:xs)
+            [] -> mzero
 
-leftBrother :: Div a
+leftBrother :: MonadPlus m => Div m a
 leftBrother node = ContT $ 
     \next -> case getLeftBrothers node of
-            x:xs -> findDiv next (x:xs)
-            [] -> Nothing
+            x:xs -> matchNodes next (x:xs)
+            [] -> mzero
 
 -- alternative paths
-alt :: Div a -> Div a -> Div a
+alt :: (MonadZero m) => Div m a -> Div  m a -> Div m a
 alt div1 div2 node =  ContT $ 
-    \next -> case runContT (div1 node) next of
-             Just node -> Just node
-             _         -> runContT (div2 node) next
+    \next -> let [fst,sec] = [runContT (div node) next | div <- [div1,div2] ]
+             in  if not (miszero fst) then fst else sec
 
-brother ::  Div a
+brother ::  (MonadZero m) => Div m a
 brother = alt leftBrother rightBrother
 
-childOf ::  Tree a -> ContT r Maybe (Tree a)
+childOf ::  MonadPlus m => Div m a
 childOf node = ContT $ 
     \next -> case getParent node of
              HasParent parent -> next parent
-             None             -> Nothing
-    
-subNodeOf ::  Div a
+             None             -> mzero
+
+subNodeOf :: MonadPlus m => Div m a
 subNodeOf node = ContT $ \next ->
     let parents node = case getParent node of
                        HasParent parent -> parent : parents parent
                        None             -> []
     in
-    findDiv next $ parents node
+    matchNodes next $ parents node
 
-first :: Div a
+-- here we don't have tail recursion , we should user the ContT monad for recursive application of the function
+first :: ( MonadZero m)=> Div m a
 first node = ContT $ 
-    \next -> fix (\cont n1 -> case next n1 of
-                         Just ret -> Just ret
-                         _  ->    
-                           case getChildren node of
-                             HasChildren xs -> findDiv cont xs
-                             _ -> Nothing) node
+    \next -> fix (\cont subNode -> 
+                 let m = next subNode
+                     n = case getChildren subNode of
+                         HasChildren xs ->                               
+                             case find (not . miszero) [cont x | x <- xs] of
+                                 Just n -> n
+                                 Nothing -> mzero
+                         _ -> mzero
+
+                 in if not (miszero m) then m else n) node
+
+any :: ( MonadZero m)=> Div m a
+any node = ContT $ 
+    \next -> fix (\cont subNode -> 
+                    let init = next subNode
+                        children =  case getChildren subNode of
+                                       HasChildren xs -> map cont xs
+                                       _ -> []
+                    in foldl mplus init children ) node
+
 
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
 f ... g = \b -> (f b) >>= g 
-
-findDiv ::  (a -> Maybe b) -> [a] -> Maybe b
-findDiv next xs = do 
-                     x <- find isJust $ map next $ xs
-                     x
