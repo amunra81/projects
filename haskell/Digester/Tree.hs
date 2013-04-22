@@ -5,7 +5,7 @@ module Tree (
 -- * Tree data
 Tree(..),TreeProps(..),
 -- * Tree constructor
-root,node,leaf,PassParent,
+root,node,leaf,nodeOrLeaf,PassParent,
 -- * Tree utils
 getVal,getChildren,getParent,
 getRightBrothers,getLeftBrothers
@@ -44,6 +44,10 @@ node a getChildren parent pos =
 leaf :: a -> PassParent a
 leaf a parent pos = Leaf a parent pos
                 
+nodeOrLeaf :: a -> [PassParent a] -> PassParent a
+nodeOrLeaf a (x:xs) = node a (x:xs)
+nodeOrLeaf a [] = leaf a
+
 type Pos = Integer 
 type PassParent a = Tree a -> Pos -> Tree a  -- getRoot -> pos -> theTree
 

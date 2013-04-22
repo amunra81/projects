@@ -1,52 +1,44 @@
 {-# LANGUAGE ExistentialQuantification #-}
 module Projection (
+-- * projection tree constructors
+proot,pnode,pleaf,pnodeOrLeaf
+-- * projection utils
+,project,projectToRoot
 ) where
 
 import Tree
 import Monad
 import Data.Foldable(toList)
 
-
 data Proj a = forall m. MonadZero m => Proj ( Div m a )
 
-prj :: MonadZero m => Div m a -> Proj a
-prj = Proj
+proot       n xs = root         (Proj n) xs
+pnode       n xs = node         (Proj n) xs
+pleaf       n    = leaf         (Proj n) 
+pnodeOrLeaf n xs = nodeOrLeaf   (Proj n) xs
 
+projectNode ::  Proj t -> Tree t -> [Tree t]
+projectNode (Proj div) node = toList $ runDiv div node 
 
-(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]::[Div [] Integer]
-(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_) = map equal [1..]::[Div Maybe Integer]
+project ::  Tree (Proj a) -> Tree a -> [PassParent a]
+project prjTree tree = 
+    do 
+        tnode <- projectNode (getVal prjTree) tree -- :: [Tree t]
+        let children = case getChildren prjTree of -- :: [PassParent t]
+                        None -> []
+                        HasChildren xs -> do 
+                                            x <- xs -- :: Tree (Proj t)
+                                            project x tnode -- :: [PassParent t]
+        return $ nodeOrLeaf (getVal tnode) children
 
-proot n xs  = root (Proj n) xs
-pnode n xs  = node (Proj n) xs
-pleaf n     = leaf (Proj n) 
+projectToRoot ::  Tree (Proj a) -> Tree a -> [Tree a]
+projectToRoot  prjTree tree = 
+    do 
+        tnode <- projectNode (getVal prjTree) tree -- :: [Tree t]
+        let passParentList = case getChildren prjTree of -- :: [PassParent t]
+                          None -> []
+                          HasChildren xs -> do 
+                                            x <- xs -- :: Tree (Proj t)
+                                            project x tnode -- :: [PassParent t]
 
-d :: Tree (Proj Integer)
-d = proot ( first ... sdiv8 ) [
-                                pleaf mdiv5,
-                                pnode sdiv1 [
-                                            pleaf mdiv6]]
-
-getDiv ::  Proj t -> Tree t -> [Tree t]
-getDiv (Proj div) n = toList $ runDiv div n
-
-
-project prjTree tree =
-    let matchList = getDiv prjTree tree
-    in do 
-        t <- matchList
-        return t
-
-
--- project :: Tree (Proj a) -> Tree a -> [PassParent a]
--- project prjTree tree =
---     map (\a -> node (getVal a) []) list
---     where
---     list = toList m     -- :: [Tree a]
---     m    = runDiv div1 tree -- :: m (Tree a)
---     div1  = case getVal prjTree of   -- :: Div m a
---             Proj x -> x 
--- 
-
-    
- 
- 
+        return $ root (getVal tnode) passParentList
