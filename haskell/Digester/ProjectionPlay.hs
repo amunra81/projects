@@ -67,6 +67,8 @@ m13 = proot mdiv1 [                                                        -- on
 
 -- GHCi  projectToRoot s13 tree1 
 
+-- Mixted projection --
+-- ----------------- --
 tree2 = 
     root 1 [
             --from here 
