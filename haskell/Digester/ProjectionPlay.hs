@@ -51,19 +51,19 @@ m12 = proot (anyware ... mdiv2) [] -- only one result
 -- GHCi  projectToRoot s12 tree1 
 
 
-s13 = proot sdiv1 [                                                    -- one
+s13 = proot sdiv1 [                                                        -- one
             pleaf (anyware ... sdiv2 ^< sdiv5),                            -- three
-            pnode (first ... sdiv2 ^< sdiv2) [                         -- one
+            pnode (first ... sdiv2 ^< sdiv2) [                             -- one
                                             pleaf (anyware ... sdiv7) ],   -- two
-            pleaf (first ... sdiv3 ^< sdiv5) ]                         -- NONE 
+            pleaf (first ... sdiv3 ^< sdiv5) ]                             -- NONE 
 
 -- GHCi  projectToRoot s13 tree1 
 
-m13 = proot mdiv1 [                                                    -- one
+m13 = proot mdiv1 [                                                        -- one
             pleaf (anyware ... mdiv2 ^< mdiv5),                            -- one
-            pnode (first ... mdiv2 ^< mdiv2) [                         -- one
+            pnode (first ... mdiv2 ^< mdiv2) [                             -- one
                                             pleaf (anyware ... mdiv7) ],   -- one
-            pleaf (first ... mdiv3 ^< mdiv5) ]                         -- NONE 
+            pleaf (first ... mdiv3 ^< mdiv5) ]                             -- NONE 
 
 -- GHCi  projectToRoot s13 tree1 
 
@@ -85,6 +85,7 @@ tree2 =
 p1 = proot ( mdiv1 ) [
          pnode (parentOf::Div [] Integer) [
               pleaf (first ... sdiv5)]]
+
 -- GHCi  projectToRoot p1 tree2 
 
 
