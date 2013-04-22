@@ -5,7 +5,7 @@ DivCont,MonadZero(miszero),Div
 -- * Utils
 ,runDiv
 -- * Div constructors
-,parentOf,equal,alt,first,Monad.any
+,parentOf,equal,alt,first,anyware
 ,(...)
 ) where
 
@@ -114,8 +114,8 @@ first node = ContT $
 
                  in if not (miszero m) then m else n) node
 
-any :: ( MonadZero m)=> Div m a
-any node = ContT $ 
+anyware :: ( MonadZero m)=> Div m a
+anyware node = ContT $ 
     \next -> fix (\cont subNode -> 
                     let init = next subNode
                         children =  case getChildren subNode of

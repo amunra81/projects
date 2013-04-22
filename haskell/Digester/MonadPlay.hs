@@ -48,7 +48,7 @@ m11 =  mdiv1 ... parentOf ... mdiv2       -- one result
 s12 =  first ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
 m12 =  first ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
 
-s13 =  any ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
-m13 =  any ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
+s13 =  anyware ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
+m13 =  anyware ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
 
 ---- GHCi runDiv s11 tree 
