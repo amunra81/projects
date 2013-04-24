@@ -1,12 +1,14 @@
 
 module Monad(
 -- * Types
-DivCont,MonadZero(miszero),Div
+DivCont,MonadZero(miszero),Div,
 -- * Utils
-,runDiv
+runDiv,
 -- * Div constructors
-,parentOf,equal,alt,first,anyware,childOf
-,(...)
+parentOf,equal,alt,first,
+anyware,childOf,childAt,
+escalate,dig
+,(...),(^<),(^>)
 ) where
 
 import Tree
@@ -100,11 +102,18 @@ subNodeOf node = ContT $ \next ->
     in
     matchNodes next $ parents node
 
-escalate ::  MonadPlus m => Integer -> Div m a 
+escalate ::  MonadPlus m => Int -> Div m a 
 escalate level node = 
-    foldl f x [1..level]
+   foldl f x [1..level]
+   where 
+       f = \acc _ -> acc >>= childOf    
+       x = do return node
+
+dig :: MonadPlus m => [Int] -> Div m a
+dig indexes node = 
+    foldl f x indexes
     where 
-        f = \acc _ -> acc >>= childOf    
+        f = \acc i -> acc >>= childAt i
         x = do return node
 
 -- here we don't have tail recursion , we should user the ContT monad for recursive application of the function
@@ -130,6 +139,9 @@ anyware node = ContT $
                                        _ -> []
                     in foldl mplus init children ) node
 
-
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
 f ... g = \b -> (f b) >>= g 
+
+-- parentOf
+(^<) d1 d2 = d1 ... parentOf ... d2
+(^>) d1 d2 = d1 ... childOf ... d2

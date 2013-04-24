@@ -51,29 +51,10 @@ nodeOrLeaf a [] = leaf a
 type Pos = Integer 
 type PassParent a = Tree a -> Pos -> Tree a  -- getRoot -> pos -> theTree
 
-----------------------
- -- PRINT THE TREE --
-----------------------
-
-instance Show a => Show (Tree a) where
-    show = showNode 0
-
-showNode:: Show a => Integer -> Tree a -> String
-showNode depth (Root value children)        = "R("++(show value)++",["++(showChildren (depth + 1) children)++ "])"
-showNode depth (Node value children _ pos)  = "N"++(show pos)++"("++(show value)++",["++
-                                                (showChildren (depth + 1) children)++ "])"
-showNode depth (Leaf value _ pos)           = "L"++(show pos)++"("++(show value)++")"
-
-showChildren :: Show a => Integer -> [Tree a] -> String
-showChildren  depth = concatStr . map (ident . showNode depth)
-                where
-                concatStr  = foldl (++) ""  
-                ident str = ( foldl (\acc _-> acc ++ "       ") "\n" [1..depth] ) ++ str
 
 ------------------
  -- TREE UTILS --
 ------------------
-
 
 getVal ::  Tree t -> t
 getVal (Root val _)     = val 
