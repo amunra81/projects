@@ -5,7 +5,7 @@ DivCont,MonadZero(miszero),Div
 -- * Utils
 ,runDiv
 -- * Div constructors
-,parentOf,equal,alt,first,anyware
+,parentOf,equal,alt,first,anyware,childOf
 ,(...)
 ) where
 
@@ -57,8 +57,8 @@ parentOf node =  ContT $
              HasChildren xs  -> matchNodes next xs
              _               -> mzero
 
-specificChildAt :: MonadPlus m => Int -> Div m a
-specificChildAt pos node = ContT $ 
+childAt :: MonadPlus m => Int -> Div m a
+childAt pos node = ContT $ 
     \next -> case getChildren node of
             HasChildren xs  -> 
                 if pos < length xs then next $ xs !! pos 
@@ -95,10 +95,17 @@ childOf node = ContT $
 subNodeOf :: MonadPlus m => Div m a
 subNodeOf node = ContT $ \next ->
     let parents node = case getParent node of
-                       HasParent parent -> parent : parents parent
+                       HasParent p -> p : parents p
                        None             -> []
     in
     matchNodes next $ parents node
+
+escalate ::  MonadPlus m => Integer -> Div m a 
+escalate level node = 
+    foldl f x [1..level]
+    where 
+        f = \acc _ -> acc >>= childOf    
+        x = do return node
 
 -- here we don't have tail recursion , we should user the ContT monad for recursive application of the function
 first :: ( MonadZero m)=> Div m a
