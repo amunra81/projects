@@ -65,10 +65,11 @@ m13 = proot mdiv1 [                                                        -- on
                                             pleaf (anyware ... mdiv7) ],   -- one
             pleaf (first ... mdiv3 ^< mdiv5) ]                             -- NONE 
 
--- GHCi  projectToRoot s13 tree1 
+-- GHCi  projectToRoot m13 tree1 
 
 -- Mixted projection --
 -- ----------------- --
+
 tree2 = 
     root 1 [
             --from here 
