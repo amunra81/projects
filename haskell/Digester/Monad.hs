@@ -18,9 +18,9 @@ import Data.Function(fix)
 import Data.Monoid
 import Data.Foldable(Foldable)
 
--------------------
+------------------
  -- Monad Zero --
--------------------
+------------------
 
 class (MonadPlus m,Foldable m) => MonadZero m where
     miszero :: m a -> Bool
@@ -79,11 +79,20 @@ leftBrother node = ContT $
             x:xs -> matchNodes next (x:xs)
             [] -> mzero
 
--- alternative paths
+-- conjuction and dijunction
 alt :: (MonadZero m) => Div m a -> Div  m a -> Div m a
-alt div1 div2 node =  ContT $ 
+alt div1 div2 node =  
+   ContT $ 
     \next -> let [fst,sec] = [runContT (div node) next | div <- [div1,div2] ]
              in  if not (miszero fst) then fst else sec
+
+both :: MonadPlus m => Div m a -> Div  m a -> Div m a
+both div1 div2 node = do 
+    x <- div1 node
+    y <- div2 node
+    if stringIndex x == stringIndex y 
+        then return x
+        else lift $ mzero
 
 brother ::  (MonadZero m) => Div m a
 brother = alt leftBrother rightBrother

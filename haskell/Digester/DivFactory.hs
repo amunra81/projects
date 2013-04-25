@@ -11,5 +11,3 @@ path fromNode toNode =
     where 
     ( fromIndex, toIndex ) = commonIndexes fromNode toNode 
     level =  length fromIndex - 1
-
-

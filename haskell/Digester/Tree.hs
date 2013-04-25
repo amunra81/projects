@@ -1,5 +1,4 @@
 {-# LANGUAGE ViewPatterns #-}
-
 -- {-# LANGUAGE  #-}
 module Tree (
 -- * Tree data
