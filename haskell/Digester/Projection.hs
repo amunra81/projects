@@ -23,22 +23,22 @@ projectNode (Proj div) node = toList $ runDiv div node
 project ::  Tree (Proj a) -> Tree a -> [PassParent a]
 project prjTree tree = 
     do 
-        tnode <- projectNode (getVal prjTree) tree -- :: [Tree t]
-        let children = case getChildren prjTree of -- :: [PassParent t]
+        tnode <- projectNode (value prjTree) tree -- :: [Tree t]
+        let childSeq = case children prjTree of -- :: [PassParent t]
                         None -> []
                         HasChildren xs -> do 
                                             x <- xs -- :: Tree (Proj t)
                                             project x tnode -- :: [PassParent t]
-        return $ nodeOrLeaf (getVal tnode) children
+        return $ nodeOrLeaf (value tnode) childSeq
 
 projectToRoot ::  Tree (Proj a) -> Tree a -> [Tree a]
 projectToRoot  prjTree tree = 
     do 
-        tnode <- projectNode (getVal prjTree) tree -- :: [Tree t]
-        let passParentList = case getChildren prjTree of -- :: [PassParent t]
+        tnode <- projectNode (value prjTree) tree -- :: [Tree t]
+        let passParentList = case children prjTree of -- :: [PassParent t]
                           None -> []
                           HasChildren xs -> do 
                                             x <- xs -- :: Tree (Proj t)
                                             project x tnode -- :: [PassParent t]
 
-        return $ root (getVal tnode) passParentList
+        return $ root (value tnode) passParentList

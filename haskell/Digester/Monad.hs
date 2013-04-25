@@ -50,18 +50,18 @@ runDiv comp node = runContT (do x <- return node
 
 equal :: (Eq a, MonadPlus m) => a -> Div m a
 equal val node = ContT $ \next ->
-                        if getVal node == val then next node 
+                        if value node == val then next node 
                                               else mzero
 
 parentOf :: MonadPlus m => Div m a
 parentOf node =  ContT $ 
-    \next -> case getChildren node of
+    \next -> case children node of
              HasChildren xs  -> matchNodes next xs
              _               -> mzero
 
 childAt :: MonadPlus m => Int -> Div m a
 childAt pos node = ContT $ 
-    \next -> case getChildren node of
+    \next -> case children node of
             HasChildren xs  -> 
                 if pos < length xs then next $ xs !! pos 
                 else mzero
@@ -69,13 +69,13 @@ childAt pos node = ContT $
 
 rightBrother :: MonadPlus m => Div m a
 rightBrother node = ContT $ 
-    \next -> case getRightBrothers node of
+    \next -> case rightBrothers node of
             x:xs -> matchNodes next (x:xs)
             [] -> mzero
 
 leftBrother :: MonadPlus m => Div m a
 leftBrother node = ContT $ 
-    \next -> case getLeftBrothers node of
+    \next -> case leftBrothers node of
             x:xs -> matchNodes next (x:xs)
             [] -> mzero
 
@@ -90,13 +90,13 @@ brother = alt leftBrother rightBrother
 
 childOf ::  MonadPlus m => Div m a
 childOf node = ContT $ 
-    \next -> case getParent node of
+    \next -> case parent node of
              HasParent parent -> next parent
              None             -> mzero
 
 subNodeOf :: MonadPlus m => Div m a
 subNodeOf node = ContT $ \next ->
-    let parents node = case getParent node of
+    let parents node = case parent node of
                        HasParent p -> p : parents p
                        None             -> []
     in
@@ -121,7 +121,7 @@ first :: ( MonadZero m)=> Div m a
 first node = ContT $ 
     \next -> fix (\cont subNode -> 
                  let m = next subNode
-                     n = case getChildren subNode of
+                     n = case children subNode of
                          HasChildren xs ->                               
                              case find (not . miszero) [cont x | x <- xs] of
                                  Just n -> n
@@ -134,10 +134,10 @@ anyware :: ( MonadZero m)=> Div m a
 anyware node = ContT $ 
     \next -> fix (\cont subNode -> 
                     let init = next subNode
-                        children =  case getChildren subNode of
+                        childSeq =  case children subNode of
                                        HasChildren xs -> map cont xs
                                        _ -> []
-                    in foldl mplus init children ) node
+                    in foldl mplus init childSeq ) node
 
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
 f ... g = \b -> (f b) >>= g 

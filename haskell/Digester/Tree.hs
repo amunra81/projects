@@ -3,12 +3,13 @@
 -- {-# LANGUAGE  #-}
 module Tree (
 -- * Tree data
-Tree(..),TreeProps(..),
+Tree(..),TreeProps(..),Pos,
 -- * Tree constructor
 root,node,leaf,nodeOrLeaf,PassParent,
 -- * Tree utils
-getVal,getChildren,getParent,
-getRightBrothers,getLeftBrothers
+value,children,parent,
+rightBrothers,leftBrothers,position,
+index,commonIndexes,stringIndex
 ) where
 import Data.List
 import Data.Maybe
@@ -48,7 +49,7 @@ nodeOrLeaf :: a -> [PassParent a] -> PassParent a
 nodeOrLeaf a (x:xs) = node a (x:xs)
 nodeOrLeaf a [] = leaf a
 
-type Pos = Integer 
+type Pos = Int 
 type PassParent a = Tree a -> Pos -> Tree a  -- getRoot -> pos -> theTree
 
 
@@ -56,40 +57,59 @@ type PassParent a = Tree a -> Pos -> Tree a  -- getRoot -> pos -> theTree
  -- TREE UTILS --
 ------------------
 
-getVal ::  Tree t -> t
-getVal (Root val _)     = val 
-getVal (Node val _ _ _) = val
-getVal (Leaf val _ _ )  = val
+value ::  Tree t -> t
+value (Root v _)     = v 
+value (Node v _ _ _) = v
+value (Leaf v _ _ )  = v
 
-getPos ::  Tree t -> Pos
-getPos (Root _ _)       = 0
-getPos (Node _ _ _ pos) = pos
-getPos (Leaf _ _ pos )  = pos
+position ::  Tree t -> Pos
+position (Root _ _)      = 0
+position (Node _ _ _ i)  = i
+position (Leaf _ _ i )   = i
 
-getChildren ::  Tree a -> TreeProps a
-getChildren (Root _ (x:xs))      = HasChildren (x:xs)
-getChildren (Node _ (x:xs) _ _)  = HasChildren (x:xs)
-getChildren _                    = None
+index :: Tree a -> [Pos]
+index node = 
+    case parent node of
+    (HasParent p) -> (position node : index p)
+    None -> [0]
 
-getParent ::  Tree a -> TreeProps a
-getParent (Node _ _ parent _)  = HasParent parent
-getParent (Leaf _ parent _)    = HasParent parent
-getParent _                    = None
+commonIndexes :: Tree a -> Tree a -> ([Pos],[Pos])
+commonIndexes n1 n2= 
+    let reduce i1 i2 = 
+            case (i1,i2) of
+            (x:xs,y:ys) -> if x == y then reduce xs ys 
+                                     else (i1,i2)
+            _ -> (i1,i2)
+    in
+    reduce (index n1) (index n2) 
 
-getRightBrothers ::  Tree t -> [Tree t]
-getRightBrothers node = 
+stringIndex ::  Tree a -> [Char]
+stringIndex node = foldl (\a x -> a ++ (show x)) "" $ index node
+
+children ::  Tree a -> TreeProps a
+children (Root _ (x:xs))      = HasChildren (x:xs)
+children (Node _ (x:xs) _ _)  = HasChildren (x:xs)
+children _                    = None
+
+parent ::  Tree a -> TreeProps a
+parent (Node _ _ p _)  = HasParent p
+parent (Leaf _ p _)    = HasParent p
+parent _               = None
+
+rightBrothers ::  Tree t -> [Tree t]
+rightBrothers node = 
     case node of
-    (getParent -> HasParent (getChildren -> HasChildren xs)) -> 
+    (parent -> HasParent (children -> HasChildren xs)) -> 
         map (\(_,child) -> child) 
-        $ filter (\(i,_) -> i > getPos node) 
+        $ filter (\(i,_) -> i > position node) 
         $ zip [0..] xs
     _ -> []
 
-getLeftBrothers ::  Tree t -> [Tree t]
-getLeftBrothers node = 
+leftBrothers ::  Tree t -> [Tree t]
+leftBrothers node = 
     case node of
-    (getParent -> HasParent (getChildren -> HasChildren xs)) -> 
+    (parent -> HasParent (children -> HasChildren xs)) -> 
         map (\(_,child) -> child) 
-        $ filter (\(i,_) -> i < getPos node) 
+        $ filter (\(i,_) -> i < position node) 
         $ zip [0..] xs
     _ -> []
