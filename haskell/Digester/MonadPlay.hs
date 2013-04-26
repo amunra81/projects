@@ -22,11 +22,8 @@ tree  =
             leaf 4 ] 
 
 
-
-
 -- Parent --
 -- ------ -- 
-
 p1 =  mdiv1 ^< ( mdiv2 ^< mdiv5 ) ^< mdiv7      -- RESULT: Some 
 p2 =  mdiv5 ^< mdiv7                            -- RESULT : NONE
 p3 =  (first ... mdiv2) ^< (mdiv5 ^< mdiv7)     -- Will search in all the tree RESULT: SOME
@@ -51,7 +48,6 @@ m13 =  anyware ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some
 
 -- DIGGING AND ESCALATION --
 -- ---------------------- --
-
 s21 = anyware ... sdiv7 ... escalate 1
 m21 = anyware ... mdiv7 ... escalate 1
 ---- GHCi runDiv s21 tree 
@@ -66,8 +62,6 @@ m23 = dig [0] :: Div Maybe Integer
 
 -- INDEXES --
 -- ------- --
-
-
 indexOf ::  MonadPlus m => Div m Integer -> m [Pos]
 indexOf div = do
                 x <- runDiv div tree 
@@ -85,3 +79,12 @@ commonIndexesOf div1 div2 = do
 s32 = commonIndexesOf (anyware ... sdiv9) (anyware ... sdiv6)
 m32 = commonIndexesOf (anyware ... mdiv9) (anyware ... mdiv6)
 -- GHCi s32
+
+s33 = commonIndexesOf (anyware ... sdiv2) (anyware ... sdiv2) -- all the posibilities
+m33 = commonIndexesOf (anyware ... mdiv2) (anyware ... mdiv2) -- the same one
+-- GHCi s33
+
+-- Path --
+-- ---- --
+
+ 

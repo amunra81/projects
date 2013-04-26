@@ -6,8 +6,8 @@ DivCont,MonadZero(miszero),Div,
 runDiv,
 -- * Div constructors
 parentOf,equal,alt,first,
-anyware,childOf,childAt,
-escalate,dig
+Monad.any,childOf,childAt,
+escalate,dig,path
 ,(...),(^<),(^>)
 ) where
 
@@ -139,14 +139,21 @@ first node = ContT $
 
                  in if not (miszero m) then m else n) node
 
-anyware :: ( MonadZero m)=> Div m a
-anyware node = ContT $ 
+any :: ( MonadZero m)=> Div m a
+any node = ContT $ 
     \next -> fix (\cont subNode -> 
                     let init = next subNode
                         childSeq =  case children subNode of
                                        HasChildren xs -> map cont xs
                                        _ -> []
                     in foldl mplus init childSeq ) node
+
+path :: MonadPlus m =>Tree a -> Tree a -> Div m a
+path fromNode toNode = 
+    ( escalate level ) ... dig (tail toIndex)
+    where 
+    ( fromIndex, toIndex ) = commonIndexes fromNode toNode 
+    level =  length fromIndex - 1
 
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
 f ... g = \b -> (f b) >>= g 
