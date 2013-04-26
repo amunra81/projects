@@ -3,8 +3,8 @@ import Monad
 import Control.Monad.Cont
 import Printers
                     
-(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]::[Div [] Integer]
-(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_) = map equal [1..]::[Div Maybe Integer]
+(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:sdiv9:_) = map equal [1..]::[Div [] Integer]
+(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:mdiv9:_) = map equal [1..]::[Div Maybe Integer]
 
 tree  = 
     root 1 [
@@ -63,3 +63,25 @@ m22 = anyware ... mdiv2 ... dig [1,0]
 s23 = dig [0] :: Div [] Integer
 m23 = dig [0] :: Div Maybe Integer
 ---- GHCi runDiv s22 tree 
+
+-- INDEXES --
+-- ------- --
+
+
+indexOf ::  MonadPlus m => Div m Integer -> m [Pos]
+indexOf div = do
+                x <- runDiv div tree 
+                return (index x)
+
+s31 = indexOf $ anyware ... sdiv2
+m31 = indexOf $ anyware ... mdiv2
+-- GHCi s31
+
+commonIndexesOf div1 div2 = do 
+                    x <- runDiv div1 tree
+                    y <- runDiv div2 tree 
+                    return (commonIndexes x y)
+
+s32 = commonIndexesOf (anyware ... sdiv9) (anyware ... sdiv6)
+m32 = commonIndexesOf (anyware ... mdiv9) (anyware ... mdiv6)
+-- GHCi s32
