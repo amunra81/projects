@@ -1,5 +1,4 @@
 import Control.Monad.Cont
-
 ex1 :: Maybe Integer
 ex1 = do
    a <- return 1

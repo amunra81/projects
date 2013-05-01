@@ -51,7 +51,6 @@ nodeOrLeaf a [] = leaf a
 type Pos = Int 
 type PassParent a = Tree a -> Pos -> Tree a  -- getRoot -> pos -> theTree
 
-
 ------------------
  -- TREE UTILS --
 ------------------

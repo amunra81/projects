@@ -1,6 +1,8 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 import Tree
 import Monad
 import Control.Monad.Cont
+import Prelude hiding (any) 
 import Printers
                     
 (sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:sdiv9:_) = map equal [1..]::[Div [] Integer]
@@ -34,26 +36,24 @@ p6 =  first ... mdiv2
 
 -- Maybe vs Seqence --
 -- ---------------- --
-
 s11 =  sdiv1 ... parentOf ... sdiv2       -- two results
 m11 =  mdiv1 ... parentOf ... mdiv2       -- one result
 
 s12 =  first ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
 m12 =  first ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
 
-s13 =  anyware ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
-m13 =  anyware ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
+s13 =  any ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
+m13 =  any ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
 ---- GHCi runDiv s11 tree 
-
 
 -- DIGGING AND ESCALATION --
 -- ---------------------- --
-s21 = anyware ... sdiv7 ... escalate 1
-m21 = anyware ... mdiv7 ... escalate 1
+s21 = any ... sdiv7 ... escalate 1
+m21 = any ... mdiv7 ... escalate 1
 ---- GHCi runDiv s21 tree 
 
-s22 = anyware ... sdiv2 ... dig [1,0]
-m22 = anyware ... mdiv2 ... dig [1,0]
+s22 = any ... sdiv2 ... dig [1,0]
+m22 = any ... mdiv2 ... dig [1,0]
 ---- GHCi runDiv s22 tree 
 
 s23 = dig [0] :: Div [] Integer
@@ -67,8 +67,8 @@ indexOf div = do
                 x <- runDiv div tree 
                 return (index x)
 
-s31 = indexOf $ anyware ... sdiv2
-m31 = indexOf $ anyware ... mdiv2
+s31 = indexOf $ any ... sdiv2
+m31 = indexOf $ any ... mdiv2
 -- GHCi s31
 
 commonIndexesOf div1 div2 = do 
@@ -76,15 +76,13 @@ commonIndexesOf div1 div2 = do
                     y <- runDiv div2 tree 
                     return (commonIndexes x y)
 
-s32 = commonIndexesOf (anyware ... sdiv9) (anyware ... sdiv6)
-m32 = commonIndexesOf (anyware ... mdiv9) (anyware ... mdiv6)
+s32 = commonIndexesOf (any ... sdiv9) (any ... sdiv6)
+m32 = commonIndexesOf (any ... mdiv9) (any ... mdiv6)
 -- GHCi s32
 
-s33 = commonIndexesOf (anyware ... sdiv2) (anyware ... sdiv2) -- all the posibilities
-m33 = commonIndexesOf (anyware ... mdiv2) (anyware ... mdiv2) -- the same one
+s33 = commonIndexesOf (any ... sdiv2) (any ... sdiv2) -- all the posibilities
+m33 = commonIndexesOf (any ... mdiv2) (any ... mdiv2) -- the same one
 -- GHCi s33
 
 -- Path --
 -- ---- --
-
- 

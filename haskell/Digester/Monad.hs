@@ -17,6 +17,7 @@ import Data.List
 import Data.Function(fix)
 import Data.Monoid
 import Data.Foldable(Foldable)
+import Data.List
 
 ------------------
  -- Monad Zero --
@@ -24,7 +25,6 @@ import Data.Foldable(Foldable)
 
 class (MonadPlus m,Foldable m) => MonadZero m where
     miszero :: m a -> Bool
-    
 
 instance MonadZero [] where
     miszero [] = True
@@ -42,14 +42,14 @@ type DivCont m a = ContT (Tree a) m (Tree a)
 type Div m a = Tree a -> DivCont m a
 
 matchNodes ::  MonadPlus m => (b -> m a) -> [b] -> m a
-matchNodes next xs = foldl (\acc n -> mplus acc (next n)) mzero xs
+matchNodes next xs = foldl (\ acc n -> mplus acc (next n)) mzero xs
 
 runDiv ::  MonadPlus m => Div m a -> Tree a -> m (Tree a)
 runDiv comp node = runContT (do x <- return node 
                                 comp x) $ return
 
 equal :: (Eq a, MonadPlus m) => a -> Div m a
-equal val node = ContT $ \next ->
+equal val node = ContT $ \ next ->
                         if value node == val then next node 
                                               else mzero
 
@@ -80,11 +80,11 @@ leftBrother node = ContT $
             [] -> mzero
 
 -- conjuction and dijunction
-alt :: (MonadZero m) => Div m a -> Div  m a -> Div m a
+alt :: (MonadZero m) => Div m a -> Div m a -> Div m a
 alt div1 div2 node =  
    ContT $ 
-    \next -> let [fst,sec] = [runContT (div node) next | div <- [div1,div2] ]
-             in  if not (miszero fst) then fst else sec
+    \ next -> let [fst,sec] = [runContT (div node) next | div <- [div1,div2] ]
+             in if not (miszero fst) then fst else sec
 
 both :: MonadPlus m => Div m a -> Div  m a -> Div m a
 both div1 div2 node = do 
@@ -99,12 +99,12 @@ brother = alt leftBrother rightBrother
 
 childOf ::  MonadPlus m => Div m a
 childOf node = ContT $ 
-    \next -> case parent node of
+    \ next -> case parent node of
              HasParent parent -> next parent
              None             -> mzero
 
 subNodeOf :: MonadPlus m => Div m a
-subNodeOf node = ContT $ \next ->
+subNodeOf node = ContT $ \ next ->
     let parents node = case parent node of
                        HasParent p -> p : parents p
                        None             -> []
@@ -115,14 +115,14 @@ escalate ::  MonadPlus m => Int -> Div m a
 escalate level node = 
    foldl f x [1..level]
    where 
-       f = \acc _ -> acc >>= childOf    
+       f = \ acc _ -> acc >>= childOf    
        x = do return node
 
 dig :: MonadPlus m => [Int] -> Div m a
 dig indexes node = 
-    foldl f x indexes
+    foldl f x indexes 
     where 
-        f = \acc i -> acc >>= childAt i
+        f = \ acc i -> acc >>= childAt i
         x = do return node
 
 -- here we don't have tail recursion , we should user the ContT monad for recursive application of the function
@@ -139,7 +139,7 @@ first node = ContT $
 
                  in if not (miszero m) then m else n) node
 
-any :: ( MonadZero m)=> Div m a
+any :: ( MonadZero m) => Div m a
 any node = ContT $ 
     \next -> fix (\cont subNode -> 
                     let init = next subNode
@@ -148,7 +148,7 @@ any node = ContT $
                                        _ -> []
                     in foldl mplus init childSeq ) node
 
-path :: MonadPlus m =>Tree a -> Tree a -> Div m a
+path :: MonadPlus m => Tree a -> Tree a -> Div m a
 path fromNode toNode = 
     ( escalate level ) ... dig (tail toIndex)
     where 
@@ -158,6 +158,5 @@ path fromNode toNode =
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
 f ... g = \b -> (f b) >>= g 
 
--- parentOf
 (^<) d1 d2 = d1 ... parentOf ... d2
 (^>) d1 d2 = d1 ... childOf ... d2

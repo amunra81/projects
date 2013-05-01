@@ -1,5 +1,4 @@
 module DivFactory(
-path
 ) where
 
 import Tree
