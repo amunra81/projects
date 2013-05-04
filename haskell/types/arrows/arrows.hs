@@ -34,7 +34,7 @@ f *** g = first f >>> second g
 -- | combines two arrows into a new arrow by running the two arrows on the same value:
 f &&& g = split >>> first f >>> second g
 
--- | LiftA2 makes a new arrow that combines the output from two arrows using a binary operation. It works by splitting a value and operating on both halfs and then combining the result:
+-- | LiftA2 makes a new arrow that combines the output from two zarrows using a binary operation. It works by splitting a value and operating on both halfs and then combining the result:
 liftA2 :: (Arrow a) => (b -> c -> d) -> a e b -> a e c -> a e d
 liftA2 op f g = split >>> first f >>> second g >>> unsplit op
 
@@ -61,3 +61,33 @@ h' = proc x -> do
 
 hOutput' :: Int
 hOutput' = runF h' 8
+
+-- Ex 3 --
+-- ---- --
+
+--newtype Kleisli m a b = Kleisli {
+--  runKleisli :: (a -> m b) 
+--}
+
+plusminus, double, h2 :: Kleisli [] Int Int
+plusminus = Kleisli (\x -> [x, -x])
+double    = arr (* 2)
+h2        = liftA2 (+) plusminus double 
+
+h2Output :: [Int]
+h2Output = runKleisli h2 8
+
+-- Ex 4 --
+-- ---- --
+
+main :: IO ()
+main = do
+   let
+       prepend x = arr (x ++)
+       append  x = arr (++ x)
+       withId  t = returnA <+> t
+       xform = (withId $ prepend "<") >>>
+               (withId $ append ">")  >>>
+               (withId $ ((prepend "!") >>> (append "!")))
+       xs = ["test", "foobar"] >>= (runKleisli xform)
+   mapM_ putStrLn xs

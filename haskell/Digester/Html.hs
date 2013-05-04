@@ -1,5 +1,6 @@
 import Data.List
 import Text.XML.HXT.Core
+import Text.HandsomeSoup
 
 main = do
   html <- readFile "Data\\test.html"
