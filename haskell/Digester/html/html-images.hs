@@ -1,49 +1,43 @@
 import Text.XML.HXT.Core
 import Text.XML.HXT.HTTP
-import Text.XML.HXT.Curl 
  
 import System.Environment
-
+import System.IO
+import System.Environment
+import System.Console.GetOpt
+import System.Exit
+ 
 main :: IO ()
 main
     = do
-      let (src:dst:_) = ["http://www.hotnews.ro", "images.html"] 
-      runX $ imageTable (readDocument [withValidate no
-                          ,withParseHTML yes
-                          ,withHTTP []
-                          ] src)
-	     >>> 
-	     writeDocument [withIndent yes
-                           ,withOutputEncoding isoLatin1
-                           ] dst
-	   
-      return ()
-
--- write = do
---         runX $ root [] [imageTable] >>> writeDocument [withIndent yes] "images.xml"
---         return ()
--- 
-imageTable	:: ArrowXml a => a XmlTree XmlTree -> a XmlTree XmlTree
-imageTable pg
-    = selem "html"
-      [ selem "head"
-        [ selem "title"
-          [ txt "Images in Page" ]
-        ]
-          , selem "body"
-        [ selem "h1"
-          [ txt "Images in Page" ]
-        , selem "table"
-          [ pg {->>> collectImages           -- (1)
-            >>>
-            genTableRows            -- (2) -}
-          ]
-        ]
-      ]
-  --  where
-  --  collectImages                   -- (1)
-  --      = deep ( isElem >>> hasName "img")
-  --  genTableRows                    -- (2)
-  --      = selem "tr"
-  --        [ selem "td"
-  --          [ getAttrValue "src" >>> mkText ]]
+      --argv <- getArgs
+      (al, src, dst) <- cmdlineOpts ["http://www.google.be", "ilidenta.html"] 
+      [rc]  <- runX (application al src dst)
+      if rc >= c_err
+	  then exitWith (ExitFailure (0-1))
+	  else exitWith ExitSuccess
+ 
+-- | the dummy for the boring stuff of option evaluation,
+-- usually done with 'System.Console.GetOpt'
+ 
+cmdlineOpts 	:: [String] -> IO (SysConfigList, String, String)
+cmdlineOpts argv
+    = return ([withValidate no, withParseHTML yes,withHTTP []], argv!!0, argv!!1)
+ 
+-- | the main arrow
+application	:: SysConfigList -> String -> String -> IOSArrow b Int
+application cfg src dst
+    = configSysVars cfg                                           -- (0)
+      >>>
+      readDocument [] src
+      >>>
+      processChildren (processDocumentRootElement `when` isElem)  -- (1)
+      >>>
+      writeDocument [] dst                                        -- (3)
+      >>>
+      getErrStatus
+ 
+-- | the dummy for the real processing: the identity filter
+processDocumentRootElement	:: IOSArrow XmlTree XmlTree
+processDocumentRootElement
+    = this         -- substitute this by the real application
