@@ -75,7 +75,7 @@ rightBrother node = ContT $
 
 leftBrother :: MonadPlus m => Div m a
 leftBrother node = ContT $ 
-    \next -> case leftBrothers node of
+    \ next -> case leftBrothers node of
             x:xs -> matchNodes next (x:xs)
             [] -> mzero
 
