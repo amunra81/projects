@@ -3,6 +3,8 @@
 
 module Printers() where 
 import Tree
+import Text.XML.HXT.DOM.TypeDefs
+import Data.Tree.NTree.TypeDefs
 
 instance Show a => Show (Tree a) where
     show = showNode 0
@@ -29,3 +31,4 @@ showChildren  depth = concatStr . map (ident . showNode depth)
 instance Show a => Show ([(Tree a)]) where
     show (x:xs) = foldl (\acc x -> acc ++ "\n+ " ++ (show x)) ("+ " ++ show x) xs   
     show _ = "n/a"
+
