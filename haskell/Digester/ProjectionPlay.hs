@@ -85,7 +85,6 @@ p1 = proot ( mdiv1 ) [
 
 -- GHCi  projectToRoot p1 tree2 
 
-
 p2 = proot ( mdiv1 ) [
          pnode (parentOf::Div Maybe Integer) [
               pleaf (parentOf ... sdiv5)]]

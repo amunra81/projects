@@ -1,7 +1,7 @@
 
 module Monad(
 -- * Types
-DivCont,MonadZero(miszero),Div,
+DivCont,MonadNonZero(nonzero,firstnonzero),Div,
 -- * Utils
 runDiv,
 -- * Div constructors
@@ -23,16 +23,26 @@ import Data.List
  -- Monad Zero --
 ------------------
 
-class (MonadPlus m,Foldable m) => MonadZero m where
-    miszero :: m a -> Bool
+class (MonadPlus m) => MonadNonZero m where
+    nonzero :: m a -> m a -> m a
+    firstnonzero :: [m a] -> m a
+    firstnonzero xs = foldl nonzero mzero xs
 
-instance MonadZero [] where
-    miszero [] = True
-    miszero _ = False
+instance MonadNonZero [] where
+    nonzero ([]) b = b
+    nonzero a _ = a
 
-instance MonadZero Maybe where 
-    miszero Nothing = True
-    miszero _ = False
+    firstnonzero ([]:xs) = firstnonzero xs
+    firstnonzero (x:xs)  = x
+    firstnonzero []      = []
+
+instance MonadNonZero Maybe where 
+    nonzero Nothing b = b
+    nonzero a _ = a
+
+    firstnonzero (Nothing:xs) = firstnonzero xs
+    firstnonzero (x:xs)  = x
+    firstnonzero []      = Nothing
 
 ---------------------------
  -- Div types and utils --
@@ -44,7 +54,7 @@ type Div m a = Tree a -> DivCont m a
 matchNodes ::  MonadPlus m => (b -> m a) -> [b] -> m a
 matchNodes next xs = foldl (\ acc n -> mplus acc (next n)) mzero xs
 
-runDiv ::  MonadPlus m => Div m a -> Tree a -> m (Tree a)
+runDiv ::  Monad m => Div m a -> Tree a -> m (Tree a)
 runDiv comp node = runContT (do x <- return node 
                                 comp x) $ return
 
@@ -80,11 +90,11 @@ leftBrother node = ContT $
             [] -> mzero
 
 -- conjuction and dijunction
-alt :: (MonadZero m) => Div m a -> Div m a -> Div m a
+alt :: (MonadNonZero m) => Div m a -> Div m a -> Div m a
 alt div1 div2 node =  
    ContT $ 
     \ next -> let [fst,sec] = [runContT (div node) next | div <- [div1,div2] ]
-             in if not (miszero fst) then fst else sec
+             in nonzero fst sec
 
 both :: MonadPlus m => Div m a -> Div  m a -> Div m a
 both div1 div2 node = do 
@@ -94,7 +104,7 @@ both div1 div2 node = do
         then return x
         else lift $ mzero
 
-brother ::  (MonadZero m) => Div m a
+brother ::  (MonadNonZero m) => Div m a
 brother = alt leftBrother rightBrother
 
 childOf ::  MonadPlus m => Div m a
@@ -126,20 +136,16 @@ dig indexes node =
         x = do return node
 
 -- here we don't have tail recursion , we should user the ContT monad for recursive application of the function
-first :: ( MonadZero m)=> Div m a
+first :: ( MonadNonZero m)=> Div m a
 first node = ContT $ 
     \next -> fix (\cont subNode -> 
-                 let m = next subNode
-                     n = case children subNode of
-                         HasChildren xs ->                               
-                             case find (not . miszero) [cont x | x <- xs] of
-                                 Just n -> n
-                                 Nothing -> mzero
-                         _ -> mzero
+                    let init = next subNode
+                        childSeq =  case children subNode of
+                                       HasChildren xs -> map cont xs
+                                       _ -> []
+                    in firstnonzero (init:childSeq) ) node
 
-                 in if not (miszero m) then m else n) node
-
-any :: ( MonadZero m) => Div m a
+any :: ( MonadNonZero m) => Div m a
 any node = ContT $ 
     \next -> fix (\cont subNode -> 
                     let init = next subNode
