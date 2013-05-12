@@ -24,7 +24,10 @@ import Data.List
 ------------------
 
 class (MonadPlus m) => MonadNonZero m where
+    -- | chosing the non-zero monad from the list
     nonzero :: m a -> m a -> m a
+    
+    -- | optimizing searching for nonzero monad in a list
     firstnonzero :: [m a] -> m a
     firstnonzero xs = foldl nonzero mzero xs
 

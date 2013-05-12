@@ -39,6 +39,3 @@ instance Show a => Show (ListT IO (Tree a)) where
     show ls = unsafePerformIO $ do
                                    xs <- runListT ls 
                                    (return . show) xs
-
-some :: ListT IO (Tree String)
-some =  lift $ return (root "asda" [])

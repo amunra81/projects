@@ -3,7 +3,7 @@ module Projection (
 -- * projection tree constructors
 proot,pnode,pleaf,pnodeOrLeaf
 -- * projection utils
-,project,projectToRoot,MonadListT
+,project,projectToRoot,MonadListT(..)
 ) where
 
 import Tree
