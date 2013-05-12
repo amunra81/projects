@@ -18,6 +18,8 @@ import Data.Function(fix)
 import Data.Monoid
 import Data.Foldable(Foldable)
 import Data.List
+import Control.Monad.Trans.List
+import Control.Monad.Trans.Maybe
 
 ------------------
  -- Monad Zero --
@@ -46,6 +48,36 @@ instance MonadNonZero Maybe where
     firstnonzero (Nothing:xs) = firstnonzero xs
     firstnonzero (x:xs)  = x
     firstnonzero []      = Nothing
+
+instance Monad m => MonadNonZero (ListT m) where 
+    nonzero mx my = ListT $ do
+        x <- runListT mx
+        runListT $ case x of
+                   [] -> my
+                   _  -> mx
+
+    firstnonzero []      = mzero
+    firstnonzero (mx:mxs)  = ListT $ do 
+       x <- runListT mx
+       runListT $ case x of
+                   [] -> firstnonzero mxs
+                   _  -> mx
+
+instance Monad m => MonadNonZero (MaybeT m) where 
+    nonzero mx my = MaybeT $ 
+     do 
+       x <- runMaybeT mx
+       runMaybeT $ case x of
+                   Nothing -> my
+                   _       -> mx
+
+    firstnonzero []      = mzero
+    firstnonzero (mx:mxs)  = MaybeT $ 
+     do 
+       x <- runMaybeT mx
+       runMaybeT $ case x of
+                   Nothing -> firstnonzero mxs
+                   _       -> mx
 
 ---------------------------
  -- Div types and utils --

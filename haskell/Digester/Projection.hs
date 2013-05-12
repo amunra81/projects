@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE ExistentialQuantification #-}
 module Projection (
 -- * projection tree constructors
@@ -11,6 +12,8 @@ import Monad
 import Data.Foldable(toList,Foldable)
 import Control.Monad.Trans.List
 import Control.Monad.Trans.Class
+import Control.Monad.Trans.Maybe(MaybeT)
+import Control.Monad.Trans.Maybe(runMaybeT)
 
 data Proj a = forall m. (Monad m,MonadListT m ) => Proj ( Div m a )
 
@@ -28,6 +31,18 @@ instance MonadListT [] where
 instance MonadListT Maybe where
    toListT (Just a) = ListT $ (return [a])
    toListT (Nothing) = ListT $ (return [])
+
+instance MonadListT (ListT IO) where
+   toListT m = m
+
+instance MonadListT (MaybeT IO) where
+   toListT m = 
+    ListT $ do 
+        x <- runMaybeT m
+        return []
+        (case x of
+         Just a -> return [a]
+         Nothing -> return [])
 
 projectNode :: Proj t -> Tree t -> ListT IO (Tree t)
 projectNode (Proj div) node = toListT $ runDiv div node 
