@@ -9,6 +9,7 @@ import Data.Tree.NTree.TypeDefs
 import Control.Monad.Trans.List
 import Control.Monad.Trans.Class
 import System.IO.Unsafe(unsafePerformIO)
+import Control.Monad.Trans.Maybe(MaybeT,runMaybeT)
 
 instance Show a => Show (Tree a) where
     show = showNode 0
@@ -28,7 +29,6 @@ showChildren  depth = concatStr . map (ident . showNode depth)
                 concatStr  = foldl (++) ""  
                 ident str = ( foldl (\acc _-> acc ++ "       ") "\n" [1..depth] ) ++ str
 
-
 -- Print tree list --
 -- --------------- --
 instance Show a => Show ([(Tree a)]) where
@@ -36,6 +36,13 @@ instance Show a => Show ([(Tree a)]) where
     show _ = "n/a"
 
 instance Show a => Show (ListT IO (Tree a)) where
-    show ls = unsafePerformIO $ do
-                                   xs <- runListT ls 
-                                   (return . show) xs
+    show ls = "IO → \n" ++ (unsafePerformIO msg)
+              where msg = do 
+                           xs <- runListT ls 
+                           (return . show) xs
+
+instance Show a => Show (MaybeT IO (Tree a)) where
+    show m = "IO → \n" ++ (unsafePerformIO msg)
+              where msg = do 
+                           xs <- runMaybeT m 
+                           (return . show) xs

@@ -34,9 +34,6 @@ tree1 =
                      leaf 7 ],
             leaf 4 ]
 
--- Maybe vs List --
--- ------------- --
-
 s11 = proot (first ... sdiv2) [] -- only one result
 m11 = proot (first ... mdiv2) [] -- only one result
 

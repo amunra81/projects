@@ -97,6 +97,17 @@ p2 = proot ( mdiv1 ) [
          pnode (parentOf::Div Maybe Integer) [
               pleaf (parentOf ... sdiv5)]]
 
+-- GHCi  projectToRoot p2 tree2 
 
+p3 = proot ( mdiv1 ) [
+         pnode (parentOf::Div (ListT IO) Integer) [
+              pleaf (first ... sdiv5)]]
 
 -- GHCi  projectToRoot p3 tree2 
+
+p4 = proot ( mdiv1 ) [
+         pnode (parentOf::Div (MaybeT IO) Integer) [
+              pleaf (parentOf ... sdiv5)]]
+
+-- GHCi  projectToRoot p4 tree2 
+

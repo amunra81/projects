@@ -4,6 +4,8 @@ import Monad
 import Control.Monad.Cont
 import Prelude hiding (any) 
 import Printers
+import Control.Monad.Trans.List(ListT)
+import Control.Monad.Trans.Maybe(MaybeT)
                     
 (sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:sdiv9:_) = map equal [1..]::[Div [] Integer]
 (mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:mdiv9:_) = map equal [1..]::[Div Maybe Integer]
@@ -22,7 +24,6 @@ tree  =
                             node 5 [
                                     leaf 9 ]]],
             leaf 4 ] 
-
 
 -- Parent --
 -- ------ -- 
@@ -84,5 +85,12 @@ s33 = commonIndexesOf (any ... sdiv2) (any ... sdiv2) -- all the posibilities
 m33 = commonIndexesOf (any ... mdiv2) (any ... mdiv2) -- the same one
 -- GHCi s33
 
--- Path --
--- ---- --
+-- ListT IO and MaybeT IO --
+-- ---------------------- --
+(isdiv1:isdiv2:isdiv3:isdiv4:isdiv5:isdiv6:isdiv7:isdiv8:_) = map equal [1..]::[Div (ListT IO) Integer]
+(imdiv1:imdiv2:imdiv3:imdiv4:imdiv5:imdiv6:imdiv7:imdiv8:_) = map equal [1..]::[Div (MaybeT IO) Integer]
+
+is11 =  isdiv1 ... parentOf ... isdiv2       -- two results
+im11 =  imdiv1 ... parentOf ... imdiv2       -- one result
+
+---- GHCi runDiv s11 tree 

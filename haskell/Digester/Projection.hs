@@ -47,8 +47,7 @@ instance MonadListT (MaybeT IO) where
 projectNode :: Proj t -> Tree t -> ListT IO (Tree t)
 projectNode (Proj div) node = toListT $ runDiv div node 
 
-
-project ::  Tree (Proj a) -> Tree a -> ListT IO (PassParent a)
+project :: Tree (Proj a) -> Tree a -> ListT IO (PassParent a)
 project prjTree tree = do 
     tnode <- projectNode (value prjTree) tree 
     let childSeq = case children prjTree of 

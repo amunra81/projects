@@ -79,16 +79,13 @@ instance Monad m => MonadNonZero (MaybeT m) where
                    Nothing -> firstnonzero mxs
                    _       -> mx
 
----------------------------
- -- Div types and utils --
----------------------------
-
 type DivCont m a = ContT (Tree a) m (Tree a)
 type Div m a = Tree a -> DivCont m a
 
 matchNodes ::  MonadPlus m => (b -> m a) -> [b] -> m a
 matchNodes next xs = foldl (\ acc n -> mplus acc (next n)) mzero xs
 
+-- | running s div trough a tree
 runDiv ::  Monad m => Div m a -> Tree a -> m (Tree a)
 runDiv comp node = runContT (do x <- return node 
                                 comp x) $ return
@@ -131,7 +128,7 @@ alt div1 div2 node =
     \ next -> let [fst,sec] = [runContT (div node) next | div <- [div1,div2] ]
              in nonzero fst sec
 
-both :: MonadPlus m => Div m a -> Div  m a -> Div m a
+both :: MonadPlus m => Div m a -> Div m a -> Div m a
 both div1 div2 node = do 
     x <- div1 node
     y <- div2 node
