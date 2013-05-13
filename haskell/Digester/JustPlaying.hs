@@ -1,12 +1,6 @@
 import Tree
-<<<<<<< HEAD
 import Html
 import Control.Monad.Trans.Maybe(MaybeT)
-import Monad
-
-type Some = Div (MaybeT IO) Html
--- data Proj a = forall m. MonadZero m => Proj ( Div m a )
-=======
 import Monad
 import Projection
 import Control.Monad.Trans.Maybe
@@ -52,4 +46,3 @@ m12 = proot (any ... mdiv2) [] -- only one result
 ---- GHCi  projectToRoot s11 tree1
 ---- GHCi  projectToRoot m12 tree1
 ---- GHCi  projectToRoot s12 tree1 
->>>>>>> 155f50ebf11b0da75bd1edbe5827ce3833d80845
