@@ -36,7 +36,6 @@ cmdlineOpts 	:: [String] -> IO (SysConfigList, String, String)
 cmdlineOpts argv
     = return ([withValidate no, withParseHTML yes,withHTTP []], argv!!0, argv!!1)
 
-
 -- | application
 application	:: SysConfigList -> String -> String -> IOSArrow b XmlTree
 application cfg src dst
@@ -46,14 +45,14 @@ application cfg src dst
       >>> traceMsg 1 "document read"               
 
 instance Show Html where
-    show  (Html (XText s))         = s
-    show  (Html (XCharRef n))      = show n
-    show  (Html (XEntityRef s))    = "{ entityRef = "++s++ " }"
-    show  (Html (XCmt s))          = "{ comment = "++ s ++ " }"
-    show  (Html (XCdata s))        = "{ cdata = " ++ s ++ " }"
-    show  (Html (XPi name trees))  = "{ pi = " ++ (show name) ++ " }"
-    show  (Html (XTag name trees)) = show name
-    show  (Html (XDTD a b))        = "{ xdtd }"
-    show  (Html (XAttr name))      = "a"++show name
-    show  (Html (XError no msg))   = "{ error = "++ (show no) ++ " - " ++ msg ++ " }"
+  show  (Html (XText s))         = s
+  show  (Html (XCharRef n))      = show n
+  show  (Html (XEntityRef s))    = "{ entityRef = "++s++ " }"
+  show  (Html (XCmt s))          = "{ comment = "++ s ++ " }"
+  show  (Html (XCdata s))        = "{ cdata = " ++ s ++ " }"
+  show  (Html (XPi name trees))  = "{ pi = " ++ (show name) ++ " }"
+  show  (Html (XTag name trees)) = show name
+  show  (Html (XDTD a b))        = "{ xdtd }"
+  show  (Html (XAttr name))      = "a"++show name
+  show  (Html (XError no msg))   = "{ error = "++ (show no) ++ " - " ++ msg ++ " }"
 

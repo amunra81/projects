@@ -1,3 +1,4 @@
+{-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE FlexibleInstances #-} 
 {-# LANGUAGE  OverlappingInstances #-}
 
@@ -5,6 +6,9 @@ module Printers() where
 import Tree
 import Text.XML.HXT.DOM.TypeDefs
 import Data.Tree.NTree.TypeDefs
+import Control.Monad.Trans.List
+import Control.Monad.Trans.Class
+import System.IO.Unsafe(unsafePerformIO)
 
 instance Show a => Show (Tree a) where
     show = showNode 0
@@ -27,8 +31,11 @@ showChildren  depth = concatStr . map (ident . showNode depth)
 
 -- Print tree list --
 -- --------------- --
-
 instance Show a => Show ([(Tree a)]) where
     show (x:xs) = foldl (\acc x -> acc ++ "\n+ " ++ (show x)) ("+ " ++ show x) xs   
     show _ = "n/a"
 
+instance Show a => Show (ListT IO (Tree a)) where
+    show ls = unsafePerformIO $ do
+                                   xs <- runListT ls 
+                                   (return . show) xs

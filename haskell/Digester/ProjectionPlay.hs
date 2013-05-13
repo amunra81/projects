@@ -3,12 +3,16 @@ import Monad
 import Projection
 import Printers
 import Prelude hiding (any)
+import Control.Monad.Trans.List(ListT)
+import Control.Monad.Trans.Maybe(MaybeT)
 
 
 
 (sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]::[Div [] Integer]
 (mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_) = map equal [1..]::[Div Maybe Integer]
 
+(isdiv1:isdiv2:isdiv3:isdiv4:isdiv5:isdiv6:isdiv7:isdiv8:_) = map equal [1..]::[Div (ListT IO) Integer]
+(imdiv1:imdiv2:imdiv3:imdiv4:imdiv5:imdiv6:imdiv7:imdiv8:_) = map equal [1..]::[Div (MaybeT IO) Integer]
 tree1 = 
     root 1 [
             --from here 
@@ -35,9 +39,13 @@ tree1 =
 
 s11 = proot (first ... sdiv2) [] -- only one result
 m11 = proot (first ... mdiv2) [] -- only one result
+is11 = proot (first ... isdiv2) [] -- only one result
+im11 = proot (first ... imdiv2) [] -- only one result
 
 s12 = proot (any ... sdiv2) [] -- three results
 m12 = proot (any ... mdiv2) [] -- only one result
+is12 = proot (any ... isdiv2) [] -- three results
+im12 = proot (any ... imdiv2) [] -- only one result
 
 -- GHCi  projectToRoot m11 tree1
 -- GHCi  projectToRoot s11 tree1
@@ -84,7 +92,6 @@ p1 = proot ( mdiv1 ) [
               pleaf (first ... sdiv5)]]
 
 -- GHCi  projectToRoot p1 tree2 
-
 
 p2 = proot ( mdiv1 ) [
          pnode (parentOf::Div Maybe Integer) [

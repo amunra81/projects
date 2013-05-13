@@ -1,44 +1,74 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE ExistentialQuantification #-}
 module Projection (
 -- * projection tree constructors
 proot,pnode,pleaf,pnodeOrLeaf
 -- * projection utils
-,project,projectToRoot
+,project,projectToRoot,MonadListT(..)
 ) where
 
 import Tree
 import Monad
-import Data.Foldable(toList)
+import Data.Foldable(toList,Foldable)
+import Control.Monad.Trans.List
+import Control.Monad.Trans.Class
+import Control.Monad.Trans.Maybe(MaybeT)
+import Control.Monad.Trans.Maybe(runMaybeT)
 
-data Proj a = forall m. MonadZero m => Proj ( Div m a )
+data Proj a = forall m. (Monad m,MonadListT m ) => Proj ( Div m a )
 
 proot       n xs = root         (Proj n) xs
 pnode       n xs = node         (Proj n) xs
 pleaf       n    = leaf         (Proj n) 
 pnodeOrLeaf n xs = nodeOrLeaf   (Proj n) xs
 
-projectNode ::  Proj t -> Tree t -> [Tree t]
-projectNode (Proj div) node = toList $ runDiv div node 
+class MonadListT m where
+   toListT :: m a -> ListT IO a
 
-project ::  Tree (Proj a) -> Tree a -> [PassParent a]
-project prjTree tree = 
-    do 
-        tnode <- projectNode (value prjTree) tree -- :: [Tree t]
-        let childSeq = case children prjTree of -- :: [PassParent t]
-                        None -> []
-                        HasChildren xs -> do 
-                                            x <- xs -- :: Tree (Proj t)
-                                            project x tnode -- :: [PassParent t]
-        return $ nodeOrLeaf (value tnode) childSeq
+instance MonadListT [] where
+   toListT xs = ListT $ return xs
 
-projectToRoot ::  Tree (Proj a) -> Tree a -> [Tree a]
-projectToRoot  prjTree tree = 
-    do 
-        tnode <- projectNode (value prjTree) tree -- :: [Tree t]
-        let passParentList = case children prjTree of -- :: [PassParent t]
-                          None -> []
+instance MonadListT Maybe where
+   toListT (Just a) = ListT $ (return [a])
+   toListT (Nothing) = ListT $ (return [])
+
+instance MonadListT (ListT IO) where
+   toListT m = m
+
+instance MonadListT (MaybeT IO) where
+   toListT m = 
+    ListT $ do 
+        x <- runMaybeT m
+        return []
+        (case x of
+         Just a -> return [a]
+         Nothing -> return [])
+
+projectNode :: Proj t -> Tree t -> ListT IO (Tree t)
+projectNode (Proj div) node = toListT $ runDiv div node 
+
+
+project ::  Tree (Proj a) -> Tree a -> ListT IO (PassParent a)
+project prjTree tree = do 
+    tnode <- projectNode (value prjTree) tree 
+    let childSeq = case children prjTree of 
+                   None -> toListT []
+                   HasChildren xs -> do -- ListT IO (PassParent a)
+                                    x <- toListT xs
+                                    project x tnode 
+    lift $ do  -- :: IO 
+        xs <- runListT $ childSeq -- :: IO [PassParent a], xs is a list
+        return $ nodeOrLeaf (value tnode) xs -- :: IO (PassParent)
+
+projectToRoot ::  Tree (Proj a) -> Tree a -> ListT IO (Tree a)
+projectToRoot  prjTree tree = do 
+        tnode <- projectNode (value prjTree) tree -- 
+        let passParentList = case children prjTree of 
+                          None -> toListT []
                           HasChildren xs -> do 
-                                            x <- xs -- :: Tree (Proj t)
+                                            x <- toListT xs -- ListT IO (PassParent a)
                                             project x tnode -- :: [PassParent t]
 
-        return $ root (value tnode) passParentList
+        lift $ do 
+            xs <- runListT $ passParentList -- :: IO [PassParent a], xs is a list
+            return $ root (value tnode) xs
