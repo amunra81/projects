@@ -10,6 +10,10 @@ import Control.Monad.Trans.List
 import Control.Monad.Trans.Class
 import System.IO.Unsafe(unsafePerformIO)
 import Control.Monad.Trans.Maybe(MaybeT,runMaybeT)
+import GHC.IO.Encoding(setLocaleEncoding)
+import GHC.IO.Encoding(setFileSystemEncoding)
+import GHC.IO.Encoding(setForeignEncoding)
+import GHC.IO.Encoding(utf8)
 
 instance Show a => Show (Tree a) where
     show = showNode 0
@@ -35,14 +39,19 @@ instance Show a => Show ([(Tree a)]) where
     show (x:xs) = foldl (\acc x -> acc ++ "\n+ " ++ (show x)) ("+ " ++ show x) xs   
     show _ = "n/a"
 
+arrow = "→"
+
 instance Show a => Show (ListT IO (Tree a)) where
-    show ls = "IO → \n" ++ (unsafePerformIO msg)
+    show ls = "IO "++arrow++" \n" ++ (unsafePerformIO msg)
               where msg = do 
+                           setLocaleEncoding utf8
+                           setFileSystemEncoding utf8
+                           setForeignEncoding utf8
                            xs <- runListT ls 
                            (return . show) xs
 
 instance Show a => Show (MaybeT IO (Tree a)) where
-    show m = "IO → \n" ++ (unsafePerformIO msg)
+    show m = "IO "++arrow++"\n" ++ (unsafePerformIO msg)
               where msg = do 
                            xs <- runMaybeT m 
                            (return . show) xs

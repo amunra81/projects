@@ -93,4 +93,4 @@ m33 = commonIndexesOf (any ... mdiv2) (any ... mdiv2) -- the same one
 is11 =  isdiv1 ... parentOf ... isdiv2       -- two results
 im11 =  imdiv1 ... parentOf ... imdiv2       -- one result
 
----- GHCi runDiv s11 tree 
+---- GHCi runDiv is11 tree 
