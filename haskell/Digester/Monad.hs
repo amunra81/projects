@@ -87,8 +87,7 @@ matchNodes next xs = foldl (\ acc n -> mplus acc (next n)) mzero xs
 
 -- | running s div trough a tree
 runDiv ::  Monad m => Div m a -> Tree a -> m (Tree a)
-runDiv comp node = runContT (do x <- return node 
-                                comp x) $ return
+runDiv comp node = runContT (comp node) $ return
 
 equal :: (Eq a, MonadPlus m) => a -> Div m a
 equal val node = ContT $ \ next ->
@@ -103,7 +102,7 @@ parentOf node =  ContT $
 
 childAt :: MonadPlus m => Int -> Div m a
 childAt pos node = ContT $ 
-    \next -> case children node of
+    \ next -> case children node of
             HasChildren xs  -> 
                 if pos < length xs then next $ xs !! pos 
                 else mzero
