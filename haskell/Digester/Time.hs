@@ -1,3 +1,7 @@
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE FlexibleInstances #-} 
+{-# LANGUAGE  OverlappingInstances #-}
+
 data Time m e = Time e (m (Time m e)) 
 
 get :: Time [] Integer
@@ -10,3 +14,15 @@ doi = Time True $ Just $
 
 trei :: Time [] Bool
 trei = Time True [ Time False [], Time True []]
+
+patru :: Time [] (Integer,Integer)
+patru = Time (0,0) [ patru ]
+
+cinci :: Integer -> Time Maybe Integer
+cinci n = Time n m
+         where m = if n <= 0 then Nothing
+                           else Just $ cinci (n - 1)
+
+instance Show (Time Maybe Integer) where
+ show (Time n Nothing) = "\nTime " ++ (show n) 
+ show (Time n (Just x) ) = "\nTime " ++ (show n) ++ (show x)
