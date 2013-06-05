@@ -56,8 +56,8 @@ instance Monad m => MonadNonZero (ListT m) where
                    [] -> my
                    _  -> mx
 
-    firstnonzero []      = mzero
-    firstnonzero (mx:mxs)  = ListT $ do 
+    firstnonzero []         = mzero
+    firstnonzero (mx:mxs)   = ListT $ do 
        x <- runListT mx
        runListT $ case x of
                    [] -> firstnonzero mxs
@@ -95,7 +95,7 @@ equal val node = ContT $ \ next ->
                                               else mzero
 
 parentOf :: MonadPlus m => Div m a
-parentOf node =  ContT $ 
+parentOf = \ node ->  ContT $ 
     \next -> case children node of
              HasChildren xs  -> matchNodes next xs
              _               -> mzero
@@ -116,7 +116,7 @@ rightBrother node = ContT $
 
 leftBrother :: MonadPlus m => Div m a
 leftBrother node = ContT $ 
-    \ next -> case leftBrothers node of
+    \next -> case leftBrothers node of
             x:xs -> matchNodes next (x:xs)
             [] -> mzero
 

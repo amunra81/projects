@@ -39,7 +39,7 @@ instance Show a => Show ([(Tree a)]) where
     show (x:xs) = foldl (\acc x -> acc ++ "\n+ " ++ (show x)) ("+ " ++ show x) xs   
     show _ = "n/a"
 
-arrow = "→"
+arrow = "->"
 
 instance Show a => Show (ListT IO (Tree a)) where
     show ls = "IO "++arrow++" \n" ++ (unsafePerformIO msg)
