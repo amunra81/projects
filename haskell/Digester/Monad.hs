@@ -193,7 +193,7 @@ path fromNode toNode =
     level =  length fromIndex - 1
 
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
-f ... g = \b -> (f b) >>= g 
+f ... g = \ b -> (f b) >>= g 
 
 (^<) d1 d2 = d1 ... parentOf ... d2
 (^>) d1 d2 = d1 ... childOf ... d2

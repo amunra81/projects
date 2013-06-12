@@ -40,7 +40,3 @@ m11 = proot (first ... mdiv2) [] -- only one result
 s12 = proot (any ... sdiv2) [] -- three results
 m12 = proot (any ... mdiv2) [] -- only one result
 ---- GHCi  projectToRoot m11 tree1
-
-
-
--- some playground

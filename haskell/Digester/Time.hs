@@ -1,6 +1,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE FlexibleInstances #-} 
 {-# LANGUAGE  OverlappingInstances #-}
+import Control.Monad(MonadPlus)
 
 data Time m e = Time e (m (Time m e)) 
 
@@ -26,3 +27,8 @@ cinci n = Time n m
 instance Show (Time Maybe Integer) where
  show (Time n Nothing) = "\nTime " ++ (show n) 
  show (Time n (Just x) ) = "\nTime " ++ (show n) ++ (show x)
+
+-- some advanced
+instance (MonadPlus m,Monad m) => Monad (Time m) where
+ return e = Time e (return (return e) )
+ (Time m _) >>= f = f m
