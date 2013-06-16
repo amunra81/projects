@@ -1,0 +1,16 @@
+   Name:                ltree
+   Version:             0.1
+   Description:         Lambda tree implementation
+   License:             BSD3
+   License-file:        LICENSE
+   Author:              Don Stewart
+   Maintainer:          dons@cse.unsw.edu.au
+   Build-Type:          Simple
+   Cabal-Version:       >=1.2
+   
+   Library
+     Build-Depends:     base >= 3 && < 5
+     Exposed-modules:   
+                        Data.LTree
+                        Data.MTree
+     ghc-options:       -Wall
