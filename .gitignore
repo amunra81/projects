@@ -1,3 +1,6 @@
 *.swp
 
 haskell/cabal/haq
+haskell/yosog/cabal-dev/
+haskell/yosog/dist/
+haskell/yosog/yesod-devel/
