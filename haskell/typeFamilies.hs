@@ -50,4 +50,14 @@ instance (GMapKey a,GMapKey b) => GMapKey (Either a b) where
     insert (Left a) v (GMapEither gm1 gm2)  = GMapEither (Main.insert a v gm1) gm2
     insert (Right b) v (GMapEither gm1 gm2) = GMapEither gm1 (Main.insert b v gm2) 
 
+-- | let's try some data now 
+myGMap :: GMap (Int, Either Char ()) String
+myGMap = Main.insert (5, Left 'c') "(5, Left 'c')"    $
+         Main.insert (4, Right ()) "(4, Right ())"    $
+         Main.insert (5, Right ()) "This is the one!" $
+         Main.insert (5, Right ()) "This is the two!" $
+         Main.insert (6, Right ()) "(6, Right ())"    $
+         Main.insert (5, Left 'a') "(5, Left 'a')"    $
+         Main.empty
 
+main = putStrLn $ maybe "Couldn't find key!" id $ Main.lookup (5, Left 't') myGMap
