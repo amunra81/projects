@@ -23,11 +23,11 @@ instance ToContent Int where
 instance ToTypedContent Int where
     toTypedContent = toTypedContent . show
     
-getPersonR :: Text -> HandlerT App IO Int
-getPersonR name = (HandlerT $ \ _ -> do return 3) >>= \ val -> (HandlerT $ \ _ -> do return $  (4+3))
+--getPersonR :: Text -> HandlerT App IO Int
+--getPersonR name = (HandlerT $ \ _ -> do return 3) >>= \ val -> (HandlerT $ \ _ -> do return $  (4+3))
 
---defaultLayout [whamlet|<h1>Hello #{name}!|]
-
+getPersonR :: Text -> Handler Html
+getPersonR  = defaultLayout [whamlet|<h1>Hello #{name}!|]
 
 handleDateR :: Integer -> Text -> Int -> Handler Text -- text/plain
 handleDateR year month day =

@@ -1,4 +1,5 @@
 *.swp
+*.aes
 
 haskell/cabal/haq
 haskell/yosog/cabal-dev/
