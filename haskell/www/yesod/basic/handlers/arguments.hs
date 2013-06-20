@@ -20,6 +20,7 @@ mkYesod "App" [parseRoutes|
 --some extra definition to prove myself that i understand
 instance ToContent Int where 
     toContent = toContent . show
+
 instance ToTypedContent Int where
     toTypedContent = toTypedContent . show
     
@@ -27,7 +28,7 @@ instance ToTypedContent Int where
 --getPersonR name = (HandlerT $ \ _ -> do return 3) >>= \ val -> (HandlerT $ \ _ -> do return $  (4+3))
 
 getPersonR :: Text -> Handler Html
-getPersonR  = defaultLayout [whamlet|<h1>Hello #{name}!|]
+getPersonR  name = defaultLayout [whamlet|<h1>Hello #{name}!|]
 
 handleDateR :: Integer -> Text -> Int -> Handler Text -- text/plain
 handleDateR year month day =
