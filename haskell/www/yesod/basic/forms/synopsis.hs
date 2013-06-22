@@ -8,6 +8,7 @@ import           Data.Text           (Text)
 import           Data.Time           (Day)
 import           Yesod
 import           Yesod.Form.Jquery
+import Data.Text(unpack)
 
 data App = App
 
@@ -17,6 +18,7 @@ mkYesod "App" [parseRoutes|
 |]
 
 instance Yesod App
+instance YesodJquery App
 
 -- Tells our application to use the standard English messages.
 -- If you want i18n, then you can supply a translating function instead.
@@ -25,7 +27,6 @@ instance RenderMessage App FormMessage where
 
 -- And tell us where to find the jQuery libraries. We'll just use the defaults,
 -- which point to the Google CDN.
-instance YesodJquery App
 
 -- The datatype we wish to receive from the form
 data Person = Person
@@ -58,6 +59,7 @@ data Person = Person
 -- > personForm :: Form Person
 --
 -- For our purposes, it's good to see the long version.
+
 personForm :: Html -> MForm Handler (FormResult Person, Widget)
 personForm = renderDivs $ Person
     <$> areq textField "Name" Nothing
@@ -68,20 +70,28 @@ personForm = renderDivs $ Person
     <*> aopt textField "Favorite color" Nothing
     <*> areq emailField "Email address" Nothing
     <*> aopt urlField "Website" Nothing
+-- FormMissing	 
+-- FormFailure [Text]	 
+-- FormSuccess a
 
 -- The GET handler displays the form
 getHomeR :: Handler Html
 getHomeR = do
     -- Generate the form to be displayed
-    (widget, enctype) <- generateFormPost personForm
+    ((s,widget), enctype) <- runFormPost personForm
+    let name = case s of
+                FormMissing     -> "FormMissing"
+                FormFailure _   -> "FormFailure"
+                FormSuccess p   -> "FormSuccess name:" ++ (unpack $ personName p)
     defaultLayout
         [whamlet|
             <p>
                 The widget generated contains only the contents
                 of the form, not the form tag itself. So...
-            <form method=post action=@{PersonR} enctype=#{enctype}>
+            <form method=get action=@{PersonR} enctype=#{enctype}>
                 ^{widget}
                 <p>It also doesn't include the submit button.
+                <p> #{name}
                 <button>Submit
         |]
 
