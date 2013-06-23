@@ -25,4 +25,4 @@ some =  h
 data Accum a = forall s. Show s => MkAccum s (a -> s) 
 
 -- Compilation error : data Accum a = MkAccum s (a -> s)
-accumList = [MkAccum True (\x -> read x), MkAccum 1 (\x -> let i = read x in i*2)]  
+accumList = [ MkAccum True (\ x -> read x), MkAccum 1 (\x -> let i = read x in i*2) ]  
