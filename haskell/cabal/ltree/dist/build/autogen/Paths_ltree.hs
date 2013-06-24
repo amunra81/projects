@@ -17,10 +17,10 @@ version :: Version
 version = Version {versionBranch = [0,1], versionTags = []}
 bindir, libdir, datadir, libexecdir :: FilePath
 
-bindir     = "/Users/horus/Library/Haskell/ghc-7.4.2/lib/ltree-0.1/bin"
-libdir     = "/Users/horus/Library/Haskell/ghc-7.4.2/lib/ltree-0.1/lib"
-datadir    = "/Users/horus/Library/Haskell/ghc-7.4.2/lib/ltree-0.1/share"
-libexecdir = "/Users/horus/Library/Haskell/ghc-7.4.2/lib/ltree-0.1/libexec"
+bindir     = "/Users/horus/Library/Haskell/ghc-7.6.3/lib/ltree-0.1/bin"
+libdir     = "/Users/horus/Library/Haskell/ghc-7.6.3/lib/ltree-0.1/lib"
+datadir    = "/Users/horus/Library/Haskell/ghc-7.6.3/lib/ltree-0.1/share"
+libexecdir = "/Users/horus/Library/Haskell/ghc-7.6.3/lib/ltree-0.1/libexec"
 
 getBinDir, getLibDir, getDataDir, getLibexecDir :: IO FilePath
 getBinDir = catchIO (getEnv "ltree_bindir") (\_ -> return bindir)
