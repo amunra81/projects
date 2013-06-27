@@ -1,0 +1,24 @@
+Default: &defaults
+  user: horus
+  password: ""
+  host: localhost
+  port: 5432
+  database: logfas
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: logfas_test
+  <<: *defaults
+
+Staging:
+  database: logfas_staging
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: logfas_production
+  poolsize: 100
+  <<: *defaults

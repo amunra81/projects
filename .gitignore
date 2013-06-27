@@ -5,3 +5,6 @@ haskell/cabal/haq
 haskell/yosog/cabal-dev/
 haskell/yosog/dist/
 haskell/yosog/yesod-devel/
+haskell/logfas/cabal-dev/
+haskell/logfas/dist/
+haskell/logfas/logfas-devel/
