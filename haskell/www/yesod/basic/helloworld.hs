@@ -17,8 +17,3 @@ getHomeR = defaultLayout [whamlet|
 
 main :: IO ()
 main = warp 3000 FuckYouWorld
-
-
-some = "asda" ++ "/"
-
--- some blank line

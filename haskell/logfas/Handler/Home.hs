@@ -2,6 +2,7 @@
 module Handler.Home where
 
 import Import
+import Yesod.Core.Types
 
 -- This is a handler function for the GET request method on the HomeR
 -- resource pattern. All of your resource patterns are defined in
@@ -15,25 +16,30 @@ import Import
 getHomeR :: Handler RepHtml
 getHomeR = do
     (formWidget, formEnctype) <- generateFormPost sampleForm
+
     let submission = Nothing :: Maybe (FileInfo, Text , Text)
         handlerName = "getHomeR" :: Text
-    defaultLayout $ do
-        aDomId <- newIdent
-        setTitle "Welcome To Yesod!"
-        $(widgetFile "homepage")
-
-postHomeR :: Handler RepHtml
-postHomeR = do
-    ((result, formWidget), formEnctype) <- runFormPost sampleForm
-    let handlerName = "postHomeR" :: Text
-        submission = case result of
-            FormSuccess res -> Just res
-            _ -> Nothing
 
     defaultLayout $ do
         aDomId <- newIdent
         setTitle "Welcome To Yesod!"
         $(widgetFile "homepage")
+
+postHomeR :: Handler Text
+postHomeR = HandlerT $ \_ -> return ("Ia pula cu carul" :: Text)
+--postHomeR :: Handler RepHtml
+--postHomeR = do
+--    ((result, formWidget), formEnctype) <- runFormPost sampleForm
+--
+--    let handlerName = "postHomeR" :: Text
+--        submission = case result of
+--            FormSuccess res -> Just res
+--            _ -> Nothing
+--
+--    defaultLayout $ do
+--        aDomId <- newIdent
+--        setTitle "Welcome To Yesod!"
+--        $(widgetFile "homepage")
 
 sampleForm :: Form (FileInfo, Text , Text)
 sampleForm = renderDivs $ (,,)
