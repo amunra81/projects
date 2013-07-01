@@ -13,10 +13,16 @@ Email
 Force
     name Text
     nation Text
+    force ForceId Eq
+    weight Double
 
 Accesorie
     force ForceId Eq
     name Text
-    
-    
+    weight Double
+
+Asset
+    name Text
+    cargoWeight Double
+
  -- By default this file is used in Model.hs (which is imported by Foundation.hs)
