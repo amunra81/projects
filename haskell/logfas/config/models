@@ -8,12 +8,12 @@ Email
     email Text
     user UserId Maybe
     verkey Text Maybe
-    UniqueEmail email
+    UniqueEmail email 
 
 Force
     name Text
     nation Text
-    force ForceId Eq
+    force ForceId Maybe Eq
     weight Double
 
 Accesorie
