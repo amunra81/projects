@@ -4,10 +4,16 @@ Default: &defaults
   #  host: localhost
   #  port: 5432
   #  database: saf
+  #  user: postgres
+  #  password: "1234"
+  #  host: 192.168.1.6
+  #  port: 5432
+  #  database: saf
+  #  poolsize: 10
   user: postgres
-  password: "1234"
-  host: 192.168.1.6
-  port: 5432
+  password: postgres
+  host: 10.132.45.65
+  port: 15432
   database: saf
   poolsize: 10
 
