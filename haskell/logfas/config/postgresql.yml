@@ -1,21 +1,24 @@
 Default: &defaults
-  #  user: horus
-  #  password: ""
-  #  host: localhost
-  #  port: 5432
-  #  database: saf
+    user: horus
+    password: ""
+    host: localhost
+    port: 5432
+    database: saf
+    poolsize: 10
+  #
   #  user: postgres
   #  password: "1234"
   #  host: 192.168.1.6
   #  port: 5432
   #  database: saf
   #  poolsize: 10
-  user: postgres
-  password: postgres
-  host: 10.132.45.65
-  port: 15432
-  database: saf
-  poolsize: 10
+  #
+  #  user: postgres
+  #  password: postgres
+  #  host: 10.132.45.65
+  #  port: 15432
+  #  database: saf
+  #  poolsize: 10
 
 Development:
   <<: *defaults

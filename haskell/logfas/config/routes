@@ -5,4 +5,7 @@
 /robots.txt RobotsR GET
 
 /home HomeR GET POST
-/ SafR GET POST
+
+/ SafR GET 
+
+/force/#ForceId ForceR GET 
