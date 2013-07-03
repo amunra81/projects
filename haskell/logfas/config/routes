@@ -8,7 +8,7 @@
 
 / SafR GET 
 
-/force/#ForceId ForceR GET 
+/force/#ForceId ForceR GET POST
 /forces ForcesR GET
 
 
