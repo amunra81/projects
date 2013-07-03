@@ -9,3 +9,6 @@
 / SafR GET 
 
 /force/#ForceId ForceR GET 
+/forces ForcesR GET
+
+

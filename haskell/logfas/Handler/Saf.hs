@@ -5,12 +5,6 @@ import Yesod.Core.Types
 import Yesod.Core.Json
 import Data.List (head)
 
-instance ToJSON Force where
-   toJSON (Force name nation parentId weight) = 
-        object [ "name"     .= name  
-               , "nation"   .= nation 
-               , "parent"   .= parentId 
-               , "wight"    .= weight ]
 
 getSafR :: HandlerT App IO TypedContent 
 getSafR =  do 
@@ -26,15 +20,9 @@ getSafR =  do
                   toWidget [julius|
                     $(function(){
                         $("#ajax a").click(function(){
-                            $.ajax({
-                                headers: { 
-        Accept : "text/plain; charset=utf-8",
-        "Content-Type": "text/plain; charset=utf-8"
-    }
-                                url : $(this).attr("href"),
-                                success : function(response) {
+                            jQuery.getJSON($(this).attr("href"),function(response) {
                                     $("#res").html(response);
-                                }
+                                })
                             })
                             return false;
                         });
@@ -49,8 +37,3 @@ getSafR =  do
 
              defaultLayoutJson widget json
 
-getForceR forceId = do
-            force <- runDB $ get $ forceId
-            let json = return $ toJSON force
-                widget = [whamlet| Is like you would have the javascript off |]
-            defaultLayoutJson widget json

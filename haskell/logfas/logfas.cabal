@@ -21,6 +21,7 @@ library
                      Settings.Development
                      Handler.Home
                      Handler.Saf
+                     Handler.Force
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT

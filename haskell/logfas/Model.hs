@@ -12,3 +12,10 @@ import Data.Typeable (Typeable)
 -- http://www.yesodweb.com/book/persistent/
 share [mkPersist sqlOnlySettings, mkMigrate "migrateAll"]
     $(persistFileWith lowerCaseSettings "config/models")
+
+instance ToJSON Force where
+   toJSON (Force name nation parentId weight) = 
+        object [ "name"     .= name  
+               , "nation"   .= nation 
+               , "parent"   .= parentId 
+               , "wight"    .= weight ]

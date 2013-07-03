@@ -27,19 +27,6 @@ getHomeR = do
 
 postHomeR :: Handler Text
 postHomeR = HandlerT $ \_ -> return ("Ia pula cu carul" :: Text)
---postHomeR :: Handler RepHtml
---postHomeR = do
---    ((result, formWidget), formEnctype) <- runFormPost sampleForm
---
---    let handlerName = "postHomeR" :: Text
---        submission = case result of
---            FormSuccess res -> Just res
---            _ -> Nothing
---
---    defaultLayout $ do
---        aDomId <- newIdent
---        setTitle "Welcome To Yesod!"
---        $(widgetFile "homepage")
 
 sampleForm :: Form (FileInfo, Text , Text)
 sampleForm = renderDivs $ (,,)
