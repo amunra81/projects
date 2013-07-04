@@ -11,9 +11,12 @@ getForcesR = do
 
 getForceR ::  Key Force -> Handler TypedContent
 getForceR forceId = do
+            -- db
             force <- runDB $ get $ forceId
+            -- form
             form  <- forceForm forceId
             (widget,enctype) <- generateFormPost form
+            -- presentation
             let json = return $ toJSON force
                 personForm = [whamlet|
                 <form method=post action=@{ForceR forceId} enctype=#{enctype}>
