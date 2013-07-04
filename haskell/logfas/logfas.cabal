@@ -22,6 +22,7 @@ library
                      Handler.Home
                      Handler.Saf
                      Handler.Force
+                     Handler.Experiment
 
     if flag(dev) || flag(library-only)
         cpp-options:   -DDEVELOPMENT
