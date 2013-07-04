@@ -11,7 +11,7 @@ import Yesod.Core.Types
 -- The majority of the code you will write in Yesod lives in these handler
 -- functions. You can spread them across multiple files if you are so
 -- inclined, or create a single monolithic file.
--- -i../ -cpp -optP-DDEVELOPMENT -fno-warn-warnings-deprecations -XTemplateHaskell -XQuasiQuotes -XOverloadedStrings -XNoImplicitPrelude -XCPP -XMultiParamTypeClasses -XTypeFamilies -XGADTs -XGeneralizedNewtypeDeriving -XFlexibleContexts -XEmptyDataDecls -XNoMonomorphismRestriction -XDeriveDataTypeable 
+-- -i../ -cpp -optP-DDEVELOPMENT -fno-warn-warnings-deprecations -XTemplateHaskell -XQuasiQuotes -XOverloadedStrings -XNoImplicitPrelude -XCPP -XMultiParamTypeClasses -XTypeFamilies -XGADTs -XGeneralizedNewtypeDeriving -XFlexibleContexts -XEmptyDataDecls -XNoMonomorphismRestriction -XDeriveDataTypeable -XRank2Types
 
 getHomeR :: Handler RepHtml
 getHomeR = do

@@ -43,7 +43,7 @@ library
                 EmptyDataDecls
                 NoMonomorphismRestriction
                 DeriveDataTypeable
-
+                Rank2Types
     build-depends: base                          >= 4          && < 5
                  -- , yesod-platform                >= 1.1        && < 1.2
                  , yesod                         >= 1.2        && < 1.3

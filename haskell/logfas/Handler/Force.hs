@@ -17,7 +17,7 @@ getForceR forceId = do
 
             -- form
             form  <- forceForm forceId
-            (widget,enctype) <- generateFormPost form
+            ( widget,enctype ) <- generateFormPost form
             
             -- presentation
             let json = return $ toJSON force
