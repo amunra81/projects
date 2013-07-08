@@ -16,7 +16,7 @@ getForceR forceId = do
             force <- runDB $ get $ forceId
 
             -- form
-            form  <- forceForm forceId
+            let form  = forceForm forceId
             ( widget,enctype ) <- generateFormPost form
             
             -- presentation
@@ -28,8 +28,7 @@ getForceR forceId = do
                 |]
             defaultLayoutJson personForm json
 
-forceForm id = do 
-        return $ renderDivs $ Force 
+forceForm id = renderDivs $ Force 
          <$> areq textField "Name" Nothing
          <*> areq textField "Nation" Nothing
          <*> aopt (selectField optForces) "Parent Force" (Just Nothing)--Just id))
@@ -37,7 +36,8 @@ forceForm id = do
 
 postForceR ::  Key Force -> Handler TypedContent
 postForceR forceId = do
-                     ((result, widget), enctype) <- runFormPost forceForm
+                     
+                     ((result, widget), enctype) <- runFormPost $ forceForm forceId
                      let form = [whamlet|
                      <form method=post action=@{ForceR forceId} enctype=#{enctype}>
                          ^{widget}

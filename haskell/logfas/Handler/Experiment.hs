@@ -15,6 +15,7 @@ getExperimentR = defaultLayout $  do
                                     --some event hooking
                                     onClick div $ jurlToJS [julius| $("##{rawJS $ ident div2}").html("clicked from #{rawJS $ ident div}"); |]
                                     onClick div2 $ jurlToJS [julius| $("##{rawJS $ ident div}").html("clicked from #{rawJS $ ident div2}"); |]
+
                                     return ()
                                    
 jurlToJS :: JavascriptUrl url -> RawJavascript
