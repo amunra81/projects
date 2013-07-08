@@ -36,7 +36,16 @@ forceForm id = do
          <*> areq doubleField "Weight" Nothing
 
 postForceR ::  Key Force -> Handler TypedContent
-postForceR forceId = error "Pula bocanc ba"
+postForceR forceId = do
+                     ((result, widget), enctype) <- runFormPost forceForm
+                     let form = [whamlet|
+                     <form method=post action=@{ForceR forceId} enctype=#{enctype}>
+                         ^{widget}
+                         <input type=submit>
+                     |]
+                     defaultLayoutJson form json
+                     where json :: Handler Force
+                           json = parseJsonBody_
 
 optForces :: Handler (OptionList (Key Force))
 optForces = do
