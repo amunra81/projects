@@ -36,6 +36,7 @@ data App = App
 -- Set up i18n messages. See the message folder.
 mkMessage "App" "messages" "en"
 
+
 -- This is where we define all of the routes in our application. For a full
 -- explanation of the syntax, please see:
 -- http://www.yesodweb.com/book/handler
@@ -55,7 +56,9 @@ mkMessage "App" "messages" "en"
 -- for our application to be in scope. However, the handler functions
 -- usually require access to the AppRoute datatype. Therefore, we
 -- split these actions into two functions and place them in separate files.
+
 mkYesodData "App" $(parseRoutesFile "config/routes")
+
 
 type Form x = Html -> MForm (HandlerT App IO) (FormResult x, Widget)
 

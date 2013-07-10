@@ -1,6 +1,6 @@
 module Handler.Experiment where
 import Import
-import Yesod.Core.Widget(toWidget)
+import Yesod.Core.Widget(addScript,toWidget)
 import Data.Conduit(MonadThrow)
 import Data.Conduit(MonadUnsafeIO)
 import Data.Text(pack,unpack)
@@ -8,10 +8,10 @@ import Text.Julius(rawJS,renderJavascriptUrl,RawJavascript,Javascript,ToJavascri
 
 getExperimentR :: Handler Html
 getExperimentR = defaultLayout $  do 
+                                    addScript $ StaticR js_ext_debug_js
                                     --create two divs
                                     div <- clickedDiv 
                                     div2 <- clickedDiv
-
                                     --some event hooking
                                     onClick div $ jurlToJS [julius| $("##{rawJS $ ident div2}").html("clicked from #{rawJS $ ident div}"); |]
                                     onClick div2 $ jurlToJS [julius| $("##{rawJS $ ident div}").html("clicked from #{rawJS $ ident div2}"); |]
