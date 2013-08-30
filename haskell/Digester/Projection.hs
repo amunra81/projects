@@ -15,7 +15,7 @@ import Control.Monad.Trans.Class
 import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.Trans.Maybe(runMaybeT)
 
-data Proj a = forall m. (Monad m,MonadListT m ) => Proj ( Div m a )
+data Proj a = forall m. (Monad m, MonadListT m ) => Proj ( Div m a )
 
 proot       n xs = root         (Proj n) xs
 pnode       n xs = node         (Proj n) xs
@@ -39,10 +39,9 @@ instance MonadListT (MaybeT IO) where
    toListT m = 
     ListT $ do 
         x <- runMaybeT m
-        return []
-        (case x of
+        case x of
          Just a -> return [a]
-         Nothing -> return [])
+         Nothing -> return []
 
 projectNode :: Proj t -> Tree t -> ListT IO (Tree t)
 projectNode (Proj div) node = toListT $ runDiv div node 

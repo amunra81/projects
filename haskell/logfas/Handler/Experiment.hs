@@ -30,10 +30,11 @@ data Div = Div {
 minJquery ::  MonadWidget m => m ()
 minJquery = addScriptRemote "http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"
 
-clickedDiv :: (MonadIO m, MonadBaseControl IO m, MonadThrow m,MonadUnsafeIO m) =>WidgetT site m Div
+clickedDiv :: (MonadIO m, MonadBaseControl IO m, MonadThrow m,MonadUnsafeIO m) => WidgetT site m Div
 clickedDiv = do
               id <- newIdent ; minJquery
               [whamlet|<div ##{id}>My Header|]
-              return $ Div id $ \ a -> toWidget [julius|
- $("##{rawJS id}").click(function(){
-        #{a} })|]
+
+              return $ 
+                Div id $ 
+                \ a -> toWidget [julius| $("##{rawJS id}").click(function(){ #{a} })|]

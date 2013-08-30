@@ -4,7 +4,7 @@ import Data.Maybe
 import Text.XML.HXT.Core
 import Control.Monad
 import Control.Monad.Trans
-import Control.Monad.Maybe
+import Control.Monad.Trans.Maybe
 import Network.HTTP
 import Network.URI
 import System.Environment
