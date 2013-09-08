@@ -13,17 +13,17 @@ index,commonIndexes,stringIndex
 import Data.List
 import Data.Maybe
 
-data Tree a =   Root a [Tree a] |                       -- value , children
-                Node a [Tree a] (Tree a) Pos |          -- value , children , parent , position
-                Leaf a (Tree a) Pos                     -- value , parent , position
+type Pos = Int 
+
+type PassParent a = Tree a -> Pos -> Tree a  
+
+data Tree a =   Root a [Tree a] |               -- value , children
+                Node a [Tree a] (Tree a) Pos |  -- value , children , parent , position
+                Leaf a (Tree a) Pos             -- value , parent , position
 
 data TreeProps a = None
                  | HasChildren [Tree a]
                  | HasParent (Tree a)
-
---------------------------
- -- CONSTRUCT THE TREE --
---------------------------
 
 root ::  a -> [PassParent a] -> Tree a
 root a getChildren = 
@@ -47,13 +47,6 @@ leaf a parent pos = Leaf a parent pos
 nodeOrLeaf :: a -> [PassParent a] -> PassParent a
 nodeOrLeaf a (x:xs) = node a (x:xs)
 nodeOrLeaf a [] = leaf a
-
-type Pos = Int 
-type PassParent a = Tree a -> Pos -> Tree a  -- getRoot -> pos -> theTree
-
-------------------
- -- TREE UTILS --
-------------------
 
 value ::  Tree t -> t
 value (Root v _)     = v 
