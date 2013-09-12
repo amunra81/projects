@@ -21,10 +21,6 @@ import Data.List
 import Control.Monad.Trans.List
 import Control.Monad.Trans.Maybe
 
-------------------
- -- Monad Zero --
-------------------
-
 class (MonadPlus m) => MonadNonZero m where
     -- | chosing the non-zero monad from the list
     nonzero :: m a -> m a -> m a
