@@ -1,3 +1,4 @@
+module ProjectionPlay where
 import Tree
 import Monad
 import Projection
@@ -5,6 +6,7 @@ import Printers
 import Prelude hiding (any)
 import Control.Monad.Trans.List(ListT)
 import Control.Monad.Trans.Maybe(MaybeT)
+import Control.Monad.Trans.Class(lift)
 
 
 

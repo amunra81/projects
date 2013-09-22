@@ -1,20 +1,27 @@
+module Web (staticWeb) where
+
 import Tree
 import Html
 
-import Text.XML.HXT.Core hiding (Tree,root)
-import Text.XML.HXT.HTTP
-import Data.List
-import Text.XML.HXT.DOM.TypeDefs
-import Data.Tree.NTree.TypeDefs
-import Printers
+import Text.XML.HXT.Core hiding (Tree,root,getChildren)
+import Control.Monad.Trans.List
+import Control.Monad.Trans.Class(lift)
 
-createWeb ::  Tree Html
-createWeb = root (xText "za veb") []
+staticWeb ::  IO (Tree Html)
+staticWeb =  do 
+          xs <- runListT domains
+          return $ root (xText "za veb") xs
 
-createDomain ::  [PassParent Html]
-createDomain = map xNode domainNames
-               where domainNames = ["www.haskell.com","www.google.com"]
-                     xNode = (flip node []) . xText 
-               
 xText ::  String -> Html
 xText = Html . XText 
+
+liftList :: (Monad m) =>  [a] -> ListT m a
+liftList = ListT . return
+        
+-- | create the domain nodes
+domains :: ListT IO (PassParent Html)
+domains = do
+            a <- liftList ["http://www.haskell.com","http://www.google.com"] 
+            t <- lift $ downloadTree a
+            return $ 
+                node (xText a) [toPassParent x | x <- getChildren t]

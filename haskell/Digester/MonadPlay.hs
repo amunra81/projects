@@ -1,4 +1,5 @@
 {-# LANGUAGE ScopedTypeVariables #-}
+module MonadPlay where
 import Tree
 import Monad
 import Control.Monad.Cont

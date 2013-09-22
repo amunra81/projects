@@ -1,13 +1,10 @@
-module Html(mapTree ,  downloadTree,Html(..))
+module Html(mapTree ,  downloadTree,Html(..),HtmlTree)
 where 
 
 import Text.XML.HXT.Core hiding (Tree,root)
 import Text.XML.HXT.HTTP
-import Data.List
-import Text.XML.HXT.DOM.TypeDefs
 import Data.Tree.NTree.TypeDefs
 import Tree
-import Printers
 
 newtype Html = Html {runNode :: XNode} 
 
@@ -23,12 +20,12 @@ downloadTree url = do
 -- | mapping an XmlTree to a Tree of Html
 mapTree :: XmlTree -> Tree Html
 mapTree (NTree val xs) = 
-    root (Html val) $ children xs 
+    root (Html val) $ g xs 
     where 
-        children xs = [ getTreeNode x | x <- xs]
+        g zs = [ getTreeNode x | x <- zs]
         getTreeNode xml = case xml of
-                          NTree val [] -> leaf (Html $ val)
-                          NTree val xs -> node (Html $ val) (children xs)
+                          NTree a [] -> leaf (Html $ a)
+                          NTree a ys -> node (Html $ a) (g ys)
 
 -- | the dummy for the boring stuff of option evaluation,
 -- usually done with 'System.Console.GetOpt'
@@ -38,7 +35,7 @@ cmdlineOpts argv
 
 -- | application
 application	:: SysConfigList -> String -> String -> IOSArrow b XmlTree
-application cfg src dst
+application cfg src _
     = configSysVars (withTrace 1 : cfg)                            
       >>> traceMsg 1 "start reading document"                        
       >>> readDocument [] src
@@ -50,9 +47,9 @@ instance Show Html where
   show  (Html (XEntityRef s))    = "{ entityRef = "++s++ " }"
   show  (Html (XCmt s))          = "{ comment = "++ s ++ " }"
   show  (Html (XCdata s))        = "{ cdata = " ++ s ++ " }"
-  show  (Html (XPi name trees))  = "{ pi = " ++ (show name) ++ " }"
-  show  (Html (XTag name trees)) = show name
-  show  (Html (XDTD a b))        = "{ xdtd }"
+  show  (Html (XPi name _))  = "{ pi = " ++ (show name) ++ " }"
+  show  (Html (XTag name _)) = show name
+  show  (Html (XDTD _ _))        = "{ xdtd }"
   show  (Html (XAttr name))      = "a"++show name
-  show  (Html (XError no msg))   = "{ error = "++ (show no) ++ " - " ++ msg ++ " }"
+  show  (Html (XError errno msg))   = "{ error = "++ (show errno) ++ " - " ++ msg ++ " }"
 

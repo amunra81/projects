@@ -9,17 +9,24 @@ proot,pnode,pleaf,pnodeOrLeaf
 
 import Tree
 import Monad
-import Data.Foldable(toList,Foldable)
 import Control.Monad.Trans.List
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.Trans.Maybe(runMaybeT)
+import Prelude hiding (div)
 
 data Proj a = forall m. (Monad m, MonadListT m ) => Proj ( Div m a )
 
+proot :: (Monad m, MonadListT m) =>Div m a -> [PassParent (Proj a)] -> Tree (Proj a)
 proot       n xs = root         (Proj n) xs
+
+pnode :: (Monad m, MonadListT m) =>Div m a -> [PassParent (Proj a)] -> PassParent (Proj a)
 pnode       n xs = node         (Proj n) xs
+
+pleaf ::  (Monad m, MonadListT m) => Div m a -> PassParent (Proj a)
 pleaf       n    = leaf         (Proj n) 
+
+pnodeOrLeaf :: (Monad m, MonadListT m) =>Div m a -> [PassParent (Proj a)] -> PassParent (Proj a)
 pnodeOrLeaf n xs = nodeOrLeaf   (Proj n) xs
 
 class MonadListT m where
@@ -44,7 +51,7 @@ instance MonadListT (MaybeT IO) where
          Nothing -> return []
 
 projectNode :: Proj t -> Tree t -> ListT IO (Tree t)
-projectNode (Proj div) node = toListT $ runDiv div node 
+projectNode (Proj div) tree = toListT $ runDiv div tree 
 
 project :: Tree (Proj a) -> Tree a -> ListT IO (PassParent a)
 project prjTree tree = do 
