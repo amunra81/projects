@@ -52,10 +52,10 @@ instance Monad m => MonadNonZero (ListT m) where
 
     firstnonzero []         = mzero
     firstnonzero (mx:mxs)   = ListT $ do 
-       x <- runListT mx
-       runListT $ case x of
-                   [] -> firstnonzero mxs
-                   _  -> mx
+        x <- runListT mx
+        runListT $ case x of
+                    [] -> firstnonzero mxs
+                    _  -> mx
 
 instance Monad m => MonadNonZero (MaybeT m) where 
     nonzero mx my = MaybeT $ 

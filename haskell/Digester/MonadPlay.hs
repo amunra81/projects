@@ -4,7 +4,6 @@ import Tree
 import Monad
 import Control.Monad.Cont
 import Prelude hiding (any) 
-import Printers
 import Control.Monad.Trans.List(ListT)
 import Control.Monad.Trans.Maybe(MaybeT)
                     
@@ -60,7 +59,7 @@ m22 = any ... mdiv2 ... dig [1,0]
 
 s23 = dig [0] :: Div [] Integer
 m23 = dig [0] :: Div Maybe Integer
----- GHCi runDiv s22 tree 
+---- GHCi runDiv s23 tree 
 
 -- INDEXES --
 -- ------- --

@@ -22,7 +22,7 @@ instance GMapKey Char where
     empty                        = NIL
     insert k v gm                = GMapChar (k,v) gm
 
-    lookup k NIL                 = Nothing
+    lookup _ NIL                 = Nothing
     lookup k (GMapChar (c,v) gm) = if k == c then Just v else (Main.lookup) k gm
 
 -- | GMapKey ()
@@ -60,4 +60,5 @@ myGMap = Main.insert (5, Left 'c') "(5, Left 'c')"    $
          Main.insert (5, Left 'a') "(5, Left 'a')"    $
          Main.empty
 
+main ::  IO ()
 main = putStrLn $ maybe "Couldn't find key!" id $ Main.lookup (5, Left 't') myGMap

@@ -18,16 +18,16 @@ import Prelude hiding (div)
 data Proj a = forall m. (Monad m, MonadListT m ) => Proj ( Div m a )
 
 proot :: (Monad m, MonadListT m) =>Div m a -> [PassParent (Proj a)] -> Tree (Proj a)
-proot       n xs = root         (Proj n) xs
+proot n xs = root (Proj n) xs
 
 pnode :: (Monad m, MonadListT m) =>Div m a -> [PassParent (Proj a)] -> PassParent (Proj a)
-pnode       n xs = node         (Proj n) xs
+pnode n xs = node (Proj n) xs
 
 pleaf ::  (Monad m, MonadListT m) => Div m a -> PassParent (Proj a)
-pleaf       n    = leaf         (Proj n) 
+pleaf n = leaf (Proj n) 
 
 pnodeOrLeaf :: (Monad m, MonadListT m) =>Div m a -> [PassParent (Proj a)] -> PassParent (Proj a)
-pnodeOrLeaf n xs = nodeOrLeaf   (Proj n) xs
+pnodeOrLeaf n xs = nodeOrLeaf (Proj n) xs
 
 class MonadListT m where
    toListT :: m a -> ListT IO a

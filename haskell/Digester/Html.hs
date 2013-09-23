@@ -1,6 +1,5 @@
 module Html(mapTree ,  downloadTree,Html(..),HtmlTree)
 where 
-
 import Text.XML.HXT.Core hiding (Tree,root)
 import Text.XML.HXT.HTTP
 import Data.Tree.NTree.TypeDefs
@@ -22,10 +21,10 @@ mapTree :: XmlTree -> Tree Html
 mapTree (NTree val xs) = 
     root (Html val) $ g xs 
     where 
-        g zs = [ getTreeNode x | x <- zs]
-        getTreeNode xml = case xml of
-                          NTree a [] -> leaf (Html $ a)
-                          NTree a ys -> node (Html $ a) (g ys)
+    g zs = [ getTreeNode x | x <- zs]
+    getTreeNode xml = case xml of
+                      NTree a [] -> leaf (Html $ a)
+                      NTree a ys -> node (Html $ a) (g ys)
 
 -- | the dummy for the boring stuff of option evaluation,
 -- usually done with 'System.Console.GetOpt'
@@ -42,14 +41,14 @@ application cfg src _
       >>> traceMsg 1 "document read"               
 
 instance Show Html where
-  show  (Html (XText s))         = s
-  show  (Html (XCharRef n))      = show n
-  show  (Html (XEntityRef s))    = "{ entityRef = "++s++ " }"
-  show  (Html (XCmt s))          = "{ comment = "++ s ++ " }"
-  show  (Html (XCdata s))        = "{ cdata = " ++ s ++ " }"
-  show  (Html (XPi name _))  = "{ pi = " ++ (show name) ++ " }"
-  show  (Html (XTag name _)) = show name
-  show  (Html (XDTD _ _))        = "{ xdtd }"
-  show  (Html (XAttr name))      = "a"++show name
+  show  (Html (XText s))            = s
+  show  (Html (XCharRef n))         = show n
+  show  (Html (XEntityRef s))       = "{ entityRef = "++s++ " }"
+  show  (Html (XCmt s))             = "{ comment = "++ s ++ " }"
+  show  (Html (XCdata s))           = "{ cdata = " ++ s ++ " }"
+  show  (Html (XPi name _))         = "{ pi = " ++ (show name) ++ " }"
+  show  (Html (XTag name _))        = show name
+  show  (Html (XDTD _ _))           = "{ xdtd }"
+  show  (Html (XAttr name))         = "a"++show name
   show  (Html (XError errno msg))   = "{ error = "++ (show errno) ++ " - " ++ msg ++ " }"
 
