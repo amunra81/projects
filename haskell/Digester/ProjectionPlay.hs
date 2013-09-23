@@ -2,19 +2,25 @@ module ProjectionPlay where
 import Tree
 import Monad
 import Projection
-import Printers
 import Prelude hiding (any)
 import Control.Monad.Trans.List(ListT)
 import Control.Monad.Trans.Maybe(MaybeT)
-import Control.Monad.Trans.Class(lift)
 
 
 
-(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]::[Div [] Integer]
-(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_) = map equal [1..]::[Div Maybe Integer]
+sdiv1,sdiv2,sdiv3,sdiv4,sdiv5,sdiv6,sdiv7,sdiv8 ::  Div [] Integer
+(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]
 
+mdiv1,mdiv2,mdiv3,mdiv4,mdiv5,mdiv6,mdiv7,mdiv8 ::  Div Maybe Integer
+(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_) = map equal [1..]
+
+isdiv1,isdiv2,isdiv3,isdiv4,isdiv5,isdiv6,isdiv7,isdiv8 ::  Div (ListT IO) Integer
 (isdiv1:isdiv2:isdiv3:isdiv4:isdiv5:isdiv6:isdiv7:isdiv8:_) = map equal [1..]::[Div (ListT IO) Integer]
+
+imdiv1,imdiv2,imdiv3,imdiv4,imdiv5,imdiv6,imdiv7,imdiv8 ::  Div (MaybeT IO) Integer
 (imdiv1:imdiv2:imdiv3:imdiv4:imdiv5:imdiv6:imdiv7:imdiv8:_) = map equal [1..]::[Div (MaybeT IO) Integer]
+
+tree1 ::  Tree Integer
 tree1 = 
     root 1 [
             --from here 
@@ -70,9 +76,6 @@ m13 = proot mdiv1 [                                                        -- on
             pleaf (first ... mdiv3 ^< mdiv5) ]                             -- NONE 
 
 -- GHCi  projectToRoot m13 tree1 
-
--- Mixted projection --
--- ----------------- --
 
 tree2 = 
     root 1 [

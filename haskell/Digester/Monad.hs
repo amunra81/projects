@@ -181,9 +181,9 @@ any tree = ContT $
 
 path :: MonadPlus m => Tree a -> Tree a -> Div m a
 path fromNode toNode = 
-    ( escalate level ) ... dig (tail toIndex)
+    (escalate level) ... dig (tail toIndex)
     where 
-    ( fromIndex, toIndex ) = commonIndexes fromNode toNode 
+    (fromIndex, toIndex) = commonIndexes fromNode toNode 
     level =  length fromIndex - 1
 
 (...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b

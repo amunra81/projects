@@ -3,7 +3,6 @@
 {-# LANGUAGE FlexibleInstances #-} 
 {-# LANGUAGE OverlappingInstances #-}
 
--- {-# LANGUAGE  #-}
 module Tree (
 -- * Tree data
 Tree(..),TreeProps(..),Pos,

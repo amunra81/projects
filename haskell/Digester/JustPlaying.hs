@@ -6,6 +6,7 @@ import Projection
 import Control.Monad.Trans.Maybe
 import Control.Monad.Trans.List
 import Prelude hiding (any)
+module JustPlaying() where
 import Printers
 import Control.Monad 
 import Control.Monad.IO.Class
