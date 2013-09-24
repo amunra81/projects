@@ -37,9 +37,10 @@ instance (GMapKey a,GMapKey b) => GMapKey (a,b) where
     data GMap (a,b) v            = GMapPair (GMap a (GMap b v)) 
     empty                        = GMapPair Main.empty
     lookup (a,b) (GMapPair gm)   = Main.lookup a gm >>= Main.lookup b
-    insert (a,b) v (GMapPair gm) = GMapPair $ case Main.lookup a gm of
-                                              Nothing -> Main.insert a ( Main.insert b v Main.empty ) gm
-                                              Just gm2 -> Main.insert a ( Main.insert b v gm2 )  gm
+    insert (a,b) v (GMapPair gm) = GMapPair $ 
+        case Main.lookup a gm of
+        Nothing -> Main.insert a ( Main.insert b v Main.empty ) gm
+        Just gm2 -> Main.insert a ( Main.insert b v gm2 )  gm
 
 -- | GMapKey (Either a b)
 instance (GMapKey a,GMapKey b) => GMapKey (Either a b) where 
