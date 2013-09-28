@@ -1,6 +1,6 @@
-(ns nailgun-test.core-test
+(ns primul.core-test
   (:use clojure.test
-        nailgun-test.core))
+        primul.core))
 
 (deftest a-test
   (testing "FIXME, I fail."

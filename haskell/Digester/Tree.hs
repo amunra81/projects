@@ -92,7 +92,7 @@ commonIndexes n1 n2=
 stringIndex ::  Tree a -> [Char]
 stringIndex tree = foldl (\a x -> a ++ (show x)) "" $ index tree
 
-getChildren ::  Tree a -> [Tree a]
+getChildren :: Tree a -> [Tree a]
 getChildren tree = case children tree of
                    HasChildren xs -> xs
                    None           -> []

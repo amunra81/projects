@@ -1,4 +1,4 @@
-module Web (staticWeb) where
+zrdule Web (staticWeb) where
 
 import Tree
 import Html

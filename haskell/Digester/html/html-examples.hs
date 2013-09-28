@@ -1,12 +1,9 @@
-module Main
+module HtmlEcamples
 where
  
 import Text.XML.HXT.Core
-import Text.XML.HXT.HTTP
-import Text.XML.HXT.Curl 
  
-import System.Environment
- 
+write ::  IO ()
 write = do
         runX $ root [] [helloWorld] >>> writeDocument [withIndent yes] "hello.xml"
         return ()

@@ -1,3 +1,3 @@
-# Introduction to nailgun-test
+# Introduction to primul
 
 TODO: write [great documentation](http://jacobian.org/writing/great-documentation/what-to-write/)
