@@ -19,6 +19,12 @@ import Control.Monad.Trans.List
 import Control.Monad.Trans.Maybe
 import Prelude hiding (div)
 
+type DivCont m a = 
+    ContT (Tree a) m (Tree a)
+
+type Div m a =
+    Tree a -> DivCont m a
+
 class (MonadPlus m) => MonadNonZero m where
     -- | chosing the non-zero monad from the list
     nonzero :: m a -> m a -> m a
@@ -73,9 +79,6 @@ instance Monad m => MonadNonZero (MaybeT m) where
                    Nothing -> firstnonzero mxs
                    _       -> mx
 
-type DivCont m a = ContT (Tree a) m (Tree a)
-type Div m a = Tree a -> DivCont m a
-
 matchNodes ::  MonadPlus m => (b -> m a) -> [b] -> m a
 matchNodes next xs = foldl (\ acc n -> mplus acc (next n)) mzero xs
 
@@ -86,7 +89,7 @@ runDiv comp tree = runContT (comp tree) $ return
 equal :: (Eq a, MonadPlus m) => a -> Div m a
 equal val tree = ContT $ \ next ->
                         if value tree == val then next tree 
-                                              else mzero
+                                            else mzero
 
 parentOf :: MonadPlus m => Div m a
 parentOf = \ tree ->  ContT $ 
