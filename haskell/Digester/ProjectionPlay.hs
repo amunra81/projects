@@ -60,7 +60,6 @@ im12 = proot (any ... imdiv2) [] -- only one result
 -- GHCi  projectToRoot m12 tree1
 -- GHCi  projectToRoot s12 tree1 
 
-
 s13 = proot sdiv1 [                                                        -- one
             pleaf (any ... sdiv2 ^< sdiv5),                            -- three
             pnode (first ... sdiv2 ^< sdiv2) [                             -- one
