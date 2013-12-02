@@ -17,7 +17,6 @@
         row rows :while (< row 3)]
     (println (str col row))))
 
-
 (println "\ndoseq demo")
 
 (doseq [col cols :when (not= col \B)
