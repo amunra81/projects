@@ -1,6 +1,6 @@
 {-# LANGUAGE TemplateHaskell #-}
 {- Printf.hs -}
-module Printf where
+module Printf (pr) where
 
 -- Skeletal printf from the paper.
 -- It needs to be in a separate module to the one where
@@ -21,10 +21,10 @@ parse s   = [ L s ]
 -- Generate Haskell source code from a parsed representation
 -- of the format string.  This code will be spliced into
 -- the module which calls "pr", at compile time.
-gen :: [Format] -> Q Exp
-gen [D]   = [| \n -> show n |]
-gen [S]   = [| \s -> s |]
-gen [L s] = [| \s -> s |]
+--gen :: [Format] -> Q Exp
+gen [D]       = [| \n -> show n |]
+gen [S]       = [| \s -> s |]
+gen [L intro] = [| \s -> intro ++ s |]
 
 -- Here we generate the Haskell code for the splice
 -- from an input format string.

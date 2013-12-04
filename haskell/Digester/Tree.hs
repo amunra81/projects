@@ -22,24 +22,31 @@ import GHC.IO.Encoding(setForeignEncoding)
 import GHC.IO.Encoding(utf8)
 import Control.Monad.Trans.List
 
+-- |alias for position in a collection of childrent
 type Pos = Int 
 
+-- |create a tree based on a parent and a position
 type PassParent a = Tree a -> Pos -> Tree a  
 
+-- |the tree structure
 data Tree a =   Root a [Tree a] |               -- value , children
                 Node a [Tree a] (Tree a) Pos |  -- value , children , parent , position
                 Leaf a (Tree a) Pos             -- value , parent , position
 
+-- |tree properties
 data TreeProps a = None
                  | HasChildren [Tree a]
                  | HasParent (Tree a)
 
-toPassParent ::  Tree a -> PassParent a
+-- |poject a tree into a passparent
+toPassParent :: Tree a -> PassParent a
 toPassParent tree = case tree of
                     Root a xs -> \ p i -> Node a xs p i
                     Node a xs _ _ -> \ p i -> Node a xs p i 
                     Leaf a _ _ -> \ p i -> Leaf a p i
 
+-- |constructor for a node of type root. first argurment is the value, and the second the list of passparent elements.
+-- |the returning part is the tree node
 root ::  a -> [PassParent a] -> Tree a
 root a xs = 
            Root a zs
@@ -48,6 +55,8 @@ root a xs =
               toNode (pos,passParent) = passParent p pos 
               p = root a xs
 
+-- |constructor for a node of type node. first argurment is the value, and the second the list of passparent elements
+-- |the returning part is a passparent as wel
 node :: a -> [PassParent a] -> PassParent a
 node a xs p pos =
            Node a cs p pos
@@ -56,9 +65,11 @@ node a xs p pos =
               toNode (i,passParent) = passParent thisNode i 
               thisNode = node a xs p pos
 
+-- |constructor for a node of type leaf. the single argurment is the value, and the returning element is a passparent
 leaf :: a -> PassParent a
 leaf a p i = Leaf a p i
                 
+-- |create a node or leaf.
 nodeOrLeaf :: a -> [PassParent a] -> PassParent a
 nodeOrLeaf a (x:xs) = node a (x:xs)
 nodeOrLeaf a [] = leaf a
@@ -84,7 +95,7 @@ commonIndexes n1 n2=
     let reduce i1 i2 = 
             case (i1,i2) of
             (x:xs,y:ys) -> if x == y then reduce xs ys 
-                                     else (i1,i2)
+                                   else (i1,i2)
             _ -> (i1,i2)
     in
     reduce (index n1) (index n2) 
