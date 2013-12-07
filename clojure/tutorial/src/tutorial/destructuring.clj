@@ -15,7 +15,7 @@
 
 (approach2 [1 2 3])
 (approach2 [1 2 3 5])
-(approach2 [1 2]) ; nullpointer excheption
+;(approach2 [1 2]) ; nullpointer excheption
 
 ;The ampersand character can be used with destructuring to capture the remaining items in a collection. For example:
 (defn name-summary [[n1 n2 & others]]

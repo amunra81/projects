@@ -77,7 +77,9 @@
       :zip 63141}}})
 
 (get-in person [:employer :address :city])
+
 (-> person :employer :address :city)  
+
 (:city (:address (:employer person))) ; este echivalent cu ->
 (reduce get person [:employer :address :city])
 
