@@ -1,10 +1,12 @@
 module Cont where
 import Control.Monad.Cont
+
 ex1 :: Maybe Integer
 ex1 = do
    a <- return 1
    b <- return 10
    return $ a+b
+
 ex2 :: [Integer]
 ex2 = do
    a <- return 1

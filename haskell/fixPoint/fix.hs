@@ -5,7 +5,7 @@ import Control.Monad.Fix
 some = (\rec n -> if n == 0 then 1 else n * rec (n-1))
 
 -- fix f = f ( fix f )
-fact = fix (\rec n -> if n == 0 then 1 else n * rec (n-1)) 
+fact = fix ( \rec n -> if n == 0 then 1 else n * rec (n-1) ) 
 
 --
 -- GHCi fact 5 
