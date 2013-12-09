@@ -27,7 +27,7 @@ mapTree (NTree val xs) =
                       NTree a ys -> node (Html $ a) (g ys)
 
 -- | the dummy for the boring stuff of option evaluation,
--- usually done with 'System.Console.GetOpt'
+-- | usually done with 'System.Console.GetOpt'
 cmdlineOpts 	:: [String] -> IO (SysConfigList, String, String)
 cmdlineOpts argv
     = return ([withValidate no, withParseHTML yes,withHTTP []], argv!!0, argv!!1)
