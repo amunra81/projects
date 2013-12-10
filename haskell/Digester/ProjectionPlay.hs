@@ -60,19 +60,19 @@ im12 = proot (any ... imdiv2) [] -- only one result
 -- GHCi  projectToRoot m12 tree1
 -- GHCi  projectToRoot s12 tree1 
 
-s13 = proot sdiv1 [                                                        -- one
+s13 = proot sdiv1 [                                                   -- one
             pleaf (any ... sdiv2 ^< sdiv5),                            -- three
-            pnode (first ... sdiv2 ^< sdiv2) [                             -- one
+            pnode (first ... sdiv2 ^< sdiv2) [                         -- one
                                             pleaf (any ... sdiv7) ],   -- two
-            pleaf (first ... sdiv3 ^< sdiv5) ]                             -- NONE 
+            pleaf (first ... sdiv3 ^< sdiv5) ]                         -- NONE 
 
 -- GHCi  projectToRoot s13 tree1 
 
-m13 = proot mdiv1 [                                                        -- one
+m13 = proot mdiv1 [                                                   -- one
             pleaf (any ... mdiv2 ^< mdiv5),                            -- one
-            pnode (first ... mdiv2 ^< mdiv2) [                             -- one
+            pnode (first ... mdiv2 ^< mdiv2) [                         -- one
                                             pleaf (any ... mdiv7) ],   -- one
-            pleaf (first ... mdiv3 ^< mdiv5) ]                             -- NONE 
+            pleaf (first ... mdiv3 ^< mdiv5) ]                         -- NONE 
 
 -- GHCi  projectToRoot m13 tree1 
 
