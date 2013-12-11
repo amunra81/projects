@@ -11,19 +11,19 @@ import Control.Monad.Trans.Maybe(MaybeT)
 (mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:mdiv9:_) = map equal [1..]::[Div Maybe Integer]
 
 tree  = 
-    root 1 [
-            node 2 [
-                    leaf 6 ,
-                    node 5 [
-                            leaf 7 ] ,
-                    leaf 7 ] ,
-            leaf 2 ,
-            node 3 [
-                    node 2 [
-                            leaf 4,
-                            node 5 [
-                                    leaf 9 ]]],
-            leaf 4 ] 
+    root 1 
+        [ node 2 
+            [ leaf 6 ,
+              node 5 
+                [ leaf 7 ] ,
+              leaf 7 ] ,
+              leaf 2 ,
+              node 3 
+                [ node 2 
+                    [ leaf 4,
+                      node 5 
+                        [ leaf 9 ]]],
+          leaf 4 ] 
 
 -- Parent --
 -- ------ -- 

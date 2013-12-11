@@ -99,7 +99,7 @@ parentOf = \ tree ->  ContT $
 
 childAt :: MonadPlus m => Int -> Div m a
 childAt pos tree = ContT $ 
-    \ next -> case children tree of
+    \next -> case children tree of
             HasChildren xs  -> 
                 if pos < length xs then next $ xs !! pos 
                 else mzero
@@ -121,7 +121,7 @@ leftBrother tree = ContT $
 alt :: (MonadNonZero m) => Div m a -> Div m a -> Div m a
 alt div1 div2 tree =  
    ContT $ 
-    \ next -> let [a,b] = [runContT (div tree) next | div <- [div1,div2] ]
+    \next -> let [a,b] = [runContT (div tree) next | div <- [div1,div2] ]
              in nonzero a b
 
 both :: MonadPlus m => Div m a -> Div m a -> Div m a

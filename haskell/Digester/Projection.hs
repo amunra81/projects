@@ -15,7 +15,8 @@ import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.Trans.Maybe(runMaybeT)
 import Prelude hiding (div)
 
-data Proj a = forall m. (Monad m, MonadListT m ) => Proj ( Div m a )
+-- aici sau la monadListT trebuie lucrat pentru a pune in applicare readerul pentru web
+data Proj a = forall m. ( Monad m, MonadListT m ) => Proj ( Div m a )
 
 proot :: (Monad m, MonadListT m) => Div m a -> [PassParent (Proj a)] -> Tree (Proj a)
 proot n xs = root (Proj n) xs
