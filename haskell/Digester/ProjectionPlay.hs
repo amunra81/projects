@@ -6,8 +6,6 @@ import Prelude hiding (any)
 import Control.Monad.Trans.List(ListT)
 import Control.Monad.Trans.Maybe(MaybeT)
 
-
-
 sdiv1,sdiv2,sdiv3,sdiv4,sdiv5,sdiv6,sdiv7,sdiv8 ::  Div [] Integer
 (sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]
 

@@ -14,24 +14,29 @@ import Control.Monad.Trans.Class
 import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.Trans.Maybe(runMaybeT)
 import Prelude hiding (div)
+import Control.Monad.Trans.Identity(IdentityT)
 
 -- aici sau la monadListT trebuie lucrat pentru a pune in applicare readerul pentru web
-data Proj a = forall m. ( Monad m, MonadListT m ) => Proj ( Div m a )
+type Proj a = ProjX IdentityT a
+data ProjX r a = forall m. ( Monad m, MonadListT m, MonadListTX r ) => ProjX ( Div (r m) a )
 
-proot :: (Monad m, MonadListT m) => Div m a -> [PassParent (Proj a)] -> Tree (Proj a)
-proot n xs = root (Proj n) xs
+proot :: (Monad m, MonadListT m) => Div (r m) a -> [PassParent (ProjX r a)] -> Tree (ProjX r a)
+proot n xs = root (ProjX n) xs
 
-pnode :: (Monad m, MonadListT m) => Div m a -> [PassParent (Proj a)] -> PassParent (Proj a)
-pnode n xs = node (Proj n) xs
+pnode :: (Monad m, MonadListT m) => Div (r m) a -> [PassParent (ProjX r a)] -> Tree (ProjX r a)
+pnode n xs = node (ProjX n) xs
 
-pleaf ::  (Monad m, MonadListT m) => Div m a -> PassParent (Proj a)
-pleaf n = leaf (Proj n) 
+pleaf :: (Monad m, MonadListT m) => Div m a -> PassParent (ProjX r a)
+pleaf n = leaf (ProjX n) 
 
-pnodeOrLeaf :: (Monad m, MonadListT m) => Div m a -> [PassParent (Proj a)] -> PassParent (Proj a)
-pnodeOrLeaf n xs = nodeOrLeaf (Proj n) xs
+pnodeOrLeaf :: (Monad m, MonadListT m) => Div (r m) a -> [PassParent (ProjX r a)] -> Tree (ProjX r a)
+pnodeOrLeaf n xs = nodeOrLeaf (ProjX n) xs
 
 class MonadListT m where
    toListT :: m a -> ListT IO a
+
+class MonadTrans n => MonadListTX n where
+   toListTX :: (MonadListT m) => n m a -> n (ListT IO) a
 
 instance MonadListT [] where
    toListT xs = ListT $ return xs
