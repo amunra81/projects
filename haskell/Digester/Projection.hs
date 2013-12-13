@@ -17,33 +17,37 @@ import Control.Monad.Trans.Maybe(runMaybeT)
 import Prelude hiding (div)
 import Control.Monad.Trans.Identity(IdentityT)
 import Control.Monad.Trans.Reader(ReaderT)
+import Data.Foldable(Foldable)
 
 -- aici sau la monadListT trebuie lucrat pentru a pune in applicare readerul pentru web
 type Proj a = ProjX IdentityT a
-data ProjX r a = forall m. ( Monad m, MonadListT m, MonadListTX r ) => ProjX ( Div (r m) a )
+data ProjX r a = forall m. ( Monad m, Foldable m, MonadListTX r ) => ProjX ( Div (r m) a )
 
-proot :: (Monad m, MonadListT m, MonadListTX r) 
+proot :: (Monad m, Foldable m, MonadListTX r) 
         => Div (r m) a 
         -> [PassParent (ProjX r a)] 
         -> Tree (ProjX r a)
 proot = root . ProjX 
 
-pnode :: (Monad m, MonadListT m, MonadListTX r) 
+pnode :: (Monad m, Foldable m, MonadListTX r) 
         => Div (r m) a 
         -> [PassParent (ProjX r a)] 
         -> PassParent (ProjX r a)
 pnode = node . ProjX 
 
-pleaf :: (Monad m, MonadListT m, MonadListTX r) 
+pleaf :: (Monad m, Foldable m, MonadListTX r) 
         => Div (r m) a 
         -> PassParent (ProjX r a)
 pleaf = leaf . ProjX 
 
-pnodeOrLeaf :: (Monad m, MonadListT m, MonadListTX r) 
+pnodeOrLeaf :: (Monad m, Foldable m, MonadListTX r) 
             => Div (r m) a 
             -> [PassParent (ProjX r a)] 
             -> PassParent (ProjX r a)
 pnodeOrLeaf = nodeOrLeaf . ProjX 
+
+err ::  t
+err = error ""
 
 class MonadListT m where
    toListT :: m a -> ListT IO a
@@ -72,8 +76,9 @@ instance MonadListT (MaybeT IO) where
          Just a -> return [a]
          Nothing -> return []
 
---projectNode :: Proj t -> Tree t -> ListT IO (Tree t)
---projectNode (Proj div) tree = toListT $ runDiv div tree 
+--projectNode :: ProjX r t -> Tree t -> r (ListT IO) (Tree t)
+--projectNode (ProjX rt) tree = toListTX $ rt 
+----toListTX $ runDiv div tree 
 --
 --project :: Tree (Proj a) -> Tree a -> ListT IO (PassParent a)
 --project prjTree tree = do 
