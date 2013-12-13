@@ -16,6 +16,7 @@ import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.Trans.Maybe(runMaybeT)
 import Prelude hiding (div)
 import Control.Monad.Trans.Identity(IdentityT)
+import Control.Monad.Trans.Reader(ReaderT)
 
 -- aici sau la monadListT trebuie lucrat pentru a pune in applicare readerul pentru web
 type Proj a = ProjX IdentityT a
@@ -32,6 +33,9 @@ pleaf = leaf . ProjX
 
 pnodeOrLeaf :: (Monad m, MonadListT m, MonadListTX r) => Div (r m) a -> [PassParent (ProjX r a)] -> PassParent (ProjX r a)
 pnodeOrLeaf = nodeOrLeaf . ProjX 
+
+err ::  t
+err = error ""
 
 class MonadListT m where
    toListT :: m a -> ListT IO a
