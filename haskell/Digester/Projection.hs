@@ -4,7 +4,7 @@ module Projection (
 -- * projection tree constructors
 proot,pnode,pleaf,pnodeOrLeaf
 -- * projection utils
-,MonadListT(..)
+--,MonadListT(..)
 --,project,projectToRoot
 ) where
 
@@ -49,33 +49,30 @@ pnodeOrLeaf = nodeOrLeaf . ProjX
 err ::  t
 err = error ""
 
-class MonadListT m where
-   toListT :: m a -> ListT IO a
-
 class MonadTrans n => MonadListTX n where
-   toListTX :: (MonadListT m) => n m a -> n (ListT IO) a
+   toListTX :: (Foldable m) => n m a -> n (ListT IO) a
 
 instance MonadListTX (ReaderT a) where
     toListTX = error ""
     
-instance MonadListT [] where
-   toListT xs = ListT $ return xs
-
-instance MonadListT Maybe where
-   toListT (Just a) = ListT $ (return [a])
-   toListT (Nothing) = ListT $ (return [])
-
-instance MonadListT (ListT IO) where
-   toListT m = m
-
-instance MonadListT (MaybeT IO) where
-   toListT m = 
-    ListT $ do 
-        x <- runMaybeT m
-        case x of
-         Just a -> return [a]
-         Nothing -> return []
-
+--instance MonadListT [] where
+--   toListT xs = ListT $ return xs
+--
+--instance MonadListT Maybe where
+--   toListT (Just a) = ListT $ (return [a])
+--   toListT (Nothing) = ListT $ (return [])
+--
+--instance MonadListT (ListT IO) where
+--   toListT m = m
+--
+--instance MonadListT (MaybeT IO) where
+--   toListT m = 
+--    ListT $ do 
+--        x <- runMaybeT m
+--        case x of
+--         Just a -> return [a]
+--         Nothing -> return []
+--
 --projectNode :: ProjX r t -> Tree t -> r (ListT IO) (Tree t)
 --projectNode (ProjX rt) tree = toListTX $ rt 
 ----toListTX $ runDiv div tree 
