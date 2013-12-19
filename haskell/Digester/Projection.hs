@@ -1,6 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 module Projection (
 -- * projection tree constructors
 proot,pnode,pleaf,pnodeOrLeaf
@@ -12,57 +13,47 @@ proot,pnode,pleaf,pnodeOrLeaf
 import Tree
 import Monad
 import Control.Monad.Trans.List
-import Control.Monad.Trans.Class
-import Control.Monad.Trans.Maybe(MaybeT)
-import Control.Monad.Trans.Maybe(runMaybeT)
 import Prelude hiding (div)
 import Control.Monad.Trans.Identity(IdentityT)
-import Control.Monad.Trans.Reader(ReaderT)
-import Data.Foldable(Foldable)
 
 -- aici sau la monadListT trebuie lucrat pentru a pune in applicare readerul pentru web
-type Proj a = ProjX IdentityT a
-data ProjX r a = forall m. ( Monad m, MonadListT m, MonadListTX r ) => ProjX ( Div (r m) a )
+type Proj a = ProjX IdentityT (ListT IO) a
+data ProjX r l a = forall m. ( Monad m, Convertable m l) => ProjX ( Div (r m) a )
 
 -- * CONSTRUCTORS
-
-proot :: (Monad m, MonadListT m, MonadListTX r) 
+proot :: (Monad m, Convertable m l) 
       => Div (r m) a 
-      -> [PassParent (ProjX r a)] 
-      -> Tree (ProjX r a)
+      -> [PassParent (ProjX r l a)] 
+      -> Tree (ProjX r l a)
 proot = root . ProjX 
 
-pnode :: (Monad m, MonadListT m, MonadListTX r) 
+pnode :: (Monad m, Convertable m l) 
       => Div (r m) a 
-      -> [PassParent (ProjX r a)] 
-      -> PassParent (ProjX r a)
+      -> [PassParent (ProjX r l a)] 
+      -> PassParent (ProjX r l a)
 pnode = node . ProjX 
 
-pleaf ::  (Monad m, MonadListT m, MonadListTX r) 
+pleaf ::  (Monad m, Convertable m l) 
       => Div (r m) a 
-      -> PassParent (ProjX r a)
+      -> PassParent (ProjX r l a)
 pleaf = leaf . ProjX 
 
-pnodeOrLeaf :: (Monad m, MonadListT m, MonadListTX r) 
+pnodeOrLeaf :: (Monad m, Convertable m l) 
             => Div (r m) a 
-            -> [PassParent (ProjX r a)] 
-            -> PassParent (ProjX r a)
+            -> [PassParent (ProjX r l a)] 
+            -> PassParent (ProjX r l a)
 pnodeOrLeaf = nodeOrLeaf . ProjX 
 
 -- * CLASSES
+class Convertable m l where
+   convert :: m a -> l a
 
-class MonadListT m where
-   toListT :: m a -> ListT IO a
+instance Convertable m m where
+    convert = id
 
-class MonadTrans n => MonadListTX n where
-   toListTX :: (Foldable m) => n m a -> n (ListT IO) a
-
-instance MonadListTX (ReaderT a) where
-    toListTX = error ""
+instance Monad m => Convert [] m where
+    convert Just a = return a
     
---instance MonadListT [] where
---   toListT xs = ListT $ return xs
---
 --instance MonadListT Maybe where
 --   toListT (Just a) = ListT $ (return [a])
 --   toListT (Nothing) = ListT $ (return [])

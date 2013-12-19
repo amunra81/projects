@@ -20,7 +20,8 @@ import GHC.IO.Encoding(setLocaleEncoding)
 import GHC.IO.Encoding(setFileSystemEncoding)
 import GHC.IO.Encoding(setForeignEncoding)
 import GHC.IO.Encoding(utf8)
-import Control.Monad.Trans.List
+import Control.Monad.List(ListT)
+import Control.Monad.List(runListT)
 
 -- |alias for position in a collection of childrent
 type Pos = Int 

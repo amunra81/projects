@@ -15,9 +15,9 @@ escalate,dig,path
 import Tree
 import Control.Monad.Cont hiding (cont)
 import Data.Function(fix)
-import Control.Monad.Trans.List
 import Control.Monad.Trans.Maybe
 import Prelude hiding (div)
+import Control.Monad.List
 
 type DivCont m a = 
     ContT (Tree a) m (Tree a)
