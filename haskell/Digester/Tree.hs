@@ -12,7 +12,7 @@ root,node,leaf,nodeOrLeaf,PassParent,toPassParent,
 value,children,getChildren,parent,
 rightBrothers,leftBrothers,position,
 index,commonIndexes,stringIndex
-) where
+,err) where
 import Data.List
 import System.IO.Unsafe(unsafePerformIO)
 import Control.Monad.Trans.Maybe(MaybeT,runMaybeT)
@@ -187,3 +187,7 @@ instance Show a => Show (MaybeT IO (Tree a)) where
               where msg = do 
                            xs <- runMaybeT m 
                            (return . show) xs
+
+err ::  t
+err = error ""
+

@@ -1,4 +1,5 @@
 {-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE ExistentialQuantification #-}
 module Projection (
 -- * projection tree constructors
@@ -22,20 +23,35 @@ import Control.Monad.Trans.Reader(ReaderT)
 type Proj a = ProjX IdentityT a
 data ProjX r a = forall m. ( Monad m, MonadListT m, MonadListTX r ) => ProjX ( Div (r m) a )
 
-proot :: (Monad m, MonadListT m, MonadListTX r) => Div (r m) a -> [PassParent (ProjX r a)] -> Tree (ProjX r a)
+-- * CONSTRUCTORS
+
+proot :: (Monad m, MonadListT m, MonadListTX r) 
+      => Div (r m) a 
+      -> [PassParent (ProjX r a)] 
+      -> Tree (ProjX r a)
 proot = root . ProjX 
 
-pnode :: (Monad m, MonadListT m, MonadListTX r) => Div (r m) a -> [PassParent (ProjX r a)] -> PassParent (ProjX r a)
+pnode :: (Monad m, MonadListT m, MonadListTX r) 
+      => Div (r m) a 
+      -> [PassParent (ProjX r a)] 
+      -> PassParent (ProjX r a)
 pnode = node . ProjX 
 
-pleaf ::  (Monad m, MonadListT m, MonadListTX r) => Div (r m) a -> PassParent (ProjX r a)
+pleaf ::  (Monad m, MonadListT m, MonadListTX r) 
+      => Div (r m) a 
+      -> PassParent (ProjX r a)
 pleaf = leaf . ProjX 
 
-pnodeOrLeaf :: (Monad m, MonadListT m, MonadListTX r) => Div (r m) a -> [PassParent (ProjX r a)] -> PassParent (ProjX r a)
+pnodeOrLeaf :: (Monad m, MonadListT m, MonadListTX r) 
+            => Div (r m) a 
+            -> [PassParent (ProjX r a)] 
+            -> PassParent (ProjX r a)
 pnodeOrLeaf = nodeOrLeaf . ProjX 
 
 err ::  t
 err = error ""
+
+-- * CLASSES
 
 class MonadListT m where
    toListT :: m a -> ListT IO a
@@ -61,10 +77,10 @@ instance MonadListT (MaybeT IO) where
          Just a -> return [a]
          Nothing -> return []
 
---projectNode :: ProjX r t -> Tree t -> r (ListT IO) (Tree t)
---projectNode (ProjX rt) tree = toListTX $ rt 
-----toListTX $ runDiv div tree 
---
+projectNode :: ProjX r t -> Tree t -> r (ListT IO) (Tree t)
+projectNode (ProjX rt) tree = toListTX $ rt 
+--toListTX $ runDiv div tree 
+
 --project :: Tree (Proj a) -> Tree a -> ListT IO (PassParent a)
 --project prjTree tree = do 
 --    tnode <- projectNode (value prjTree) tree 
