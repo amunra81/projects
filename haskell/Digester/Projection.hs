@@ -53,8 +53,8 @@ class Convertable m l where
 instance Convertable m m where
     convert = id
 
-projectNode :: ProjX r t -> Tree t -> r (ListT IO) (Tree t)
-projectNode (ProjX rt) tree = toListTX $ rt 
+projectNode :: ProjX r l t -> Tree t -> r l (Tree t)
+projectNode (ProjX rt) tree = err -- toListTX $ rt 
 
 ----toListTX $ runDiv div tree 
 
