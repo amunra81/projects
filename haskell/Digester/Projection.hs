@@ -12,33 +12,35 @@ proot,pnode,pleaf,pnodeOrLeaf
 
 import Tree
 import Monad
-import Control.Monad.Trans.List
 import Prelude hiding (div)
+import Control.Monad.List
 import Control.Monad.Trans.Identity(IdentityT)
+import Data.List.Class
+
 
 -- aici sau la monadListT trebuie lucrat pentru a pune in applicare readerul pentru web
 type Proj a = ProjX IdentityT (ListT IO) a
-data ProjX r l a = forall m. ( Monad m, Convertable m l) => ProjX ( Div (r m) a )
+data ProjX r l a = forall m. ( Monad m, Convertable m l,List l) => ProjX ( Div (r m) a )
 
 -- * CONSTRUCTORS
-proot :: (Monad m, Convertable m l) 
+proot :: ( Monad m, Convertable m l,List l)
       => Div (r m) a 
       -> [PassParent (ProjX r l a)] 
       -> Tree (ProjX r l a)
 proot = root . ProjX 
 
-pnode :: (Monad m, Convertable m l) 
+pnode :: ( Monad m, Convertable m l,List l) 
       => Div (r m) a 
       -> [PassParent (ProjX r l a)] 
       -> PassParent (ProjX r l a)
 pnode = node . ProjX 
 
-pleaf ::  (Monad m, Convertable m l) 
+pleaf ::  ( Monad m, Convertable m l,List l) 
       => Div (r m) a 
       -> PassParent (ProjX r l a)
 pleaf = leaf . ProjX 
 
-pnodeOrLeaf :: (Monad m, Convertable m l) 
+pnodeOrLeaf :: ( Monad m, Convertable m l,List l) 
             => Div (r m) a 
             -> [PassParent (ProjX r l a)] 
             -> PassParent (ProjX r l a)
@@ -51,9 +53,6 @@ class Convertable m l where
 instance Convertable m m where
     convert = id
 
-instance Monad m => Convert [] m where
-    convert Just a = return a
-    
 --instance MonadListT Maybe where
 --   toListT (Just a) = ListT $ (return [a])
 --   toListT (Nothing) = ListT $ (return [])
