@@ -20,7 +20,7 @@ import Data.List.Class
 
 -- aici sau la monadListT trebuie lucrat pentru a pune in applicare readerul pentru web
 type Proj a = ProjX IdentityT (ListT IO) a
-data ProjX r l a = forall m. ( Monad m, Convertable m l,List l) => ProjX ( Div (r m) a )
+data ProjX r l a = forall m. ( Monad m, Convertable m l,List l ) => ProjX ( Div (r m) a )
 
 -- * CONSTRUCTORS
 proot :: ( Monad m, Convertable m l,List l)
@@ -53,6 +53,11 @@ class Convertable m l where
 instance Convertable m m where
     convert = id
 
+projectNode :: ProjX r t -> Tree t -> r (ListT IO) (Tree t)
+projectNode (ProjX rt) tree = toListTX $ rt 
+
+----toListTX $ runDiv div tree 
+
 --instance MonadListT Maybe where
 --   toListT (Just a) = ListT $ (return [a])
 --   toListT (Nothing) = ListT $ (return [])
@@ -68,9 +73,6 @@ instance Convertable m m where
 --         Just a -> return [a]
 --         Nothing -> return []
 --
---projectNode :: ProjX r t -> Tree t -> r (ListT IO) (Tree t)
---projectNode (ProjX rt) tree = toListTX $ rt 
-----toListTX $ runDiv div tree 
 --
 --project :: Tree (Proj a) -> Tree a -> ListT IO (PassParent a)
 --project prjTree tree = do 
