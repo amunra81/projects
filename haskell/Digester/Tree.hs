@@ -2,6 +2,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE FlexibleInstances #-} 
 {-# LANGUAGE OverlappingInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 module Tree (
 -- * Tree data
@@ -12,7 +13,7 @@ root,node,leaf,nodeOrLeaf,PassParent,toPassParent,
 value,children,getChildren,parent,
 rightBrothers,leftBrothers,position,
 index,commonIndexes,stringIndex
-,err) where
+,na) where
 import Data.List
 import System.IO.Unsafe(unsafePerformIO)
 import Control.Monad.Trans.Maybe(MaybeT,runMaybeT)
@@ -22,6 +23,8 @@ import GHC.IO.Encoding(setForeignEncoding)
 import GHC.IO.Encoding(utf8)
 import Control.Monad.List(ListT)
 import Control.Monad.List(runListT)
+import Control.Monad.Trans.Identity(IdentityT)
+import Control.Monad.Trans.Identity(runIdentityT)
 
 -- |alias for position in a collection of childrent
 type Pos = Int 
@@ -173,6 +176,9 @@ instance Show a => Show ([(Tree a)]) where
     show (x:xs) = foldl (\acc b -> acc ++ "\n+ " ++ (show b)) ("+ " ++ show x) xs   
     show _ = "n/a"
 
+instance Show (m (Tree a)) => Show (IdentityT m (Tree a)) where 
+    show = show . runIdentityT
+
 instance Show a => Show (ListT IO (Tree a)) where
     show ls = "IO "++arrow++" \n" ++ (unsafePerformIO msg)
               where msg = do 
@@ -189,6 +195,6 @@ instance Show a => Show (MaybeT IO (Tree a)) where
                            xs <- runMaybeT m 
                            (return . show) xs
 
-err ::  t
-err = error ""
+na ::  t
+na = error "Not implemented"
 

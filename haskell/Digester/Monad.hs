@@ -18,6 +18,7 @@ import Data.Function(fix)
 import Control.Monad.Trans.Maybe
 import Prelude hiding (div)
 import Control.Monad.List
+import Control.Monad.Trans.Identity
 
 type DivCont m a = 
     ContT (Tree a) m (Tree a)
@@ -78,6 +79,9 @@ instance Monad m => MonadNonZero (MaybeT m) where
        runMaybeT $ case x of
                    Nothing -> firstnonzero mxs
                    _       -> mx
+
+instance (Monad m , MonadNonZero m) => MonadNonZero (IdentityT m) where 
+    nonzero mx my = IdentityT $ nonzero ( runIdentityT mx) ( runIdentityT my)
 
 matchNodes ::  MonadPlus m => (b -> m a) -> [b] -> m a
 matchNodes next xs = foldl (\ acc n -> mplus acc (next n)) mzero xs
