@@ -4,7 +4,7 @@
 {-# LANGUAGE OverlappingInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
 
-module Tree (
+module TreeM (
 
 ) where 
 
