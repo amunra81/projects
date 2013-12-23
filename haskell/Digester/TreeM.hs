@@ -22,7 +22,7 @@ data Tree m a = Root a (m (Tree m a)) |                 -- value , children
 -- |constructor for a node of type root. first argurment is the value, and the second the list of passparent elements.
 -- the returning part is the tree node
 --root ::  a -> m (PassParent m a) -> Tree m a
---root a xs = 
+--root a ms = 
 --           Root a zs
 --              where
 --              zs = map toNode $ zip [0..] xs
@@ -36,9 +36,9 @@ leaf a p i = Leaf a p i
 -- |constructor for a node of type node. first argurment is the value, and the second the list of passparent elements
 -- |the returning part is a passparent as wel
 node :: a -> m (PassParent m a) -> PassParent m a
-node a xs p pos =
+node a ms p pos =
            Node a cs p pos
               where 
-              cs = map toNode $ zip [0..] xs
+              cs = map toNode $ zip [0..] ms
               toNode (i,passParent) = passParent thisNode i 
-              thisNode = node a xs p pos
+              thisNode = node a ms p pos

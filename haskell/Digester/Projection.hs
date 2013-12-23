@@ -78,10 +78,7 @@ project pTree tree = do
         tnode <- projectNode (value pTree) tree -- r l
 
         -- get the projected children
-        tchildren <- foldM (\ xs prjNode -> do 
-                                    cnode <- project prjNode tnode
-                                    return $ xs++[cnode]) 
-                  [] $ getChildren pTree  
+        tchildren <- sequence $ map (\ pNode -> project pNode tnode) $ getChildren pTree
 
         -- construct the final node
         return $ nodeOrLeaf (value tnode) tchildren
@@ -92,10 +89,7 @@ projectToRoot pTree tree = do
         tnode <- projectNode (value pTree) tree -- r l
 
         -- get the projected children
-        tchildren <- foldM (\ xs prjNode -> do 
-                                    cnode <- project prjNode tnode
-                                    return $ xs++[cnode]) 
-                      [] $ getChildren pTree  
+        tchildren <- sequence $ map (\ pNode -> project pNode tnode) $ getChildren pTree
 
         -- construct the root
         return $ root (value tnode) tchildren
