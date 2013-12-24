@@ -50,7 +50,7 @@ toPassParent tree = case tree of
                     Leaf a _ _ -> \ p i -> Leaf a p i
 
 -- |constructor for a node of type root. first argurment is the value, and the second the list of passparent elements.
--- |the returning part is the tree node
+-- the returning part is the tree node
 root ::  a -> [PassParent a] -> Tree a
 root a xs = 
            Root a zs

@@ -3,10 +3,13 @@
 {-# LANGUAGE FlexibleInstances #-} 
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE OverlappingInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
 
 module TreeM () where 
+import Control.Monad.Trans.Class(MonadTrans)
 
-import Data.Traversable(Traversable)
+na ::  t
+na = error ""
 
 -- |alias for position in a collection of childrent
 type Pos = Int 
@@ -35,10 +38,21 @@ leaf a p i = Leaf a p i
 
 -- |constructor for a node of type node. first argurment is the value, and the second the list of passparent elements
 -- |the returning part is a passparent as wel
-node :: (Foldable m) => a -> m (PassParent m a) -> PassParent m a
+
+node :: (Monad m,Countable m) => a -> m (PassParent m a) -> PassParent m a
 node a ms p pos =
            Node a cs p pos
               where 
-              cs = mapM toNode $ zip [0..] ms
-              toNode (i,passParent) = passParent thisNode i 
-              thisNode = node a ms p pos
+              cs = do 
+                    (passParent,pos) <- count ms 
+                    return $ passParent p pos 
+
+class Countable m where
+  count :: m a -> m (a,Int)
+
+instance Countable [] where
+  count xs = zip xs [0..] 
+                
+instance Countable Maybe where
+  count (Just a) = Just (a,0)              
+  count Nothing = Nothing
