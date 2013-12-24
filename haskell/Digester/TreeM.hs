@@ -1,12 +1,12 @@
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE FlexibleInstances #-} 
-{-# LANGUAGE OverlappingInstances #-}
 {-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE OverlappingInstances #-}
 
-module TreeM (
+module TreeM () where 
 
-) where 
+import Data.Traversable(Traversable)
 
 -- |alias for position in a collection of childrent
 type Pos = Int 
@@ -35,10 +35,10 @@ leaf a p i = Leaf a p i
 
 -- |constructor for a node of type node. first argurment is the value, and the second the list of passparent elements
 -- |the returning part is a passparent as wel
-node :: a -> m (PassParent m a) -> PassParent m a
+node :: (Foldable m) => a -> m (PassParent m a) -> PassParent m a
 node a ms p pos =
            Node a cs p pos
               where 
-              cs = map toNode $ zip [0..] ms
+              cs = mapM toNode $ zip [0..] ms
               toNode (i,passParent) = passParent thisNode i 
               thisNode = node a ms p pos
