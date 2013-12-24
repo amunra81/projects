@@ -153,7 +153,6 @@ leftBrothers tree =
 arrow ::  [Char]
 arrow = "->"
 
-
 -- |based on a given number which represents the number of identation and a node, returns a string representing the tree structure
 showNode:: Show a => Integer -> Tree a -> String
 showNode depth (Root a cs)        = "R("++(show a)++",["++(showChildren (depth + 1) cs)++ "])"
@@ -195,6 +194,7 @@ instance Show a => Show (MaybeT IO (Tree a)) where
                            xs <- runMaybeT m 
                            (return . show) xs
 
-na ::  t
+
+na ::  t 
 na = error "Not implemented"
 
