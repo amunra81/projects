@@ -188,13 +188,10 @@ instance Show a => Show (ListT IO (Tree a)) where
                            (return . show) xs
 
 instance Show a => Show (MaybeT IO (Tree a)) where
-
     show m = "IO "++arrow++"\n" ++ (unsafePerformIO msg)
               where msg = do 
                            xs <- runMaybeT m 
                            (return . show) xs
 
-
-na ::  t 
+na :: t
 na = error "Not implemented"
-

@@ -1,4 +1,4 @@
-module Monad(
+module Monad( 
 -- * Types
 DivCont,MonadNonZero(nonzero,firstnonzero),Div,
 -- * Utils
@@ -9,21 +9,24 @@ Monad.any,childOf,childAt,rightBrother,leftBrother,subNodeOf,
 both,brother,
 escalate,dig,path
 ,(...),(^<),(^>)
-) where
+)where
 
 import Tree
-import Control.Monad.Cont hiding (cont)
-import Data.Function(fix)
-import Control.Monad.Trans.Maybe
+import Control.Monad(MonadPlus(..))
+import Control.Monad.Cont(ContT(..))
+import Control.Monad.List(ListT(..))
+import Control.Monad.Trans.Maybe(MaybeT(..))
+import Control.Monad.Trans.Identity(IdentityT(..))
 import Prelude hiding (div)
-import Control.Monad.List
-import Control.Monad.Trans.Identity
+import Control.Monad.Trans.Class(lift)
+import Control.Monad(msum)
+import Control.Monad.Fix(fix)
 
 type DivCont m a = 
-    ContT (Tree a) m (Tree a)
+    ContT (Tree m a) m (Tree m a)
 
 type Div m a =
-    Tree a -> DivCont m a
+    Tree m a -> DivCont m a
 
 class (MonadPlus m) => MonadNonZero m where
     -- | chosing the non-zero monad from the list
@@ -79,14 +82,6 @@ instance Monad m => MonadNonZero (MaybeT m) where
 
 instance (Monad m , MonadNonZero m) => MonadNonZero (IdentityT m) where 
     nonzero mx my = IdentityT $ nonzero (runIdentityT mx) (runIdentityT my)
-
-matchNodes ::  MonadPlus m => (b -> m a) -> [b] -> m a
-matchNodes next xs = foldl (\ acc n -> mplus acc (next n)) mzero xs
-
--- | running s div trough a tree
-runDiv ::  Monad m => Div m a -> Tree a -> m (Tree a)
-runDiv comp tree = runContT (comp tree) $ return
-
 equal :: (Eq a, MonadPlus m) => a -> Div m a
 equal val tree = ContT $ \ next ->
                         if value tree == val then next tree 
@@ -94,31 +89,16 @@ equal val tree = ContT $ \ next ->
 
 parentOf :: MonadPlus m => Div m a
 parentOf = \ tree ->  ContT $ 
-    \next -> case children tree of
-             HasChildren xs  -> matchNodes next xs
-             _               -> mzero
-
-childAt :: MonadPlus m => Int -> Div m a
-childAt pos tree = ContT $ 
-    \next -> case children tree of
-            HasChildren xs  -> 
-                if pos < length xs then next $ xs !! pos 
-                else mzero
-            _               -> mzero
+    \next ->  getChildren tree >>= next
 
 rightBrother :: MonadPlus m => Div m a
 rightBrother tree = ContT $ 
-    \next -> case rightBrothers tree of
-            x:xs -> matchNodes next (x:xs)
-            [] -> mzero
+    \next -> Tree.rightBrothers tree >>= next
 
 leftBrother :: MonadPlus m => Div m a
 leftBrother tree = ContT $ 
-    \next -> case leftBrothers tree of
-            x:xs -> matchNodes next (x:xs)
-            [] -> mzero
+    \next -> Tree.leftBrothers tree >>= next
 
--- conjuction and dijunction
 alt :: (MonadNonZero m) => Div m a -> Div m a -> Div m a
 alt div1 div2 tree =  
    ContT $ 
@@ -133,22 +113,25 @@ both div1 div2 tree = do
         then return x
         else lift $ mzero
 
-brother ::  (monadnonzero m) => div m a
-brother = alt leftbrother rightbrother
+brother ::  (MonadNonZero m) => Div m a
+brother = alt leftBrother rightBrother
 
 childOf ::  MonadPlus m => Div m a
 childOf tree = ContT $ 
     \ next -> case parent tree of
-             HasParent p -> next p
+             HasParent p      -> next p
              None             -> mzero
 
 subNodeOf :: MonadPlus m => Div m a
 subNodeOf tree = ContT $ \ next ->
+        -- direct and idirect parents
     let parents t = case parent t of
                        HasParent p -> p : parents p
                        None             -> []
-    in
-    matchNodes next $ parents tree
+        -- map to next
+        divs = map next (parents tree)
+        -- sum all the nonzero results
+    in msum divs
 
 escalate ::  MonadPlus m => Int -> Div m a 
 escalate level tree = 
@@ -157,6 +140,16 @@ escalate level tree =
        f = \ acc _ -> acc >>= childOf    
        x = return tree
 
+childAt :: MonadPlus m => Int -> Div m a
+childAt pos tree = ContT $ 
+    \next -> case children tree of
+            -- here should find a more efficient way
+            HasChildren ms  -> do 
+                                s <- ms
+                                if position s == pos then next s
+                                                    else mzero
+            _               -> mzero
+
 dig :: MonadPlus m => [Int] -> Div m a
 dig indexes tree = 
     foldl f x indexes 
@@ -164,26 +157,25 @@ dig indexes tree =
         f = \ acc i -> acc >>= childAt i
         x = do return tree
 
--- here we don't have tail recursion , we should use the ContT monad for recursive application of the function
-first :: ( MonadNonZero m)=> Div m a
+first :: (MonadPlus m,MonadNonZero m)=> Div m a
 first tree = ContT $ 
     \next -> fix (\cont subNode -> 
                     let x = next subNode
-                        xs =  case children subNode of
-                                       HasChildren ys -> map cont ys
-                                       _ -> []
-                    in firstnonzero (x:xs)) tree
+                        mx =  case children subNode of
+                                       HasChildren ms -> ms >>= \ s -> cont s
+                                       _ -> mzero
+                    in nonzero x mx) tree
 
-any :: ( MonadNonZero m) => Div m a
+any :: ( MonadPlus m) => Div m a
 any tree = ContT $ 
     \next -> fix (\cont subNode -> 
                     let x = next subNode
-                        xs =  case children subNode of
-                                       HasChildren ys -> map cont ys
-                                       _ -> []
-                    in foldl mplus x xs ) tree
+                        mx =  case children subNode of
+                                       HasChildren ms -> ms >>= \ s -> cont s
+                                       _ -> mzero
+                    in mplus x mx) tree
 
-path :: MonadPlus m => Tree a -> Tree a -> Div m a
+path :: MonadPlus m => Tree m a -> Tree m a -> Div m a
 path fromNode toNode = 
     (escalate level) ... dig (tail toIndex)
     where 
@@ -198,3 +190,7 @@ f ... g = \ b -> (f b) >>= g
 
 (^>) :: MonadPlus m => Div m a -> Div m a -> Div m a
 (^>) d1 d2 = d1 ... childOf ... d2
+
+-- | running s div trough a tree
+runDiv ::  Monad m => Div m a -> Tree m a -> m (Tree m a)
+runDiv comp tree = runContT (comp tree) $ return

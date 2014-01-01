@@ -1,18 +1,14 @@
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE FlexibleInstances #-} 
-{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE OverlappingInstances #-}
-{-# LANGUAGE UndecidableInstances #-}
 
-module TreeM (Tree,na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
-,parent) where 
-import Data.Monoid
+module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
+,parent,rightBrothers,leftBrothers,ExtractFlat(..)) where 
 import Control.Monad
-import Control.Monad(mfilter)
 
-na ::  t
-na = error ""
+-- for not implemented parts
+na :: t
+na = error "Not implemented"
 
 -- |alias for position in a collection of childrent
 type Pos = Int 
@@ -46,7 +42,7 @@ leaf :: a -> PassParent m a
 leaf a p i = Leaf a p i
 
 -- |constructor for a node of type node. first argurment is the value, and the second the list of passparent elements
--- |the returning part is a passparent as wel
+-- the returning part is a passparent as wel
 node :: (Monad m,Countable m) => a -> m (PassParent m a) -> PassParent m a
 node a ms p pos =
            Node a cs p pos
@@ -91,7 +87,7 @@ index tree =
     case tree of
     Node _ _ p _ -> (position tree : index p) 
     Leaf _ p _   -> (position tree : index p)
-    Root _ _ -> [0]
+    Root _ _     -> [0]
 
 -- |take two nodes and create a tubple of two array of indexes. The difference between the indexes created by the "index" function, the indexes cretead by the commonIndexes represent the index of all parents for each node, till a common parent is found. For sure if no other common parent diffrent then root is found, there will be no diference between the indexes created by the "index" function and the "commonIndexes" method
 commonIndexes :: Tree m a -> Tree m a -> ([Pos],[Pos])
@@ -109,17 +105,16 @@ stringIndex ::  Tree m a -> [Char]
 stringIndex tree = foldl (\a x -> a ++ (show x)) "" $ index tree
 
 -- |get the children o a node , under the repsentation of a sequence
-getChildren :: Monoid (m (Tree m a)) => Tree m a -> m (Tree m a)
+getChildren :: MonadPlus m => Tree m a -> m (Tree m a)
 getChildren tree = case tree of
                     Node _ xs _ _   -> xs
                     Root _ xs       -> xs
-                    Leaf _ _ _      -> mempty
-
+                    Leaf _ _ _      -> mzero
 
 -- |children of the node
 children ::  Tree m a -> TreeProps m a
-children (Root _ xs)      = HasChildren xs
-children (Node _ xs _ _)  = HasChildren xs
+children (Root _ ms)      = HasChildren ms
+children (Node _ ms _ _)  = HasChildren ms
 children _                = None
 
 -- |parent properties of a node: None or HasParent
@@ -144,20 +139,49 @@ leftBrothers tree =
          mfilter  (\n -> position n < position tree) m
      _ -> mzero
 
--- | get a string representing a graphical arrow
-arrow ::  [Char]
-arrow = "->"
+-- Show instances
+--
+instance (Show a,Show' m, ExtractFlat m,Functor m) => Show (Tree m a) where
+    show =  show' . (extractToStr 0)
 
+class ExtractFlat m where
+ -- | extract to a flat list with identation
+ extract :: Integer -> Tree m a -> m [(Integer,Tree m a)]
+ -- | extract to a m of string
+ extractToStr :: (Functor m,Show a) => Integer -> Tree m a -> m String
+ extractToStr ident tree =  
+    flip fmap (extract ident tree)
+    ( \ xs -> 
+        let 
+            identation depth = (foldl (\ acc _-> acc ++ "    ") "" [1..depth]) 
+            f (d,(Root a _))        = (identation d) ++ "R(" ++ (show a) ++ ")"
+            f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
+            f (d,(Leaf a _ pos))    = (identation d) ++ "L" ++ (show pos) ++ "(" ++ (show a)  ++ ")"
+        in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)
+    
+class Show' m where
+  show' :: m String -> String
 
--- |based on a number which represents the number of identations and a list of node, will print (getting the string) the nodes
-showChildren :: Show a => Integer -> m (Tree m a) -> String
-showChildren  depth = concatStr . map (ident . showNode depth)
-                where
-                concatStr  = foldl (++) ""  
-                ident str = ( foldl (\acc _-> acc ++ "       ") "\n" [1..depth] ) ++ str
+instance Show' [] where
+    show' = foldl f "" 
+            where f = \ acc str -> acc ++ "+" ++ str ++ "\n"
 
--- |based on a given number which represents the number of identation and a node, returns a string representing the tree structure
-showNode:: Show a => Integer -> Tree m a -> String
-showNode depth (Root a cs)        = "R("++(show a)++",["++(showChildren (depth + 1) cs)++ "])"
-showNode depth (Node a cs _ pos)  = "N"++(show pos)++"("++(show a)++",["++ (showChildren (depth + 1) cs)++ "])"
-showNode _     (Leaf a _ pos)     = "L"++(show pos)++"("++(show a)++")"
+instance ExtractFlat [] where
+    extract ident tree =  
+     let extract' depth tnode = 
+            let tchildren = foldl ( \ acc child -> acc ++ (extract' (depth + 1) child)) 
+                            [] (getChildren tnode)
+            in (depth,tnode):tchildren
+     in return $ extract' ident tree
+
+instance Show' Maybe where
+    show' (Just str) = str
+    show' Nothing = "Nothing"     
+
+instance ExtractFlat Maybe where
+    extract ident tree = 
+        let extract' depth tnode = 
+                (depth,tnode):(case getChildren tnode of
+                                Just tchild -> extract' (depth+1) tchild
+                                Nothing -> [])
+        in Just $ extract' ident tree
