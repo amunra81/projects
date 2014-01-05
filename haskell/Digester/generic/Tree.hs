@@ -3,7 +3,7 @@
 {-# LANGUAGE OverlappingInstances #-}
 
 module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
-,parent,rightBrothers,leftBrothers,ExtractFlat(..)) where 
+,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos) where 
 import Control.Monad
 
 -- for not implemented parts
@@ -50,7 +50,7 @@ node a ms p pos =
               cs = do 
                     (passParent,cpos) <- count ms 
 
-                    return $ passParent p cpos 
+                    return $ passParent (Node a cs p pos) cpos 
 
 -- |constructor for a node of type root. first argurment is the value, and the second the list of passparent elements.
 -- the returning part is the tree node
@@ -124,16 +124,16 @@ parent (Leaf _ p _)    = HasParent p
 parent _               = None
 
 -- |extract all brothers with the pos index bigger then given noe
-rightBrothers ::  MonadPlus m => Tree m t -> m (Tree m t)
-rightBrothers tree = 
+nextBrothers ::  MonadPlus m => Tree m t -> m (Tree m t)
+nextBrothers tree = 
     case tree of
     (parent -> HasParent (children -> HasChildren m)) -> 
         mfilter  (\n -> position n > position tree) m
     _ -> mzero
 
 -- |extract all brothers with the pos index less then given noe
-leftBrothers ::  MonadPlus m => Tree m t -> m (Tree m t)
-leftBrothers tree = 
+prevBrothers ::  MonadPlus m => Tree m t -> m (Tree m t)
+prevBrothers tree = 
      case tree of
      (parent -> HasParent (children -> HasChildren m)) -> 
          mfilter  (\n -> position n < position tree) m

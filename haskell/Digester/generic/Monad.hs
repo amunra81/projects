@@ -5,10 +5,10 @@ DivCont,MonadNonZero(nonzero,firstnonzero),Div,
 runDiv,
 -- * Div constructors
 parentOf,equal,alt,first,
-Monad.any,childOf,childAt,rightBrother,leftBrother,subNodeOf,
+Monad.any,childOf,childAt,nextBrother,prevBrother,subNodeOf,
 both,brother,
 escalate,dig,path
-,(...),(^<),(^>)
+,(==.),(==<),(==>)
 )where
 
 import Tree
@@ -82,6 +82,7 @@ instance Monad m => MonadNonZero (MaybeT m) where
 
 instance (Monad m , MonadNonZero m) => MonadNonZero (IdentityT m) where 
     nonzero mx my = IdentityT $ nonzero (runIdentityT mx) (runIdentityT my)
+
 equal :: (Eq a, MonadPlus m) => a -> Div m a
 equal val tree = ContT $ \ next ->
                         if value tree == val then next tree 
@@ -91,13 +92,13 @@ parentOf :: MonadPlus m => Div m a
 parentOf = \ tree ->  ContT $ 
     \next ->  getChildren tree >>= next
 
-rightBrother :: MonadPlus m => Div m a
-rightBrother tree = ContT $ 
-    \next -> Tree.rightBrothers tree >>= next
+nextBrother :: MonadPlus m => Div m a
+nextBrother tree = ContT $ 
+    \next -> Tree.nextBrothers tree >>= next
 
-leftBrother :: MonadPlus m => Div m a
-leftBrother tree = ContT $ 
-    \next -> Tree.leftBrothers tree >>= next
+prevBrother :: MonadPlus m => Div m a
+prevBrother tree = ContT $ 
+    \next -> Tree.prevBrothers tree >>= next
 
 alt :: (MonadNonZero m) => Div m a -> Div m a -> Div m a
 alt div1 div2 tree =  
@@ -114,7 +115,7 @@ both div1 div2 tree = do
         else lift $ mzero
 
 brother ::  (MonadNonZero m) => Div m a
-brother = alt leftBrother rightBrother
+brother = alt prevBrother nextBrother
 
 childOf ::  MonadPlus m => Div m a
 childOf tree = ContT $ 
@@ -164,7 +165,7 @@ first tree = ContT $
                         mx =  case children subNode of
                                        HasChildren ms -> ms >>= \ s -> cont s
                                        _ -> mzero
-                    in nonzero x mx) tree
+                    in nonzero mx x) tree
 
 any :: ( MonadPlus m) => Div m a
 any tree = ContT $ 
@@ -177,19 +178,19 @@ any tree = ContT $
 
 path :: MonadPlus m => Tree m a -> Tree m a -> Div m a
 path fromNode toNode = 
-    (escalate level) ... dig (tail toIndex)
+    (escalate level) ==. dig (tail toIndex)
     where 
     (fromIndex, toIndex) = commonIndexes fromNode toNode 
     level =  length fromIndex - 1
 
-(...) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
-f ... g = \ b -> (f b) >>= g 
+(==.) ::  Monad m => (t -> m a) -> (a -> m b) -> t -> m b
+f ==. g = \ b -> (f b) >>= g 
 
-(^<) :: MonadPlus m => Div m a -> Div m a -> Div m a
-(^<) d1 d2 = d1 ... parentOf ... d2
+(==<) :: MonadPlus m => Div m a -> Div m a -> Div m a
+(==<) d1 d2 = d1 ==. parentOf ==. d2
 
-(^>) :: MonadPlus m => Div m a -> Div m a -> Div m a
-(^>) d1 d2 = d1 ... childOf ... d2
+(==>) :: MonadPlus m => Div m a -> Div m a -> Div m a
+(==>) d1 d2 = d1 ==. childOf ==. d2
 
 -- | running s div trough a tree
 runDiv ::  Monad m => Div m a -> Tree m a -> m (Tree m a)
