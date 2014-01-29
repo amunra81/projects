@@ -3,7 +3,7 @@
 {-# LANGUAGE OverlappingInstances #-}
 
 module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
-,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos,PassParent) where 
+,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos,PassParent,Countable) where 
 import Control.Monad
 
 -- for not implemented parts
