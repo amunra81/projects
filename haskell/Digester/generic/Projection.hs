@@ -37,7 +37,7 @@ pnode :: (Monad m,Monad l,Countable l)
       -> PassParent l (ProjX l a)
 pnode = node . ProjX 
 
-pleaf :: (Monad m,Monad l,Countable l)
+pleaf :: MonadPlus l => (Monad m,Monad l,Countable l)
       => Div m a 
       -> PassParent l (ProjX l a)
 pleaf = leaf . ProjX 
@@ -72,16 +72,16 @@ instance Convertible Maybe [] where
 --projectNode :: ProjX l a -> Tree l a -> l (Tree l a)
 --projectNode (ProjX div) tree = convert $ runDiv div tree
 
-project ::  Tree (Div m a) -> Tree m a -> m (PassParent m a)
+project ::  Tree m (Div m a) -> Tree m a -> m (PassParent m a)
 project pTree tree = do
         -- get the node from the projection
-        tnode <- projectNode (value pTree) tree -- r l
+        tnode <- runDiv (value pTree) tree 
 
         -- get the projected children
         tchildren <- sequence $ map (\ pNode -> project pNode tnode) $ getChildren pTree
 
         -- construct the final node
-        return $ nodeOrLeaf (value tnode) tchildren
+        return $ node (value tnode) tchildren
 --
 --projectToRoot :: Monad l => Tree (ProjX l a) -> Tree a -> l (Tree a)
 --projectToRoot pTree tree = do

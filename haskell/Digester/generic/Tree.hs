@@ -17,9 +17,8 @@ type Pos = Int
 type PassParent m a = Tree m a -> Pos -> Tree m a  
 
 -- |the tree structure
-data Tree m a = Root a (m (Tree m a)) |                 -- value , children
-                Node a (m (Tree m a)) (Tree m a) Pos |  -- value , children , parent , position
-                Leaf a (Tree m a) Pos                   -- value , parent , position
+data Tree m a = Root a (m (Tree m a))                    -- value , children
+                | Node a (m (Tree m a)) (Tree m a) Pos   -- value , children , parent , position
 
 -- |tree properties
 data TreeProps m a = None
@@ -38,8 +37,8 @@ instance Countable Maybe where
   count Nothing = Nothing
 
 -- |constructor for a node of type leaf. the single argurment is the value, and the returning element is a passparent
-leaf :: a -> PassParent m a
-leaf a p i = Leaf a p i
+leaf :: MonadPlus m => a -> PassParent m a
+leaf a p i = Node a mzero p i
 
 -- |constructor for a node of type node. first argurment is the value, and the second the list of passparent elements
 -- the returning part is a passparent as wel
@@ -67,26 +66,22 @@ toPassParent :: Tree m a -> PassParent m a
 toPassParent tree = case tree of
                     Root a m -> \ p i -> Node a m p i
                     Node a m _ _ -> \ p i -> Node a m p i 
-                    Leaf a _ _ -> \ p i -> Leaf a p i
 
 -- |fetch the value from a node
 value ::  Tree m a -> a
 value (Root v _)     = v 
 value (Node v _ _ _) = v
-value (Leaf v _ _ )  = v
 
 -- |fetch the node position
 position ::  Tree m a -> Pos
 position (Root _ _)      = 0
 position (Node _ _ _ i)  = i
-position (Leaf _ _ i )   = i
 
 -- |create a list of pos representing the indexes of each node (parents) until the root is reached
 index :: Tree m a -> [Pos]
 index tree = 
     case tree of
     Node _ _ p _ -> (position tree : index p) 
-    Leaf _ p _   -> (position tree : index p)
     Root _ _     -> [0]
 
 -- |take two nodes and create a tubple of two array of indexes. The difference between the indexes created by the "index" function, the indexes cretead by the commonIndexes represent the index of all parents for each node, till a common parent is found. For sure if no other common parent diffrent then root is found, there will be no diference between the indexes created by the "index" function and the "commonIndexes" method
@@ -109,7 +104,6 @@ getChildren :: MonadPlus m => Tree m a -> m (Tree m a)
 getChildren tree = case tree of
                     Node _ xs _ _   -> xs
                     Root _ xs       -> xs
-                    Leaf _ _ _      -> mzero
 
 -- |children of the node
 children ::  Tree m a -> TreeProps m a
@@ -120,7 +114,6 @@ children _                = None
 -- |parent properties of a node: None or HasParent
 parent ::  Tree m a -> TreeProps m a
 parent (Node _ _ p _)  = HasParent p
-parent (Leaf _ p _)    = HasParent p
 parent _               = None
 
 -- |extract all brothers with the pos index bigger then given noe
@@ -156,7 +149,6 @@ class ExtractFlat m where
             identation depth = (foldl (\ acc _-> acc ++ "    ") "" [1..depth]) 
             f (d,(Root a _))        = (identation d) ++ "R(" ++ (show a) ++ ")"
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
-            f (d,(Leaf a _ pos))    = (identation d) ++ "L" ++ (show pos) ++ "(" ++ (show a)  ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)
     
 class Show' m where
