@@ -109,7 +109,6 @@ getChildren tree = case tree of
 children ::  Tree m a -> TreeProps m a
 children (Root _ ms)      = HasChildren ms
 children (Node _ ms _ _)  = HasChildren ms
-children _                = None
 
 -- |parent properties of a node: None or HasParent
 parent ::  Tree m a -> TreeProps m a
