@@ -1,3 +1,5 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
+
 module ProjectionPlay where
 import Tree
 import Monad
@@ -7,25 +9,15 @@ import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.List(ListT)
 import Control.Monad(MonadPlus)
 
-sdiv1,sdiv2,sdiv3,sdiv4,sdiv5,sdiv6,sdiv7,sdiv8 ::  MonadPlus m => Div m Integer
-(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]
-
-
-ss :: MonadPlus m => Div m Integer
-ss = equal 1
-
-
-isdiv1,isdiv2,isdiv3,isdiv4,isdiv5,isdiv6,isdiv7,isdiv8 ::  Div (ListT IO) Integer
-(isdiv1:isdiv2:isdiv3:isdiv4:isdiv5:isdiv6:isdiv7:isdiv8:_) = map equal [1..]::[Div (ListT IO) Integer]
+(div1:div2:div3:div4:div5:div6:div7:div8:_) = map equal [1..]
 
 tree1 ::  Tree [] Integer
 tree1 = 
     root 1 [
-            --from here 
             node 2 [
                     leaf 6,
                     node 5 [
-                            leaf 7 ], -- to here is repeating
+                            leaf 7 ], 
                     node 2 [
                             leaf 6,
                             node 5 [

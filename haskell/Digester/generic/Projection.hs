@@ -4,7 +4,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 module Projection (
 -- * projection utils
-project,projectToRoot
+project,projectToRoot,transform
 ) where
 
 import Tree
@@ -37,3 +37,6 @@ projectToRoot pTree tree = do
 
         -- construct the root
         return $ root (value tnode) tchildren
+
+transform :: Tree m a -> Tree n a
+transform = na
