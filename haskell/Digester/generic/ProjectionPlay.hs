@@ -32,6 +32,7 @@ tree1 =
                      leaf 7 ],
             leaf 4 ]
 
+ss = transform tree1 :: Tree (ListT IO) Integer
 -- Maybe vs List --
 -- ------------- --
 

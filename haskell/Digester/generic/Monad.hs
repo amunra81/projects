@@ -125,7 +125,7 @@ childOf tree = ContT $
 
 subNodeOf :: MonadPlus m => Div m a
 subNodeOf tree = ContT $ \ next ->
-        -- direct and idirect parents
+    -- direct and idirect parents
     let parents t = case parent t of
                        HasParent p -> p : parents p
                        None             -> []
