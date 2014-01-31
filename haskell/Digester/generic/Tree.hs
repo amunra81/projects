@@ -5,6 +5,7 @@
 module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
 ,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos,PassParent,Countable) where 
 import Control.Monad
+import Control.Monad.List
 
 -- for not implemented parts
 na :: t
@@ -164,6 +165,9 @@ instance ExtractFlat [] where
                             [] (getChildren tnode)
             in (depth,tnode):tchildren
      in return $ extract' ident tree
+
+instance ExtractFlat (ListT a) where
+    extract = runListT . return
 
 instance Show' Maybe where
     show' (Just str) = str

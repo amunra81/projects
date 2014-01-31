@@ -49,7 +49,7 @@ instance Convertible [] [] where
     convert = id
 
 instance Convertible [] (ListT IO)  where
-    convert = na
+    convert xs = ListT $ return xs
 
 instance Convertible (MaybeT IO) (ListT IO)  where
     convert m = ListT $ do 

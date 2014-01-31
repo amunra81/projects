@@ -11,7 +11,7 @@ import Control.Monad(MonadPlus)
 
 (div1:div2:div3:div4:div5:div6:div7:div8:_) = map equal [1..]
 
-tree1 ::  Tree [] Integer
+tree1 :: Tree [] Integer
 tree1 = 
     root 1 [
             node 2 [
