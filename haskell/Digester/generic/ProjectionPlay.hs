@@ -34,13 +34,13 @@ tree1 =
             leaf 4 ]
 
 ss = transform tree1 :: Tree (ListT IO) Integer
-
 aa = getChildren ss
 
 ll = do
         xs <- runListT $ aa
         return $ length xs
 
+--make a function to count all the nodes
 
             
 -- Maybe vs List --
