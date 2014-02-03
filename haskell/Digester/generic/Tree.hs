@@ -6,6 +6,7 @@ module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,common
 ,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos,PassParent,Countable) where 
 import Control.Monad
 import Control.Monad.List
+import System.IO.Unsafe(unsafePerformIO)
 
 -- for not implemented parts
 na :: t
@@ -134,8 +135,28 @@ prevBrothers tree =
 
 -- Show instances
 --
+class Show' m where
+    show' :: m String -> String
+
 instance (Show a,Show' m, ExtractFlat m,Functor m) => Show (Tree m a) where
     show =  show' . (extractToStr 0)
+
+instance Show' IO where
+    show' = unsafePerformIO
+
+instance (Show' a,Monad a) => Show' (ListT a) where
+    show' ls = "IO "++"->"++" \n" ++ (show' msg)
+                where msg = do 
+                              xs <- runListT ls 
+                              (return . show') xs
+ 
+instance Show' [] where
+    show' = foldl f "" 
+            where f = \ acc str -> acc ++ "+" ++ str ++ "\n"
+
+instance Show' Maybe where
+    show' (Just str) = str
+    show' Nothing = "Nothing"     
 
 class ExtractFlat m where
  -- | extract to a flat list with identation
@@ -150,13 +171,6 @@ class ExtractFlat m where
             f (d,(Root a _))        = (identation d) ++ "R(" ++ (show a) ++ ")"
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)
-    
-class Show' m where
-  show' :: m String -> String
-
-instance Show' [] where
-    show' = foldl f "" 
-            where f = \ acc str -> acc ++ "+" ++ str ++ "\n"
 
 instance ExtractFlat [] where
     extract ident tree =  
@@ -166,12 +180,12 @@ instance ExtractFlat [] where
             in (depth,tnode):tchildren
      in return $ extract' ident tree
 
-instance ExtractFlat (ListT a) where
-    extract = runListT . return
-
-instance Show' Maybe where
-    show' (Just str) = str
-    show' Nothing = "Nothing"     
+instance Monad a => ExtractFlat (ListT a) where
+    extract i n = do
+                    xs <-  do
+                            t <- getChildren n
+                            extract (i+1) t
+                    return ((i,n):xs) 
 
 instance ExtractFlat Maybe where
     extract ident tree = 

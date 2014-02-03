@@ -15,8 +15,8 @@ rightBrothers,leftBrothers,position,
 index,commonIndexes,stringIndex
 ,na) where
 import Data.List
-import System.IO.Unsafe(unsafePerformIO)
 import Control.Monad.Trans.Maybe(MaybeT,runMaybeT)
+import System.IO.Unsafe(unsafePerformIO)
 import GHC.IO.Encoding(setLocaleEncoding)
 import GHC.IO.Encoding(setFileSystemEncoding)
 import GHC.IO.Encoding(setForeignEncoding)
