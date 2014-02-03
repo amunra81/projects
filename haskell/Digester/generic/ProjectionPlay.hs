@@ -8,6 +8,7 @@ import Prelude hiding (any)
 import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.List(ListT)
 import Control.Monad(MonadPlus)
+import Control.Monad.List
 
 (div1:div2:div3:div4:div5:div6:div7:div8:_) = map equal [1..]
 
@@ -33,6 +34,15 @@ tree1 =
             leaf 4 ]
 
 ss = transform tree1 :: Tree (ListT IO) Integer
+
+aa = getChildren ss
+
+ll = do
+        xs <- runListT $ aa
+        return $ length xs
+
+
+            
 -- Maybe vs List --
 -- ------------- --
 
