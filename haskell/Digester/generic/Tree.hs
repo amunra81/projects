@@ -7,7 +7,6 @@ module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,common
 import Control.Monad
 import Control.Monad.List
 import System.IO.Unsafe(unsafePerformIO)
-import Data.Foldable(Foldable)
 
 -- for not implemented parts
 na :: t
@@ -157,11 +156,11 @@ instance Show' Maybe where
     show' Nothing = "Nothing"     
 
 class FoldableTree m where
-    foldTree :: (n -> Tree m a -> n) -> n -> Tree m a -> m n
+    foldTree :: (m n -> Tree m a -> m n) -> m n -> Tree m a -> m n
 
 instance FoldableTree [] where
-    --foldTree :: (n -> Tree [] a -> n) -> n -> Tree [] a -> [n]
-    foldTree = na
+    foldTree f i t = foldl g (f i t) (getChildren t)
+                     where g acc t1 = foldTree f acc t1
 
 class ExtractFlat m where
  -- | extract to a flat list with identation
@@ -208,8 +207,4 @@ countNodes tree = do
                     n <- getChildren tree
                     countNodes n
         
-
-
--- FOLDABLE
-instance Foldable (Tree m) where
 
