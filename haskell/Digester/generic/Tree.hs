@@ -7,6 +7,7 @@ module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,common
 import Control.Monad
 import Control.Monad.List
 import System.IO.Unsafe(unsafePerformIO)
+import Data.Foldable(Foldable)
 
 -- for not implemented parts
 na :: t
@@ -29,7 +30,7 @@ data TreeProps m a = None
 
 -- * Countable class
 class Countable m where
-  count :: m a -> m (a,Int)
+    count :: m a -> m (a,Int)
 
 instance Countable [] where
   count xs = zip xs [0..] 
@@ -138,9 +139,6 @@ prevBrothers tree =
 class Show' m where
     show' :: m String -> String
 
-instance (Show a,Show' m, ExtractFlat m,Functor m) => Show (Tree m a) where
-    show =  show' . (extractToStr 0)
-
 instance Show' IO where
     show' = unsafePerformIO
 
@@ -158,6 +156,13 @@ instance Show' Maybe where
     show' (Just str) = str
     show' Nothing = "Nothing"     
 
+class FoldableTree m where
+    foldTree :: (n -> Tree m a -> n) -> n -> Tree m a -> m n
+
+instance FoldableTree [] where
+    --foldTree :: (n -> Tree [] a -> n) -> n -> Tree [] a -> [n]
+    foldTree = na
+
 class ExtractFlat m where
  -- | extract to a flat list with identation
  extract :: Integer -> Tree m a -> m [(Integer,Tree m a)]
@@ -171,6 +176,9 @@ class ExtractFlat m where
             f (d,(Root a _))        = (identation d) ++ "R(" ++ (show a) ++ ")"
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)
+
+instance (Show a,Show' m, ExtractFlat m,Functor m) => Show (Tree m a) where
+    show =  show' . (extractToStr 0)
 
 instance ExtractFlat [] where
     extract ident tree =  
@@ -194,3 +202,14 @@ instance ExtractFlat Maybe where
                                 Just tchild -> extract' (depth+1) tchild
                                 Nothing -> [])
         in Just $ extract' ident tree
+
+countNodes :: (Countable m,MonadPlus m) => Tree m a -> m Integer
+countNodes tree = do 
+                    n <- getChildren tree
+                    countNodes n
+        
+
+
+-- FOLDABLE
+instance Foldable (Tree m) where
+

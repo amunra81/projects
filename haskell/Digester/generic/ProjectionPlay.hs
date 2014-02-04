@@ -9,6 +9,8 @@ import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.List(ListT)
 import Control.Monad(MonadPlus)
 import Control.Monad.List
+import Data.Foldable(foldMap)
+import Data.Monoid(Sum(..))
 
 (div1:div2:div3:div4:div5:div6:div7:div8:_) = map equal [1..]
 
@@ -40,6 +42,8 @@ ll = do
         xs <- runListT $ aa
         return $ length xs
 
+ff :: Sum Integer
+ff = foldMap (\ n -> Sum 1) tree1 
 --make a function to count all the nodes
 
             
