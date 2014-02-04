@@ -86,6 +86,9 @@ index tree =
     Node _ _ p _ -> (position tree : index p) 
     Root _ _     -> [0]
 
+depth :: Tree m a -> Integer
+depth = toInteger . length . index
+
 -- |take two nodes and create a tubple of two array of indexes. The difference between the indexes created by the "index" function, the indexes cretead by the commonIndexes represent the index of all parents for each node, till a common parent is found. For sure if no other common parent diffrent then root is found, there will be no diference between the indexes created by the "index" function and the "commonIndexes" method
 commonIndexes :: Tree m a -> Tree m a -> ([Pos],[Pos])
 commonIndexes n1 n2= 
@@ -156,11 +159,16 @@ instance Show' Maybe where
     show' Nothing = "Nothing"     
 
 class FoldableTree m where
-    foldTree :: (m n -> Tree m a -> m n) -> m n -> Tree m a -> m n
+    foldTree :: (n -> Tree m a -> n) -> n -> Tree m a -> m n
 
 instance FoldableTree [] where
     foldTree f i t = foldl g (f i t) (getChildren t)
                      where g acc t1 = foldTree f acc t1
+
+--depths :: FoldableTree m,Monad m) => Tree m a -> m [(Integer,Tree m a)]
+--depths t = foldTree f [] t
+--             where f a t = a ++ [(depth t,t)]
+                   
 
 class ExtractFlat m where
  -- | extract to a flat list with identation
