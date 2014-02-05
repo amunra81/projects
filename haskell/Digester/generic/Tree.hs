@@ -89,7 +89,7 @@ index tree =
 depth :: Tree m a -> Integer
 depth = toInteger . length . index
 
--- |take two nodes and create a tubple of two array of indexes. The difference between the indexes created by the "index" function, the indexes cretead by the commonIndexes represent the index of all parents for each node, till a common parent is found. For sure if no other common parent diffrent then root is found, there will be no diference between the indexes created by the "index" function and the "commonIndexes" method
+-- |take two nodes and create a tuple of two array of indexes. The difference between the indexes created by the "index" function, the indexes cretead by the commonIndexes represent the index of all parents for each node, till a common parent is found. For sure if no other common parent diffrent then root is found, there will be no diference between the indexes created by the "index" function and the "commonIndexes" method
 commonIndexes :: Tree m a -> Tree m a -> ([Pos],[Pos])
 commonIndexes n1 n2= 
     let reduce i1 i2 = 
