@@ -5,7 +5,7 @@
 
 module Projection (
 -- * projection utils
-project,projectToRoot,transform
+project,transform -- projectToRoot,
 ) where
 
 import Tree

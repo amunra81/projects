@@ -56,7 +56,6 @@ node a ms p pos =
               where 
               cs = do 
                     (passParent,cpos) <- count ms 
-
                     return $ passParent (Node a cs p pos) cpos 
 
 -- |constructor for a node of type root. first argurment is the value, and the second the list of passparent elements.
@@ -97,11 +96,11 @@ depth = ((+)(-1)) . toInteger . length . index
 
 countNodes :: (FoldableTree m,Monad m) => Tree m a -> m Integer
 countNodes t = foldTree f (return 0) t
-                  where f acc t = acc >>= \a -> return $ a+1
+                  where f acc _ = acc >>= \a -> return $ a+1
 
 depths :: (FoldableTree m,Monad m) => Tree m a -> m [(Integer,Tree m a)]
 depths t = foldTree f (return []) t
-             where f acc t = acc >>= \xs -> return $ xs ++ [(depth t,t)] 
+             where f acc n = acc >>= \xs -> return $ xs ++ [(depth n,n)] 
 
 -- |take two nodes and create a tuple of two array of indexes. The difference between the indexes created by the "index" function, the indexes cretead by the commonIndexes represent the index of all parents for each node, till a common parent is found. For sure if no other common parent diffrent then root is found, there will be no diference between the indexes created by the "index" function and the "commonIndexes" method
 commonIndexes :: Tree m a -> Tree m a -> ([Pos],[Pos])
@@ -199,7 +198,7 @@ depthsToStr tree =
     flip fmap (depths tree)
     ( \ xs -> 
         let 
-            identation depth = (foldl (\ acc _-> acc ++ "    ") "" [1..depth]) 
+            identation i = (foldl (\ acc _-> acc ++ "    ") "" [1..i]) 
             f (d,(Root a _))        = (identation d) ++ "R(" ++ (show a) ++ ")"
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)

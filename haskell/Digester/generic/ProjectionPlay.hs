@@ -35,18 +35,12 @@ tree1 =
                      leaf 7 ],
             leaf 4 ]
 
-ss = transform tree1 :: Tree (ListT IO) Integer
-aa = getChildren ss
+ltree1 = transform tree1 :: Tree (ListT IO) Integer
 
-ll = do
-        xs <- runListT $ aa
-        return $ length xs
-
-            
 -- Maybe vs List --
 -- ------------- --
 
---s11 = proot (first ... sdiv2) []-- only one result
+s11 = root (first ==. div2) [] -- only one result
 --m11 = proot (first ... mdiv2) [] -- only one result
 --
 --is11 = proot (first ... isdiv2) [] -- only one result
