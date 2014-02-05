@@ -42,10 +42,6 @@ ll = do
         xs <- runListT $ aa
         return $ length xs
 
-ff :: Sum Integer
-ff = foldMap (\ n -> Sum 1) tree1 
---make a function to count all the nodes
-
             
 -- Maybe vs List --
 -- ------------- --

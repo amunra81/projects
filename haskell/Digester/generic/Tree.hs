@@ -3,7 +3,7 @@
 {-# LANGUAGE OverlappingInstances #-}
 
 module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
-,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos,PassParent,Countable) where 
+,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos,PassParent,Countable,countNodes,depths) where 
 import Control.Monad
 import Control.Monad.List
 import System.IO.Unsafe(unsafePerformIO)
@@ -37,6 +37,11 @@ instance Countable [] where
 instance Countable Maybe where
   count (Just a) = Just (a,0)              
   count Nothing = Nothing
+
+instance Monad m => Countable (ListT m) where
+  count ls = ListT $ do
+                        xs <- runListT ls
+                        return $ count xs
 
 -- |constructor for a node of type leaf. the single argurment is the value, and the returning element is a passparent
 leaf :: MonadPlus m => a -> PassParent m a
@@ -89,6 +94,14 @@ index tree =
 depth :: Tree m a -> Integer
 depth = toInteger . length . index
 
+countNodes :: (FoldableTree m,Monad m) => Tree m a -> m Integer
+countNodes t = foldTree f (return 0) t
+                  where f acc t = acc >>= \a -> return $ a+1
+
+depths :: (FoldableTree m,Monad m) => Tree m a -> m [(Integer,Tree m a)]
+depths t = foldTree f (return []) t
+             where f acc t = acc >>= \xs -> return $ xs ++ [(depth t,t)] 
+
 -- |take two nodes and create a tuple of two array of indexes. The difference between the indexes created by the "index" function, the indexes cretead by the commonIndexes represent the index of all parents for each node, till a common parent is found. For sure if no other common parent diffrent then root is found, there will be no diference between the indexes created by the "index" function and the "commonIndexes" method
 commonIndexes :: Tree m a -> Tree m a -> ([Pos],[Pos])
 commonIndexes n1 n2= 
@@ -138,6 +151,10 @@ prevBrothers tree =
 
 -- Show instances
 --
+
+instance (Show a,Show' m, ExtractFlat m,Functor m) => Show (Tree m a) where
+    show =  show' . (extractToStr 0)
+
 class Show' m where
     show' :: m String -> String
 
@@ -159,16 +176,22 @@ instance Show' Maybe where
     show' Nothing = "Nothing"     
 
 class FoldableTree m where
-    foldTree :: (n -> Tree m a -> n) -> n -> Tree m a -> m n
+    foldTree :: (m n -> Tree m a -> m n) -> m n -> Tree m a -> m n
 
 instance FoldableTree [] where
     foldTree f i t = foldl g (f i t) (getChildren t)
                      where g acc t1 = foldTree f acc t1
 
---depths :: FoldableTree m,Monad m) => Tree m a -> m [(Integer,Tree m a)]
---depths t = foldTree f [] t
---             where f a t = a ++ [(depth t,t)]
-                   
+instance FoldableTree Maybe where
+    foldTree f i t = case getChildren t of
+                     Nothing -> f i t
+                     Just n -> foldTree f (f i t) n
+
+instance Monad m => FoldableTree (ListT m) where
+    foldTree f i t = ListT $ do
+                        xs <- runListT $ getChildren t
+                        runListT $
+                            foldl (foldTree f) (f i t) xs 
 
 class ExtractFlat m where
  -- | extract to a flat list with identation
@@ -183,9 +206,6 @@ class ExtractFlat m where
             f (d,(Root a _))        = (identation d) ++ "R(" ++ (show a) ++ ")"
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)
-
-instance (Show a,Show' m, ExtractFlat m,Functor m) => Show (Tree m a) where
-    show =  show' . (extractToStr 0)
 
 instance ExtractFlat [] where
     extract ident tree =  
@@ -209,10 +229,4 @@ instance ExtractFlat Maybe where
                                 Just tchild -> extract' (depth+1) tchild
                                 Nothing -> [])
         in Just $ extract' ident tree
-
-countNodes :: (Countable m,MonadPlus m) => Tree m a -> m Integer
-countNodes tree = do 
-                    n <- getChildren tree
-                    countNodes n
-        
 
