@@ -3,10 +3,11 @@
 {-# LANGUAGE OverlappingInstances #-}
 
 module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
-,parent,nextBrothers,prevBrothers,ExtractFlat(..),Pos,PassParent,Countable,countNodes,depths) where 
+,parent,nextBrothers,prevBrothers,Pos,PassParent,Countable,countNodes,depths) where 
 import Control.Monad
 import Control.Monad.List
 import System.IO.Unsafe(unsafePerformIO)
+import Data.Functor.Identity(Identity(..))
 
 -- for not implemented parts
 na :: t
@@ -92,7 +93,7 @@ index tree =
     Root _ _     -> [0]
 
 depth :: Tree m a -> Integer
-depth = toInteger . length . index
+depth = ((+)(-1)) . toInteger . length . index
 
 countNodes :: (FoldableTree m,Monad m) => Tree m a -> m Integer
 countNodes t = foldTree f (return 0) t
@@ -149,23 +150,22 @@ prevBrothers tree =
          mfilter  (\n -> position n < position tree) m
      _ -> mzero
 
--- Show instances
---
-
-instance (Show a,Show' m, ExtractFlat m,Functor m) => Show (Tree m a) where
-    show =  show' . (extractToStr 0)
+instance (Show a,Show' m, FoldableTree m,Functor m,Monad m) => Show (Tree m a) where
+    show =  show' . depthsToStr
 
 class Show' m where
     show' :: m String -> String
 
 instance Show' IO where
-    show' = unsafePerformIO
+    show' str = "IO -> \n" ++ (unsafePerformIO str)
+
+instance Show' Identity where
+    show' istr = runIdentity istr
 
 instance (Show' a,Monad a) => Show' (ListT a) where
-    show' ls = "IO "++"->"++" \n" ++ (show' msg)
-                where msg = do 
-                              xs <- runListT ls 
-                              (return . show') xs
+    show' ls =  show' $ do 
+                    xs <- runListT ls 
+                    (return . show') xs
  
 instance Show' [] where
     show' = foldl f "" 
@@ -193,13 +193,10 @@ instance Monad m => FoldableTree (ListT m) where
                         runListT $
                             foldl (foldTree f) (f i t) xs 
 
-class ExtractFlat m where
- -- | extract to a flat list with identation
- extract :: Integer -> Tree m a -> m [(Integer,Tree m a)]
- -- | extract to a m of string
- extractToStr :: (Functor m,Show a) => Integer -> Tree m a -> m String
- extractToStr ident tree =  
-    flip fmap (extract ident tree)
+-- | extract to a m of string
+depthsToStr :: (FoldableTree m,Monad m,Functor m,Show a) => Tree m a -> m String
+depthsToStr tree =  
+    flip fmap (depths tree)
     ( \ xs -> 
         let 
             identation depth = (foldl (\ acc _-> acc ++ "    ") "" [1..depth]) 
@@ -207,26 +204,4 @@ class ExtractFlat m where
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)
 
-instance ExtractFlat [] where
-    extract ident tree =  
-     let extract' depth tnode = 
-            let tchildren = foldl ( \ acc child -> acc ++ (extract' (depth + 1) child)) 
-                            [] (getChildren tnode)
-            in (depth,tnode):tchildren
-     in return $ extract' ident tree
-
-instance Monad a => ExtractFlat (ListT a) where
-    extract i n = do
-                    xs <-  do
-                            t <- getChildren n
-                            extract (i+1) t
-                    return ((i,n):xs) 
-
-instance ExtractFlat Maybe where
-    extract ident tree = 
-        let extract' depth tnode = 
-                (depth,tnode):(case getChildren tnode of
-                                Just tchild -> extract' (depth+1) tchild
-                                Nothing -> [])
-        in Just $ extract' ident tree
 

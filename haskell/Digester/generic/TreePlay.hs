@@ -19,11 +19,11 @@ exMaybe = root 2 $ Just $ node 1 $ Just $ leaf 4
 
 exListT :: Tree (ListT IO) Integer
 exListT = root 2 $ ListT $ return [ 
-                    node 1  $ ListT $ return [
-                            node 1 $ ListT $ return [],  
-                            node 1 $ ListT $ return [], 
-                            node 3 $ ListT $ return []], 
-                    leaf 2 ] 
+                node 1  $ ListT $ return [
+                        node 1 $ ListT $ return [],  
+                        node 1 $ ListT $ return [], 
+                        node 3 $ ListT $ return []], 
+                leaf 2 ] 
 listTNodes = runListT $ countNodes exListT
                 
 
