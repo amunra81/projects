@@ -5,7 +5,7 @@
 
 module Projection (
 -- * projection utils
-project,transform -- projectToRoot,
+project,transform,projectToRoot
 ) where
 
 import Tree
@@ -45,7 +45,7 @@ projectToRoot pTree tree = do
 class Convertible m l where
    convert :: m a -> l a
 
-instance Convertible [] [] where
+instance Convertible m m where
     convert = id
 
 instance Convertible [] (ListT IO)  where
