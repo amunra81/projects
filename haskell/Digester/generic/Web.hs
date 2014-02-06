@@ -14,11 +14,12 @@ staticWeb =  do
 xText ::  String -> Html
 xText = Html . XText 
 
-liftList :: (Monad m) =>  [a] -> ListT m a
+liftList :: (Monad m) => [a] -> ListT m a
 liftList = ListT . return
         
 -- | create the domain nodes
---domains ::  ListT IO (PassParent (ListT IO) Html)
+-- domains ::  ListT IO (PassParent (ListT IO) Html)
+domains ::  ListT IO (PassParent [] Html)
 domains = do
             a <- liftList ["http://www.google.com"] 
             t <- lift $ downloadTree a

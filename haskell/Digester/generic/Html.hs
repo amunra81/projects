@@ -4,7 +4,6 @@ module Html where
 import Text.XML.HXT.Core hiding (Tree,root)
 import Text.XML.HXT.HTTP
 import Data.Tree.NTree.TypeDefs
-import Control.Monad.List
 import Tree
 
 newtype Html = Html {runNode :: XNode} 

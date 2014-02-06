@@ -49,7 +49,6 @@ ltoStr m = do
             xs <- runListT m
             return $ foldl (\acc t -> acc ++ (show t)) "" xs
 
-
 -- Maybe vs List --
 -- ------------- --
 

@@ -27,7 +27,8 @@ project pTree tree = do
         -- construct the final node
         return $ node (value tnode) tchildren
 
-projectC :: (MonadPlus m, Monad n,Countable m,Convertible n m) => Tree n (Div m a) -> Tree m a -> m (PassParent m a)
+projectC :: (MonadPlus m, Monad n,Countable m,Convertible n m) 
+         => Tree n (Div m a) -> Tree m a -> m (PassParent m a)
 projectC pTree tree = project (transform pTree) tree
 
 -- |project a tree based on a tree of divs. The projection result is a M(Tree)
@@ -44,6 +45,7 @@ projectToRoot pTree tree = do
         -- construct the root
         return $ root (value tnode) tchildren
 
-projectToRootC :: (MonadPlus m, Monad n,Countable m,Convertible n m) => Tree n (Div m a) -> Tree m a -> m (Tree m a)
+projectToRootC ::(MonadPlus m, Monad n,Countable m,Convertible n m) 
+               => Tree n (Div m a) -> Tree m a -> m (Tree m a)
 projectToRootC pTree tree= projectToRoot (transform pTree) tree
 
