@@ -26,7 +26,6 @@ exListT = root 2 $ ListT $ return [
                 leaf 2 ] 
 listTNodes = runListT $ countNodes exListT
                 
-
 -- GHCi some
 a :: Maybe [Integer]
 a = traverse (\x -> if x == 4 then Nothing else Just x ) [1,2,3] 

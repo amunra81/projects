@@ -1,13 +1,18 @@
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverlappingInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleInstances #-}
 
 module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
-,parent,nextBrothers,prevBrothers,Pos,PassParent,Countable,countNodes,depths,Show'(..)) where 
+,parent,nextBrothers,prevBrothers,Pos,PassParent,Countable,countNodes,depths,Show'(..),
+Convertible(..),transform) where 
+
 import Control.Monad
 import Control.Monad.List
 import System.IO.Unsafe(unsafePerformIO)
 import Data.Functor.Identity(Identity(..))
+import Control.Monad.Trans.Maybe(MaybeT(..))
 
 -- for not implemented parts
 na :: t
@@ -170,9 +175,6 @@ instance Show' [] where
     show' = foldl f "" 
             where f = \ acc str -> acc ++ "+" ++ str 
 
-instance Show' Maybe where
-    show' (Just str) = str
-    show' Nothing = "Nothing"     
 
 class FoldableTree m where
     foldTree :: (m n -> Tree m a -> m n) -> m n -> Tree m a -> m n
@@ -203,4 +205,29 @@ depthsToStr tree =
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)
 
+class Convertible m l where
+   convert :: m a -> l a
 
+instance Convertible m m where
+    convert = id
+
+instance Convertible [] (ListT IO)  where
+    convert xs = ListT $ return xs
+
+instance Convertible (MaybeT IO) (ListT IO)  where
+    convert m = ListT $ do 
+                    a <- runMaybeT m
+                    return $ maybe [] (\x -> [x]) a
+
+instance Convertible (ListT IO) (ListT IO)  where
+    convert = id
+
+instance Convertible Maybe [] where
+    convert (Just a)  = [a]
+    convert Nothing = []
+
+transform :: (Convertible m n,Monad m) => Tree m a -> Tree n a
+transform n = case n of
+                  Root a ch -> Root a (f ch)
+                  Node a ch p pos -> Node a (f ch) (transform p) pos
+               where f c = convert (c >>= \x -> return $ transform x)
