@@ -3,7 +3,7 @@
 {-# LANGUAGE OverlappingInstances #-}
 
 module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,commonIndexes,stringIndex,children,TreeProps(..),getChildren
-,parent,nextBrothers,prevBrothers,Pos,PassParent,Countable,countNodes,depths) where 
+,parent,nextBrothers,prevBrothers,Pos,PassParent,Countable,countNodes,depths,Show'(..)) where 
 import Control.Monad
 import Control.Monad.List
 import System.IO.Unsafe(unsafePerformIO)
@@ -168,7 +168,7 @@ instance (Show' a,Monad a) => Show' (ListT a) where
  
 instance Show' [] where
     show' = foldl f "" 
-            where f = \ acc str -> acc ++ "+" ++ str ++ "\n"
+            where f = \ acc str -> acc ++ "+" ++ str 
 
 instance Show' Maybe where
     show' (Just str) = str

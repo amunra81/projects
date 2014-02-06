@@ -5,7 +5,7 @@
 
 module Projection (
 -- * projection utils
-project,transform,projectToRoot
+project,transform,projectToRoot,projectC,projectToRootC
 ) where
 
 import Tree
@@ -28,6 +28,9 @@ project pTree tree = do
         -- construct the final node
         return $ node (value tnode) tchildren
 
+projectC :: (MonadPlus m, Monad n,Countable m,Convertible n m) => Tree n (Div m a) -> Tree m a -> m (PassParent m a)
+projectC pTree tree = project (transform pTree) tree
+
 -- |project a tree based on a tree of divs. The projection result is a M(Tree)
 projectToRoot :: ( MonadPlus m, Countable m ) => Tree m (Div m a) -> Tree m a -> m (Tree m a)
 projectToRoot pTree tree = do
@@ -41,6 +44,9 @@ projectToRoot pTree tree = do
 
         -- construct the root
         return $ root (value tnode) tchildren
+
+projectToRootC :: (MonadPlus m, Monad n,Countable m,Convertible n m) => Tree n (Div m a) -> Tree m a -> m (Tree m a)
+projectToRootC pTree tree= projectToRoot (transform pTree) tree
 
 class Convertible m l where
    convert :: m a -> l a
