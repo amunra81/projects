@@ -68,6 +68,7 @@ s13 = root div1 [                                                -- one
             leaf (any ==. div3 ==< div5),                          -- NONE 
             leaf (any ==. div5 ==. brother ==. div6),               -- three
             leaf (any ==. div2 ==. nextBrother ==. div7)            -- one
+-- put here all the Tree.Monad functions for testing
             ]                         
 
 -- GHCi  projectToRoot s13 tree1
