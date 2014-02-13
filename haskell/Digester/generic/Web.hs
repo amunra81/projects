@@ -26,8 +26,7 @@ domains = do
                 node (xText a) [toPassParent x | x <- getChildren t]
 
 get :: String -> Div m a
-get _ =
-              return na
+get _ = return na
 
 post :: String -> String -> Div m a
 post = na

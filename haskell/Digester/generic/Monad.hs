@@ -151,7 +151,67 @@ childAt pos tree = ContT $
                                                     else mzero
             _               -> mzero
 
-dig :: MonadPlus m => [Int] -> Div m a
+dig :: MonadPlus m => [Int] -> Div m ainstance MonadNonZero [] where
+    nonzero ([]) b  = b
+    nonzero a _     = a
+
+    firstnonzero ([]:xs) = firstnonzero xs
+    firstnonzero (x:_)   = x
+    firstnonzero []      = []
+
+instance MonadNonZero Maybe where 
+    nonzero Nothing b  = b
+    nonzero a _        = a
+
+    firstnonzero (Nothing:xs) = firstnonzero xs
+    firstnonzero (x:_)   = x
+    firstnonzero []      = Nothing
+
+instance Monad m => MonadNonZero (ListT m) where 
+    nonzero mx my = ListT $ do
+        x <- runListT mx
+        runListT $ case x of
+                   [] -> my
+                   _  -> mx
+
+    firstnonzero [] = mzero
+    firstnonzero (mx:mxs) = ListT $ do 
+        x <- runListT mx
+        runListT $ case x of
+                    [] -> firstnonzero mxs
+                    _  -> mx
+
+instance Monad m => MonadNonZero (MaybeT m) where 
+    nonzero mx my = MaybeT $ do 
+       x <- runMaybeT mx
+       runMaybeT $ case x of
+                   Nothing -> my
+                   _       -> mx
+
+    firstnonzero [] = mzero
+    firstnonzero (mx:mxs) = MaybeT $ do 
+       x <- runMaybeT mx
+       runMaybeT $ case x of
+                   Nothing -> firstnonzero mxs
+                   _       -> mx
+
+instance (Monad m , MonadNonZero m) => MonadNonZero (IdentityT m) where 
+    nonzero mx my = IdentityT $ nonzero (runIdentityT mx) (runIdentityT my)
+
+equal :: (Eq a, MonadPlus m) => a -> Div m a
+equal val tree = ContT $ \ next ->
+                        if value tree == val then next tree 
+                                            else mzero
+
+parentOf :: MonadPlus m => Div m a
+parentOf = \ tree ->  ContT $ 
+    \next ->  getChildren tree >>= next
+
+nextBrother :: MonadPlus m => Div m a
+nextBrother tree = ContT $ 
+    \next -> Tree.nextBrothers tree >>= next
+
+
 dig indexes tree = 
     foldl f x indexes 
     where 
