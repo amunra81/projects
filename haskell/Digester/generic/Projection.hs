@@ -48,3 +48,6 @@ projectToRoot pTree tree = do
 projectToRootC :: (MonadPlus m, Monad n, Countable m,Convertible n m) 
                => Tree n (Div m a) -> Tree m a -> m (Tree m a)
 projectToRootC pTree tree= projectToRoot (transform pTree) tree
+
+all :: Div m a -> m (PassParent m a) 
+all = na
