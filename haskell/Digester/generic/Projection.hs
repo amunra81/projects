@@ -27,7 +27,7 @@ project pTree tree = do
         -- construct the final node
         return $ node (value tnode) tchildren
 
-projectC :: (MonadPlus m, Monad n,Countable m,Convertible n m) 
+projectC :: (MonadPlus m, Monad n, Countable m, Convertible n m) 
          => Tree n (Div m a) -> Tree m a -> m (PassParent m a)
 projectC pTree tree = project (transform pTree) tree
 
