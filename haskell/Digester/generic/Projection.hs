@@ -52,13 +52,8 @@ projectToRootC pTree tree = projectToRoot (transform pTree) tree
 all :: Div m a -> m (PassParent m (Div m a)) 
 all = na
 
-replaceNode :: Monad m => Div m a -> Div m a -> Tree m a -> Tree m a
-replaceNode m n t = 
-        case t of
-        Root a ch -> Root a (f ch)
-        where f ch = do 
-                       x <- ch
-                       return x
-                    
+replaceNode :: Monad m => m [Pos] -> Div m a -> Tree m a -> Tree m a
+replaceNode m n t = na
+
 link :: Monad m => m (Tree m (Div m a,Div m a)) -> Tree m a -> Tree m a
 link _ t = t
