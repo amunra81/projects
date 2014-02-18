@@ -123,7 +123,7 @@ stringIndex ::  Tree m a -> [Char]
 stringIndex tree = foldl (\a x -> a ++ (show x)) "" $ index tree
 
 -- |get the children o a node , under the repsentation of a sequence
-getChildren :: MonadPlus m => Tree m a -> m (Tree m a)
+getChildren :: Tree m a -> m (Tree m a)
 getChildren tree = case tree of
                     Node _ xs _ _   -> xs
                     Root _ xs       -> xs
