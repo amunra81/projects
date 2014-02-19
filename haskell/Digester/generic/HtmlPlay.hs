@@ -7,7 +7,7 @@ import Control.Monad.List
 import Monad
 import Control.Monad.Trans.Cont(ContT(..))
 import Prelude hiding (any)
-import Text.XML.HXT.Core hiding (Tree,root)
+import Text.XML.HXT.Core hiding (Tree,root,first)
 import Text.XML.HXT.HTTP
 import Data.Tree.NTree.TypeDefs
 import ShowInstances 
@@ -22,13 +22,17 @@ get str t = ContT $
                         web <- liftIO $ downloadTree str 
                         next web
 
-t ::  Tree (ListT IO) Html
-t = transform $ root (Html (XText "http://www.haskell.com")) []
+htmTxt :: String -> Html
+htmTxt = Html . XText
 
-d :: (Convertible [] m,Monad m,MonadIO m) => Div m Html
+t ::  Tree (ListT IO) Html
+t = transform $ root (htmTxt "http://www.google.com") [node (htmTxt "http://www.haskell.com") []]
+
+d :: (MonadPlus m,Convertible [] m,Monad m,MonadIO m) => Div m Html
 d t = do
-        t1 <- idDiv t
+        t1 <- any t
         let (Html (XText url)) = value t1 
-        get url t1
+        return t1
+        --get url t1
 
 x = runDiv d t
