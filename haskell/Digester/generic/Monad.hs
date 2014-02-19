@@ -4,7 +4,7 @@ DivCont,MonadNonZero(nonzero,firstnonzero),Div,
 -- * Utils
 runDiv,
 -- * Div constructors
-parentOf,equal,alt,first,
+idDiv,parentOf,equal,alt,first,
 Monad.any,childOf,childAt,nextBrother,prevBrother,subNodeOf,
 both,brother,
 escalate,dig,path
@@ -83,6 +83,9 @@ instance Monad m => MonadNonZero (MaybeT m) where
 instance (Monad m , MonadNonZero m) => MonadNonZero (IdentityT m) where 
     nonzero mx my = IdentityT $ nonzero (runIdentityT mx) (runIdentityT my)
 
+idDiv :: Div m a
+idDiv tree = ContT $ \ next -> next tree
+
 equal :: (Eq a, MonadPlus m) => a -> Div m a
 equal val tree = ContT $ \ next ->
                         if value tree == val then next tree 
@@ -90,7 +93,7 @@ equal val tree = ContT $ \ next ->
 
 parentOf :: MonadPlus m => Div m a
 parentOf = \ tree ->  ContT $ 
-    \next ->  getChildren tree >>= next
+    \next -> getChildren tree >>= next
 
 nextBrother :: MonadPlus m => Div m a
 nextBrother tree = ContT $ 

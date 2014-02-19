@@ -1,20 +1,33 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 module HtmlPlay where
 import Tree
 import Html
 import Control.Monad.List
 import Monad
 import Control.Monad.Trans.Cont(ContT(..))
+import Prelude hiding (any)
+import Text.XML.HXT.Core hiding (Tree,root)
+import Text.XML.HXT.HTTP
+import Data.Tree.NTree.TypeDefs
 
 haskellPage ::  IO (Tree (ListT IO) Html)
 haskellPage = downloadTree "http://www.haskell.com"
 
---get :: String -> Div m a
+get :: (Monad m,MonadIO m,Convertible [] m) 
+    => String -> Div m Html
 get str t = ContT $  
-            \ next -> next $ downloadTree str
-                        
+            \ next -> do
+                        web <- liftIO $ downloadTree str 
+                        next web
 
-t = root "http://www.haskell.com" []
+t ::  Tree (ListT IO) Html
+t = transform $ root (Html (XText "http://www.haskell.com")) []
 
---d t = do
---        t1 <- all t
---        return 
+d :: (Convertible [] m,Monad m,MonadIO m) => Div m Html
+d t = do
+        t1 <- idDiv t
+        let (Html (XText url)) = value t1 
+        get url t1
+
+x = runDiv d t
