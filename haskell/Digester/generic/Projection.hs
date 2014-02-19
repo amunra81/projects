@@ -11,7 +11,6 @@ project,transform,projectToRoot,projectC,projectToRootC
 import Tree
 import Monad
 import Prelude hiding (div,all)
-import Control.Monad.List
 
 -- |project a tree based on a tree of divs. The projection result is a M(PassParent)
 project :: (Monad m, Countable m) => Tree m (Div m a) -> Tree m a -> m (PassParent m a)
@@ -52,8 +51,8 @@ projectToRootC pTree tree = projectToRoot (transform pTree) tree
 all :: Div m a -> m (PassParent m (Div m a)) 
 all = na
 
-replaceNode :: MonadPlus m => m [Pos] -> Div m a -> Tree m a -> Tree m a
-replaceNode m n t = na -- mzero is the key
+replaceNode :: Div m a -> Div m a
+replaceNode d1 tree = na 
 
 link :: Monad m => m (Tree m (Div m a,Div m a)) -> Tree m a -> Tree m a
 link _ t = t
