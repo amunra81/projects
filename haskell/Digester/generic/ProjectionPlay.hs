@@ -22,6 +22,10 @@ instance Show a => Show (ListT IO (Tree (ListT IO) a)) where
 instance Show (ListT IO Integer) where
     show = show . unsafePerformIO . runListT
 
+ltoStr m = do
+            xs <- runListT m
+            return $ foldl (\acc t -> acc ++ (show t)) "" xs
+
 tree1 :: Tree [] Integer
 tree1 = 
     root 1 [
@@ -45,9 +49,6 @@ tree1 =
 
 ltree1 = transform tree1 :: Tree (ListT IO) Integer
 
-ltoStr m = do
-            xs <- runListT m
-            return $ foldl (\acc t -> acc ++ (show t)) "" xs
 
 -- Maybe vs List --
 -- ------------- --

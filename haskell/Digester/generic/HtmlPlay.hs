@@ -10,6 +10,7 @@ import Prelude hiding (any)
 import Text.XML.HXT.Core hiding (Tree,root)
 import Text.XML.HXT.HTTP
 import Data.Tree.NTree.TypeDefs
+import ShowInstances 
 
 haskellPage ::  IO (Tree (ListT IO) Html)
 haskellPage = downloadTree "http://www.haskell.com"
