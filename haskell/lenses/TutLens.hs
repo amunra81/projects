@@ -96,11 +96,16 @@ unitsOfInitialState = initialState ^.. partyHP
 
 around :: Point -> Double -> Traversal' Unit Unit
 around center radius = filtered (\unit ->
-    (unit^.position.x - center^.x)^2
-  + (unit^.position.y - center^.y)^2
-  < radius^2 ) 
+    (unit^.position.x - center^.x)^2 + (unit^.position.y - center^.y)^2 < radius^2 ) 
 
 fireBreath2 :: Point -> StateT Game IO ()
 fireBreath2 target = do
               lift $ putStrLn "*rawr*"
               units.traversed.(around target 1.0).health -= 3
+
+retreat :: StateT Game IO ()
+retreat = do
+    lift $ putStrLn "Retreat!"
+    zoom (units.traversed.position) $ do
+        x += 10
+        y += 10
