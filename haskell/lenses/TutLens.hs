@@ -103,6 +103,7 @@ fireBreath2 target = do
               lift $ putStrLn "*rawr*"
               units.traversed.(around target 1.0).health -= 3
 
+-- zoom 
 retreat :: StateT Game IO ()
 retreat = do
     lift $ putStrLn "Retreat!"
