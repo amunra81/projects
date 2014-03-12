@@ -1,3 +1,5 @@
+{-# LANGUAGE RankNTypes #-}
+
 module TutLens where
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.State
@@ -70,7 +72,7 @@ initialState = Game
 strike :: StateT Game IO ()
 strike = do
         lift $ putStrLn "*shink*"
-        boss.health -= 10
+        boss . health -= 10
 
 fstMove ::  IO Int
 fstMove = do
@@ -80,4 +82,25 @@ fstMove = do
 fireBreath :: StateT Game IO ()
 fireBreath = do
     lift $ putStrLn "*rawl*"
-    units . traversed . health -= 3
+    partyHP -= 3
+
+partyHP :: Traversal' Game Int
+partyHP = units . traversed . health
+
+move mv =  do -- IO
+             newState <- execStateT mv initialState
+             return $ toListOf partyHP newState
+
+unitsOfInitialState :: [Int]
+unitsOfInitialState = initialState ^.. partyHP
+
+around :: Point -> Double -> Traversal' Unit Unit
+around center radius = filtered (\unit ->
+    (unit^.position.x - center^.x)^2
+  + (unit^.position.y - center^.y)^2
+  < radius^2 ) 
+
+fireBreath2 :: Point -> StateT Game IO ()
+fireBreath2 target = do
+              lift $ putStrLn "*rawr*"
+              units.traversed.(around target 1.0).health -= 3
