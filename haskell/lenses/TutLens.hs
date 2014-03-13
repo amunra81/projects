@@ -4,6 +4,8 @@ module TutLens where
 import Control.Monad.Trans.Class
 import Control.Monad.Trans.State
 import Control.Lens
+import Data.Foldable(forM_)
+import Control.Monad(replicateM_)
 
 na :: t
 na = error "na"
@@ -110,3 +112,26 @@ retreat = do
     zoom (units.traversed.position) $ do
         x += 10
         y += 10
+
+--real battle
+battle :: StateT Game IO ()
+battle = do
+    -- Charge!
+    forM_ ["Take that!", "and that!", "and that!"] $ \taunt -> do
+        lift $ putStrLn taunt
+        strike
+
+    -- The dragon awakes!
+    fireBreath2 (Point 0.5 1.5)
+    
+    replicateM_ 3 $ do
+        -- The better part of valor
+        retreat
+
+        -- Boss chases them
+        zoom (boss.position) $ do
+            x += 10
+            y += 10
+
+play :: (Monad m) => StateT Game m a -> m Game
+play = (flip execStateT) initialState 
