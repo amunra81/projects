@@ -18,21 +18,27 @@ haskellPage = downloadTree "http://www.haskell.com"
 get :: (Monad m,MonadIO m,Convertible [] m) 
     => String -> Div m Html
 get str t = ContT $  
-            \ next -> do
-                        web <- liftIO $ downloadTree str 
-                        next web
+            \ next -> do 
+               web <- liftIO $ downloadTree str 
+               next web
 
 htmTxt :: String -> Html
 htmTxt = Html . XText
 
 t ::  Tree (ListT IO) Html
-t = transform $ root (htmTxt "http://www.google.com") [node (htmTxt "http://www.haskell.com") []]
+t = transform $ root (htmTxt "http://www.haskell.com") []
 
-d :: (MonadPlus m,Convertible [] m,Monad m,MonadIO m) => Div m Html
+equalTag :: MonadPlus m => String -> Div m Html
+equalTag str tree = 
+        ContT $ \ next ->
+            if show (value tree) == str then next tree 
+                                       else mzero
+
+d :: (MonadPlus m,Convertible [] m,Monad m,MonadIO m,MonadNonZero m) => Div m Html
 d t = do
-        t1 <- any t
+        t1 <- first t
         let (Html (XText url)) = value t1 
-        return t1
-        --get url t1
+        t2 <- get url t1
+        any ==. equalTag "\"body\"" $ t2 
 
-x = runDiv d t
+x = runDiv d t 

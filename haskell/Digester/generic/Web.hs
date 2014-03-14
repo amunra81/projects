@@ -1,3 +1,5 @@
+{-# LANGUAGE FlexibleContexts #-}
+
 module Web (staticWeb,get,post) where
 
 import Tree
@@ -5,6 +7,7 @@ import Html
 import Monad
 import Text.XML.HXT.Core hiding (Tree,root,getChildren)
 import Control.Monad.List
+import Control.Monad.Trans.Cont(ContT(..))
 
 staticWeb ::  IO (Tree [] Html)
 staticWeb =  do 
@@ -25,8 +28,13 @@ domains = do
             return $ 
                 node (xText a) [toPassParent x | x <- getChildren t]
 
-get :: String -> Div m a
-get _ = return na
+-- get a html page returning a div
+get :: (Monad m,MonadIO m,Convertible [] m) 
+    => String -> Div m Html
+get str t = ContT $  
+            \ next -> do 
+               web <- liftIO $ downloadTree str 
+               next web
 
 post :: String -> String -> Div m a
 post = na

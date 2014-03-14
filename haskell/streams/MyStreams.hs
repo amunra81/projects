@@ -7,6 +7,7 @@ na = error "na"
 test ::  IO ()
 test = do
         listHandle <- S.fromList ([1,2]::[Integer])
+
         i1 <- S.read listHandle
         (putStrLn . show) i1
         i2 <- S.read listHandle
@@ -18,12 +19,17 @@ test = do
 -- streams transformation
 test2 = do
         oldHandle <- S.fromList ([1,2]::[Integer])
+        -- transform first handle
         newHandle <- S.mapM (\a-> (return . show) (a*10)) oldHandle
+
         i1 <- S.read newHandle
         (putStrLn . show) i1
+
         -- we can still see the stream throw the old handle
         i2 <- S.read oldHandle
         (putStrLn . show) i2
+
+        -- get nothing
         i3 <- S.read newHandle
         (putStrLn . show) i3
 

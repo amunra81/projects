@@ -16,4 +16,4 @@ some xs = do                            -- runST takes out stateful code and mak
 sumST :: Num a => [a] -> a
 sumST xs = runST $ some xs
 -- GHCi sumST [1,2,3]
-
+main = error ""

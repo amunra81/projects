@@ -14,7 +14,7 @@ import Data.Foldable(foldMap)
 import Data.Monoid(Sum(..))
 import System.IO.Unsafe(unsafePerformIO)
 
-(div1:div2:div3:div4:div5:div6:div7:div8:_) = map equal [1..]
+(div1:div2:div3:div4:div5:div6:div7:div8:_) =  map equal [1..]
 
 instance Show a => Show (ListT IO (Tree (ListT IO) a)) where
     show = unsafePerformIO . ltoStr
