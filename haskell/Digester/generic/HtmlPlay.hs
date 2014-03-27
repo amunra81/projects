@@ -3,7 +3,7 @@
 module HtmlPlay where
 import Tree
 import Html
-import Control.Monad.List
+import Control.Monad.Trans.List(ListT(..))
 import Monad
 import Control.Monad.Trans.Cont(ContT(..))
 import Prelude hiding (any)
@@ -11,6 +11,9 @@ import Text.XML.HXT.Core hiding (Tree,root,first)
 import Text.XML.HXT.HTTP
 import Data.Tree.NTree.TypeDefs
 import ShowInstances 
+import Control.Monad.IO.Class(MonadIO)
+import Control.Monad.IO.Class(liftIO)
+import Control.Monad(MonadPlus(..))
 
 haskellPage ::  IO (Tree (ListT IO) Html)
 haskellPage = downloadTree "http://www.haskell.com"

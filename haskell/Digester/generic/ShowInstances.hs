@@ -1,7 +1,7 @@
 {-# LANGUAGE FlexibleInstances #-}
 module ShowInstances where 
 
-import Control.Monad.List(ListT(..))
+import Control.Monad.Trans.List(ListT(..))
 import Tree
 import System.IO.Unsafe(unsafePerformIO)
 

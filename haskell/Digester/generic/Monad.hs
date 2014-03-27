@@ -13,8 +13,8 @@ escalate,dig,path
 
 import Tree
 import Control.Monad(MonadPlus(..))
-import Control.Monad.Cont(ContT(..))
-import Control.Monad.List(ListT(..))
+import Control.Monad.Trans.Cont(ContT(..))
+import Control.Monad.Trans.List(ListT(..))
 import Control.Monad.Trans.Maybe(MaybeT(..))
 import Control.Monad.Trans.Identity(IdentityT(..))
 import Prelude hiding (div)

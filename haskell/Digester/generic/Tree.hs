@@ -9,10 +9,10 @@ module Tree (Tree(..),na,node,root,leaf,toPassParent,value,position,index,common
 Convertible(..),transform) where 
 
 import Control.Monad
-import Control.Monad.List
 import System.IO.Unsafe(unsafePerformIO)
 import Data.Functor.Identity(Identity(..))
 import Control.Monad.Trans.Maybe(MaybeT(..))
+import Control.Monad.Trans.List(ListT(..))
 
 -- for not implemented parts
 na :: t

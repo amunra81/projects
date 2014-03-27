@@ -6,8 +6,10 @@ import Tree
 import Html
 import Monad
 import Text.XML.HXT.Core hiding (Tree,root,getChildren)
-import Control.Monad.List
 import Control.Monad.Trans.Cont(ContT(..))
+import Control.Monad.Trans.List(ListT(..))
+import Control.Monad.Trans.Class(lift)
+import Control.Monad.IO.Class(MonadIO,liftIO)
 
 staticWeb ::  IO (Tree [] Html)
 staticWeb =  do 
