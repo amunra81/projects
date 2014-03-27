@@ -24,7 +24,7 @@ cmdlineOpts argv
 -- | mapping an XmlTree to a Tree of Html
 mapTree :: XmlTree -> Tree [] Html
 mapTree (NTree val xs) 
-  = root (Html val) $ g xs 
+  = root (Html val) $ g xs
     where 
     g zs = [getTreeNode x | x <- zs]
     getTreeNode xml = case xml of
