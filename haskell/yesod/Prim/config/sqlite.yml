@@ -1,0 +1,20 @@
+Default: &defaults
+  database: Prim.sqlite3
+  poolsize: 10
+
+Development:
+  <<: *defaults
+
+Testing:
+  database: Prim_test.sqlite3
+  <<: *defaults
+
+Staging:
+  database: Prim_staging.sqlite3
+  poolsize: 100
+  <<: *defaults
+
+Production:
+  database: Prim_production.sqlite3
+  poolsize: 100
+  <<: *defaults
