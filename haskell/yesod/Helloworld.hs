@@ -1,6 +1,7 @@
 {-# LANGUAGE QuasiQuotes           #-}
 {-# LANGUAGE TemplateHaskell       #-}
 {-# LANGUAGE TypeFamilies          #-}
+
 import           Yesod
 
 na :: t
@@ -16,13 +17,11 @@ mkYesod "HelloWorld" [parseRoutes|
 instance Yesod HelloWorld
 
 getHomeR :: Handler Html
-getHomeR = defaultLayout [whamlet|Hello World!|]
+getHomeR = defaultLayout [whamlet| Hello World! |]
 
---getSampleR :: Handler Html
+getSampleR ::  Handler Html
 getSampleR = defaultLayout $ do
-    --setTitle "My Awesome Site"
     toWidget [julius| alert("Hello World"); |]
-
 
 main :: IO ()
 main = warp 3000 HelloWorld
