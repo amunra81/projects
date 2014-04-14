@@ -11,5 +11,3 @@ tk = take 3000
 
 y  = tk x
 y' = tk x'
-
-
