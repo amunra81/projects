@@ -5,6 +5,8 @@ module TestImport
     , module Foundation
     , module Database.Persist
     , runDB
+    , module Data.Functor
+    , module Prelude
     , Spec
     , Example
     ) where
@@ -16,6 +18,8 @@ import Control.Monad.IO.Class (liftIO)
 
 import Foundation
 import Model
+import Data.Functor(fmap)
+import Prelude(($))
 
 type Spec = YesodSpec App
 type Example = YesodExample App
