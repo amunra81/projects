@@ -46,9 +46,10 @@ instance Show Html where
   show  (Html (XEntityRef s))       = "{ entityRef = "++s++ " }"
   show  (Html (XCmt s))             = "{ comment = "++ s ++ " }"
   show  (Html (XCdata s))           = "{ cdata = " ++ s ++ " }"
-  show  (Html (XPi name _))         = "{ pi = " ++ (show name) ++ " }"
+  show  (Html (XPi name _))         = "{ pi = " ++ show name ++ " }"
   show  (Html (XTag name _))        = show name
   show  (Html (XDTD _ _))           = "{ xdtd }"
   show  (Html (XAttr name))         = "a"++show name
-  show  (Html (XError errno msg))   = "{ error = "++ (show errno) ++ " - " ++ msg ++ " }"
+  show  (Html (XError errno msg))   = "{ error = "++ show errno ++ " - " ++ msg ++ " }"
+  show  (Html (XBlob _))            = na
 

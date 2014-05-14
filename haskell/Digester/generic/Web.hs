@@ -33,7 +33,7 @@ domains = do
 -- get a html page returning a div
 get :: (Monad m,MonadIO m,Convertible [] m) 
     => String -> Div m Html
-get str t = ContT $  
+get str _ = ContT $  
             \ next -> do 
                web <- liftIO $ downloadTree str 
                next web

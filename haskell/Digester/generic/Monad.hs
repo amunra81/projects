@@ -125,6 +125,7 @@ childOf tree = ContT $
     \ next -> case parent tree of
              HasParent p      -> next p
              None             -> mzero
+             HasChildren _    -> na
 
 subNodeOf :: MonadPlus m => Div m a
 subNodeOf tree = ContT $ \ next ->
@@ -132,6 +133,7 @@ subNodeOf tree = ContT $ \ next ->
     let parents t = case parent t of
                        HasParent p -> p : parents p
                        None             -> []
+                       HasChildren _    -> na
         -- map to next
         divs = map next (parents tree)
         -- sum all the nonzero results
