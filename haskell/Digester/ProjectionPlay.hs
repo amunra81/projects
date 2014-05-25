@@ -1,3 +1,6 @@
+{-# LANGUAGE NoMonomorphismRestriction #-}
+{-# LANGUAGE FlexibleInstances #-}
+
 module ProjectionPlay where
 import Tree
 import Monad
@@ -5,27 +8,31 @@ import Projection
 import Prelude hiding (any)
 import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.List(ListT)
+import Control.Monad(MonadPlus)
+import Control.Monad.List
+import Data.Foldable(foldMap)
+import Data.Monoid(Sum(..))
+import System.IO.Unsafe(unsafePerformIO)
 
-sdiv1,sdiv2,sdiv3,sdiv4,sdiv5,sdiv6,sdiv7,sdiv8 ::  Div [] Integer
-(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:_) = map equal [1..]
+(div1:div2:div3:div4:div5:div6:div7:div8:_) =  map equal [1..]
 
-mdiv1,mdiv2,mdiv3,mdiv4,mdiv5,mdiv6,mdiv7,mdiv8 ::  Div Maybe Integer
-(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:_) = map equal [1..]
+instance Show a => Show (ListT IO (Tree (ListT IO) a)) where
+    show = unsafePerformIO . ltoStr
 
-isdiv1,isdiv2,isdiv3,isdiv4,isdiv5,isdiv6,isdiv7,isdiv8 ::  Div (ListT IO) Integer
-(isdiv1:isdiv2:isdiv3:isdiv4:isdiv5:isdiv6:isdiv7:isdiv8:_) = map equal [1..]::[Div (ListT IO) Integer]
+instance Show (ListT IO Integer) where
+    show = show . unsafePerformIO . runListT
 
-imdiv1,imdiv2,imdiv3,imdiv4,imdiv5,imdiv6,imdiv7,imdiv8 ::  Div (MaybeT IO) Integer
-(imdiv1:imdiv2:imdiv3:imdiv4:imdiv5:imdiv6:imdiv7:imdiv8:_) = map equal [1..]::[Div (MaybeT IO) Integer]
+ltoStr m = do
+            xs <- runListT m
+            return $ foldl (\acc t -> acc ++ (show t)) "" xs
 
-tree1 ::  Tree Integer
+tree1 :: Tree [] Integer
 tree1 = 
     root 1 [
-            --from here 
             node 2 [
                     leaf 6,
                     node 5 [
-                            leaf 7 ], -- to here is repeating
+                            leaf 7 ], 
                     node 2 [
                             leaf 6,
                             node 5 [
@@ -40,87 +47,30 @@ tree1 =
                      leaf 7 ],
             leaf 4 ]
 
+ltree1 = transform tree1 :: Tree (ListT IO) Integer
+
+
 -- Maybe vs List --
 -- ------------- --
 
-s11,m11,s12,m12,s13,m13,s14 :: Tree ( Proj Integer )
+s11 = root (first ==. div2) []  -- only one result : FUCK ME :)) there are two of them
+s12 = root (any ==. div2) []    -- three results
 
-is11,im11,is12,im12:: Tree (ProjIO Integer)
+-- GHCi  projectToRoot s11 tree1
+-- GHCi  projectToRootC s11 ltree1
+-- GHCi  projectToRoot s12 tree1
+-- GHCi  projectToRootC s12 ltree1
 
-s11 = proot (first ... sdiv2) []-- only one result
-m11 = proot (first ... mdiv2) [] -- only one result
+s13 = root div1 [                                                -- one
+            leaf (any ==. div2 ==< div5),                          -- three
+            node (any ==. div2 ==< div2) [                         -- one
+                        leaf (any ==. div7) ],                    -- two
+            leaf (any ==. div3 ==< div5),                          -- NONE 
+            leaf (any ==. div5 ==. brother ==. div6),               -- three
+            leaf (any ==. div2 ==. nextBrother ==. div7)            -- one
+-- put here all the Tree.Monad functions for testing
+            ]                         
 
-is11 = proot (first ... isdiv2) [] -- only one result
-im11 = proot (first ... imdiv2) [] -- only one result
+-- GHCi  projectToRoot s13 tree1
+-- GHCi  projectToRootC s13 ltree1
 
-s12 = proot (any ... sdiv2) [] -- three results
-m12 = proot (any ... mdiv2) [] -- only one result
-is12 = proot (any ... isdiv2) [] -- three results
-im12 = proot (any ... imdiv2) [] -- only one result
-
----- GHCi  projectToRoot m11 tree1
----- GHCi  projectToRoot s11 tree1
----- GHCi  projectToRoot m12 tree1
----- GHCi  projectToRoot s12 tree1 
-
---s14 = proot sdiv1 [ pleaf $ (first :: (Div [] Integer)) ]                                                   
-s14 = proot mdiv1 [ 
-                    pleaf ( any ... sdiv2 ^< sdiv5)
-                    --pnode (first ... sdiv2 ^< sdiv2) []
-                  ]                                                   
-
-s13 = proot sdiv1 [                                                   -- one
-            pleaf (any ... sdiv2 ^< sdiv5),                            -- three
-            pnode (first ... sdiv2 ^< sdiv2) [                         -- one
-                                            pleaf (any ... sdiv7) ],   -- two
-            pleaf (first ... sdiv3 ^< sdiv5) ]                         -- NONE 
-
--- GHCi  projectToRoot s13 tree1 
-
-m13 = proot mdiv1 [                                                   -- one
-            pleaf (any ... mdiv2 ^< mdiv5),                            -- one
-            pnode (first ... mdiv2 ^< mdiv2) [                         -- one
-                                            pleaf (any ... mdiv7) ],   -- one
-            pleaf (first ... mdiv3 ^< mdiv5) ]                         -- NONE 
-
--- GHCi  projectToRoot m13 tree1 
---
---tree2 = 
---    root 1 [
---            --from here 
---            node 1 [
---                    leaf 6,
---                    node 5 [],
---                    leaf 5 ],
---            node 2 [
---                    leaf 6,
---                    leaf 5 ],
---            node 3 [
---                    leaf 6,
---                    leaf 5 ]
---            ] 
---
---p1 = proot ( mdiv1 ) [
---         pnode (parentOf::Div [] Integer) [
---              pleaf (first ... sdiv5)]]
---
----- GHCi  projectToRoot p1 tree2 
---
---p2 = proot ( mdiv1 ) [
---         pnode (parentOf::Div Maybe Integer) [
---              pleaf (parentOf ... sdiv5)]]
---
----- GHCi  projectToRoot p2 tree2 
---
---p3 = proot ( mdiv1 ) [
---         pnode (parentOf::Div (ListT IO) Integer) [
---              pleaf (first ... sdiv5)]]
---
----- GHCi  projectToRoot p3 tree2 
---
---p4 = proot ( mdiv1 ) [
---         pnode (parentOf::Div (MaybeT IO) Integer) [
---              pleaf (parentOf ... sdiv5)]]
---
----- GHCi  projectToRoot p4 tree2 
---

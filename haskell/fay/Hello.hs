@@ -15,7 +15,7 @@ addWindowEvent :: String -> (Event -> Fay ()) -> Fay ()
 addWindowEvent = ffi "window.addEventListener(%1, %2)"
 
 greet :: Event -> Fay()
-greet event = do
+greet _ = do
   putStrLn "The document has loaded"
   setBodyHtml "Hello HTML!"
 

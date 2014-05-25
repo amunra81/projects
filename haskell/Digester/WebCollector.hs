@@ -10,10 +10,6 @@ type ParentPos = Integer
 type Url = String
 type QueryParams = (String,String)
 
-data ExternAction  a =  AddRoot a |
-                        AddNode ParentPos NodePos |
-                        Nothing
-
 data WebAction = Get Url |
                  Post Url [QueryParams] 
                  

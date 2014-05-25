@@ -18,7 +18,7 @@ keepSmall x
 
 --some custom implementation of filterM'
 filterM' :: (Monad m) => (a -> m Bool) -> [a] -> m [a]
-filterM' f [] = return []
+filterM' _ [] = return []
 filterM' f (x:xs) = do
             valid <- f x
             if valid then do
@@ -28,8 +28,10 @@ filterM' f (x:xs) = do
             else filterM' f xs 
                 
 --another implementation of the same filter function
+filterM'a ::  Monad m => (a -> m Bool) -> [a] -> m [a]
 filterM'a f (x:xs) = f x >>= ( \b -> if b then filterM'a f xs >>= \ls -> return (x:ls)
                                     else filterM'a f xs) 
+filterM'a _ _ = error ""
 
 filterM'b :: (Monad m) => (a -> m Bool) -> [a] -> m [a]
 filterM'b f xs =
@@ -43,7 +45,9 @@ filterM'b f xs =
 --GHCi fst $ runWriter $ filterM'b  keepSmall [1,2,3,4,5,6,7,8,9,0]
 
 --official implementation
+stdFilter ::  IO ()
 stdFilter = mapM_ putStrLn $ snd $ runWriter $ filterM  keepSmall [1,2,3,4,5,6,7,8,9,0]
 
 --the equivalent custom-implementation
+cusFilter ::  IO ()
 cusFilter = mapM_ putStrLn $ snd $ runWriter $ filterM' keepSmall [1,2,3,4,5,6,7,8,9,0]

@@ -2,94 +2,58 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+
 module Projection (
-ProjX(..),Proj,ProjIO,ProjRIO
--- * projection tree constructors
-,proot,pnode,pleaf,pnodeOrLeaf
 -- * projection utils
-,project,projectToRoot
-) where
+project,transform,projectToRoot,projectC,projectToRootC
+,link,all) where
 
 import Tree
 import Monad
-import Prelude hiding (div)
-import Control.Monad.List
-import Control.Monad.Trans.Reader(ReaderT)
-import Control.Monad.Trans.Maybe
+import Prelude hiding (div,all)
 
-data ProjX l a = forall m. ( Monad m,Monad l,Convertible m l) => ProjX ( Div m a )
-
--- ProjX aliasses
-type Proj a = ProjX [] a
-type ProjIO a = ProjX (ListT IO) a
-type ProjRIO r a = ProjX (ReaderT r (ListT IO)) a
-
--- * CONSTRUCTORS
-proot :: ( Monad m,Monad l,Convertible m l)
-      => Div m a 
-      -> [PassParent (ProjX l a)] 
-      -> Tree (ProjX l a)
-proot = root . ProjX 
-
-pnode :: ( Monad m,Monad l,Convertible m l)
-      => Div m a 
-      -> [PassParent (ProjX l a)] 
-      -> PassParent (ProjX l a)
-pnode = node . ProjX 
-
-pleaf ::  ( Monad m,Monad l,Convertible m l)
-      => Div m a 
-      -> PassParent (ProjX l a)
-pleaf = leaf . ProjX 
-
-pnodeOrLeaf :: ( Monad m,Monad l,Convertible m l)
-            => Div m a 
-            -> [PassParent (ProjX l a)] 
-            -> PassParent (ProjX l a)
-pnodeOrLeaf = nodeOrLeaf . ProjX 
-
--- * Convertible
-class Convertible m l where
-   convert :: m a -> l a
-
-instance Convertible [] [] where
-    convert = id
-
-instance Convertible (MaybeT IO) (ListT IO)  where
-    convert m = ListT $ do 
-                    a <- runMaybeT m
-                    return $ maybe [] (\x -> [x]) a
-                     
-    --maybe (ListT . return []) id 
-
-instance Convertible (ListT IO) (ListT IO)  where
-    convert = id
-
-instance Convertible Maybe [] where
-    convert (Just a)  = [a]
-    convert Nothing = []
-
-projectNode :: ProjX l a -> Tree a -> l (Tree a)
-projectNode (ProjX div) tree = convert $ runDiv  div tree
-                                
-project :: Monad l => Tree (ProjX l a) -> Tree a -> l (PassParent a)
+-- |project a tree based on a tree of divs. The projection result is a M(PassParent)
+project :: (Monad m, Countable m) => Tree m (Div m a) -> Tree m a -> m (PassParent m a)
 project pTree tree = do
-        -- get the node from the projection
-        tnode <- projectNode (value pTree) tree -- r l
+        -- project the main node
+        tnode <- runDiv (value pTree) tree
 
         -- get the projected children
-        tchildren <- sequence $ map (\ pNode -> project pNode tnode) $ getChildren pTree
+        let tchildren = do
+                            x <- getChildren pTree
+                            project x tnode
 
         -- construct the final node
-        return $ nodeOrLeaf (value tnode) tchildren
+        return $ node (value tnode) tchildren
 
-projectToRoot :: Monad l => Tree (ProjX l a) -> Tree a -> l (Tree a)
+projectC :: (Monad m,Monad n, Countable m, Convertible n m) 
+         => Tree n (Div m a) -> Tree m a -> m (PassParent m a)
+projectC pTree tree = project (transform pTree) tree
+
+-- |project a tree based on a tree of divs. The projection result is a M(Tree)
+projectToRoot :: (Monad m, Countable m) => Tree m (Div m a) -> Tree m a -> m (Tree m a)
 projectToRoot pTree tree = do
         -- get the node from the projection
-        tnode <- projectNode (value pTree) tree -- r l
+        tnode <- runDiv (value pTree) tree
 
         -- get the projected children
-        tchildren <- sequence $ map (\ pNode -> project pNode tnode) $ getChildren pTree
+        let tchildren = do
+                           x <- getChildren pTree
+                           project x tnode
 
         -- construct the root
         return $ root (value tnode) tchildren
+
+projectToRootC :: (Monad m, Monad n, Countable m,Convertible n m) 
+               => Tree n (Div m a) -> Tree m a -> m (Tree m a)
+projectToRootC pTree tree = 
+    projectToRoot (transform pTree) tree
+
+all :: Div m a -> m (PassParent m (Div m a)) 
+all = na
+
+replaceNode :: Div m a -> Div m a
+replaceNode d1 tree = na 
+
+link :: Monad m => m (Tree m (Div m a,Div m a)) -> Tree m a -> Tree m a
+link _ t = t

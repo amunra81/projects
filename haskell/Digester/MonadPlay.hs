@@ -1,15 +1,24 @@
-{-# LANGUAGE ScopedTypeVariables #-}
 module MonadPlay where
+
 import Tree
 import Monad
-import Control.Monad.Cont
 import Prelude hiding (any) 
-import Control.Monad.Trans.List(ListT)
 import Control.Monad.Trans.Maybe(MaybeT)
-                    
-(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:sdiv9:_) = map equal [1..]::[Div [] Integer]
-(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:mdiv9:_) = map equal [1..]::[Div Maybe Integer]
+import Control.Monad.List(ListT)
+import Control.Monad(MonadPlus)
 
+sdiv1,sdiv2,sdiv3,sdiv4,sdiv5,sdiv6,sdiv7,sdiv8,sdiv9 :: Div [] Integer
+mdiv1,mdiv2,mdiv3,mdiv4,mdiv5,mdiv6,mdiv7,mdiv8,mdiv9 :: Div Maybe Integer
+isdiv1,isdiv2,isdiv3,isdiv4,isdiv5,isdiv6,isdiv7,isdiv8,isdiv9 :: Div (ListT IO) Integer
+imdiv1,imdiv2,imdiv3,imdiv4,imdiv5,imdiv6,imdiv7,imdiv8,imdiv9 :: Div (MaybeT IO) Integer
+(sdiv1:sdiv2:sdiv3:sdiv4:sdiv5:sdiv6:sdiv7:sdiv8:sdiv9:_) = map equal [1..]
+(mdiv1:mdiv2:mdiv3:mdiv4:mdiv5:mdiv6:mdiv7:mdiv8:mdiv9:_) = map equal [1..]
+(isdiv1:isdiv2:isdiv3:isdiv4:isdiv5:isdiv6:isdiv7:isdiv8:isdiv9:_) = 
+                                    map equal [1..]::[Div (ListT IO) Integer]
+(imdiv1:imdiv2:imdiv3:imdiv4:imdiv5:imdiv6:imdiv7:imdiv8:imdiv9:_) = 
+                                    map equal [1..]::[Div (MaybeT IO) Integer]
+
+tree :: Tree [] Integer
 tree  = 
     root 1 
         [ node 2 
@@ -17,80 +26,59 @@ tree  =
               node 5 
                 [ leaf 7 ] ,
               leaf 7 ] ,
-              leaf 2 ,
-              node 3 
-                [ node 2 
-                    [ leaf 4,
-                      node 5 
-                        [ leaf 9 ]]],
+          leaf 2 ,
+          node 3 
+            [ node 2 
+                [ leaf 4,
+                  node 5 
+                    [ leaf 9 ]]],
           leaf 4 ] 
-
--- Parent --
--- ------ -- 
-p1 =  mdiv1 ^< ( mdiv2 ^< mdiv5 ) ^< mdiv7      -- RESULT: Some 
-p2 =  mdiv5 ^< mdiv7                            -- RESULT : NONE
-p3 =  (first ... mdiv2) ^< (mdiv5 ^< mdiv7)     -- Will search in all the tree RESULT: SOME
-p4 =  first ...  mdiv2 ^< mdiv5 ^< mdiv7        -- RESULT: SOME 
-p5 =  first ... ( mdiv2 ^< mdiv5 ) ^< mdiv7     -- RESULT: SOME
-p6 =  first ... mdiv2 
----- GHCi runDiv p1 tree 
-
--- Maybe vs Seqence --
--- ---------------- --
-s11 =  sdiv1 ... parentOf ... sdiv2       -- two results
-m11 =  mdiv1 ... parentOf ... mdiv2       -- one result
-
-s12 =  first ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
-m12 =  first ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
-
-s13 =  any ... ( sdiv2 ^< sdiv5 ) ^< sdiv7       -- RESULT: Some 
-m13 =  any ... ( mdiv2 ^< mdiv5 ) ^< mdiv7       -- RESULT: Some 
----- GHCi runDiv s11 tree 
-
--- DIGGING AND ESCALATION --
--- ---------------------- --
-s21 = any ... sdiv7 ... escalate 1
-m21 = any ... mdiv7 ... escalate 1
----- GHCi runDiv s21 tree 
-
-s22 = any ... sdiv2 ... dig [1,0]
-m22 = any ... mdiv2 ... dig [1,0]
----- GHCi runDiv s22 tree 
-
-s23 = dig [0] :: Div [] Integer
-m23 = dig [0] :: Div Maybe Integer
----- GHCi runDiv s23 tree 
+--equal / first / any
+s11 = (first ==. sdiv1)                      -- one
+-- first is now well designed for the desired purpose
+s12 = first ==. sdiv2                        -- one
+s13 = any ==. sdiv2                          -- three
+--parent of
+s21 = sdiv1 ==. parentOf ==. sdiv2            -- two
+s22 = sdiv1 ==< sdiv2                        -- two
+--brothers
+s31 = any ==. sdiv3 ==. nextBrother ==. sdiv4  -- one
+s32 = any ==. sdiv4 ==. nextBrother ==. sdiv5  -- one
+s33 = any ==. sdiv5 ==. prevBrother ==. sdiv4  -- one
+s34 = any ==. sdiv2 ==. brother ==. sdiv2      -- two
+--alt
+s41 = alt (any ==. sdiv2 ==< sdiv5) (any ==. sdiv6 ==. brother ==. sdiv5) --two
+s42 = alt (any ==. sdiv6 ==. brother ==. sdiv5) (any ==. sdiv2 ==< sdiv5) --one
+--both
+--both nu testeaza daca se intoarce acelasi nod, ci doar e bazat pe mzero
+s51 = both (any ==. sdiv2 ==< sdiv5) (any ==. sdiv6 ==. brother ==. sdiv5) --two
+s52 = both (any ==. sdiv6 ==. brother ==. sdiv5) (any ==. sdiv2 ==< sdiv5) --one
+--childof and subnodeOf of
+s61 = any ==. sdiv5 ==> sdiv2              --two
+s62 = any ==. sdiv5 ==. subNodeOf ==. sdiv1 --two
+--escalate / dig / childAt
+s71 = any ==. sdiv1 ==< sdiv2 ==< sdiv5 ==< sdiv7 ==. (escalate 2) --one
+s72 = sdiv1 ==. dig [0,1]                                      -- one
+s73 = sdiv1 ==. childAt 3                                      -- one
+-- GHCi runDiv  s11 tree
 
 -- INDEXES --
 -- ------- --
-indexOf ::  MonadPlus m => Div m Integer -> m [Pos]
+indexOf ::  Div [] Integer -> [[Pos]]
 indexOf div = do
                 x <- runDiv div tree 
                 return (index x)
 
-s31 = indexOf $ any ... sdiv2
-m31 = indexOf $ any ... mdiv2
--- GHCi s31
+i31 = indexOf $ any ==. sdiv2
+-- GHCi i31
 
 commonIndexesOf div1 div2 = do 
                     x <- runDiv div1 tree
                     y <- runDiv div2 tree 
                     return (commonIndexes x y)
 
-s32 = commonIndexesOf (any ... sdiv9) (any ... sdiv6)
-m32 = commonIndexesOf (any ... mdiv9) (any ... mdiv6)
--- GHCi s32
+i32 = commonIndexesOf (any ==. sdiv9) (any ==. sdiv6)
+-- GHCi i32
 
-s33 = commonIndexesOf (any ... sdiv2) (any ... sdiv2) -- all the posibilities
-m33 = commonIndexesOf (any ... mdiv2) (any ... mdiv2) -- the same one
--- GHCi s33
-
--- ListT IO and MaybeT IO --
--- ---------------------- --
-(isdiv1:isdiv2:isdiv3:isdiv4:isdiv5:isdiv6:isdiv7:isdiv8:_) = map equal [1..]::[Div (ListT IO) Integer]
-(imdiv1:imdiv2:imdiv3:imdiv4:imdiv5:imdiv6:imdiv7:imdiv8:_) = map equal [1..]::[Div (MaybeT IO) Integer]
-
-is11 =  isdiv1 ... parentOf ... isdiv2       -- two results
-im11 =  imdiv1 ... parentOf ... imdiv2       -- one result
-
----- GHCi runDiv is11 tree 
+i33 = commonIndexesOf (any ==. sdiv2) (any ==. sdiv2) -- all the posibilities
+-- GHCi i33
