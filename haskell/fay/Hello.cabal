@@ -1,0 +1,13 @@
+name:              hello-fay
+version:           0.0.0
+cabal-version:     >= 1.8
+build-type:        Simple
+
+Flag dev
+    Description:   Turn on development settings, like auto-reload templates.
+    Default:       False
+library
+    exposed-modules: Hello
+
+    extensions: EmptyDataDecl
+    build-depends: fay-base                      >= 0.19
