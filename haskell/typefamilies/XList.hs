@@ -9,4 +9,5 @@ data instance XList Char = XCons !Char !(XList Char) | XNil
 -- Declare a number-like instance for ()
 data instance XList () = XListUnit !Int
 
-
+--suss ::  a -> a
+suss = id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id id 
