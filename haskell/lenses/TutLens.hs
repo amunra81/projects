@@ -10,7 +10,6 @@ import Control.Monad(replicateM_)
 na :: t
 na = error "na"
 
-
 data Game = Game 
     { _score :: Int
     , _units :: [Unit]

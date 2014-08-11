@@ -5,7 +5,6 @@ import Monad
 import Prelude hiding (any) 
 import Control.Monad.Trans.Maybe(MaybeT)
 import Control.Monad.List(ListT)
-import Control.Monad(MonadPlus)
 
 sdiv1,sdiv2,sdiv3,sdiv4,sdiv5,sdiv6,sdiv7,sdiv8,sdiv9 :: Div [] Integer
 mdiv1,mdiv2,mdiv3,mdiv4,mdiv5,mdiv6,mdiv7,mdiv8,mdiv9 :: Div Maybe Integer
