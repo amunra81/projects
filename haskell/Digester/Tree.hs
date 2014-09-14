@@ -199,7 +199,7 @@ depthsToStr tree =
     flip fmap (depths tree)
     ( \ xs -> 
         let 
-            identation i            = (foldl (\ acc _-> acc ++ "    ") "" [1..i]) 
+            identation i            = foldl (\ acc _-> acc ++ "    ") "" [1..i] 
             f (d,(Root a _))        = (identation d) ++ "R(" ++ (show a) ++ ")"
             f (d,(Node a _ _ pos))  = (identation d) ++ "N" ++ (show pos) ++ "(" ++ (show a) ++ ")"
         in foldl (\ a b -> a ++ (f b) ++ "\n") "" xs)

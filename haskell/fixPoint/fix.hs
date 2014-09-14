@@ -1,3 +1,4 @@
+module Fix where 
 import Control.Monad.Fix
  
  -- fix (\rec n -> if n == 0 then 1 else n * rec (n-1)) 5
