@@ -2,7 +2,7 @@ import Text.ParserCombinators.Parsec
 import qualified Text.ParserCombinators.Parsec.Token as P
 import Text.ParserCombinators.Parsec.Language
 
-oneLetter:: Parser Char
+oneLetter :: Parser Char
 oneLetter = letter
 
 run parser s = let parsed =  parse parser "" s 
