@@ -21,8 +21,6 @@ type XIM3 = XIM2 :. Int
 type Lupu a b = (a,b) :. Int
 type Lupu2 a b = ((a,b),Int)
 
-
-
 doi :: Lupu Int String -> String
 doi ((1,"") :. _) = "L-am prins"
 doi _ = "Inca nu"
