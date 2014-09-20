@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeOperators #-}
-module Prim where 
+module Examples.Prim where 
 
 import Data.Array.Accelerate 
 import Data.Array.Accelerate as Acc

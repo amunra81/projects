@@ -1,3 +1,5 @@
+module Examples.Vectors.ImpureArrays where
+
 import qualified System.Random.Mersenne      as R
  
 import qualified Data.Vector.Generic         as G

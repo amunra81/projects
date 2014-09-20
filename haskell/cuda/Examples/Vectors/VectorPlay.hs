@@ -1,4 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
+module Examples.Vectors.VectorPlay where
 
 import qualified Data.Vector.Storable as V
 import Foreign 

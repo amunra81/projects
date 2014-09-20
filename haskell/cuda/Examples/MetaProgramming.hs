@@ -1,4 +1,4 @@
-module MetaProgramming where
+module Examples.MetaProgramming where
 
 import Control.Monad.Par.Meta.AccSMP
 import Data.Array.Accelerate
