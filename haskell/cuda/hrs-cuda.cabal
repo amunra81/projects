@@ -28,6 +28,8 @@ library
                          --accelerate-cuda >= 0.15.0.0, 
                          bytestring >=0.10 && <0.11,
                          mersenne-random >= 1.0
+
+    cpp-options:   -DDEVELOPMENT
 executable hrs-cuda
   main-is:             Main.hs
   -- other-modules:       
