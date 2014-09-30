@@ -25,7 +25,7 @@ library
     build-depends:       base >=4.7 && <4.8,
                          vector >= 0.10.9.3,
                          --cuda >= 0.6.5.0,
-                         --accelerate-cuda >= 0.15.0.0, 
+                         accelerate-cuda >= 0.15.0.0, 
                          bytestring >=0.10 && <0.11,
                          mersenne-random >= 1.0
 
