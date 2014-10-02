@@ -24,4 +24,3 @@ main :: IO (Vector Int)
 main = do
     a <- R.getStdGen 
     random a 6 :: IO (Vector Int)
-
