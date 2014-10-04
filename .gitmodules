@@ -1,0 +1,3 @@
+[submodule "haskell/parsec/tutorial-from-git"]
+	path = haskell/parsec/tutorial-from-git
+	url = git@github.com:JakeWheat/intro_to_parsing.git
