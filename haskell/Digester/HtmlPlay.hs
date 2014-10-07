@@ -8,9 +8,6 @@ import Monad
 import Control.Monad.Trans.Cont(ContT(..))
 import Prelude hiding (any)
 import Text.XML.HXT.Core hiding (Tree,root,first)
-import Text.XML.HXT.HTTP
-import Data.Tree.NTree.TypeDefs
-import ShowInstances 
 import Control.Monad.IO.Class(MonadIO)
 import Control.Monad.IO.Class(liftIO)
 import Control.Monad(MonadPlus(..))
@@ -20,7 +17,7 @@ haskellPage = downloadTree "http://www.haskell.com"
 
 get :: (Monad m,MonadIO m,Convertible [] m) 
     => String -> Div m Html
-get str t = ContT $  
+get str _ = ContT $  
             \ next -> do 
                web <- liftIO $ downloadTree str 
                next web
@@ -38,10 +35,11 @@ equalTag str tree =
                                        else mzero
 
 d :: (MonadPlus m,Convertible [] m,Monad m,MonadIO m,MonadNonZero m) => Div m Html
-d t = do
-        t1 <- first t
+d s = do
+        t1 <- first s
         let (Html (XText url)) = value t1 
         t2 <- get url t1
         any ==. equalTag "\"body\"" $ t2 
 
+x ::  ListT IO (Tree (ListT IO) Html)
 x = runDiv d t 
