@@ -27,7 +27,7 @@ runLex p input
 
 -- create a token parser
 lexer :: P.TokenParser ()
-lexer  = P.makeTokenParser
+lexer = P.makeTokenParser
          (haskellDef
                 {reservedNames   = ["return","total"] 
                 ,reservedOpNames = ["*","/","+","-"] } )
@@ -41,7 +41,6 @@ semi       = P.semi lexer
 identifier = P.identifier lexer
 reserved   = P.reserved lexer
 reservedOp = P.reservedOp lexer
-
 
 -- main receipt parser
 receipt :: Parser Bool
