@@ -1,3 +1,0 @@
-
-identifier → identifier-head​ identifier-characters​opt ​
-identifier → `​ identifier-head​ identifier-characters​opt ​`​
