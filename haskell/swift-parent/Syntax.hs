@@ -7,6 +7,7 @@ data Clause = Constant Char | Cat Category | Opt Clause deriving Show
 
 data Category = Category String deriving Show
 
+-- PARSERS
 spaces :: Parser ()
 spaces = skipMany space
 
@@ -18,16 +19,20 @@ parseCategory = do
                  skipMany1 space
                  return $ Category (x:xs)
                 
-runP :: Parser a -> String -> Either ParseError a
-runP parser = parse parser "name"
-
-
-
 parseRule :: Parser Rule
 parseRule = do
             left <- parseCategory
             char '→'
-            return $ Rule left []
+            clause <- parseClause
+            return $ Rule left [clause]
+
+parseClause :: Parser Clause
+parseClause = do
+                skipMany space
+                return $ Constant '*'
+-- TESTS
+runP :: Parser a -> String -> Either ParseError a
+runP p = parse p "name"
 
 eg1 ::  Either ParseError Rule
 eg1 = runP parseRule "identifier-id → identifier-head identifier-characters opt   "
