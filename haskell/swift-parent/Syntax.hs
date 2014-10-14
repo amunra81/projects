@@ -25,7 +25,7 @@ lexer = P.makeTokenParser
                 ,commentEnd      = "-}"
                 ,commentLine     = "--"
                 ,identStart      = letter 
-                ,identLetter     = letter <|> digit <|> char '-' 
+                ,identLetter     = letter <|> digit <|> char '-' <|> char '+'
                 })
 
 whiteSpace :: Parser ()
@@ -58,26 +58,22 @@ multipleClauses = sepBy clause (reservedOp "|")
 
 category :: Parser Category
 category = do
-                 x <- identifier
-                 return $ Category x
+            x <- identifier
+            let isCategory _ = True
+            if( isCategory x)
+                then return $ Category x
+                else pzero
 
 
 clauseItem :: Parser ClauseItem
 clauseItem = choice [ -- category
-                      do 
+                      try $ do 
                         cat <- category 
                         option (Cat cat) 
-                            (reserved "opt" >> (return . Opt . Cat) cat)
-                      -- comma
-                      ,constant]
+                            (reserved "opt" >> (return . Opt . Cat) cat)]
+                      {-,constant]-}
 
-constant :: Parser ClauseItem
-constant =  do
-               whiteSpace
-               str <- many (letter <|> digit <|>  '-' <|> char '+')
-               whiteSpace
-               return $ Constant str
-
+{-RUN-}
 runP :: Parser a -> String -> Either ParseError a
 runP p = parse (lexeme (do 
                             whiteSpace 
@@ -92,9 +88,10 @@ eg1 = runP rule "{-COMMENT !@#$#@$-} identifier-id → identifier-head identifie
 eg2 ::  Either ParseError Rule
 eg2 = runP rule "identifier-list → identifier | ` identifier , identifier-list"
 
-eg3 ::  Either ParseError Rule
-eg3 = runP rule "identifier-character → U+0300"
+eg3 :: Either ParseError Rule
+eg3 = runP rule "identifier-character → U+0300-U+400"
 
+eg = runP (try (symbol "U+" >> many (letter <|> digit))) "U+3 "
+eg4 = runP identifier2  "U345"
 
-
-
+identifier2 = try $ symbol "U3" >> symbol "45"
