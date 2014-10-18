@@ -1,4 +1,4 @@
-module Syntax where
+module Syntax2 where
 import Text.ParserCombinators.Parsec 
 import qualified Text.ParserCombinators.Parsec.Token as P
 import Text.ParserCombinators.Parsec.Language
@@ -25,12 +25,12 @@ lexer :: P.TokenParser ()
 lexer = P.makeTokenParser
          (haskellDef
                 {reservedNames   = ["opt"] 
-                ,reservedOpNames = ["→","|"]
+                ,reservedOpNames = ["→","|",","]
                 ,commentStart    = "{-"
                 ,commentEnd      = "-}"
                 ,commentLine     = "--"
-                ,identStart      = letter 
-                ,identLetter     = letter <|> digit <|> char '-' 
+                ,identStart      = letter <|> digit
+                ,identLetter     = letter <|> digit <|> char '-' <|> char '+'
                 })
 
 whiteSpace :: Parser ()
