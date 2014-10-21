@@ -2,15 +2,16 @@ module Syntax2 where
 import Text.ParserCombinators.Parsec 
 import qualified Text.ParserCombinators.Parsec.Token as P
 import Text.ParserCombinators.Parsec.Language
-import Control.Monad(liftM)
 import Control.Applicative((<$>))
+import Text.Parsec.Error(messageString,errorMessages)
 
 data Rule = Rule Category [Clause] deriving Show
 
 type Clause = [ClauseItem]
 
 data ClauseItem = Constant String
-                | Cat Category 
+                | Cat String
+                | Unicode String
                 | Opt ClauseItem 
                 | Range ClauseItem ClauseItem 
                 deriving Show
@@ -24,14 +25,17 @@ na = undefined
 lexer :: P.TokenParser ()
 lexer = P.makeTokenParser
          (haskellDef
-                {reservedNames   = ["opt"] 
-                ,reservedOpNames = ["→","|",","]
+                {reservedNames   = ["opt"]
+                ,reservedOpNames = ["→","|",";"] 
                 ,commentStart    = "{-"
                 ,commentEnd      = "-}"
                 ,commentLine     = "--"
                 ,identStart      = letter <|> digit
                 ,identLetter     = letter <|> digit <|> char '-' <|> char '+'
                 })
+
+constantChars ::  [String]
+constantChars = [",","`"]
 
 whiteSpace :: Parser ()
 identifier,comma :: Parser String
@@ -49,7 +53,7 @@ symbol      = P.symbol lexer
 
 {-PARSERS-}
 rules :: Parser  [Rule]
-rules = many1 $ many newline >> rule
+rules = sepBy rule (reservedOp ";")
 
 -- rule parser
 rule :: Parser Rule
@@ -59,54 +63,53 @@ rule = do
             cls <- multipleClauses
             return $ Rule cat cls
         
--- | parser for clause
-clause :: Parser Clause
-clause = many1 clauseItem
+-- | parser for Category
+category :: Parser Category
+category = do
+        x <- identifier
+        return $ Category x
 
 -- | parser for multiple clauses
 multipleClauses :: Parser [Clause]
 multipleClauses = 
         sepBy clause (reservedOp "|")
 
--- | parser for Category
-category :: Parser Category
-category = do
-            x <- identifier
-            return $ Category x
+-- | parser for clause
+clause :: Parser Clause
+clause = many clauseItem 
 
 -- | Parser for ClauseItems
 clauseItem :: Parser ClauseItem
 clauseItem =
-        --constant
-        constant <|>
-        -- category
-        (do cat <- category 
-            -- option tries the parser (snd argument) if it
-            -- fails returns the first argument as a praser
-            -- value
-            option (Cat cat) 
-                (reserved "opt" >> (return . Opt . Cat) cat))
+            -- identifier
+            do 
+                x <- identifier
+                case x of
+                    [a,'-',b]  -> return $ Range (Constant $ show a) (Constant $ show b)
+                    [_]        -> return $ Constant x
+                    'U':'+':_  -> case parseUnicode x of
+                                        Left err -> (unexpected 
+                                                    . messageString 
+                                                    . head 
+                                                    . errorMessages) err
+                                        Right cl -> return cl
+                    _           -> return $ Cat x
+            <|> 
+                Constant <$> (choice $ map symbol constantChars)
 
-constant :: Parser ClauseItem
-constant = choice $ try <$>
-                     [range unicode
-                     ,unicode
-                     ,liftC $ symbol "`"
-                     ,liftC comma
-                     ,liftC (letterS >>= \s -> space >> return s)
-                     ,range $ liftC letterS]
-           where
-                -- litfting a string parser to a constant parser 
-                liftC = liftM Constant
-                -- aplies lexeme to a letter parser and lifts it to Parser [Char]
-                letterS = (:[]) <$> lexeme letter
+parseUnicode :: String -> Either ParseError ClauseItem
+parseUnicode =  parse p "unicode"
+                where 
+                      unicode = Unicode <$> (string "U+" >> many alphaNum)
+                      p = 
+                          (try $ do
+                            a <- unicode
+                            _ <- string "-"
+                            b <- unicode
+                            return $ Range a b)
+                           <|> unicode
 
-unicode ::  Parser ClauseItem
-unicode = lexeme $ do 
-                    x <- symbol "U+" 
-                    y <- many alphaNum
-                    return $ Constant $ x ++ y
-
+--create a parser which spleets the line
 range :: Parser ClauseItem -> Parser ClauseItem
 range p = do 
             a <- p
@@ -135,4 +138,10 @@ eg4 :: Either ParseError Rule
 eg4 = runP rule "identifier-head → a-z | A-Z"
 
 eg5 :: Either ParseError [Rule]
-eg5 = runP rules "identifier-head → a-z | A-Z\n identifier → identifier"
+eg5 = runP rules "identifier-head → a-z A-Z; asdas → asdad"
+
+eg6 :: Either ParseError Clause
+eg6 = runP clause "idsd-sds a U+2-U+34"
+
+eg7 :: Either ParseError Clause
+eg7 = runP clause "idsd-sds a-z U+234 U+234-U+232"
