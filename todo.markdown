@@ -1,4 +1,0 @@
-vim
-=====
-
-- help registers

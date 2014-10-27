@@ -52,4 +52,3 @@ instance Show Html where
   show  (Html (XAttr name))         = "a"++show name
   show  (Html (XError errno msg))   = "{ error = "++ show errno ++ " - " ++ msg ++ " }"
   show  (Html (XBlob _))            = na
-

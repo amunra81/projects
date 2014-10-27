@@ -9,5 +9,4 @@ Flag dev
 library
     exposed-modules: Hello
 
-    extensions: EmptyDataDecl
     build-depends: fay-base                      >= 0.19

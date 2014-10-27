@@ -1,4 +1,0 @@
-<ul>
-    <!-- iterating trough everything -->
-    $forall Entity id (Force name nation _ weight) <- forces
-       <li> #{name} - #{nation}

@@ -15,7 +15,6 @@ test = do
         i3 <- S.read listHandle
         (putStrLn . show) i3
 
-
 -- streams transformation
 test2 = do
         oldHandle <- S.fromList ([1,2]::[Integer])

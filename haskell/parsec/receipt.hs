@@ -1,3 +1,4 @@
+module Receipt where
 import Text.ParserCombinators.Parsec
 import qualified Text.ParserCombinators.Parsec.Token as P
 import Text.ParserCombinators.Parsec.Language
@@ -26,7 +27,7 @@ runLex p input
 
 -- create a token parser
 lexer :: P.TokenParser ()
-lexer  = P.makeTokenParser
+lexer = P.makeTokenParser
          (haskellDef
                 {reservedNames   = ["return","total"] 
                 ,reservedOpNames = ["*","/","+","-"] } )
@@ -40,7 +41,6 @@ semi       = P.semi lexer
 identifier = P.identifier lexer
 reserved   = P.reserved lexer
 reservedOp = P.reservedOp lexer
-
 
 -- main receipt parser
 receipt :: Parser Bool
@@ -74,7 +74,7 @@ price   = lexeme (do { ds1 <- many1 digit
           convert n [] = n
           convert n (d:ds) = convert (10*n + digitToInt d) ds
 
--- GHCi runLex receipt "book 12.00; returns 2.00; plant 1.00; 15.00 total"
+-- GHCi runLex receipt "book 12.00 ; returns 2.00; plant 1.00; 15.00 total"
 -- True
 -- GHCi runLex receipt "book 12.00; total 2.00; plant 1.00; 15.00 total"
 -- parse error at (line 1, column 13):

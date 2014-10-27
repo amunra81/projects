@@ -88,6 +88,7 @@ fireBreath = do
 partyHP :: Traversal' Game Int
 partyHP = units . traversed . health
 
+move :: Monad m => StateT Game m a -> m [Int]
 move mv =  do -- IO
              newState <- execStateT mv initialState
              return $ toListOf partyHP newState
