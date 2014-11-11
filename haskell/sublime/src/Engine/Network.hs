@@ -15,7 +15,7 @@ data Network r = Network
                 itaration :: Integer --TODO: change to long
              }
 na = undefined
-class Region a where
+class RegionClass a where
 
 commonInit :: String -> Network r
 commonInit p = Network {
@@ -28,6 +28,7 @@ commonInit p = Network {
                        }
 
 data Dimensions
+data Spec
 data Link = Link { 
                     srcName :: String,
                     destName :: String,
@@ -37,12 +38,18 @@ data Link = Link {
                     srcInput :: String 
                  }
 
-data RegionBundle = Region { 
+data RegionBundle = RegionBundle { 
                              name :: String,
                              nodeType :: String,
                              dimensions :: [Dimensions],
                              bundlePath :: String,
                              label :: String }
+
+-- THESE WILL BE TAKEN DIRECTLY FROM A REGION!
+--setPhases :: r -> Network r -> Network r
+--setPhases = na
+--getPhases :: r -> Network r -> Network r
+--getPhases = na
 
 -- |add a region to a network
 addRegion :: r -> Network r -> Network r
@@ -53,7 +60,7 @@ removeRegion :: String -> Network r
 removeRegion = na
 
 -- |Create a new region from saved state.
-addRegionFromBundle :: Region r => RegionBundle -> r
+addRegionFromBundle :: RegionClass r => RegionBundle -> r
 addRegionFromBundle = na 
 
 -- |Save the network to a network bundle (extension `.nta`).
@@ -77,9 +84,3 @@ getMaxPhase = na
 
 run :: Integer -> Network r
 run = na
-
--- THESE WILL BE TAKEN DIRECTLY FROM A REGION!
---setPhases :: r -> Network r -> Network r
---setPhases = na
---getPhases :: r -> Network r -> Network r
---getPhases = na
