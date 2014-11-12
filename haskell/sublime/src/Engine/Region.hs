@@ -1,14 +1,7 @@
 module Region where
 import Data.Map.Lazy(Map) -- TODO sau strict? de verificat e si in functie de performante
+import Types
 
-data Dimensions -- UNIMPLEMENTED
-data Spec -- UNIMPLEMENTED
-data Output -- UNIMPLEMENTED
-data Input -- UNIMPLEMENTED
-
-    
--- ~~ REGION ~~ --
--- ------------ --
 data Region = Region 
             {
                 -- |name of the region

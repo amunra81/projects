@@ -78,7 +78,6 @@ parseClassTypeEnd =
      _ <- char ';'
      return x
 
-  
 parseMethodType :: Parser (Maybe Type, [Type])
 parseMethodType = 
   do args <- between (char '(') (char ')') (many parseType)
@@ -339,7 +338,7 @@ data ClassImportResult = ClassImportResult
                            typeDecl :: TypeDecl,
                            innerTypes :: [InnerType] }
                        deriving Show
-  
+ 
 instance NFData Constant where
   rnf (ConstantClass ty) = ty `seq` ()
   rnf (ConstantValue value) = value `deepseq` ()

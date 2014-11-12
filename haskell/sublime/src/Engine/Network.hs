@@ -2,6 +2,7 @@ module Network where
 import Data.Set(Set)
 import Data.Set(empty)
 import Data.Word(Word)
+import Types
 
 data Network r = Network
              {
@@ -27,7 +28,6 @@ commonInit p = Network {
                          phaseInfo = [empty]
                        }
 
-data Dimensions
 data Spec
 data Link = Link { 
                     srcName :: String,

@@ -1,0 +1,3 @@
+- prietena vs pretendenta
+- qr
+- lucrul in cafenea
