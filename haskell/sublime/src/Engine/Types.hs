@@ -23,3 +23,5 @@ type Collection a = Map String a -- nta/Collection.hpp
 -- a client application and NuPIC, minimizing copying. It facilitates
 -- both zero-copy and one-copy operations.
 data ArrayBase 
+
+data Dimenssions
