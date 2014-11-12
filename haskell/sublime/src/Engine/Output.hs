@@ -2,7 +2,6 @@ module Output (Output) where
 
 import Data.Set(Set)
 import Link
-import Types
 import Array
 
 data Output = Output { name :: String

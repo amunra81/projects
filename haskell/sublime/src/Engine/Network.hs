@@ -2,7 +2,6 @@ module Network where
 import Data.Set(Set)
 import Data.Set(empty)
 import Data.Word(Word)
-import Types
 
 data Network r = Network
              {

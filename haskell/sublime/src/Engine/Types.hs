@@ -2,9 +2,6 @@ module Types where
 
 import Data.Map.Lazy(Map)
 
-data Spec -- UNIMPLEMENTED
-data Input -- UNIMPLEMENTED
-
 -- A collection is a templated class that contains items of type t.
  --It supports lookup by name and by index. The items are stored in a map
  --and copies are also stored in a vector (it's Ok to use pointers).
@@ -26,5 +23,3 @@ type Collection a = Map String a -- nta/Collection.hpp
 -- a client application and NuPIC, minimizing copying. It facilitates
 -- both zero-copy and one-copy operations.
 data ArrayBase 
-
-data Dimensions
