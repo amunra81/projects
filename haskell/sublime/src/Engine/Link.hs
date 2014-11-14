@@ -17,7 +17,5 @@ data Link = Link
             { linkType :: String
             , linkParams :: String
             , details :: LinkDetails
-            -- private ::
             , linkPolicy :: LinkPolicy
             } 
-                    
