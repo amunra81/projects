@@ -9,3 +9,5 @@ instance Functor ZipList where
 instance Applicative ZipList where
   pure = ZipList . (:[])
   (ZipList gs) <*> (ZipList xs) = ZipList (zipWith ($) gs xs)
+
+s = 4  / 0

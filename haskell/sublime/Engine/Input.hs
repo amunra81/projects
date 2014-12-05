@@ -9,5 +9,4 @@ data Input = Input { name :: String
                    , links :: [Link]
                    , payLoad :: Array
                    , splitterMap :: SplitterMap
-                   , linkOffsets :: [Integer]
-                   }
+                   , linkOffsets :: [Integer] }
