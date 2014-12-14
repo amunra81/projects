@@ -38,7 +38,6 @@
 
 module Algorithms.Segment where
 
-import Algorithms.InSynapse
 import Data.Word(Word32)
 import Data.List(sort)
 
@@ -48,13 +47,24 @@ data InSynapses = InSynapses {  _srcCellIdx :: Word32,
 
 data Segment = Segment 
              { inSynapses :: InSynapse
-             , frequency :: Rational
+             , frequency :: Rational -- unused in the last implementation
              , seqSegFlag :: Bool
              , permConnected :: Rational
              , iteration :: Word32 }
 
+ inline bool checkConnected(Real permConnected) const {
+          //
+          UInt nc = 0;
+          for (UInt i = 0; i != _synapses.size(); ++i)
+            nc += (_synapses[i].permanence() >= permConnected);
 
-quicksort (x:xs) = quicksort [y | y <- xs, y <= x]  
-                   ++ [x] ++ 
-                   quicksort [y | y <- xs, y > x]
-quicksort [] = []
+          if (nc != _nConnected) {
+            std::cout << "\nConnected stats inconsistent. _nConnected="
+                      << _nConnected << ", computed nc=" << nc << std::endl;
+          }
+
+          return nc == _nConnected;
+        }
+
+checkConnected :: Rational -> Segment -> Boolean
+checkConnected = undefined 
