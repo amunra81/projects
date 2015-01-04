@@ -36,35 +36,50 @@
     The member variable _nConnected holds the number of synapses that
     are actually connected (permanence value >= connected threshold). -}
 
-module Algorithms.Segment where
+module Algorithms.Segment (
+Segment(..),
+InSynapse(..),
+addSynapses,
+connected) where 
 
 import Data.Word(Word32)
 import Data.List(sort)
 
-data InSynapses = InSynapses {  _srcCellIdx :: Word32,
-                                _permanence :: Rational } deriving Show
+data InSynapse = InSynapse {  _srcCellIdx :: Word32,
+                                _permanence :: Rational } deriving Show 
 
+instance Eq InSynapse where
+        (==) a b = _srcCellIdx a == _srcCellIdx b 
+
+instance Ord InSynapse where
+       compare (InSynapse { _srcCellIdx = a }) (InSynapse { _srcCellIdx = b})
+        = compare a b
 
 data Segment = Segment 
-             { inSynapses :: InSynapse
+             { inSynapses :: [InSynapse]
              , frequency :: Rational -- unused in the last implementation
              , seqSegFlag :: Bool
-             , permConnected :: Rational
-             , iteration :: Word32 }
+             , iteration :: Word32 
+             }
 
- inline bool checkConnected(Real permConnected) const {
-          //
-          UInt nc = 0;
-          for (UInt i = 0; i != _synapses.size(); ++i)
-            nc += (_synapses[i].permanence() >= permConnected);
+-- ge all connected after a permanence 
+connected :: Rational -> Segment -> Int
+connected p = length . filter ((>= p) . _permanence) . inSynapses
 
-          if (nc != _nConnected) {
-            std::cout << "\nConnected stats inconsistent. _nConnected="
-                      << _nConnected << ", computed nc=" << nc << std::endl;
-          }
+addSynapses :: [InSynapse] -> Segment -> Segment
+addSynapses xs s = s { inSynapses = ys }
+                 where ys = sort $ inSynapses s ++ xs
 
-          return nc == _nConnected;
-        }
+decaySynapses :: Rational -> Bool -> Segment -> Segment
+decaySynapses decay doDecay s 
+        = s { inSynapses = ys }
+        where ys = foldl f [] (inSynapses s)
+              f acc x = if _permanence x >= decay 
+                            then acc ++ [if doDecay 
+                                            then x { _permanence = (_permanence x) - decay}
+                                            else x]
+                            else acc
 
-checkConnected :: Rational -> Segment -> Boolean
-checkConnected = undefined 
+--TODO: se pare ca nConnected este calculat diferit in functie de iferite
+--apeluri catre functii, vreau sa gasesc ceva transparent, nu imi place sa
+--fie ascuns in spatele functiilor
