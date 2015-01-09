@@ -59,9 +59,20 @@ data Segment = Segment
              { inSynapses :: [InSynapse]
              , frequency :: Rational -- unused in the last implementation
              , seqSegFlag :: Bool
-             , iteration :: Word32 
+             , iteration :: Word32
+             , lastDutyCycle :: Rational
+             , lastDutyCycleIteration :: Word32
              }
 
+dutyCycleAlphas :: [Rational]
+dutyCycleAlphas  = [0.0, 0.0032, 0.0010, 0.00032, 0.00010, 0.000032, 0.000010, 0.0000032, 0.0000010]
+
+dutyCycleTiers :: [Word32]
+dutyCycleTiers = [0, 100, 320, 1000, 3200, 10000, 32000, 100000, 320000]
+
+--TODO: se pare ca nConnected este calculat diferit in functie de diferite
+--apeluri catre functii, vreau sa gasesc ceva transparent, nu imi place sa
+--fie ascuns in spatele functiilor
 -- ge all connected after a permanence 
 connected :: Rational -> Segment -> Int
 connected p = length . filter ((>= p) . _permanence) . inSynapses
@@ -80,6 +91,5 @@ decaySynapses decay doDecay s
                                             else x]
                             else acc
 
---TODO: se pare ca nConnected este calculat diferit in functie de iferite
---apeluri catre functii, vreau sa gasesc ceva transparent, nu imi place sa
---fie ascuns in spatele functiilor
+dutyCycle :: Word32 -> Bool -> Segment -> Bool
+dutyCycle = undefined
