@@ -40,13 +40,19 @@ module Algorithms.Segment (
 Segment(..),
 InSynapse(..),
 addSynapses,
-connected) where 
+connected,
+dutyCycle) where 
 
-import Data.Word(Word32)
 import Data.List(sort)
+import Data.Set(Set)
+import Data.Set(toList)
+import Data.Array.Unboxed(UArray)
+import Data.Word(Word8)
+import Data.Word(Word32)
+import Algorithms.CState(CState(..))
 
-data InSynapse = InSynapse {  _srcCellIdx :: Word32,
-                                _permanence :: Rational } deriving Show 
+data InSynapse = InSynapse {  _srcCellIdx :: Integer,
+                                _permanence :: Double } deriving Show 
 
 instance Eq InSynapse where
         (==) a b = _srcCellIdx a == _srcCellIdx b 
@@ -57,31 +63,32 @@ instance Ord InSynapse where
 
 data Segment = Segment 
              { inSynapses :: [InSynapse]
-             , frequency :: Rational -- unused in the last implementation
+             , frequency :: Double -- unused in the last implementation
              , seqSegFlag :: Bool
-             , iteration :: Word32
-             , lastDutyCycle :: Rational
-             , lastDutyCycleIteration :: Word32
+             , iteration :: Integer
+             , lastDutyCycle :: Double
+             , lastDutyCycleIteration :: Integer
+             , positiveActivations :: Integer       
              }
 
-dutyCycleAlphas :: [Rational]
+dutyCycleAlphas :: [Double]
 dutyCycleAlphas  = [0.0, 0.0032, 0.0010, 0.00032, 0.00010, 0.000032, 0.000010, 0.0000032, 0.0000010]
 
-dutyCycleTiers :: [Word32]
+dutyCycleTiers :: [Integer]
 dutyCycleTiers = [0, 100, 320, 1000, 3200, 10000, 32000, 100000, 320000]
 
 --TODO: se pare ca nConnected este calculat diferit in functie de diferite
 --apeluri catre functii, vreau sa gasesc ceva transparent, nu imi place sa
 --fie ascuns in spatele functiilor
 -- ge all connected after a permanence 
-connected :: Rational -> Segment -> Int
+connected :: Double -> Segment -> Int
 connected p = length . filter ((>= p) . _permanence) . inSynapses
 
-addSynapses :: [InSynapse] -> Segment -> Segment
+addSynapses :: Set InSynapse -> Segment -> Segment
 addSynapses xs s = s { inSynapses = ys }
-                 where ys = sort $ inSynapses s ++ xs
+                 where ys = sort $ inSynapses s ++ (toList xs)
 
-decaySynapses :: Rational -> Bool -> Segment -> Segment
+decaySynapses :: Double -> Bool -> Segment -> Segment
 decaySynapses decay doDecay s 
         = s { inSynapses = ys }
         where ys = foldl f [] (inSynapses s)
@@ -91,5 +98,27 @@ decaySynapses decay doDecay s
                                             else x]
                             else acc
 
-dutyCycle :: Word32 -> Bool -> Segment -> Bool
-dutyCycle = undefined
+itod :: Integer -> Double
+itod = fromIntegral 
+
+dutyCycle :: Integer -> Bool -> Segment -> Segment
+dutyCycle p active seg 
+
+    | p > dutyCycleTiers !! 1 = segi { lastDutyCycle = (itod $ positiveActivations seg) / (itod p) }
+    | age == 0 , not active      = seg
+    | active                  = segi { lastDutyCycle = dtyCycl + alpha }
+    | not active                = segi { lastDutyCycle = dtyCycl }
+
+    where segi = seg { lastDutyCycleIteration = p }
+          dtyCycl = ((1.0 - alpha) ^ age) * (itod $ lastDutyCycleIteration seg)
+          alpha = f $ reverse $ tail dutyCycleAlphas
+          age = p - (lastDutyCycleIteration seg)
+          f []   = 0
+          f (x:xs) = if itod p > x 
+                            then x
+                            else f xs 
+          
+isActive :: CState -> Double -> Integer -> Segment -> Bool
+isActive cs p ac seg = case inSynapses seg of
+                        x:xs -> undefined
+

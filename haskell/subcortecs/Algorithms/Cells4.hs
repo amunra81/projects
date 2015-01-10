@@ -1,5 +1,3 @@
-module Algorithms.Cells4 where
-
 {- * Overview
  * ========
  *
@@ -28,6 +26,10 @@ module Algorithms.Cells4 where
  * are explicitly defined in algorithms_impl.i. The memory for
  * certain states, such as _infActiveStateT, can be initialized as
  * pointers to numpy array buffers, avoiding a copy step. -}
+
+module Algorithms.Cells4 where
+import Data.Word(Word32)
+
                
 data Cells4 = Cells4 {
               nColumns :: Word32
@@ -42,8 +44,8 @@ data Cells4 = Cells4 {
             , permDec :: Rational
             , permInc :: Rational
             , globalDecay :: Rational
-            , doPooling :: Boolean
+            , doPooling :: Bool
             , seed :: Integer
-            , doItAll :: Boolean
-            , checkSynapseConsistency :: Boolean }
+            , doItAll :: Bool
+            , checkSynapseConsistency :: Bool }
 

@@ -8,7 +8,7 @@
 * segment level.
 -}
 
-module Cell where
+module Algorithms.Cell where
 
 import Algorithms.Segment
 import Data.Word(Word32)
