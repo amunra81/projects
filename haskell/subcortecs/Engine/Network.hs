@@ -45,12 +45,6 @@ data RegionBundle = RegionBundle {
                              bundlePath :: String,
                              label :: String }
 
--- THESE WILL BE TAKEN DIRECTLY FROM A REGION!
---setPhases :: r -> Network r -> Network r
---setPhases = na
---getPhases :: r -> Network r -> Network r
---getPhases = na
-
 -- |add a region to a network
 addRegion :: r -> Network r -> Network r
 addRegion r n = n { regions = r : (regions n) }

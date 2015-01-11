@@ -37,44 +37,45 @@
     are actually connected (permanence value >= connected threshold). -}
 
 module Algorithms.Segment (
-Segment(..),
-InSynapse(..),
-addSynapses,
-connected,
-dutyCycle) where 
+Segment(..) 
+,InSynapse(..) 
+,addSynapses 
+,connected 
+,dutyCycle 
+,decaySynapses 
+,isActive
+,computeActivity
+) where 
 
 import Data.List(sort)
 import Data.Set(Set)
 import Data.Set(toList)
-import Data.Array.Unboxed(UArray)
-import Data.Word(Word8)
-import Data.Word(Word32)
-import Algorithms.CState(CState(..))
+import Algorithms.CState(CState(..),isSet)
 
-data InSynapse = InSynapse {  _srcCellIdx :: Integer,
-                                _permanence :: Double } deriving Show 
+data InSynapse = InSynapse {  srcCellIdx :: Int,
+                                permanence :: Double } deriving Show 
 
 instance Eq InSynapse where
-        (==) a b = _srcCellIdx a == _srcCellIdx b 
+        (==) a b = srcCellIdx a == srcCellIdx b 
 
 instance Ord InSynapse where
-       compare (InSynapse { _srcCellIdx = a }) (InSynapse { _srcCellIdx = b})
+       compare (InSynapse { srcCellIdx = a }) (InSynapse { srcCellIdx = b})
         = compare a b
 
 data Segment = Segment 
              { inSynapses :: [InSynapse]
              , frequency :: Double -- unused in the last implementation
              , seqSegFlag :: Bool
-             , iteration :: Integer
+             , iteration :: Int
              , lastDutyCycle :: Double
-             , lastDutyCycleIteration :: Integer
-             , positiveActivations :: Integer       
+             , lastDutyCycleIteration :: Int
+             , positiveActivations :: Int       
              }
 
 dutyCycleAlphas :: [Double]
 dutyCycleAlphas  = [0.0, 0.0032, 0.0010, 0.00032, 0.00010, 0.000032, 0.000010, 0.0000032, 0.0000010]
 
-dutyCycleTiers :: [Integer]
+dutyCycleTiers :: [Int]
 dutyCycleTiers = [0, 100, 320, 1000, 3200, 10000, 32000, 100000, 320000]
 
 --TODO: se pare ca nConnected este calculat diferit in functie de diferite
@@ -82,7 +83,7 @@ dutyCycleTiers = [0, 100, 320, 1000, 3200, 10000, 32000, 100000, 320000]
 --fie ascuns in spatele functiilor
 -- ge all connected after a permanence 
 connected :: Double -> Segment -> Int
-connected p = length . filter ((>= p) . _permanence) . inSynapses
+connected p = length . filter ((>= p) . permanence) . inSynapses
 
 addSynapses :: Set InSynapse -> Segment -> Segment
 addSynapses xs s = s { inSynapses = ys }
@@ -92,22 +93,23 @@ decaySynapses :: Double -> Bool -> Segment -> Segment
 decaySynapses decay doDecay s 
         = s { inSynapses = ys }
         where ys = foldl f [] (inSynapses s)
-              f acc x = if _permanence x >= decay 
+              f acc x = if permanence x >= decay 
                             then acc ++ [if doDecay 
-                                            then x { _permanence = (_permanence x) - decay}
+                                            then x { permanence = (permanence x) - decay}
                                             else x]
                             else acc
 
-itod :: Integer -> Double
+itod :: Int -> Double
 itod = fromIntegral 
 
-dutyCycle :: Integer -> Bool -> Segment -> Segment
+dutyCycle :: Int -> Bool -> Segment -> Segment
 dutyCycle p active seg 
 
     | p > dutyCycleTiers !! 1 = segi { lastDutyCycle = (itod $ positiveActivations seg) / (itod p) }
-    | age == 0 , not active      = seg
+    | age == 0 ,not active      = seg
     | active                  = segi { lastDutyCycle = dtyCycl + alpha }
     | not active                = segi { lastDutyCycle = dtyCycl }
+    | otherwise               = seg 
 
     where segi = seg { lastDutyCycleIteration = p }
           dtyCycl = ((1.0 - alpha) ^ age) * (itod $ lastDutyCycleIteration seg)
@@ -118,7 +120,18 @@ dutyCycle p active seg
                             then x
                             else f xs 
           
-isActive :: CState -> Double -> Integer -> Segment -> Bool
-isActive cs p ac seg = case inSynapses seg of
-                        x:xs -> undefined
+isActive :: CState -> Double -> Int -> Segment -> Bool
+isActive cs pc ths Segment { inSynapses = xs } = 
+        length bs >= ths --TODO: trebuie gasita a functie care nu trebuie sa parcurga tot arrayul 
+        where 
+              bs = filter f xs
+              f a = permanence a >= pc && isSet (srcCellIdx a) cs
+
+computeActivity :: CState -> Double -> Bool -> Segment -> Int
+computeActivity  cs permCnt cntOnly Segment { inSynapses = xs } = 
+        length $ if (cntOnly) 
+                    then filter f xs
+                    else filter g xs
+        where f a = g a && isSet (srcCellIdx a) cs
+              g a = permanence a >= permCnt 
 

@@ -7,9 +7,9 @@ import Data.Array.IArray((!))
 
 
 data CState = CState 
-            { nCells :: Integer
-            , pData :: UArray Integer Word8 
+            { nCells :: Int
+            , pData :: UArray Int Word8 
             }
 
-isSet :: Integer -> CState -> Bool
+isSet :: Int -> CState -> Bool
 isSet ix cst = ((pData cst) ! ix ) /= 0

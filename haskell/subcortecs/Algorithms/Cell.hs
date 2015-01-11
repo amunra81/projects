@@ -11,8 +11,11 @@
 module Algorithms.Cell where
 
 import Algorithms.Segment
-import Data.Word(Word32)
 
-data Cell = Cell 
-            { segments :: [Segment] -- both 'active' and 'inactive' segments
-            , freeSegments :: [Word32] } -- slots of the 'inactive' segments 
+type Cell = [Segment] 
+
+nSynapses ::  [Segment] -> Int
+nSynapses = foldl (+) 0 . map (length . inSynapses)
+
+updateDutyCycle :: Int -> Cell -> Cell
+updateDutyCycle i = map (dutyCycle i False)
