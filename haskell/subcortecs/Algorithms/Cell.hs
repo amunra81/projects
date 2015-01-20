@@ -11,11 +11,25 @@
 module Algorithms.Cell where
 
 import Algorithms.Segment
+import Common.Core(foldli)
 
 type Cell = [Segment] 
+
+na :: a
+na = undefined 
 
 nSynapses ::  [Segment] -> Int
 nSynapses = foldl (+) 0 . map (length . inSynapses)
 
 updateDutyCycle :: Int -> Cell -> Cell
 updateDutyCycle i = map (dutyCycle i False)
+
+mostActiveSegmentPos :: Cell -> Int
+mostActiveSegmentPos = snd . foldli f (0,0)
+                    where f (j,a) i s = if a < g s
+                                            then (i,g s)
+                                            else (j,a)
+                          g = totalActivations 
+
+rebalanceSegments :: Cell -> Cell
+rebalanceSegments = na

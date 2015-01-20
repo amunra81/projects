@@ -70,6 +70,8 @@ data Segment = Segment
              , lastDutyCycle :: Double
              , lastDutyCycleIteration :: Int
              , positiveActivations :: Int       
+             , totalActivations :: Int
+             , lastActiveIteration :: Int
              }
 
 dutyCycleAlphas :: [Double]
