@@ -73,7 +73,7 @@ library
   build-depends:     base >=4.7 && <4.8
                     ,containers >= 0.5.5.1
                     ,array >= 0.5.0.0
-  
+                    , lens >= 4.7
   -- Directories containing source files.
   -- hs-source-dirs:      src
   

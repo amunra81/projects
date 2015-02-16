@@ -108,7 +108,7 @@ dutyCycle :: Int -> Bool -> Segment -> Segment
 dutyCycle p active seg 
 
     | p > dutyCycleTiers !! 1 = segi { lastDutyCycle = (itod $ positiveActivations seg) / (itod p) }
-    | age == 0 ,not active      = seg
+    | age == 0 ,not active       = seg
     | active                  = segi { lastDutyCycle = dtyCycl + alpha }
     | not active                = segi { lastDutyCycle = dtyCycl }
     | otherwise               = seg 
