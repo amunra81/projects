@@ -7,7 +7,7 @@ where
 import Data.Array.Unboxed(UArray)
 import Data.Word(Word8)
 import Data.Array.IArray((!))
-import Data.Lens.Light(makeLens)
+import Control.Lens
 
 data CState = CState 
             { _nCells :: Int
@@ -17,4 +17,4 @@ data CState = CState
 isSet :: Int -> CState -> Bool
 isSet i = (/= 0) . (! i) . _pData
 
-makeLens ''CState
+makeLenses ''CState
