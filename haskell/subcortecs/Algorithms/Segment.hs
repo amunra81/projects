@@ -101,12 +101,11 @@ addSynapses xs = over inSynapses f
 
 decaySynapses :: Double -> Bool -> Segment -> Segment
 decaySynapses decay doDecay  = over inSynapses g  
-        where g = foldl f []
-              f acc x = if _permanence x >= decay 
-                            then acc ++ [over permanence h x]
-                            else acc
+        where g =  map f . filter l 
+              l = (>= decay) . _permanence
+              f = over permanence h 
               h p = if doDecay 
-                        then decay
+                        then p - decay
                         else p
 
 itod :: Int -> Double
