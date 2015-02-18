@@ -1,8 +1,7 @@
 {-# LANGUAGE TemplateHaskell #-}
 {- Encapsulate the arrays used to maintain per-cell state.-}
 module Algorithms.CState 
-(CState(..),isSet,
-nCells,pData) 
+(CState(..),isSet,nCells,pData) 
 where
 import Data.Array.Unboxed(UArray)
 import Data.Word(Word8)
@@ -14,7 +13,8 @@ data CState = CState
             , _pData :: UArray Int Word8 
             }
 
-isSet :: Int -> CState -> Bool
-isSet i = (/= 0) . (! i) . _pData
-
 makeLenses ''CState
+
+isSet :: Int -> CState -> Bool
+isSet i = (/= 0) . (! i) . (view pData)
+

@@ -19,7 +19,7 @@ na :: a
 na = undefined 
 
 nSynapses ::  [Segment] -> Int
-nSynapses = foldl (+) 0 . map (length . inSynapses)
+nSynapses = foldl (+) 0 . map (length . _inSynapses)
 
 updateDutyCycle :: Int -> Cell -> Cell
 updateDutyCycle i = map (dutyCycle i False)
@@ -29,7 +29,7 @@ mostActiveSegmentPos = snd . foldli f (0,0)
                     where f (j,a) i s = if a < g s
                                             then (i,g s)
                                             else (j,a)
-                          g = totalActivations 
+                          g = _totalActivations 
 
 rebalanceSegments :: Cell -> Cell
 rebalanceSegments = na
