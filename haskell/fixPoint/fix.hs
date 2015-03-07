@@ -19,4 +19,3 @@ fact = fix ( \rec n -> if n == 0 then 1 else n * rec (n-1) )
 -- = if 2 == 0 then 1 else 2 * ( if 1 == 0 then 1 else 1 * ( 1 )) 
 --
 --  GHCi if 2 == 0 then 1 else 2 * ( if 1 == 0 then 1 else 1 * ( 1 ) ) 
-

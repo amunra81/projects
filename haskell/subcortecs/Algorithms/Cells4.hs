@@ -27,25 +27,30 @@
  * certain states, such as _infActiveStateT, can be initialized as
  * pointers to numpy array buffers, avoiding a copy step. -}
 
-module Algorithms.Cells4 where
+{-# LANGUAGE TemplateHaskell #-}
+module Algorithms.Cells4(
+                       ) where
 import Data.Word(Word32)
+import Control.Lens.TH(makeLenses)
 
                
 data Cells4 = Cells4 {
-              nColumns :: Word32
-            , nCellsPerCol :: Word32
-            , activationThreshold :: Word32
-            , minThreshold :: Word32
-            , newSynapseCount :: Word32
-            , segUpdateValidDuration :: Word32
-            , permInitial :: Rational
-            , permConnected :: Rational
-            , permMax :: Rational
-            , permDec :: Rational
-            , permInc :: Rational
-            , globalDecay :: Rational
-            , doPooling :: Bool
-            , seed :: Integer
-            , doItAll :: Bool
-            , checkSynapseConsistency :: Bool }
+              _nColumns :: Word32
+            , _nCellsPerCol :: Word32
+            , _activationThreshold :: Word32
+            , _minThreshold :: Word32
+            , _newSynapseCount :: Word32
+            , _segUpdateValidDuration :: Word32
+            , _permInitial :: Rational
+            , _permConnected :: Rational
+            , _permMax :: Rational
+            , _permDec :: Rational
+            , _permInc :: Rational
+            , _globalDecay :: Rational
+            , _doPooling :: Bool
+            , _seed :: Integer
+            , _doItAll :: Bool
+            , _checkSynapseConsistency :: Bool }
+
+makeLenses ''Cells4
 
