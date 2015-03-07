@@ -35,5 +35,5 @@ data SegmentData = SegmentData { _synapses :: [SynapseData]
 data CellData = CellData { _segments :: [SegmentData] }
 
 data Activity = Activity { _activeSegmentsForCell :: Map Cell [Segment] 
+                         , _numActiveSynapsesForSegment :: Map Segment SynapseIdx
                          }
-
