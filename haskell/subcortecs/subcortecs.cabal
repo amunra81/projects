@@ -62,6 +62,9 @@ library
                         ,Algorithms.CState 
                         ,Algorithms.InSynapse 
                         ,Algorithms.Segment
+                        ,Algorithms.Connections
+                        ,Common.Core
+                        
   
   -- Modules included in this library but not exported.
   -- other-modules:       

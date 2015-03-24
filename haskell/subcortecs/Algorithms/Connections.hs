@@ -1,5 +1,5 @@
-module Algorithms.Connections.Connections where
-import Algorithms.Common 
+module Algorithms.Connections where
+import Common.Core
 import Data.Map.Strict(Map)
 
 type CellIdx = UInt32 
@@ -37,3 +37,11 @@ data CellData = CellData { _segments :: [SegmentData] }
 data Activity = Activity { _activeSegmentsForCell :: Map Cell [Segment] 
                          , _numActiveSynapsesForSegment :: Map Segment SynapseIdx
                          }
+
+data Connections  = Connections { _cells :: [CellData]
+                                , _synapsesForPresynapticCell ::  Map Cell [Synapse]
+                                , _numSegments :: UInt32
+                                , _numSynapses :: UInt32 
+                                , _maxSegmentsPerCell :: SegmentIdx
+                                , _iteration :: Iteration
+                                }
