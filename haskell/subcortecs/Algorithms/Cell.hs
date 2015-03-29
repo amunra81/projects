@@ -11,12 +11,10 @@
 module Algorithms.Cell where
 
 import Algorithms.Segment
-import Common.Core(foldli)
+import Common.Core(foldli,na)
 
 type Cell = [Segment] 
 
-na :: a
-na = undefined 
 
 nSynapses ::  [Segment] -> Int
 nSynapses = foldl (+) 0 . map (length . _inSynapses)
