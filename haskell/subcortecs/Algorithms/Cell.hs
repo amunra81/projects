@@ -15,7 +15,6 @@ import Common.Core(foldli,na)
 
 type Cell = [Segment] 
 
-
 nSynapses ::  [Segment] -> Int
 nSynapses = foldl (+) 0 . map (length . _inSynapses)
 

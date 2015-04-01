@@ -66,8 +66,6 @@ defSP =    SpatialPooler { _inputDimensions               = []
                          , _wrapAround                    = True
                          }
 
-
-
 mview ::  Monad m => Getting a l a -> StateT l m a
 mview l = get >>= (\s -> return $ view l s)
 
