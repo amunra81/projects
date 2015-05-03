@@ -23,6 +23,8 @@ where
 import Common.Core
 import Control.Lens
 import Control.Monad.Trans.State.Strict
+import Math.SparseMatrix
+import Math.SparseBinaryMatrix
 
 data SpatialPooler = SpatialPooler { _inputDimensions               :: [UInt]
                                    , _columnDimensions              :: [UInt]
@@ -46,6 +48,7 @@ data SpatialPooler = SpatialPooler { _inputDimensions               :: [UInt]
 
 makeLenses ''SpatialPooler
 
+defSP ::  SpatialPooler
 defSP =  SpatialPooler { _inputDimensions                 = []
                          , _columnDimensions              = []
                          , _potentialRadius               = 16
@@ -74,58 +77,37 @@ defPotentialRadius = do
                         s <- get
                         return 1
 
-d :: Monad m => StateT SpatialPooler m [Int]
+d :: Monad m => StateT SpatialPooler m [UInt]
 d = do 
      mview inputDimensions
 
 data SPData = SPData {    _numInputs :: UInt 
                         , _numColumns :: UInt  
-                        , _columnDimensions :: [UInt]  
-                        , _inputDimensions :: [UInt]  
-                        , _potentialRadius :: UInt  
-                        , _potentialPct :: Real  
-                        , _initConnectedPct :: Real  
-                        , _globalInhibition :: bool  
-                        , _numActiveColumnsPerInhArea :: Int  
-                        , _localAreaDensity :: Real  
-                        , _stimulusThreshold :: UInt  
+                        , _initConnectedPct :: Real32  
                         , _inhibitionRadius :: UInt  
-                        , _dutyCyclePeriod :: UInt  
-                        , _maxBoost :: Real  
                         , _iterationNum :: UInt  
                         , _iterationLearnNum :: UInt  
-                        , _spVerbosity :: UInt  
-                        , _wrapAround :: bool  
                         , _updatePeriod :: UInt  
-
-                        , _synPermMin :: Real  
-                        , _synPermMax :: Real  
-                        , _synPermTrimThreshold :: Real  
-                        , _synPermInactiveDec :: Real  
-                        , _synPermActiveInc :: Real  
-                        , _synPermBelowStimulusInc :: Real  
-                        , _synPermConnected :: Real  
-
-                        , _boostFactors :: [Real]  
-                        , _overlapDutyCycles :: [Real]  
-                        , _activeDutyCycles :: [Real]  
-                        , _minOverlapDutyCycles :: [Real]  
-                        , _minActiveDutyCycles :: [Real]  
-
-                        , _minPctOverlapDutyCycles :: Real  
-                        , _minPctActiveDutyCycles :: Real  
-
-                        , _permanences :: SparseMatrix<UInt,Real,Int,Real64>  
-                        , _potentialPools :: SparseBinaryMatrix<UInt, UInt>  
-                        , _connectedSynapses :: SparseBinaryMatrix<UInt, UInt>  
+                        , _synPermMin :: Real32  
+                        , _synPermMax :: Real32  
+                        , _synPermTrimThreshold :: Real32  
+                        , _synPermBelowStimulusInc :: Real32  
+                        , _boostFactors :: [Real32]  
+                        , _overlapDutyCycles :: [Real32]  
+                        , _activeDutyCycles :: [Real32]  
+                        , _minOverlapDutyCycles :: [Real32]  
+                        , _minActiveDutyCycles :: [Real32]  
+                        , _permanences :: SparseMatrix Real32  
+                        , _potentialPools :: SparseBinaryMatrix UInt  
+                        , _connectedSynapses :: SparseBinaryMatrix UInt  
                         , _connectedCounts :: [UInt]  
-
                         , _overlaps :: [UInt]  
-                        , _overlapsPct :: [Real]  
-                        , _boostedOverlaps :: [Real]  
+                        , _overlapsPct :: [Real32]  
+                        , _boostedOverlaps :: [Real32]  
                         , _activeColumns :: [UInt]  
-                        , _tieBreaker :: [Real]  
-
+                        , _tieBreaker :: [Real32]  
                         , _version :: UInt 
                         , _rng :: Random
+                        , _sp :: SpatialPooler
                       }
+
