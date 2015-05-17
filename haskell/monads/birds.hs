@@ -36,3 +36,4 @@ routine2 = return (0,0) >>=
 routine3 :: Maybe Pole 
 routine3 = return (0,0) >>= (landLeft 2)  >>= (landRight 3) >>= (landLeft 2)
 
+a = (.).(.).(.) 

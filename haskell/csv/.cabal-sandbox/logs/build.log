@@ -1,0 +1,204 @@
+
+package: attoparsec-0.13.0.0
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -developer
+dependencies: transformers-0.3.0.0 text-1.2.0.5 scientific-0.3.3.8
+              deepseq-1.3.0.2 containers-0.5.5.1 bytestring-0.10.4.0 base-4.7.0.1
+              array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: blaze-builder-0.4.0.1
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+dependencies: text-1.2.0.5 deepseq-1.3.0.2 bytestring-0.10.4.0
+              base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: cassava-0.4.2.4
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+dependencies: vector-0.10.12.3 unordered-containers-0.2.5.1
+              text-1.2.0.5 deepseq-1.3.0.2 containers-0.5.5.1 bytestring-0.10.4.0
+              blaze-builder-0.4.0.1 base-4.7.0.1 attoparsec-0.13.0.0
+              array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: hashable-1.2.3.2
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -sse41 sse2 integer-gmp
+dependencies: text-1.2.0.5 integer-gmp-0.5.1.0 ghc-prim-0.3.1.0
+              bytestring-0.10.4.0 base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: primitive-0.6
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+dependencies: transformers-0.3.0.0 ghc-prim-0.3.1.0 base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Failed
+tests-outcome: NotTried
+
+package: scientific-0.3.3.8
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -integer-simple bytestring-builder
+dependencies: text-1.2.0.5 integer-gmp-0.5.1.0 hashable-1.2.3.2
+              ghc-prim-0.3.1.0 deepseq-1.3.0.2 bytestring-0.10.4.0 base-4.7.0.1
+              array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: text-1.2.0.5
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -integer-simple -developer
+dependencies: integer-gmp-0.5.1.0 ghc-prim-0.3.1.0 deepseq-1.3.0.2
+              bytestring-0.10.4.0 base-4.7.0.1 array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: unordered-containers-0.2.5.1
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -debug
+dependencies: hashable-1.2.3.2 deepseq-1.3.0.2 base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: vector-0.10.12.3
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -unsafechecks -internalchecks boundschecks
+dependencies: primitive-0.6 ghc-prim-0.3.1.0 deepseq-1.3.0.2
+              base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Failed
+tests-outcome: NotTried
+
+package: attoparsec-0.13.0.0
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -developer
+dependencies: transformers-0.3.0.0 text-1.2.0.5 scientific-0.3.3.8
+              deepseq-1.3.0.2 containers-0.5.5.1 bytestring-0.10.6.0 base-4.7.0.1
+              array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: blaze-builder-0.4.0.1
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+dependencies: text-1.2.0.5 deepseq-1.3.0.2 bytestring-0.10.6.0
+              base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: bytestring-0.10.6.0
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -integer-simple
+dependencies: integer-gmp-0.5.1.0 ghc-prim-0.3.1.0 deepseq-1.3.0.2
+              base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Failed
+tests-outcome: NotTried
+
+package: cassava-0.4.2.4
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+dependencies: vector-0.10.12.3 unordered-containers-0.2.5.1
+              text-1.2.0.5 deepseq-1.3.0.2 containers-0.5.5.1 bytestring-0.10.6.0
+              blaze-builder-0.4.0.1 base-4.7.0.1 attoparsec-0.13.0.0
+              array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: hashable-1.2.3.2
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -sse41 sse2 integer-gmp
+dependencies: text-1.2.0.5 integer-gmp-0.5.1.0 ghc-prim-0.3.1.0
+              bytestring-0.10.6.0 base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: scientific-0.3.3.8
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -integer-simple bytestring-builder
+dependencies: text-1.2.0.5 integer-gmp-0.5.1.0 hashable-1.2.3.2
+              ghc-prim-0.3.1.0 deepseq-1.3.0.2 bytestring-0.10.6.0 base-4.7.0.1
+              array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: text-1.2.0.5
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -integer-simple -developer
+dependencies: integer-gmp-0.5.1.0 ghc-prim-0.3.1.0 deepseq-1.3.0.2
+              bytestring-0.10.6.0 base-4.7.0.1 array-0.5.0.0
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried
+
+package: unordered-containers-0.2.5.1
+os: osx
+arch: x86_64
+compiler: ghc-7.8.3
+client: cabal-install-1.20.0.3
+flags: -debug
+dependencies: hashable-1.2.3.2 deepseq-1.3.0.2 base-4.7.0.1
+install-outcome: InstallOk
+docs-outcome: Ok
+tests-outcome: NotTried

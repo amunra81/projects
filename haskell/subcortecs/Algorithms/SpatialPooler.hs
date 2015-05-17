@@ -25,6 +25,7 @@ import Control.Lens
 import Control.Monad.Trans.State.Strict
 import Math.SparseMatrix
 import Math.SparseBinaryMatrix
+import Control.Lens.Fold(toListOf)
 
 data SpatialPooler = SpatialPooler { _inputDimensions               :: [UInt]
                                    , _columnDimensions              :: [UInt]
@@ -111,3 +112,7 @@ data SPData = SPData {    _numInputs :: UInt
                         , _sp :: SpatialPooler
                       }
 
+numInputs :: Traversal' SpatialPooler UInt
+numInputs =  inputDimensions . traversed
+
+ss = toListOf numInputs defSP
