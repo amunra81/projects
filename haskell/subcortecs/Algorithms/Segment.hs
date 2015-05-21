@@ -143,4 +143,3 @@ computeActivity  cs permCnt cntOnly Segment { _inSynapses = xs } =
                     else filter g xs
         where f a = g a && isSet (_srcCellIdx a) cs
               g a = _permanence a >= permCnt 
-

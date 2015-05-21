@@ -1,6 +1,10 @@
 module Exercices where
 import Prelude hiding (Either(..))
 
+
+
+
+
 ---------------- Create functor for Either -----------------------
 
 data Either a b = Left a | Right b
@@ -22,9 +26,6 @@ testEither = fmap show
 
 data ITree a = Leaf (Int -> a) |
                Node [ITree a]
-
 instance Functor ITree where
  fmap g (Leaf h) = Leaf $ g . h
  fmap g (Node xs) = Node $ map (fmap g) xs
-
------------------------------------------------------------------

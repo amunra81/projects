@@ -116,3 +116,4 @@ numInputs :: Traversal' SpatialPooler UInt
 numInputs =  inputDimensions . traversed
 
 ss = toListOf numInputs defSP
+
