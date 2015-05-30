@@ -16,5 +16,4 @@ data CState = CState
 makeLenses ''CState
 
 isSet :: Int -> CState -> Bool
-isSet i = (/= 0) . (! i) . (view pData)
-
+isSet i = (/= 0) . (! i) . view pData
