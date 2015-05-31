@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1F2CCE0E-BD88-4A97-BE5A-6B4FDE5A014A</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Services</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>687153ABBEE4417B71FEA3B2C630F8662924173D</key>
+		<string>github.com:amunra81/projects.git</string>
+		<key>737318401D8142EFD74E65E9C597C69847DBB128</key>
+		<string>github.com:ghc-ios/ghc-ios-scripts.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>iOS/Services/Services.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>687153ABBEE4417B71FEA3B2C630F8662924173D</key>
+		<string>../../../..</string>
+		<key>737318401D8142EFD74E65E9C597C69847DBB128</key>
+		<string>../../../../../bin/ghc-ios-scripts</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>github.com:amunra81/projects.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>687153ABBEE4417B71FEA3B2C630F8662924173D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>737318401D8142EFD74E65E9C597C69847DBB128</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ghc-ios-scripts</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>687153ABBEE4417B71FEA3B2C630F8662924173D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>projects</string>
+		</dict>
+	</array>
+</dict>
+</plist>
