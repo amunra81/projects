@@ -9,13 +9,13 @@
 /* Begin PBXBuildFile section */
 		A94C7B6319D5F0B800BAB6D3 /* kk.m in Sources */ = {isa = PBXBuildFile; fileRef = A94C7B6219D5F0B800BAB6D3 /* kk.m */; };
 		A94C7B6919D5F9F200BAB6D3 /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A94C7B6819D5F9F200BAB6D3 /* libiconv.dylib */; };
+		A98C5EFF1B1BCC0800323121 /* Counter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A98C5EFE1B1BCC0800323121 /* Counter.a */; };
 		A9A613EF19D5607400D099CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A613EE19D5607400D099CE /* AppDelegate.swift */; };
 		A9A613F119D5607400D099CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A613F019D5607400D099CE /* ViewController.swift */; };
 		A9A613F419D5607400D099CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9A613F219D5607400D099CE /* Main.storyboard */; };
 		A9A613F619D5607400D099CE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9A613F519D5607400D099CE /* Images.xcassets */; };
 		A9A613F919D5607400D099CE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9A613F719D5607400D099CE /* LaunchScreen.xib */; };
 		A9A6140519D5607400D099CE /* asdasdTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A6140419D5607400D099CE /* asdasdTests.swift */; };
-		A9A6141019D561EC00D099CE /* Counter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9A6140F19D561EC00D099CE /* Counter.a */; settings = {ATTRIBUTES = (Required, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +32,8 @@
 		A94C7B6119D5F0B800BAB6D3 /* asdasd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "asdasd-Bridging-Header.h"; sourceTree = "<group>"; };
 		A94C7B6219D5F0B800BAB6D3 /* kk.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = kk.m; sourceTree = "<group>"; };
 		A94C7B6819D5F9F200BAB6D3 /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		A98C5EFD1B1BCC0800323121 /* Counter_stub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Counter_stub.h; path = ../../../haskell/ios/Counter_stub.h; sourceTree = "<group>"; };
+		A98C5EFE1B1BCC0800323121 /* Counter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Counter.a; path = ../../../haskell/ios/Counter.a; sourceTree = "<group>"; };
 		A9A613E919D5607400D099CE /* asdasd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = asdasd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A613ED19D5607400D099CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9A613EE19D5607400D099CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,8 +44,6 @@
 		A9A613FE19D5607400D099CE /* asdasdTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = asdasdTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9A6140319D5607400D099CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9A6140419D5607400D099CE /* asdasdTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = asdasdTests.swift; sourceTree = "<group>"; };
-		A9A6140E19D561EC00D099CE /* Counter_stub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Counter_stub.h; path = ../../../projects/haskell/ios/Counter_stub.h; sourceTree = "<group>"; };
-		A9A6140F19D561EC00D099CE /* Counter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Counter.a; path = ../../../projects/haskell/ios/Counter.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,8 +51,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A98C5EFF1B1BCC0800323121 /* Counter.a in Frameworks */,
 				A94C7B6919D5F9F200BAB6D3 /* libiconv.dylib in Frameworks */,
-				A9A6141019D561EC00D099CE /* Counter.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,10 +69,10 @@
 		A94C7B6419D5F24F00BAB6D3 /* Haskell */ = {
 			isa = PBXGroup;
 			children = (
+				A98C5EFD1B1BCC0800323121 /* Counter_stub.h */,
+				A98C5EFE1B1BCC0800323121 /* Counter.a */,
 				A94C7B6219D5F0B800BAB6D3 /* kk.m */,
 				A94C7B6119D5F0B800BAB6D3 /* asdasd-Bridging-Header.h */,
-				A9A6140E19D561EC00D099CE /* Counter_stub.h */,
-				A9A6140F19D561EC00D099CE /* Counter.a */,
 			);
 			name = Haskell;
 			sourceTree = "<group>";

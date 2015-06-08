@@ -1,18 +1,12 @@
-{-# LANGUAGE ForeignFunctionInterface #-}
-module Data.Transactions where 
+module Data.Transactions 
+(startCounter2,Service(..),Window(..),services)
+where 
+                               
 import Control.Concurrent
 import Control.Monad
 
-foreign export ccall startCounter :: Int -> IO ()
-foreign export ccall divByZero :: Double -> IO Double
-
-divByZero :: Double -> IO Double
-divByZero n = do
-                print ( n / 0 )
-                return $ n / 0
-
-startCounter :: Int -> IO ()
-startCounter = void . forkIO . void . loop
+startCounter2 :: Int -> IO ()
+startCounter2 = void . forkIO . void . loop
     where loop i = do
             putStrLn (replicate i 'o')
             threadDelay 100000
@@ -26,4 +20,3 @@ data Window = Window
 services :: [Service]
 services = [Srv "PSC",
             Srv "Enel"]
-

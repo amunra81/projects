@@ -21,10 +21,11 @@ parse s   = [ L s ]
 -- Generate Haskell source code from a parsed representation
 -- of the format string.  This code will be spliced into
 -- the module which calls "pr", at compile time.
---gen :: [Format] -> Q Exp
-gen [D]       = [| \n -> show n |]
-gen [S]       = [| \s -> s |]
-gen [L intro] = [| \s -> intro ++ s |]
+gen :: [Format] -> Q Exp
+gen [D]       = [| show  |]
+gen [S]       = [| id |]
+gen [L intro] = [| (++) intro |]
+gen  _        = gen []
 
 -- Here we generate the Haskell code for the splice
 -- from an input format string.

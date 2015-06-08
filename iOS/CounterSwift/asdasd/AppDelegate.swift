@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch
-        hs_init(nil,nil);
+        //hs_init(nil,nil);
+        hs_init2()
         startCounter(0);
         let s = divByZero(10);
         return true;

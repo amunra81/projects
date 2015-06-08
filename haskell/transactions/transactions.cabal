@@ -47,7 +47,11 @@ cabal-version:       >=1.10
 
 library
   -- Modules exported by the library.
-  exposed-modules:     Data.Transactions
+  exposed-modules:     
+                     Data.Transactions
+                     Data.Exports
+                     Control.Lain
+                     --Data.Gen
   
   -- Modules included in this library but not exported.
   -- other-modules:       
@@ -56,8 +60,10 @@ library
   -- other-extensions:    
   
   -- Other library packages from which modules are imported.
-  build-depends:       base >=4.7 && <4.8
-  
+  build-depends:    base >=4.2 && <5
+                    ,c-storable-deriving  >= 0.1.1
+                    ,ghc-prim
+
   -- Directories containing source files.
   hs-source-dirs:      src
   

@@ -7,7 +7,7 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>1F2CCE0E-BD88-4A97-BE5A-6B4FDE5A014A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Services</string>
+	<string>project</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>687153ABBEE4417B71FEA3B2C630F8662924173D</key>
@@ -16,7 +16,7 @@
 		<string>github.com:ghc-ios/ghc-ios-scripts.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>iOS/Services/Services.xcodeproj</string>
+	<string>iOS/Services/Services.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>687153ABBEE4417B71FEA3B2C630F8662924173D</key>

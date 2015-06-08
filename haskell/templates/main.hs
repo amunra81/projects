@@ -2,4 +2,5 @@
 {-# LANGUAGE TemplateHaskell #-}
 import FastN
 
-main = print $ $(fstN 3) (1,2,3)
+main ::  IO ()
+main = print $ $(fstN 3) ((1,2,3) :: (Int,Int,Int))

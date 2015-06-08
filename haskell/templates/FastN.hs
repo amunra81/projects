@@ -1,4 +1,3 @@
-{-# LANGUAGE TemplateHaskell #-}
 
 module FastN where 
 import Language.Haskell.TH

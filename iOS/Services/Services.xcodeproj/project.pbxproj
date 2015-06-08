@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A98C5EFC1B1BB10000323121 /* HaskelliOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */; };
+		A98C5F021B1BCE1F00323121 /* Counter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A98C5F011B1BCE1F00323121 /* Counter.a */; };
+		A98C5F091B1BD71E00323121 /* libHStransactions-0.1.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A98C5F081B1BD71E00323121 /* libHStransactions-0.1.0.0.a */; };
 		A9958A6D1B1B568B004CD32E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9958A6C1B1B568B004CD32E /* AppDelegate.swift */; };
 		A9958A6F1B1B568B004CD32E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9958A6E1B1B568B004CD32E /* ViewController.swift */; };
 		A9958A721B1B568B004CD32E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9958A701B1B568B004CD32E /* Main.storyboard */; };
@@ -28,6 +30,11 @@
 
 /* Begin PBXFileReference section */
 		A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = HaskelliOS.xcconfig; path = "../../../bin/ghc-ios-scripts/HaskelliOS.xcconfig"; sourceTree = "<group>"; };
+		A98C5F001B1BCE1F00323121 /* Counter_stub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Counter_stub.h; path = ../../../haskell/ios/Counter_stub.h; sourceTree = "<group>"; };
+		A98C5F011B1BCE1F00323121 /* Counter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Counter.a; path = ../../../haskell/ios/Counter.a; sourceTree = "<group>"; };
+		A98C5F041B1BCF0900323121 /* Services-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Services-Bridging-Header.h"; sourceTree = "<group>"; };
+		A98C5F081B1BD71E00323121 /* libHStransactions-0.1.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libHStransactions-0.1.0.0.a"; path = "../../../haskell/transactions/dist/i386/build/libHStransactions-0.1.0.0.a"; sourceTree = "<group>"; };
+		A98C5F0A1B1CA69500323121 /* Exports_stub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exports_stub.h; path = ../../../haskell/transactions/dist/i386/build/Data/Exports_stub.h; sourceTree = "<group>"; };
 		A9958A671B1B568B004CD32E /* Services.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Services.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9958A6B1B1B568B004CD32E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9958A6C1B1B568B004CD32E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,6 +52,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A98C5F021B1BCE1F00323121 /* Counter.a in Frameworks */,
+				A98C5F091B1BD71E00323121 /* libHStransactions-0.1.0.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,12 +89,17 @@
 		A9958A691B1B568B004CD32E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A98C5F081B1BD71E00323121 /* libHStransactions-0.1.0.0.a */,
+				A98C5F0A1B1CA69500323121 /* Exports_stub.h */,
+				A98C5F001B1BCE1F00323121 /* Counter_stub.h */,
+				A98C5F011B1BCE1F00323121 /* Counter.a */,
 				A9958A6C1B1B568B004CD32E /* AppDelegate.swift */,
 				A9958A6E1B1B568B004CD32E /* ViewController.swift */,
 				A9958A701B1B568B004CD32E /* Main.storyboard */,
 				A9958A731B1B568B004CD32E /* Images.xcassets */,
 				A9958A751B1B568B004CD32E /* LaunchScreen.xib */,
 				A9958A6A1B1B568B004CD32E /* Supporting Files */,
+				A98C5F041B1BCF0900323121 /* Services-Bridging-Header.h */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -349,9 +363,17 @@
 			baseConfigurationReference = A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Services/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/horus/projects/haskell/ios,
+					/Users/horus/projects/haskell/transactions/dist/i386/build,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Services/Services-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -361,9 +383,16 @@
 			baseConfigurationReference = A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Services/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/horus/projects/haskell/ios,
+					/Users/horus/projects/haskell/transactions/dist/i386/build,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Services/Services-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
