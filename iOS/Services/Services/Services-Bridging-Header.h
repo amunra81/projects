@@ -3,3 +3,9 @@
 //
 #include "Counter_stub.h"
 #include "Exports_stub.h"
+#include "TransactionsDecl.h"
+void printMe()
+{
+    //auto x = getAString();
+    printf ("%s \n", "A string");
+}

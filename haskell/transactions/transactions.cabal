@@ -50,8 +50,8 @@ library
   exposed-modules:     
                      Data.Transactions
                      Data.Exports
-                     Control.Lain
-                     --Data.Gen
+                     --Control.Lain
+                     Data.Gen
   
   -- Modules included in this library but not exported.
   -- other-modules:       
@@ -63,11 +63,12 @@ library
   build-depends:    base >=4.2 && <5
                     ,c-storable-deriving  >= 0.1.1
                     ,ghc-prim
+                    ,transformers >= 0.4.3.0
 
   -- Directories containing source files.
-  hs-source-dirs:      src
+  -- hs-source-dirs:      src
   
   -- Base language which the package is written in.
   default-language:    Haskell2010
 
-  ghc-options:   -Wall 
+  -- ghc-options:   -static -optl-pthread -optl-static 

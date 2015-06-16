@@ -16,9 +16,57 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         hs_init(nil,nil)
-        startC2(0);
+        let i = hsfun(2)
+        
+        //wrap
+        let wrapped = wrap(i)
+        let i2 = unwrap(wrapped)
+        
+        //example struct
+        let struct1 = gethsstruct(i+43,i2)
+        let x = getx(struct1)
+        let ptr = unsafeBitCast(struct1, UnsafeMutablePointer<ExampleStruct>.self).memory
+        freehsstruct(struct1)
+        
+        //array
+        let xs0 = unsafeBitCast(gethslist(), UnsafeMutablePointer<ExampleStruct>.self)
+        let xs1 = xs0.successor()
+        let (xs0m,xs1m) = (xs0.memory,xs1.memory)
+        printlist(xs1)
+        
+        let strLen = hsstrlen(toCString ("12345∂∂"))
+        let str = stringFromHsPtr(gethsstr())
+        
+        let file = "file.txt"
+        
+        var fileContent:String?
+        if let dirs : [String] = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.AllDomainsMask, true) as? [String] {
+            let dir = dirs[0] //documents directory
+            let path = dir.stringByAppendingPathComponent(file);
+            let text = "some text∆ß˙∆˜ ∆˚˙ßå∂"
+            
+            //writing
+            text.writeToFile(path, atomically: false, encoding: NSUTF8StringEncoding, error: nil);
+            
+            //reading
+            let text2 = String(contentsOfFile: path, encoding: NSUTF8StringEncoding, error: nil)
+            
+            fileContent = stringFromHsPtr(export_wcstr(toCString(path)))
+        }
         
         return true
+    }
+    
+    func toCString(str:String) -> UnsafeMutablePointer<Int8>
+    {
+        var cstr = (str as NSString).UTF8String
+        return UnsafeMutablePointer<Int8>(cstr)
+    }
+    func stringFromHsPtr(hsPtr:HsPtr) -> String?
+    {
+        let ptr = unsafeBitCast(hsPtr, UnsafeMutablePointer<CChar>.self)
+        return String.fromCString(ptr);
+        
     }
 
     func applicationWillResignActive(application: UIApplication) {

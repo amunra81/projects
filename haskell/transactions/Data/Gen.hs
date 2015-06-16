@@ -1,4 +1,3 @@
-{-# LANGUAGE MagicHash #-}
 {-# LANGUAGE DeriveGeneric #-}
  
 module Data.Gen where
