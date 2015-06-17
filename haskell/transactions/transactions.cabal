@@ -49,7 +49,7 @@ library
   -- Modules exported by the library.
   exposed-modules:     
                      Data.Transactions
-                     Data.Exports
+                     Data.ExportsExample
                      --Control.Lain
                      Data.Gen
   

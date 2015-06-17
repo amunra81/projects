@@ -1,7 +1,7 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
-{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+-- {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
-module Data.Exports where
+module Data.ExportsExample where
 
 import Foreign.C.Types
 import Foreign.C.String
@@ -10,7 +10,6 @@ import Foreign.Storable
 import Foreign.Marshal.Alloc
 import Foreign.Marshal.Array
 import Foreign.Ptr
-import System.IO(writeFile)
 
 -- Very simple haskell function
 hsfun :: CInt -> IO CInt
@@ -84,7 +83,7 @@ foreign export ccall
 
 gethslist :: IO (Ptr ExampleStruct)
 gethslist = do
-  let e i = ExampleStruct (fromIntegral 10+i) (fromIntegral 30+i)
+  let e i = ExampleStruct (10+i) (30+i)
   let e10 = [e 1, e 2, e 3, e 4, e 5, e 6, e 7, e 8, e 9, e 10]
   p <- mallocArray 10
   pokeArray p e10
@@ -141,7 +140,7 @@ wcstr file = do
   return $ contents
 
 wfstr :: String -> String -> IO ()
-wfstr file str = writeFile file str 
+wfstr = writeFile
 
 export_wcstr :: CString -> IO CString
 export_wcstr file = do
