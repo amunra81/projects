@@ -3,21 +3,21 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 47;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A959A5F01B36EC9400290230 /* libHSc-storable-deriving-0.1.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A959A5EF1B36EC9400290230 /* libHSc-storable-deriving-0.1.2.a */; };
+		A959A5F21B36ECC600290230 /* libHStransformers-0.4.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A959A5F11B36ECC600290230 /* libHStransformers-0.4.3.0.a */; };
 		A98C5EFC1B1BB10000323121 /* HaskelliOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */; };
-		A98C5F021B1BCE1F00323121 /* Counter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A98C5F011B1BCE1F00323121 /* Counter.a */; };
 		A9958A6D1B1B568B004CD32E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9958A6C1B1B568B004CD32E /* AppDelegate.swift */; };
 		A9958A6F1B1B568B004CD32E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9958A6E1B1B568B004CD32E /* ViewController.swift */; };
 		A9958A721B1B568B004CD32E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9958A701B1B568B004CD32E /* Main.storyboard */; };
 		A9958A741B1B568B004CD32E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9958A731B1B568B004CD32E /* Images.xcassets */; };
 		A9958A771B1B568B004CD32E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A9958A751B1B568B004CD32E /* LaunchScreen.xib */; };
 		A9958A831B1B568B004CD32E /* ServicesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9958A821B1B568B004CD32E /* ServicesTests.swift */; };
-		A9B750E11B290A4C00FAA78B /* libHStransactions-0.1.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B750E01B290A4C00FAA78B /* libHStransactions-0.1.0.0.a */; };
-		A9B750E31B290A7300FAA78B /* libHStransformers-0.4.3.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B750E21B290A7300FAA78B /* libHStransformers-0.4.3.0.a */; };
-		A9B750E51B290A8600FAA78B /* libHSc-storable-deriving-0.1.1.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9B750E41B290A8600FAA78B /* libHSc-storable-deriving-0.1.1.a */; };
+		A9F8EC151B35D03200B68C11 /* Counter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F8EC141B35D03200B68C11 /* Counter.a */; };
+		A9F8EC181B35D8AA00B68C11 /* libHStransactions-0.1.0.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F8EC171B35D8AA00B68C11 /* libHStransactions-0.1.0.0.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,11 +32,10 @@
 
 /* Begin PBXFileReference section */
 		A9598CE81B2F8A1A00FB2FF3 /* TransactionsDecl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TransactionsDecl.h; path = ../../../haskell/transactions/Include/TransactionsDecl.h; sourceTree = "<group>"; };
+		A959A5EF1B36EC9400290230 /* libHSc-storable-deriving-0.1.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libHSc-storable-deriving-0.1.2.a"; path = "../../../haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/c-storable-deriving-0.1.2/libHSc-storable-deriving-0.1.2.a"; sourceTree = "<group>"; };
+		A959A5F11B36ECC600290230 /* libHStransformers-0.4.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libHStransformers-0.4.3.0.a"; path = "../../../haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/transformers-0.4.3.0/libHStransformers-0.4.3.0.a"; sourceTree = "<group>"; };
 		A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = HaskelliOS.xcconfig; path = "../../../bin/ghc-ios-scripts/HaskelliOS.xcconfig"; sourceTree = "<group>"; };
-		A98C5F001B1BCE1F00323121 /* Counter_stub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Counter_stub.h; path = ../../../haskell/ios/Counter_stub.h; sourceTree = "<group>"; };
-		A98C5F011B1BCE1F00323121 /* Counter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Counter.a; path = ../../../haskell/ios/Counter.a; sourceTree = "<group>"; };
 		A98C5F041B1BCF0900323121 /* Services-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Services-Bridging-Header.h"; sourceTree = "<group>"; };
-		A98C5F0A1B1CA69500323121 /* Exports_stub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Exports_stub.h; path = ../../../haskell/transactions/dist/i386/build/Data/Exports_stub.h; sourceTree = "<group>"; };
 		A9958A671B1B568B004CD32E /* Services.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Services.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9958A6B1B1B568B004CD32E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9958A6C1B1B568B004CD32E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -47,9 +46,10 @@
 		A9958A7C1B1B568B004CD32E /* ServicesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ServicesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9958A811B1B568B004CD32E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9958A821B1B568B004CD32E /* ServicesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesTests.swift; sourceTree = "<group>"; };
-		A9B750E01B290A4C00FAA78B /* libHStransactions-0.1.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libHStransactions-0.1.0.0.a"; path = "../../../haskell/transactions/dist/i386/build/libHStransactions-0.1.0.0.a"; sourceTree = "<group>"; };
-		A9B750E21B290A7300FAA78B /* libHStransformers-0.4.3.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libHStransformers-0.4.3.0.a"; path = "../../../haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/transformers-0.4.3.0/libHStransformers-0.4.3.0.a"; sourceTree = "<group>"; };
-		A9B750E41B290A8600FAA78B /* libHSc-storable-deriving-0.1.1.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libHSc-storable-deriving-0.1.1.a"; path = "../../../haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/c-storable-deriving-0.1.1/libHSc-storable-deriving-0.1.1.a"; sourceTree = "<group>"; };
+		A9CAA3A31B3592FD006AEEB2 /* ExportsExample_stub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ExportsExample_stub.h; path = ../../../haskell/transactions/dist/i386/build/Data/ExportsExample_stub.h; sourceTree = "<group>"; };
+		A9F8EC141B35D03200B68C11 /* Counter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = Counter.a; path = ../../../haskell/ios/Counter.a; sourceTree = "<group>"; };
+		A9F8EC161B35D05900B68C11 /* Counter_stub.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Counter_stub.h; path = ../../../haskell/ios/Counter_stub.h; sourceTree = "<group>"; };
+		A9F8EC171B35D8AA00B68C11 /* libHStransactions-0.1.0.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libHStransactions-0.1.0.0.a"; path = "../../../haskell/transactions/dist/build/libHStransactions-0.1.0.0.a"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,10 +57,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A98C5F021B1BCE1F00323121 /* Counter.a in Frameworks */,
-				A9B750E31B290A7300FAA78B /* libHStransformers-0.4.3.0.a in Frameworks */,
-				A9B750E51B290A8600FAA78B /* libHSc-storable-deriving-0.1.1.a in Frameworks */,
-				A9B750E11B290A4C00FAA78B /* libHStransactions-0.1.0.0.a in Frameworks */,
+				A959A5F21B36ECC600290230 /* libHStransformers-0.4.3.0.a in Frameworks */,
+				A959A5F01B36EC9400290230 /* libHSc-storable-deriving-0.1.2.a in Frameworks */,
+				A9F8EC151B35D03200B68C11 /* Counter.a in Frameworks */,
+				A9F8EC181B35D8AA00B68C11 /* libHStransactions-0.1.0.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,13 +96,8 @@
 		A9958A691B1B568B004CD32E /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A9CAA3A51B359320006AEEB2 /* External */,
 				A9598CE81B2F8A1A00FB2FF3 /* TransactionsDecl.h */,
-				A9B750E41B290A8600FAA78B /* libHSc-storable-deriving-0.1.1.a */,
-				A9B750E21B290A7300FAA78B /* libHStransformers-0.4.3.0.a */,
-				A9B750E01B290A4C00FAA78B /* libHStransactions-0.1.0.0.a */,
-				A98C5F0A1B1CA69500323121 /* Exports_stub.h */,
-				A98C5F001B1BCE1F00323121 /* Counter_stub.h */,
-				A98C5F011B1BCE1F00323121 /* Counter.a */,
 				A9958A6C1B1B568B004CD32E /* AppDelegate.swift */,
 				A9958A6E1B1B568B004CD32E /* ViewController.swift */,
 				A9958A701B1B568B004CD32E /* Main.storyboard */,
@@ -137,6 +132,19 @@
 				A9958A811B1B568B004CD32E /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A9CAA3A51B359320006AEEB2 /* External */ = {
+			isa = PBXGroup;
+			children = (
+				A959A5F11B36ECC600290230 /* libHStransformers-0.4.3.0.a */,
+				A959A5EF1B36EC9400290230 /* libHSc-storable-deriving-0.1.2.a */,
+				A9F8EC161B35D05900B68C11 /* Counter_stub.h */,
+				A9F8EC141B35D03200B68C11 /* Counter.a */,
+				A9CAA3A31B3592FD006AEEB2 /* ExportsExample_stub.h */,
+				A9F8EC171B35D8AA00B68C11 /* libHStransactions-0.1.0.0.a */,
+			);
+			name = External;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +204,7 @@
 				};
 			};
 			buildConfigurationList = A9958A621B1B568B004CD32E /* Build configuration list for PBXProject "Services" */;
-			compatibilityVersion = "Xcode 3.2";
+			compatibilityVersion = "Xcode 6.3";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -288,6 +296,11 @@
 			baseConfigurationReference = A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7,
+					armv7s,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -334,6 +347,11 @@
 			baseConfigurationReference = A98C5EFB1B1BB10000323121 /* HaskelliOS.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = (
+					"$(ARCHS_STANDARD)",
+					armv7,
+					armv7s,
+				);
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -378,10 +396,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/horus/projects/haskell/ios,
 					/Users/horus/projects/haskell/transactions/dist/i386/build,
-					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/c-storable-deriving-0.1.1",
 					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/transactions-0.1.0.0",
+					/Users/horus/projects/haskell/ios,
+					/Users/horus/projects/haskell/transactions/dist/build,
+					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/c-storable-deriving-0.1.2",
 					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/transformers-0.4.3.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -401,10 +420,11 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					/Users/horus/projects/haskell/ios,
 					/Users/horus/projects/haskell/transactions/dist/i386/build,
-					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/c-storable-deriving-0.1.1",
 					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/transactions-0.1.0.0",
+					/Users/horus/projects/haskell/ios,
+					/Users/horus/projects/haskell/transactions/dist/build,
+					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/c-storable-deriving-0.1.2",
 					"/Users/horus/projects/haskell/transactions/.cabal-sandbox/lib/i386-ios-ghc-7.8.3/transformers-0.4.3.0",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";

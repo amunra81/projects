@@ -49,8 +49,8 @@ library
   -- Modules exported by the library.
   exposed-modules:     
                      Data.Transactions
+                     Data.HelpMe
                      Data.ExportsExample
-                     --Control.Lain
                      Data.Gen
   
   -- Modules included in this library but not exported.
@@ -60,10 +60,10 @@ library
   -- other-extensions:    
   
   -- Other library packages from which modules are imported.
-  build-depends:    base >=4.2 && <5
+  build-depends:    base >=4.3.0.1 
                     ,c-storable-deriving  >= 0.1.1
                     ,ghc-prim
-                    ,transformers >= 0.4.3.0
+                    ,transformers >= 0.4.3.0 
 
   -- Directories containing source files.
   -- hs-source-dirs:      src
@@ -71,4 +71,4 @@ library
   -- Base language which the package is written in.
   default-language:    Haskell2010
 
-  -- ghc-options:   -static -optl-pthread -optl-static 
+  ghc-options:   -static -optl-pthread -optl-static 

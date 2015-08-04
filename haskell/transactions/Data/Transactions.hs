@@ -18,7 +18,7 @@ import Foreign.C.Types(CInt)
 
 -- |the porpuse of this is just for the design
 -- a service has several windows
-data Service = Srv { id :: CString } deriving (Generic)
+data Service = Srv { srvid :: CString } deriving (Generic)
 data Service2 = Srv2 { id2 :: CInt } deriving (Generic)
 
 instance CStorable Service

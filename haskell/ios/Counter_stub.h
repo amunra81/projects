@@ -8,4 +8,3 @@ extern HsDouble divByZero(HsDouble a1);
 }
 #endif
 
-

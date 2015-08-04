@@ -1,5 +1,4 @@
 {-# LANGUAGE ForeignFunctionInterface #-}
--- {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 
 module Data.ExportsExample where
 
@@ -10,6 +9,8 @@ import Foreign.Storable
 import Foreign.Marshal.Alloc
 import Foreign.Marshal.Array
 import Foreign.Ptr
+import Data.Transactions
+import Control.Monad.Trans.List(runListT)
 
 -- Very simple haskell function
 hsfun :: CInt -> IO CInt
@@ -31,11 +32,24 @@ unwrap wrapped = do
   Wrap d <- deRefStablePtr wrapped
   return d
 
+countStable :: StablePtr [a] -> IO CInt
+countStable ptr = do
+  xs <- deRefStablePtr ptr
+  return $ CInt $ fromIntegral $ length xs
+
 foreign export ccall
     wrap :: CInt -> IO (StablePtr Wrapper)
 
 foreign export ccall
     unwrap :: StablePtr Wrapper -> IO CInt
+
+foreign export ccall
+    countStable :: StablePtr [a] -> IO CInt
+
+foreign export ccall
+    castStablePtrToPtr2 :: StablePtr a -> IO (Ptr ())
+castStablePtrToPtr2 :: StablePtr a -> IO (Ptr ())
+castStablePtrToPtr2 stPtr = return $ castStablePtrToPtr stPtr
 
 -- Writing to memory
 data ExampleStruct = ExampleStruct Int Int deriving (Eq, Show)
@@ -61,7 +75,7 @@ gethsstruct x y = do
   poke p e
   return p
 
-freehsstruct :: (Ptr ExampleStruct) -> IO ()
+freehsstruct :: Ptr ExampleStruct -> IO ()
 freehsstruct = free
 
 getx :: (Ptr ExampleStruct) -> IO CInt
@@ -77,7 +91,6 @@ foreign export ccall
 
 foreign export ccall
     freehsstruct :: (Ptr ExampleStruct) -> IO ()
-
 
 -- Convert array to list
 
@@ -103,7 +116,6 @@ foreign export ccall
 foreign export ccall
     printlist :: (Ptr ExampleStruct) -> IO ()
 
-
 -- Some string handling
 hsstrlen :: CString -> IO CInt
 hsstrlen str = do
@@ -112,8 +124,7 @@ hsstrlen str = do
   return $ fromIntegral $ length s
 
 gethsstr :: IO CString
-gethsstr = do
-  newCString "hello world"
+gethsstr = newCString "hello world"
 
 foreign export ccall
     hsstrlen :: CString -> IO CInt
@@ -126,18 +137,16 @@ foreign export ccall
 wc :: String -> IO Int
 wc file = do
   contents <- readFile file
-  return $ length $ words $ contents
+  return $ length $ words contents
 
 export_wc :: CString -> IO CInt
 export_wc file = do
   _file <- peekCString file
   _count <- wc _file
-  return $ fromIntegral $ _count
+  return $ fromIntegral _count
 
 wcstr :: String -> IO String
-wcstr file = do
-  contents <- readFile file
-  return $ contents
+wcstr = readFile 
 
 wfstr :: String -> String -> IO ()
 wfstr = writeFile
@@ -153,3 +162,39 @@ foreign export ccall
 
 foreign export ccall
         export_wcstr ::CString -> IO CString
+
+-- Our Seriveces
+
+getStableServiceList :: IO (StablePtr [Service])
+getStableServiceList = do
+  xs <- runListT services
+  newStablePtr xs
+
+getServiceList :: IO (Ptr Service)
+getServiceList = do
+  xs <- runListT services
+  p <- mallocArray $ length xs
+  pokeArray p xs
+  return p
+
+takeElem :: StablePtr [a] -> Int -> IO (StablePtr a)
+takeElem ptr pos = do
+  xs <- deRefStablePtr ptr
+  newStablePtr $ xs !! pos
+
+getServiceId :: StablePtr Service -> IO CString
+getServiceId ptr = do
+        srv <- deRefStablePtr ptr
+        return $ srvid srv
+
+foreign export ccall
+    takeElem :: StablePtr [a] -> Int -> IO (StablePtr a)
+
+foreign export ccall
+    getServiceList :: IO (Ptr Service)
+ 
+foreign export ccall
+    getStableServiceList :: IO (StablePtr [Service])
+
+foreign export ccall
+    getServiceId :: StablePtr Service -> IO CString

@@ -16,14 +16,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         hs_init(nil,nil)
+        //startCounter(0)
+        //PlayWithServices()
+        PlayWithExterns()
+        let a = unsafeBitCast(getServiceList(),UnsafePointer<Service2>.self)
+        let (a1,a2,a3) = (a.memory,a.successor().memory,a.successor().successor().memory)
+        return true
+    }
+    
+    func PlayWithServices()
+    {
+        
+        // get a stable pointer of list of services
+        let stablePtr = getStableServiceList()
+        let noServices = countStable(stablePtr)
+        
+        //succed takinf the fird element
+        let _3rd = takeElem(stablePtr, 1)
+        
+        let serviceId = stringFromHsPtr( getServiceId(_3rd) )
+        //get one service
+        
+    }
+    func PlayWithExterns()
+    {
         let i = hsfun(2)
         
         //wrap
         let wrapped = wrap(i)
+        let ptrFromStable:HsPtr = castStablePtrToPtr2(wrapped)
+        
+       // let valueFromStable = unsafeBitCast(ptrFromStable, UnsafePointer<Int>.self).memory
+        
         let i2 = unwrap(wrapped)
         
         //example struct
         let struct1 = gethsstruct(i+43,i2)
+        
         let x = getx(struct1)
         let ptr = unsafeBitCast(struct1, UnsafeMutablePointer<ExampleStruct>.self).memory
         freehsstruct(struct1)
@@ -53,8 +82,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
             fileContent = stringFromHsPtr(export_wcstr(toCString(path)))
         }
-        
-        return true
     }
     
     func toCString(str:String) -> UnsafeMutablePointer<Int8>
@@ -90,7 +117,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 
