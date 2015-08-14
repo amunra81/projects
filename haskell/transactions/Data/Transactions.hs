@@ -38,7 +38,6 @@ instance Storable Service where
 
 services :: ListT IO Service
 services = do 
-            -- liftM   :: (Monad m) => (a1 -> r) -> m a1 -> m r
             let mm s = lift (do
                                 x <- newCAString s
                                 return $ Srv x )
