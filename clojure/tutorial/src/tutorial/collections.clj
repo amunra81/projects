@@ -40,7 +40,7 @@
 (println stooges)
 
 ; maps
-(def popsicle-map (hash-map :red :cherry,:green :apple,:purple :grape))
+(def popsicle-map (hash-map :red "cherry",:green :apple,:purple :grape))
 (def popsicle-map {:red :cherry,:green :apple,:purple :grape})
 
 (println popsicle-map)

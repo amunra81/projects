@@ -1,3 +1,8 @@
 import Distribution.Simple
+import System.Info(arch)
+import System.Info(os)
 
-main = defaultMain
+main = 
+        do
+            print "Custom build"
+            defaultMain

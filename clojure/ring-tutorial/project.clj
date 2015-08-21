@@ -1,10 +1,8 @@
 (defproject ring-tutorial "1.0.0-SNAPSHOT"
   :description "An Ring tutorial project"
-  :dependencies
-    [[org.clojure/clojure "1.3.0"]
-     [org.clojure/clojure-contrib "1.2.0"]
-     [ring "1.4.0-RC1"]
-     ]
+  :dependencies 
+    [[org.clojure/clojure "1.7.0"]
+     [ring/ring-core "1.4.0"]
+     [ring/ring-jetty-adapter "1.4.0"]]
   :dev-dependencies
-    [[javax.servlet/servlet-api "2.5"]
-     ])
+    [[javax.servlet/servlet-api "2.5"]])

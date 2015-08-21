@@ -22,3 +22,7 @@
 (doseq [col cols :when (not= col \B)
         row rows :while (< row 3)]
   (println (str col row)))
+
+(def nn  
+  {:status 200
+   :headers {"Content-Type" "text/plain"}})
