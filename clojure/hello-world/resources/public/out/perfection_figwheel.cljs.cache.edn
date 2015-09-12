@@ -1,0 +1,2 @@
+;; Analyzed by ClojureScript 1.7.48
+{:name perfection-figwheel, :doc nil, :excludes #{}, :use-macros nil, :require-macros {fw figwheel.client, figwheel.client figwheel.client}, :uses nil, :requires {fw figwheel.client, figwheel.client figwheel.client}, :imports nil}

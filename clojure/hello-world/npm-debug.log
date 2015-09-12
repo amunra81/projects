@@ -1,0 +1,146 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/iojs',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   '-g',
+1 verbose cli   'react-native-cli' ]
+2 info using npm@2.13.3
+3 info using node@v3.1.0
+4 verbose install initial load of /usr/local/lib/package.json
+5 verbose readDependencies loading dependencies from /usr/local/lib/package.json
+6 silly cache add args [ 'react-native-cli', null ]
+7 verbose cache add spec react-native-cli
+8 silly cache add parsed spec Result {
+8 silly cache add   raw: 'react-native-cli',
+8 silly cache add   scope: null,
+8 silly cache add   name: 'react-native-cli',
+8 silly cache add   rawSpec: '',
+8 silly cache add   spec: '*',
+8 silly cache add   type: 'range' }
+9 silly addNamed react-native-cli@*
+10 verbose addNamed "*" is a valid semver range for react-native-cli
+11 silly addNameRange { name: 'react-native-cli', range: '*', hasData: false }
+12 silly mapToRegistry name react-native-cli
+13 silly mapToRegistry using default registry
+14 silly mapToRegistry registry https://registry.npmjs.org/
+15 silly mapToRegistry uri https://registry.npmjs.org/react-native-cli
+16 verbose addNameRange registry:https://registry.npmjs.org/react-native-cli not in flight; fetching
+17 verbose request uri https://registry.npmjs.org/react-native-cli
+18 verbose request no auth needed
+19 info attempt registry request try #1 at 12:55:35 AM
+20 verbose request id 746b7729e541466a
+21 http request GET https://registry.npmjs.org/react-native-cli
+22 http 200 https://registry.npmjs.org/react-native-cli
+23 silly get cb [ 200,
+23 silly get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+23 silly get     etag: '"829J3NZ2QL7J8HT76L6OKGLWR"',
+23 silly get     'content-type': 'application/json',
+23 silly get     'cache-control': 'max-age=60',
+23 silly get     'content-length': '4872',
+23 silly get     'accept-ranges': 'bytes',
+23 silly get     date: 'Sun, 23 Aug 2015 21:55:36 GMT',
+23 silly get     via: '1.1 varnish',
+23 silly get     age: '0',
+23 silly get     connection: 'keep-alive',
+23 silly get     'x-served-by': 'cache-fra1248-FRA',
+23 silly get     'x-cache': 'HIT',
+23 silly get     'x-cache-hits': '1',
+23 silly get     'x-timer': 'S1440366935.974506,VS0,VE186',
+23 silly get     vary: 'Accept' } ]
+24 verbose get saving react-native-cli to /Users/horus/.npm/registry.npmjs.org/react-native-cli/.cache.json
+25 verbose makeDirectory /Users/horus/.npm creation not in flight; initializing
+26 silly makeDirectory /Users/horus/.npm uid: 502 gid: 20
+27 silly addNameRange number 2 { name: 'react-native-cli', range: '*', hasData: true }
+28 silly addNameRange versions [ 'react-native-cli',
+28 silly addNameRange   [ '0.0.0', '0.0.1', '0.1.2', '0.1.3', '0.1.4' ] ]
+29 silly addNamed react-native-cli@0.1.4
+30 verbose addNamed "0.1.4" is a plain semver version for react-native-cli
+31 silly mapToRegistry name react-native-cli
+32 silly mapToRegistry using default registry
+33 silly mapToRegistry registry https://registry.npmjs.org/
+34 silly mapToRegistry uri https://registry.npmjs.org/react-native-cli
+35 verbose addRemoteTarball https://registry.npmjs.org/react-native-cli/-/react-native-cli-0.1.4.tgz not in flight; adding
+36 verbose addRemoteTarball [ 'https://registry.npmjs.org/react-native-cli/-/react-native-cli-0.1.4.tgz',
+36 verbose addRemoteTarball   '2989108e113cf4e0b61097a0801f41f99220dd2a' ]
+37 info retry fetch attempt 1 at 12:55:36 AM
+38 info attempt registry request try #1 at 12:55:36 AM
+39 http fetch GET https://registry.npmjs.org/react-native-cli/-/react-native-cli-0.1.4.tgz
+40 http fetch 200 https://registry.npmjs.org/react-native-cli/-/react-native-cli-0.1.4.tgz
+41 silly fetchAndShaCheck shasum 2989108e113cf4e0b61097a0801f41f99220dd2a
+42 verbose addTmpTarball /var/folders/l3/4mljrcz14fs9wx3q4wq5mggh0000gp/T/npm-5023-25a102d6/registry.npmjs.org/react-native-cli/-/react-native-cli-0.1.4.tgz not in flight; adding
+43 verbose addTmpTarball already have metadata; skipping unpack for react-native-cli@0.1.4
+44 silly cache afterAdd react-native-cli@0.1.4
+45 verbose afterAdd /Users/horus/.npm/react-native-cli/0.1.4/package/package.json not in flight; writing
+46 verbose afterAdd /Users/horus/.npm/react-native-cli/0.1.4/package/package.json written
+47 silly install resolved [ { name: 'react-native-cli',
+47 silly install resolved     version: '0.1.4',
+47 silly install resolved     description: 'The ReactNative cli tools',
+47 silly install resolved     main: 'index.js',
+47 silly install resolved     bin: { 'react-native': 'index.js' },
+47 silly install resolved     dependencies: { prompt: '^0.2.14' },
+47 silly install resolved     _id: 'react-native-cli@0.1.4',
+47 silly install resolved     scripts: {},
+47 silly install resolved     _shasum: '2989108e113cf4e0b61097a0801f41f99220dd2a',
+47 silly install resolved     _from: 'react-native-cli@*',
+47 silly install resolved     _npmVersion: '2.1.18',
+47 silly install resolved     _nodeVersion: '0.10.35',
+47 silly install resolved     _npmUser: { name: 'vjeux', email: 'vjeuxx@gmail.com' },
+47 silly install resolved     maintainers: [ [Object], [Object], [Object], [Object] ],
+47 silly install resolved     dist:
+47 silly install resolved      { shasum: '2989108e113cf4e0b61097a0801f41f99220dd2a',
+47 silly install resolved        tarball: 'http://registry.npmjs.org/react-native-cli/-/react-native-cli-0.1.4.tgz' },
+47 silly install resolved     directories: {},
+47 silly install resolved     _resolved: 'https://registry.npmjs.org/react-native-cli/-/react-native-cli-0.1.4.tgz' } ]
+48 info install react-native-cli@0.1.4 into /usr/local/lib
+49 info installOne react-native-cli@0.1.4
+50 verbose installOne of react-native-cli to /usr/local/lib not in flight; installing
+51 verbose makeDirectory /Users/horus/.npm/_locks creation not in flight; initializing
+52 silly makeDirectory /Users/horus/.npm/_locks uid: 502 gid: 20
+53 verbose lock using /Users/horus/.npm/_locks/react-native-cli-a444c604a39e8d3e.lock for /usr/local/lib/node_modules/react-native-cli
+54 silly install write writing react-native-cli 0.1.4 to /usr/local/lib/node_modules/react-native-cli
+55 verbose unbuild lib/node_modules/react-native-cli
+56 silly gentlyRm /usr/local/lib/node_modules/react-native-cli is being purged from base /usr/local
+57 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/react-native-cli
+58 verbose tar unpack /Users/horus/.npm/react-native-cli/0.1.4/package.tgz
+59 verbose tar unpacking to /usr/local/lib/node_modules/react-native-cli
+60 silly gentlyRm /usr/local/lib/node_modules/react-native-cli is being purged
+61 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/react-native-cli
+62 silly gunzTarPerm modes [ '755', '644' ]
+63 error tar.unpack untar error /Users/horus/.npm/react-native-cli/0.1.4/package.tgz
+64 verbose unlock done using /Users/horus/.npm/_locks/react-native-cli-a444c604a39e8d3e.lock for /usr/local/lib/node_modules/react-native-cli
+65 verbose fstream_path /usr/local/lib/node_modules/react-native-cli
+66 verbose fstream_type Directory
+67 verbose fstream_class DirWriter
+68 verbose stack Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/react-native-cli'
+68 verbose stack     at Error (native)
+69 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25
+69 verbose fstream_stack /usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53
+69 verbose fstream_stack FSReqWrap.oncomplete (fs.js:82:15)
+70 verbose cwd /Users/horus/projects/clojure/hello-world
+71 error Darwin 14.5.0
+72 error argv "/usr/local/bin/iojs" "/usr/local/bin/npm" "install" "-g" "react-native-cli"
+73 error node v3.1.0
+74 error npm  v2.13.3
+75 error path /usr/local/lib/node_modules/react-native-cli
+76 error code EACCES
+77 error errno -13
+78 error syscall mkdir
+79 error Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/react-native-cli'
+79 error     at Error (native)
+79 error  { [Error: EACCES: permission denied, mkdir '/usr/local/lib/node_modules/react-native-cli']
+79 error   errno: -13,
+79 error   code: 'EACCES',
+79 error   syscall: 'mkdir',
+79 error   path: '/usr/local/lib/node_modules/react-native-cli',
+79 error   fstream_type: 'Directory',
+79 error   fstream_path: '/usr/local/lib/node_modules/react-native-cli',
+79 error   fstream_class: 'DirWriter',
+79 error   fstream_stack:
+79 error    [ '/usr/local/lib/node_modules/npm/node_modules/fstream/lib/dir-writer.js:35:25',
+79 error      '/usr/local/lib/node_modules/npm/node_modules/mkdirp/index.js:47:53',
+79 error      'FSReqWrap.oncomplete (fs.js:82:15)' ] }
+80 error Please try running this command again as root/Administrator.
+81 verbose exit [ -13, true ]
+82 verbose unbuild lib/node_modules/react-native-cli
+83 silly gentlyRm /usr/local/lib/node_modules/react-native-cli is being purged from base /usr/local
+84 verbose gentlyRm don't care about contents; nuking /usr/local/lib/node_modules/react-native-cli

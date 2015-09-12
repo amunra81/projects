@@ -1,0 +1,15 @@
+PODS:
+  - Ambly (0.6.0):
+    - GCDWebServer/WebDAV (~> 3.2.2)
+  - GCDWebServer/Core (3.2.5)
+  - GCDWebServer/WebDAV (3.2.5):
+    - GCDWebServer/Core
+
+DEPENDENCIES:
+  - Ambly (~> 0.6.0)
+
+SPEC CHECKSUMS:
+  Ambly: cf953b8208d534a999704f8a009897132c37a46f
+  GCDWebServer: d0e1b23785e3dfd6c87601323d0f7cae059aab18
+
+COCOAPODS: 0.38.2

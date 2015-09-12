@@ -1,0 +1,1 @@
+{"version":3,"file":"\/Users\/horus\/projects\/clojure\/hello-world\/resources\/public\/out\/hello_world\/core.js","sources":["core.cljs"],"lineCount":9,"mappings":";AAAA;;AAEA,YAAA,ZAAMA;AAGN,uBAAA,vBAAMC,sDAAKC,EAAEC;AAAb,AACE,QAAGD,IAAEC","names":["js\/console","hello-world.core\/add","a","b"]}

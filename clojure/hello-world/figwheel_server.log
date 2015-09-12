@@ -1,0 +1,64 @@
+Figwheel: focusing on build-ids (main)
+[0mCompiling "resources/public/js/cljs.js" from ["src/cljss" "src/figwheel"]...
+[32mSuccessfully compiled "resources/public/js/cljs.js" in 0.074 seconds.[0m
+notifying browser that file changed:  resources/public/js/cljs.js
+notifying browser that file changed:  resources/public/out/goog/deps.js
+notifying browser that file changed:  /perfection_figwheel.js
+notifying browser that file changed:  /hello_world/clojure.js
+Figwheel: focusing on build-ids (main)
+[0mCompiling "resources/public/js/cljs.js" from ["src/cljss" "src/figwheel"]...
+[32mSuccessfully compiled "resources/public/js/cljs.js" in 0.07 seconds.[0m
+notifying browser that file changed:  resources/public/js/cljs.js
+notifying browser that file changed:  resources/public/out/goog/deps.js
+notifying browser that file changed:  /perfection_figwheel.js
+notifying browser that file changed:  /hello_world/clojure.js
+[0mCompiling "resources/public/js/cljs.js" from ["src/cljss" "src/figwheel"]...
+[31mCompiling "resources/public/js/cljs.js" failed.[0m
+java.lang.AssertionError: No ns form found in src/cljss/core.cljs
+ at cljs.analyzer$parse_ns$fn__2162.invoke (analyzer.cljc:2706)
+    cljs.analyzer$parse_ns.invoke (analyzer.cljc:2660)
+    cljs.analyzer$parse_ns.invoke (analyzer.cljc:2651)
+    cljs.compiler$compile_root$fn__3182.invoke (compiler.cljc:1284)
+    clojure.core$map$fn__4553.invoke (core.clj:2624)
+    clojure.lang.LazySeq.sval (LazySeq.java:40)
+    clojure.lang.LazySeq.seq (LazySeq.java:49)
+    clojure.lang.RT.seq (RT.java:507)
+    clojure.core/seq (core.clj:137)
+    clojure.core$map$fn__4553.invoke (core.clj:2616)
+    clojure.lang.LazySeq.sval (LazySeq.java:40)
+    clojure.lang.LazySeq.seq (LazySeq.java:49)
+    clojure.lang.Cons.next (Cons.java:39)
+    clojure.lang.RT.next (RT.java:674)
+    clojure.core/next (core.clj:64)
+    clojure.core.protocols/fn (protocols.clj:170)
+    clojure.core.protocols$fn__6478$G__6473__6487.invoke (protocols.clj:19)
+    clojure.core.protocols$seq_reduce.invoke (protocols.clj:31)
+    clojure.core.protocols/fn (protocols.clj:101)
+    clojure.core.protocols$fn__6452$G__6447__6465.invoke (protocols.clj:13)
+    clojure.core$reduce.invoke (core.clj:6519)
+    cljs.js_deps$build_index.invoke (js_deps.cljc:128)
+    cljs.js_deps$dependency_order.invoke (js_deps.cljc:168)
+    cljs.compiler$compile_root.invoke (compiler.cljc:1283)
+    cljs.closure$compile_dir.invoke (closure.clj:438)
+    cljs.closure$eval3601$fn__3602.invoke (closure.clj:478)
+    cljs.closure$eval3553$fn__3554$G__3544__3561.invoke (closure.clj:383)
+    cljs.closure$eval3614$fn__3615.invoke (closure.clj:492)
+    cljs.closure$eval3553$fn__3554$G__3544__3561.invoke (closure.clj:383)
+    clojurescript_build.core.CompilableSourcePaths/fn (core.clj:20)
+[0mCompiling "resources/public/js/cljs.js" from ["src/cljss" "src/figwheel"]...
+[32mSuccessfully compiled "resources/public/js/cljs.js" in 0.118 seconds.[0m
+notifying browser that file changed:  resources/public/js/cljs.js
+notifying browser that file changed:  /hello_world/handler/core.js
+[0mCompiling "resources/public/js/cljs.js" from ["src/cljss" "src/figwheel"]...
+[32mSuccessfully compiled "resources/public/js/cljs.js" in 0.081 seconds.[0m
+notifying browser that file changed:  resources/public/js/cljs.js
+notifying browser that file changed:  /hello_world/core.js
+Figwheel: focusing on build-ids (main)
+[0mCompiling "resources/public/js/cljs.js" from ["src/cljss" "src/figwheel" "src/brepl"]...
+[32mSuccessfully compiled "resources/public/js/cljs.js" in 0.088 seconds.[0m
+notifying browser that file changed:  resources/public/js/cljs.js
+notifying browser that file changed:  resources/public/out/goog/deps.js
+notifying browser that file changed:  /perfection_figwheel.js
+notifying browser that file changed:  /hello_world/core.js
+notifying browser that file changed:  /perfection_brepl.js
+notifying browser that file changed:  /hello_world/clojure.js
