@@ -7,7 +7,7 @@ import Common.Core
 --    typedef Real_prec prec_value_type; // floating-point precision type
 --    dtz distanceToZero
 
-data SparseMatrix rs = SparseMatrix 
+data SparseMatrix rs = SparseMatrix
                                 { _nRows :: UInt32         -- number of rows
                                 , _nRowsMax :: UInt32      -- max size of nnzr_, ind_ and nz_
                                 , _nCols :: UInt32         -- number of columns
@@ -19,6 +19,7 @@ data SparseMatrix rs = SparseMatrix
                                 , _indBuff :: [UInt32]     -- buffer for indices of non-zeros
                                 , _nzBuff :: [Real32]      -- buffer for values of non-
                                 }
+
 
 defSparseMatix ::  SparseMatrix rs
 defSparseMatix = SparseMatrix
@@ -33,4 +34,3 @@ defSparseMatix = SparseMatrix
                                 , _indBuff = []            -- buffer for indices of non-zeros
                                 , _nzBuff = []             -- buffer for values of non-
                                 }
- 

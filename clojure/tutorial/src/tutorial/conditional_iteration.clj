@@ -15,8 +15,8 @@
 
 ;if-let
 (defn process-next [waiting-line]
-  (if-let [name (first waiting-line)]
-    (println name "is next")
+  (if-let [nameT (first waiting-line)]
+    (println nameT "is next")
     (println "no waiting")))
 
 (process-next '("Jeremy" "Amanda" "Tami")) ; -> Jeremy is next

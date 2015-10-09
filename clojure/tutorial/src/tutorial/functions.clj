@@ -37,3 +37,13 @@
 ;partial
 (def times2 (partial * 2))
 (times2 3)
+
+
+(defn s
+  [spec]
+  [(if (:isX? spec) (:x spec) (:y spec))])
+
+(s {:isX false,:x "asd",:y "basd"})
+
+(def d (fn  [[x y]] print y))
+(d "a")

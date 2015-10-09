@@ -5,7 +5,7 @@ import Control.Monad.Fix
  
  -- fix (\rec n → if n == 0 then 1 else n * rec (n-1)) 5
  
-some ∷  (Integer → Integer) -> Integer -> Integer
+some ∷  (Integer -> Integer) -> Integer -> Integer
 some rec n = if n == 0 then 1 else n * rec (n-1)
 
 fact ∷  Integer → Integer

@@ -17,4 +17,3 @@ foldli f a = snd . foldl g (-1,a)
                 where g (i,acc) x = (i+1,f acc (i+1) x)
 na :: a
 na = undefined 
-

@@ -1,5 +1,4 @@
-module Math.SparseBinaryMatrix (SparseBinaryMatrix(..)) 
-where
+module Math.SparseBinaryMatrix (SparseBinaryMatrix(..)) where
 
 import Common.Core
 
