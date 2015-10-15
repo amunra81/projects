@@ -8,6 +8,3 @@ class LinkPolicy p where
     setDestDimensions :: Dimensions -> p -> p
     getSrcDimensions :: p -> Dimensions
     getDestDimensions :: p -> Dimensions
-
-asda
-asdad

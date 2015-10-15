@@ -13,7 +13,10 @@ data CState = CState
             , _pData :: UArray Int Word8 
             }
 
+
 makeLenses ''CState
 
 isSet :: Int -> CState -> Bool
 isSet i = (/= 0) . (! i) . view pData
+
+
