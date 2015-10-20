@@ -355,6 +355,8 @@ ConcFlags	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	122
 ConcFlags	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	122
 Conf	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	109
 Conf	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	109
+Config	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	75
+Config	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	75
 ConnectorPunctuation	./external-src/base-4.8.1.0/Data/Char.hs	175
 ConsFromJSON	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	607
 ConsFromJSON	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	607
@@ -454,6 +456,7 @@ Data.Aeson	./external-src/aeson-0.10.0.0/Data/Aeson.hs	14
 Data.Aeson.Encode	./external-src/aeson-0.10.0.0/Data/Aeson/Encode.hs	19
 Data.Aeson.Encode.Builder	./external-src/aeson-0.10.0.0/Data/Aeson/Encode/Builder.hs	14
 Data.Aeson.Encode.Functions	./external-src/aeson-0.10.0.0/Data/Aeson/Encode/Functions.hs	1
+Data.Aeson.Encode.Pretty	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	4
 Data.Aeson.Functions	./external-src/aeson-0.10.0.0/Data/Aeson/Functions.hs	10
 Data.Aeson.Internal	./external-src/aeson-0.10.0.0/Data/Aeson/Internal.hs	14
 Data.Aeson.Internal.Time	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	11
@@ -1202,6 +1205,7 @@ Main	./external-src/aeson-0.10.0.0/benchmarks/Compare.hs	3
 Main	./external-src/aeson-0.10.0.0/benchmarks/Micro.hs	1
 Main	./external-src/aeson-0.10.0.0/benchmarks/Typed.hs	1
 Main	./external-src/aeson-0.10.0.0/tests/Tests.hs	1
+Main	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	2
 Main	./external-src/base-4.8.1.0/Setup.hs	1
 Main	./external-src/happstack-server-7.4.4/tests/Test.hs	1
 Male	./external-src/aeson-0.10.0.0/benchmarks/Compare/JsonBench.hs	23
@@ -1219,7 +1223,7 @@ Max	./external-src/base-4.8.1.0/Data/Foldable.hs	291
 Max	./external-src/base-4.8.1.0/Data/Foldable.hs	291
 MaxAge	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Cookie.hs	56
 Maybe	./external-src/base-4.8.1.0/GHC/Base.hs	191
-Menu	./src/Data/HotBox.hs	18
+Menu	./src/Data/HotBox.hs	19
 Metadata	./external-src/aeson-0.10.0.0/examples/Twitter.hs	28
 Metadata	./external-src/aeson-0.10.0.0/examples/Twitter.hs	28
 Method	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	135
@@ -1355,6 +1359,8 @@ Options	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	453
 Options	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	453
 Options	./external-src/aeson-0.10.0.0/benchmarks/Options.hs	1
 Options	./external-src/aeson-0.10.0.0/tests/Options.hs	1
+Options	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	14
+Opts	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	14
 OrdA	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	77
 OrdA{	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	77
 OrdB	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	96
@@ -1380,6 +1386,8 @@ PArr	./external-src/base-4.8.1.0/GHC/PArr.hs	35
 PArr	./external-src/base-4.8.1.0/GHC/PArr.hs	37
 POST	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	135
 PSQ	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	109
+PState	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	70
+PState	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	70
 PUT	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	135
 Pair	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	56
 Pair	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	410
@@ -1393,6 +1401,7 @@ Parser	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	226
 Parser	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	226
 Paths_QuickCheck	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	1
 Paths_aeson	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	1
+Paths_aeson_pretty	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	1
 Paths_base	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	1
 Paths_happstack_lite	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	1
 Paths_happstack_server	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	1
@@ -1437,7 +1446,7 @@ Product	./external-src/aeson-0.10.0.0/tests/DataFamilies/Types.hs	14
 Product	./external-src/aeson-0.10.0.0/tests/Types.hs	51
 Product	./external-src/base-4.8.1.0/Data/Monoid.hs	112
 Product	./external-src/base-4.8.1.0/Data/Monoid.hs	112
-Product	./src/Data/HotBox.hs	16
+Product	./src/Data/HotBox.hs	17
 Product'	./external-src/aeson-0.10.0.0/benchmarks/AesonCompareAutoInstances.hs	60
 Product2	./external-src/aeson-0.10.0.0/tests/Types.hs	29
 Product2	./external-src/aeson-0.10.0.0/tests/Types.hs	29
@@ -1719,8 +1728,8 @@ TRACE	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.
 TVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	772
 TVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	772
 Table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	60
-Table	./src/Data/HotBox.hs	14
-Table	./src/Data/HotBox.hs	14
+Table	./src/Data/HotBox.hs	15
+Table	./src/Data/HotBox.hs	15
 Tagged	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	760
 Tagged	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	760
 Tagged2	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	762
@@ -2059,6 +2068,8 @@ allEncodingHandlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/I
 allEncodings	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	141
 allEncodings	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	142
 allNullaryToStringTag	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	460
+allRestaurants	./src/Data/HotBox.hs	43
+allRestaurants	./src/Data/HotBox.hs	44
 allTests	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	27
 allTests	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	28
 allocArray	./external-src/base-4.8.1.0/GHC/Event/Array.hs	67
@@ -2340,6 +2351,8 @@ bindir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	17
 bindir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	19
 bindir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	17
 bindir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	19
+bindir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	17
+bindir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	19
 bindir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	17
 bindir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	19
 bindir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	17
@@ -2600,6 +2613,8 @@ catchIO	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	1
 catchIO	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	13
 catchIO	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	12
 catchIO	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	13
+catchIO	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	12
+catchIO	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	13
 catchIO	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	12
 catchIO	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	13
 catchIO	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	12
@@ -2815,6 +2830,7 @@ combineSafe	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe
 commitBuffer	./external-src/base-4.8.1.0/GHC/IO/Handle/Text.hs	629
 commitBuffer'	./external-src/base-4.8.1.0/GHC/IO/Handle/Text.hs	650
 commitBuffer'	./external-src/base-4.8.1.0/GHC/IO/Handle/Text.hs	652
+compact	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	14
 compact	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	95
 compact	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	110
 compactThreshold	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	96
@@ -2883,6 +2899,8 @@ concatMap	./external-src/base-4.8.1.0/GHC/List.hs	826
 concatMap	./external-src/base-4.8.1.0/GHC/List.hs	827
 concurrentFlags	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	249
 concurrentFlags	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	296
+confCompare	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	78
+confIndent	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	76
 confields	./external-src/base-4.8.1.0/Data/Data.hs	501
 confixity	./external-src/base-4.8.1.0/Data/Data.hs	502
 conjoin	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	446
@@ -3072,6 +3090,8 @@ datadir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	1
 datadir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	21
 datadir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	17
 datadir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	21
+datadir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	17
+datadir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	21
 datadir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	17
 datadir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	21
 datadir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	17
@@ -3135,6 +3155,8 @@ decodeWith	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	311
 decoderArray	./external-src/base-4.8.1.0/GHC/IO/Encoding/CodePage/Table.hs	49
 deconstructType	./external-src/QuickCheck-2.8.1/Test/QuickCheck/All.hs	80
 deconstructType	./external-src/QuickCheck-2.8.1/Test/QuickCheck/All.hs	81
+defConfig	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	96
+defConfig	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	97
 defaultBodyPolicy	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	33
 defaultBodyPolicy	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	38
 defaultChar	./external-src/base-4.8.1.0/GHC/IO/Encoding/CodePage/API.hs	63
@@ -3432,8 +3454,8 @@ eTXTBSY	./external-src/base-4.8.1.0/Foreign/C/Error.hs	236
 eUSERS	./external-src/base-4.8.1.0/Foreign/C/Error.hs	237
 eWOULDBLOCK	./external-src/base-4.8.1.0/Foreign/C/Error.hs	238
 eXDEV	./external-src/base-4.8.1.0/Foreign/C/Error.hs	239
-echo	./src/Server-Lite/Lite.hs	56
-echo	./src/Server-Lite/Lite.hs	57
+echo	./src/Server-Lite/Lite.hs	63
+echo	./src/Server-Lite/Lite.hs	64
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	241
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	242
 efdChar	./external-src/base-4.8.1.0/GHC/Enum.hs	382
@@ -3573,6 +3595,14 @@ encodeKV	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	611
 encodeKV	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	612
 encodeMap	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	591
 encodeMap	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	595
+encodePretty	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	103
+encodePretty	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	104
+encodePretty'	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	108
+encodePretty'	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	109
+encodePrettyToTextBuilder	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	115
+encodePrettyToTextBuilder	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	116
+encodePrettyToTextBuilder'	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	120
+encodePrettyToTextBuilder'	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	121
 encodeProduct	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	369
 encodeSet	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	557
 encodeSet	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	561
@@ -3961,8 +3991,8 @@ fileServeLazy	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileSer
 fileServeLazy	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	447
 fileServeStrict	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	458
 fileServeStrict	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	462
-fileServing	./src/Server-Lite/Lite.hs	115
-fileServing	./src/Server-Lite/Lite.hs	116
+fileServing	./src/Server-Lite/Lite.hs	122
+fileServing	./src/Server-Lite/Lite.hs	123
 fileType	./external-src/base-4.8.1.0/System/Posix/Internals.hs	95
 fileType	./external-src/base-4.8.1.0/System/Posix/Internals.hs	96
 fill	./external-src/base-4.8.1.0/GHC/Arr.hs	460
@@ -4246,8 +4276,8 @@ formDecode	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/M
 formDecode	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	78
 formDecodeBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	88
 formDecodeBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	89
-formPage	./src/Server-Lite/Lite.hs	71
-formPage	./src/Server-Lite/Lite.hs	72
+formPage	./src/Server-Lite/Lite.hs	78
+formPage	./src/Server-Lite/Lite.hs	79
 formatArg	./external-src/base-4.8.1.0/Text/Printf.hs	315
 formatChar	./external-src/base-4.8.1.0/Text/Printf.hs	511
 formatChar	./external-src/base-4.8.1.0/Text/Printf.hs	512
@@ -4277,8 +4307,8 @@ formatString	./external-src/base-4.8.1.0/Text/Printf.hs	518
 formatString	./external-src/base-4.8.1.0/Text/Printf.hs	519
 formatTimeCombined	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LogFormat.hs	25
 formatTimeCombined	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LogFormat.hs	26
-fortune	./src/Server-Lite/Lite.hs	91
-fortune	./src/Server-Lite/Lite.hs	92
+fortune	./src/Server-Lite/Lite.hs	98
+fortune	./src/Server-Lite/Lite.hs	99
 found	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	281
 found	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	282
 found	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	249
@@ -4310,6 +4340,8 @@ fromApprox	./external-src/aeson-0.10.0.0/tests/Types.hs	41
 fromBool	./external-src/base-4.8.1.0/Foreign/Marshal/Utils.hs	101
 fromBool	./external-src/base-4.8.1.0/Foreign/Marshal/Utils.hs	102
 fromChar	./external-src/base-4.8.1.0/Text/Printf.hs	390
+fromCompound	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	134
+fromCompound	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	139
 fromConstr	./external-src/base-4.8.1.0/Data/Data.hs	444
 fromConstr	./external-src/base-4.8.1.0/Data/Data.hs	445
 fromConstrB	./external-src/base-4.8.1.0/Data/Data.hs	449
@@ -4334,6 +4366,8 @@ fromEvent	./external-src/base-4.8.1.0/dist/build/GHC/Event/Poll.hs	170
 fromEvent	./external-src/base-4.8.1.0/dist/build/GHC/Event/Poll.hs	171
 fromException	./external-src/base-4.8.1.0/GHC/Exception.hs	138
 fromException	./external-src/base-4.8.1.0/GHC/Exception.hs	141
+fromIndent	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	154
+fromIndent	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	155
 fromInteger	./external-src/base-4.8.1.0/GHC/Num.hs	51
 fromIntegral	./external-src/base-4.8.1.0/GHC/Real.hs	431
 fromIntegral	./external-src/base-4.8.1.0/GHC/Real.hs	432
@@ -4354,6 +4388,8 @@ fromMaybe	./external-src/base-4.8.1.0/Data/Maybe.hs	173
 fromMaybe	./external-src/base-4.8.1.0/Data/Maybe.hs	174
 fromMaybeBody	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	321
 fromMaybeBody	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	322
+fromPair	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	151
+fromPair	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	152
 fromPath	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	108
 fromPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	32
 fromPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	33
@@ -4383,6 +4419,8 @@ fromTimeout	./external-src/base-4.8.1.0/dist/build/GHC/Event/Poll.hs	140
 fromTimeout	./external-src/base-4.8.1.0/dist/build/GHC/Event/Poll.hs	141
 fromValue	./external-src/aeson-0.10.0.0/Data/Aeson/Encode.hs	71
 fromValue	./external-src/aeson-0.10.0.0/Data/Aeson/Encode.hs	72
+fromValue	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	127
+fromValue	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	128
 from_user	./external-src/aeson-0.10.0.0/examples/Twitter.hs	45
 from_user_id	./external-src/aeson-0.10.0.0/examples/Twitter.hs	51
 from_user_id_str	./external-src/aeson-0.10.0.0/examples/Twitter.hs	42
@@ -4547,6 +4585,8 @@ getBinDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs
 getBinDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	26
 getBinDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	25
 getBinDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	26
+getBinDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	25
+getBinDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	26
 getBinDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	25
 getBinDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	26
 getBinDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	25
@@ -4616,6 +4656,8 @@ getDataDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.h
 getDataDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	28
 getDataDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	25
 getDataDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	28
+getDataDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	25
+getDataDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	28
 getDataDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	25
 getDataDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	28
 getDataDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	25
@@ -4628,6 +4670,8 @@ getDataFileName	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCh
 getDataFileName	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	33
 getDataFileName	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	32
 getDataFileName	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	33
+getDataFileName	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	32
+getDataFileName	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	33
 getDataFileName	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	32
 getDataFileName	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	33
 getDataFileName	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	32
@@ -4703,6 +4747,8 @@ getLibDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs
 getLibDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	27
 getLibDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	25
 getLibDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	27
+getLibDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	25
+getLibDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	27
 getLibDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	25
 getLibDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	27
 getLibDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	25
@@ -4715,6 +4761,8 @@ getLibexecDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickChec
 getLibexecDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	29
 getLibexecDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	25
 getLibexecDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	29
+getLibexecDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	25
+getLibexecDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	29
 getLibexecDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	25
 getLibexecDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	29
 getLibexecDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	25
@@ -4792,6 +4840,8 @@ getSysconfDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickChec
 getSysconfDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	30
 getSysconfDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	25
 getSysconfDir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	30
+getSysconfDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	25
+getSysconfDir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	30
 getSysconfDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	25
 getSysconfDir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	30
 getSysconfDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	25
@@ -5022,8 +5072,8 @@ handleFinalizer	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	420
 handleFinalizer	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	421
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	185
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	186
-handleUpload	./src/Server-Lite/Lite.hs	134
-handleUpload	./src/Server-Lite/Lite.hs	135
+handleUpload	./src/Server-Lite/Lite.hs	141
+handleUpload	./src/Server-Lite/Lite.hs	142
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	152
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	153
 happstackC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	338
@@ -5071,7 +5121,7 @@ hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	297
 hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	298
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	106
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	107
-homePage	./src/Server-Lite/Lite.hs	35
+homePage	./src/Server-Lite/Lite.hs	41
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	181
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	182
 host	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	211
@@ -5161,6 +5211,7 @@ inBounds	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	514
 inRange	./external-src/base-4.8.1.0/GHC/Arr.hs	85
 includeTSOs	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	203
 includeTSOs	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	244
+indent	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	15
 index	./external-src/base-4.8.1.0/GHC/Arr.hs	80
 index	./external-src/base-4.8.1.0/GHC/Arr.hs	98
 indexChar	./external-src/base-4.8.1.0/GHC/IO/Encoding/CodePage.hs	180
@@ -5191,6 +5242,8 @@ infixr	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	32
 infixr	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Class.hs	248
 infixr	./external-src/base-4.8.1.0/Control/Monad.hs	105
 infixr	./external-src/base-4.8.1.0/GHC/Base.hs	123
+info	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	32
+info	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	33
 infoType	./external-src/QuickCheck-2.8.1/Test/QuickCheck/All.hs	75
 infoType	./external-src/QuickCheck-2.8.1/Test/QuickCheck/All.hs	76
 init	./external-src/base-4.8.1.0/GHC/List.hs	100
@@ -5376,7 +5429,8 @@ instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	59
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	93
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	78
-instance	./src/Data/HotBox.hs	20
+instance	./src/Data/HotBox.hs	21
+instance	./src/Server-Lite/Lite.hs	149
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	346
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	347
 int16Type	./external-src/base-4.8.1.0/Data/Data.hs	949
@@ -5754,6 +5808,8 @@ kevent	./external-src/base-4.8.1.0/dist/build/GHC/Event/KQueue.hs	269
 kevent	./external-src/base-4.8.1.0/dist/build/GHC/Event/KQueue.hs	271
 key	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	98
 keyFd	./external-src/base-4.8.1.0/GHC/Event/Manager.hs	111
+keyOrder	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	88
+keyOrder	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	89
 keyUnique	./external-src/base-4.8.1.0/GHC/Event/Manager.hs	112
 killThread	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	412
 killThread	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	413
@@ -5924,6 +5980,8 @@ libdir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	17
 libdir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	20
 libdir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	17
 libdir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	20
+libdir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	17
+libdir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	20
 libdir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	17
 libdir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	20
 libdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	17
@@ -5936,6 +5994,8 @@ libexecdir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.h
 libexecdir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	22
 libexecdir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	17
 libexecdir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	22
+libexecdir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	17
+libexecdir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	22
 libexecdir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	17
 libexecdir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	22
 libexecdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	17
@@ -6173,6 +6233,9 @@ main	./external-src/aeson-0.10.0.0/examples/TemplateHaskell.hs	20
 main	./external-src/aeson-0.10.0.0/examples/TemplateHaskell.hs	21
 main	./external-src/aeson-0.10.0.0/tests/Tests.hs	8
 main	./external-src/aeson-0.10.0.0/tests/Tests.hs	9
+main	./external-src/aeson-pretty-0.7.2/Setup.hs	2
+main	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	44
+main	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	45
 main	./external-src/base-4.8.1.0/Setup.hs	5
 main	./external-src/base-4.8.1.0/Setup.hs	6
 main	./external-src/happstack-lite-7.3.6/Setup.hs	3
@@ -6180,7 +6243,7 @@ main	./external-src/happstack-server-7.4.4/Setup.hs	3
 main	./external-src/happstack-server-7.4.4/tests/Test.hs	9
 main	./external-src/happstack-server-7.4.4/tests/Test.hs	10
 main	./src/Play/Main.hs	3
-main	./src/Server-Lite/Lite.hs	15
+main	./src/Server-Lite/Lite.hs	19
 makeStableName	./external-src/base-4.8.1.0/System/Mem/StableName.hs	83
 makeStableName	./external-src/base-4.8.1.0/System/Mem/StableName.hs	85
 makeVersion	./external-src/base-4.8.1.0/Data/Version.hs	130
@@ -6639,8 +6702,8 @@ mutatorCpuSeconds	./external-src/base-4.8.1.0/GHC/Stats.hsc	62
 mutatorCpuSeconds	./external-src/base-4.8.1.0/dist/build/GHC/Stats.hs	65
 mutatorWallSeconds	./external-src/base-4.8.1.0/GHC/Stats.hsc	65
 mutatorWallSeconds	./external-src/base-4.8.1.0/dist/build/GHC/Stats.hs	68
-myApp	./src/Server-Lite/Lite.hs	23
-myApp	./src/Server-Lite/Lite.hs	24
+myApp	./src/Server-Lite/Lite.hs	28
+myApp	./src/Server-Lite/Lite.hs	29
 myThreadId	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	472
 myThreadId	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	473
 mzero	./external-src/base-4.8.1.0/GHC/Base.hs	700
@@ -7040,6 +7103,8 @@ optional	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	327
 optional	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	329
 opts	./external-src/aeson-0.10.0.0/benchmarks/Options.hs	5
 opts	./external-src/aeson-0.10.0.0/benchmarks/Options.hs	6
+opts	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	20
+opts	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	21
 opts2ElemArray	./external-src/aeson-0.10.0.0/tests/Options.hs	12
 opts2ElemArray	./external-src/aeson-0.10.0.0/tests/Options.hs	13
 optsDefault	./external-src/aeson-0.10.0.0/tests/Options.hs	6
@@ -7418,8 +7483,8 @@ printTestCase	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	313
 printf	./external-src/base-4.8.1.0/Text/Printf.hs	259
 printf	./external-src/base-4.8.1.0/Text/Printf.hs	260
 prio	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	99
-processForm	./src/Server-Lite/Lite.hs	83
-processForm	./src/Server-Lite/Lite.hs	84
+processForm	./src/Server-Lite/Lite.hs	90
+processForm	./src/Server-Lite/Lite.hs	91
 prodServiceThread	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	222
 prodServiceThread	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	223
 prodding	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	214
@@ -7485,6 +7550,9 @@ proxyServe'	./external-src/happstack-server-7.4.4/src/Happstack/Server/Proxy.hs	
 proxyServe'	./external-src/happstack-server-7.4.4/src/Happstack/Server/Proxy.hs	52
 pseq	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	513
 pseq	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	514
+pstIndent	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	70
+pstLevel	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	71
+pstSort	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	72
 ptrToIntPtr	./external-src/base-4.8.1.0/Foreign/Ptr.hs	95
 ptrToIntPtr	./external-src/base-4.8.1.0/Foreign/Ptr.hs	96
 ptrToWordPtr	./external-src/base-4.8.1.0/Foreign/Ptr.hs	87
@@ -7525,8 +7593,8 @@ query	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	36
 query	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	37
 queryInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	19
 queryInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	20
-queryParams	./src/Server-Lite/Lite.hs	64
-queryParams	./src/Server-Lite/Lite.hs	65
+queryParams	./src/Server-Lite/Lite.hs	71
+queryParams	./src/Server-Lite/Lite.hs	72
 queryString	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	660
 queryString	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	661
 quickCheck	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	107
@@ -7906,6 +7974,8 @@ responseMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Inter
 responseMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	350
 restartPollLoop	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	255
 restartPollLoop	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	256
+restaurants	./src/Server-Lite/Lite.hs	153
+restaurants	./src/Server-Lite/Lite.hs	154
 result	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	412
 result	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	413
 resultBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	418
@@ -8513,6 +8583,7 @@ someNatVal	./external-src/base-4.8.1.0/GHC/TypeLits.hs	108
 someNatVal	./external-src/base-4.8.1.0/GHC/TypeLits.hs	109
 someSymbolVal	./external-src/base-4.8.1.0/GHC/TypeLits.hs	116
 someSymbolVal	./external-src/base-4.8.1.0/GHC/TypeLits.hs	117
+sort	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	16
 sort	./external-src/base-4.8.1.0/Data/OldList.hs	818
 sort	./external-src/base-4.8.1.0/Data/OldList.hs	824
 sortBy	./external-src/base-4.8.1.0/Data/OldList.hs	821
@@ -8735,6 +8806,8 @@ sysconfdir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.h
 sysconfdir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	23
 sysconfdir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	17
 sysconfdir	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	23
+sysconfdir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	17
+sysconfdir	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	23
 sysconfdir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	17
 sysconfdir	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	23
 sysconfdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	17
@@ -8753,7 +8826,7 @@ tabArr	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	36
 tabSize	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	37
 table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	94
 table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	95
-tableName	./src/Data/HotBox.hs	14
+tableName	./src/Data/HotBox.hs	15
 tagFieldName	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	490
 taggedObjectEnc	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	166
 taggedObjectEnc'	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	205
@@ -8801,8 +8874,8 @@ tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	293
 tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	294
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	269
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	270
-template	./src/Server-Lite/Lite.hs	47
-template	./src/Server-Lite/Lite.hs	48
+template	./src/Server-Lite/Lite.hs	54
+template	./src/Server-Lite/Lite.hs	55
 terminal	./external-src/QuickCheck-2.8.1/Test/QuickCheck/State.hs	18
 terminalOutput	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Text.hs	112
 terminalOutput	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Text.hs	113
@@ -9677,8 +9750,8 @@ up_fb	./external-src/base-4.8.1.0/GHC/Enum.hs	711
 up_fb	./external-src/base-4.8.1.0/GHC/Enum.hs	712
 up_list	./external-src/base-4.8.1.0/GHC/Enum.hs	722
 up_list	./external-src/base-4.8.1.0/GHC/Enum.hs	723
-updateFortune	./src/Server-Lite/Lite.hs	108
-updateFortune	./src/Server-Lite/Lite.hs	109
+updateFortune	./src/Server-Lite/Lite.hs	115
+updateFortune	./src/Server-Lite/Lite.hs	116
 updateHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	293
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	233
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	234
@@ -9686,8 +9759,8 @@ updateWith	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	124
 updateWith	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	125
 updater	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Clock.hs	50
 updater	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Clock.hs	51
-upload	./src/Server-Lite/Lite.hs	119
-upload	./src/Server-Lite/Lite.hs	120
+upload	./src/Server-Lite/Lite.hs	126
+upload	./src/Server-Lite/Lite.hs	127
 uprintf	./external-src/base-4.8.1.0/Text/Printf.hs	620
 uprintf	./external-src/base-4.8.1.0/Text/Printf.hs	621
 uprintfs	./external-src/base-4.8.1.0/Text/Printf.hs	626
@@ -9868,6 +9941,8 @@ value'	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	188
 value'	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	189
 valueConName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1217
 valueConName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1218
+values	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	53
+values	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	54
 variant	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Gen.hs	69
 variant	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Gen.hs	70
 variantQCGen	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Random.hs	107
@@ -9900,6 +9975,8 @@ version	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	1
 version	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	16
 version	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	15
 version	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	16
+version	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	15
+version	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	16
 version	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	15
 version	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	16
 version	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	15

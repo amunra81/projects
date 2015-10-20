@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
+{-# LANGUAGE FlexibleInstances,UndecidableInstances #-}
 
 import Control.Applicative ((<$>), optional)
 import Data.Maybe (fromMaybe)
@@ -8,11 +9,15 @@ import Text.Blaze.Html5 (Html, (!), a, form, input, p, toHtml, label)
 import Text.Blaze.Html5.Attributes (action, enctype, href, name, size, type_, value)
 import qualified Text.Blaze.Html5 as H
 import qualified Text.Blaze.Html5.Attributes as A
+import qualified Data.ByteString.Char8 as B
 import Data.Time.Clock
 import Happstack.Lite
 import Data.HotBox
+import Data.Aeson
+import Data.Aeson.Encode.Pretty 
 
-main =     putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) ++ "/") 
+main =     
+        putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) ++ "/") 
         >>= \x -> serve (Just serverConfig) myApp 
         >>= (\u -> 
                 let s = x in -- da da, deci avem x
@@ -29,6 +34,7 @@ myApp = msum
     , dir "fortune" fortune
     , dir "files"   fileServing
     , dir "upload"  upload
+    , dir "restaurants"  restaurants
     , homePage
   ]
 
@@ -43,6 +49,7 @@ homePage =
            H.p $ a ! href "/fortune"       $ "(fortune) cookies"
            H.p $ a ! href "/files"         $ "file serving"
            H.p $ a ! href "/upload"        $ "file uploads"
+           H.p $ a ! href "/restaurants"   $ "all restaurants"
 
 template :: Text -> Html -> Response
 template title body = toResponse $
@@ -138,3 +145,11 @@ handleUpload =
             p (toHtml $ "temporary file: " ++ tmpFile)
             p (toHtml $ "uploaded name:  " ++ uploadName)
             p (toHtml $ "content-type:   " ++ show contentType)
+
+instance (ToJSON a) => ToMessage a where
+  toContentType _ = B.pack "application/json"
+  toMessage       = encodePretty
+
+restaurants :: ServerPart Response
+restaurants =  ok $ toResponse rest
+        where rest = allRestaurants
