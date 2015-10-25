@@ -3454,8 +3454,8 @@ eTXTBSY	./external-src/base-4.8.1.0/Foreign/C/Error.hs	236
 eUSERS	./external-src/base-4.8.1.0/Foreign/C/Error.hs	237
 eWOULDBLOCK	./external-src/base-4.8.1.0/Foreign/C/Error.hs	238
 eXDEV	./external-src/base-4.8.1.0/Foreign/C/Error.hs	239
+echo	./src/Server-Lite/Lite.hs	62
 echo	./src/Server-Lite/Lite.hs	63
-echo	./src/Server-Lite/Lite.hs	64
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	241
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	242
 efdChar	./external-src/base-4.8.1.0/GHC/Enum.hs	382
@@ -3991,8 +3991,8 @@ fileServeLazy	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileSer
 fileServeLazy	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	447
 fileServeStrict	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	458
 fileServeStrict	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	462
+fileServing	./src/Server-Lite/Lite.hs	121
 fileServing	./src/Server-Lite/Lite.hs	122
-fileServing	./src/Server-Lite/Lite.hs	123
 fileType	./external-src/base-4.8.1.0/System/Posix/Internals.hs	95
 fileType	./external-src/base-4.8.1.0/System/Posix/Internals.hs	96
 fill	./external-src/base-4.8.1.0/GHC/Arr.hs	460
@@ -4276,8 +4276,8 @@ formDecode	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/M
 formDecode	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	78
 formDecodeBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	88
 formDecodeBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	89
+formPage	./src/Server-Lite/Lite.hs	77
 formPage	./src/Server-Lite/Lite.hs	78
-formPage	./src/Server-Lite/Lite.hs	79
 formatArg	./external-src/base-4.8.1.0/Text/Printf.hs	315
 formatChar	./external-src/base-4.8.1.0/Text/Printf.hs	511
 formatChar	./external-src/base-4.8.1.0/Text/Printf.hs	512
@@ -4307,8 +4307,8 @@ formatString	./external-src/base-4.8.1.0/Text/Printf.hs	518
 formatString	./external-src/base-4.8.1.0/Text/Printf.hs	519
 formatTimeCombined	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LogFormat.hs	25
 formatTimeCombined	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LogFormat.hs	26
+fortune	./src/Server-Lite/Lite.hs	97
 fortune	./src/Server-Lite/Lite.hs	98
-fortune	./src/Server-Lite/Lite.hs	99
 found	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	281
 found	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	282
 found	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	249
@@ -5072,8 +5072,8 @@ handleFinalizer	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	420
 handleFinalizer	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	421
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	185
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	186
+handleUpload	./src/Server-Lite/Lite.hs	140
 handleUpload	./src/Server-Lite/Lite.hs	141
-handleUpload	./src/Server-Lite/Lite.hs	142
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	152
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	153
 happstackC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	338
@@ -5121,7 +5121,7 @@ hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	297
 hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	298
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	106
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	107
-homePage	./src/Server-Lite/Lite.hs	41
+homePage	./src/Server-Lite/Lite.hs	40
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	181
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	182
 host	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	211
@@ -5430,7 +5430,7 @@ instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	5
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	93
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	78
 instance	./src/Data/HotBox.hs	21
-instance	./src/Server-Lite/Lite.hs	149
+instance	./src/Server-Lite/Lite.hs	148
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	346
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	347
 int16Type	./external-src/base-4.8.1.0/Data/Data.hs	949
@@ -6702,8 +6702,8 @@ mutatorCpuSeconds	./external-src/base-4.8.1.0/GHC/Stats.hsc	62
 mutatorCpuSeconds	./external-src/base-4.8.1.0/dist/build/GHC/Stats.hs	65
 mutatorWallSeconds	./external-src/base-4.8.1.0/GHC/Stats.hsc	65
 mutatorWallSeconds	./external-src/base-4.8.1.0/dist/build/GHC/Stats.hs	68
+myApp	./src/Server-Lite/Lite.hs	27
 myApp	./src/Server-Lite/Lite.hs	28
-myApp	./src/Server-Lite/Lite.hs	29
 myThreadId	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	472
 myThreadId	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	473
 mzero	./external-src/base-4.8.1.0/GHC/Base.hs	700
@@ -7483,8 +7483,8 @@ printTestCase	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	313
 printf	./external-src/base-4.8.1.0/Text/Printf.hs	259
 printf	./external-src/base-4.8.1.0/Text/Printf.hs	260
 prio	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	99
+processForm	./src/Server-Lite/Lite.hs	89
 processForm	./src/Server-Lite/Lite.hs	90
-processForm	./src/Server-Lite/Lite.hs	91
 prodServiceThread	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	222
 prodServiceThread	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	223
 prodding	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	214
@@ -7593,8 +7593,8 @@ query	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	36
 query	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	37
 queryInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	19
 queryInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	20
+queryParams	./src/Server-Lite/Lite.hs	70
 queryParams	./src/Server-Lite/Lite.hs	71
-queryParams	./src/Server-Lite/Lite.hs	72
 queryString	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	660
 queryString	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	661
 quickCheck	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	107
@@ -7974,8 +7974,8 @@ responseMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Inter
 responseMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	350
 restartPollLoop	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	255
 restartPollLoop	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	256
+restaurants	./src/Server-Lite/Lite.hs	152
 restaurants	./src/Server-Lite/Lite.hs	153
-restaurants	./src/Server-Lite/Lite.hs	154
 result	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	412
 result	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	413
 resultBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	418
@@ -8874,8 +8874,8 @@ tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	293
 tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	294
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	269
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	270
+template	./src/Server-Lite/Lite.hs	53
 template	./src/Server-Lite/Lite.hs	54
-template	./src/Server-Lite/Lite.hs	55
 terminal	./external-src/QuickCheck-2.8.1/Test/QuickCheck/State.hs	18
 terminalOutput	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Text.hs	112
 terminalOutput	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Text.hs	113
@@ -9750,8 +9750,8 @@ up_fb	./external-src/base-4.8.1.0/GHC/Enum.hs	711
 up_fb	./external-src/base-4.8.1.0/GHC/Enum.hs	712
 up_list	./external-src/base-4.8.1.0/GHC/Enum.hs	722
 up_list	./external-src/base-4.8.1.0/GHC/Enum.hs	723
+updateFortune	./src/Server-Lite/Lite.hs	114
 updateFortune	./src/Server-Lite/Lite.hs	115
-updateFortune	./src/Server-Lite/Lite.hs	116
 updateHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	293
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	233
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	234
@@ -9759,8 +9759,8 @@ updateWith	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	124
 updateWith	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	125
 updater	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Clock.hs	50
 updater	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Clock.hs	51
+upload	./src/Server-Lite/Lite.hs	125
 upload	./src/Server-Lite/Lite.hs	126
-upload	./src/Server-Lite/Lite.hs	127
 uprintf	./external-src/base-4.8.1.0/Text/Printf.hs	620
 uprintf	./external-src/base-4.8.1.0/Text/Printf.hs	621
 uprintfs	./external-src/base-4.8.1.0/Text/Printf.hs	626

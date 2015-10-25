@@ -16,8 +16,7 @@ import Data.HotBox
 import Data.Aeson
 import Data.Aeson.Encode.Pretty 
 
-main =     
-        putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) ++ "/") 
+main =  putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) ++ "/") 
         >>= \x -> serve (Just serverConfig) myApp 
         >>= (\u -> 
                 let s = x in -- da da, deci avem x
@@ -151,5 +150,4 @@ instance (ToJSON a) => ToMessage a where
   toMessage       = encodePretty
 
 restaurants :: ServerPart Response
-restaurants =  ok $ toResponse rest
-        where rest = allRestaurants
+restaurants =  ok $ toResponse allRestaurants
