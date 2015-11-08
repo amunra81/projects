@@ -115,6 +115,7 @@ AlgConstr	./external-src/base-4.8.1.0/Data/Data.hs	527
 AlgRep	./external-src/base-4.8.1.0/Data/Data.hs	516
 All	./external-src/base-4.8.1.0/Data/Monoid.hs	87
 All	./external-src/base-4.8.1.0/Data/Monoid.hs	87
+All	./src/Server-Lite/Lite.hs	167
 AllNullary	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	735
 AllocationLimitExceeded	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	107
 AllocationLimitExceeded	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	107
@@ -177,6 +178,9 @@ ArrowPlus	./external-src/base-4.8.1.0/Control/Arrow.hs	186
 ArrowPlus	./external-src/base-4.8.1.0/Control/Arrow.hs	186
 ArrowZero	./external-src/base-4.8.1.0/Control/Arrow.hs	179
 ArrowZero	./external-src/base-4.8.1.0/Control/Arrow.hs	179
+Article	./external-src/web-routes-0.27.9/test/Test.hs	16
+ArticleId	./external-src/web-routes-0.27.9/test/Test.hs	12
+ArticleId	./external-src/web-routes-0.27.9/test/Test.hs	12
 AssertionFailed	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	124
 AssertionFailed	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	124
 Associativity	./external-src/base-4.8.1.0/GHC/Generics.hs	695
@@ -213,6 +217,7 @@ BlockedOnForeignCall	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	542
 BlockedOnMVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	530
 BlockedOnOther	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	544
 BlockedOnSTM	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	540
+BlogPost	./src/Data/HotBox.hs	60
 Blue	./external-src/aeson-0.10.0.0/benchmarks/Compare/JsonBench.hs	21
 Body	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	309
 BodyPart	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Multipart.hs	54
@@ -484,7 +489,7 @@ Data.Foldable	./external-src/base-4.8.1.0/Data/Foldable.hs	19
 Data.Function	./external-src/base-4.8.1.0/Data/Function.hs	19
 Data.Functor	./external-src/base-4.8.1.0/Data/Functor.hs	17
 Data.Functor.Identity	./external-src/base-4.8.1.0/Data/Functor/Identity.hs	32
-Data.HotBox	./src/Data/HotBox.hs	3
+Data.HotBox	./src/Data/HotBox.hs	4
 Data.IORef	./external-src/base-4.8.1.0/Data/IORef.hs	18
 Data.Int	./external-src/base-4.8.1.0/Data/Int.hs	18
 Data.Ix	./external-src/base-4.8.1.0/Data/Ix.hs	19
@@ -937,6 +942,8 @@ GHC.Windows	./external-src/base-4.8.1.0/GHC/Windows.hs	23
 GHC.Word	./external-src/base-4.8.1.0/GHC/Word.hs	22
 GHCiSandboxIO	./external-src/base-4.8.1.0/GHC/GHCi.hs	28
 GHCiSandboxIO	./external-src/base-4.8.1.0/GHC/GHCi.hs	28
+GPathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	177
+GPathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	177
 GSubterms	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	236
 GSubterms	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	236
 GSubtermsIncl	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	269
@@ -1048,6 +1055,8 @@ HeapByRetainer	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	199
 HeapByType	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	173
 HeapByType	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	198
 HeapOverflow	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	164
+Home	./external-src/web-routes-0.27.9/test/Test.hs	15
+Home	./src/Data/HotBox.hs	60
 Host	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	192
 HostAddress	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Socket.hs	26
 HostAddress6	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Socket.hs	27
@@ -1135,6 +1144,7 @@ Ix	./external-src/base-4.8.1.0/GHC/Arr.hs	74
 JSONPath	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	86
 JSONPathElement	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	79
 Just	./external-src/base-4.8.1.0/GHC/Base.hs	191
+JustOne	./src/Server-Lite/Lite.hs	167
 K1	./external-src/base-4.8.1.0/GHC/Generics.hs	594
 K1	./external-src/base-4.8.1.0/GHC/Generics.hs	594
 KEvent	./external-src/base-4.8.1.0/GHC/Event/KQueue.hsc	129
@@ -1208,6 +1218,7 @@ Main	./external-src/aeson-0.10.0.0/tests/Tests.hs	1
 Main	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	2
 Main	./external-src/base-4.8.1.0/Setup.hs	1
 Main	./external-src/happstack-server-7.4.4/tests/Test.hs	1
+Main	./external-src/web-routes-0.27.9/test/Test.hs	3
 Male	./external-src/aeson-0.10.0.0/benchmarks/Compare/JsonBench.hs	23
 MallocPtr	./external-src/base-4.8.1.0/GHC/ForeignPtr.hs	92
 Manager	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/TimeoutManager.hs	23
@@ -1223,7 +1234,7 @@ Max	./external-src/base-4.8.1.0/Data/Foldable.hs	291
 Max	./external-src/base-4.8.1.0/Data/Foldable.hs	291
 MaxAge	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Cookie.hs	56
 Maybe	./external-src/base-4.8.1.0/GHC/Base.hs	191
-Menu	./src/Data/HotBox.hs	19
+Menu	./src/Data/HotBox.hs	22
 Metadata	./external-src/aeson-0.10.0.0/examples/Twitter.hs	28
 Metadata	./external-src/aeson-0.10.0.0/examples/Twitter.hs	28
 Method	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	135
@@ -1258,6 +1269,8 @@ MonadFix	./external-src/base-4.8.1.0/Control/Monad/Fix.hs	52
 MonadFix	./external-src/base-4.8.1.0/Control/Monad/Fix.hs	52
 MonadPlus	./external-src/base-4.8.1.0/GHC/Base.hs	694
 MonadPlus	./external-src/base-4.8.1.0/GHC/Base.hs	694
+MonadRoute	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	35
+MonadRoute	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	35
 MonadZip	./external-src/base-4.8.1.0/Control/Monad/Zip.hs	36
 MonadZip	./external-src/base-4.8.1.0/Control/Monad/Zip.hs	36
 Monoid	./external-src/base-4.8.1.0/GHC/Base.hs	213
@@ -1399,6 +1412,7 @@ ParseSum	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	485
 ParseSum	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	485
 Parser	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	226
 Parser	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	226
+PathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	240
 Paths_QuickCheck	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	1
 Paths_aeson	./external-src/aeson-0.10.0.0/dist/build/autogen/Paths_aeson.hs	1
 Paths_aeson_pretty	./external-src/aeson-pretty-0.7.2/dist/build/autogen/Paths_aeson_pretty.hs	1
@@ -1406,6 +1420,7 @@ Paths_base	./external-src/base-4.8.1.0/dist/build/autogen/Paths_base.hs	1
 Paths_happstack_lite	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	1
 Paths_happstack_server	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	1
 Paths_hotBox	./dist/build/autogen/Paths_hotBox.hs	1
+Paths_web_routes	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	1
 PatternMatchFail	./external-src/base-4.8.1.0/Control/Exception/Base.hs	300
 PatternMatchFail	./external-src/base-4.8.1.0/Control/Exception/Base.hs	300
 Paused	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/TimeoutManager.hs	25
@@ -1446,7 +1461,7 @@ Product	./external-src/aeson-0.10.0.0/tests/DataFamilies/Types.hs	14
 Product	./external-src/aeson-0.10.0.0/tests/Types.hs	51
 Product	./external-src/base-4.8.1.0/Data/Monoid.hs	112
 Product	./external-src/base-4.8.1.0/Data/Monoid.hs	112
-Product	./src/Data/HotBox.hs	17
+Product	./src/Data/HotBox.hs	20
 Product'	./external-src/aeson-0.10.0.0/benchmarks/AesonCompareAutoInstances.hs	60
 Product2	./external-src/aeson-0.10.0.0/tests/Types.hs	29
 Product2	./external-src/aeson-0.10.0.0/tests/Types.hs	29
@@ -1545,8 +1560,9 @@ ResourceExhausted	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	284
 ResourceVanished	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	299
 Response	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	195
 Response	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	196
-Restaurant	./src/Data/HotBox.hs	10
-Restaurant	./src/Data/HotBox.hs	10
+Restaurant	./src/Data/HotBox.hs	13
+Restaurant	./src/Data/HotBox.hs	13
+Restaurants	./src/Server-Lite/Lite.hs	167
 Result	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	208
 Result	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	50
 Result	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	94
@@ -1558,6 +1574,8 @@ Right	./external-src/base-4.8.1.0/Data/Either.hs	125
 RightAssociative	./external-src/base-4.8.1.0/GHC/Generics.hs	696
 Rose	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	145
 RoundtripFailure	./external-src/base-4.8.1.0/GHC/IO/Encoding/Failure.hs	48
+RouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	33
+RouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	33
 RqBody	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	309
 RqData	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	142
 RqData	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	142
@@ -1599,7 +1617,7 @@ Selector	./external-src/base-4.8.1.0/GHC/Generics.hs	657
 Selector	./external-src/base-4.8.1.0/GHC/Generics.hs	657
 SemiClosedHandle	./external-src/base-4.8.1.0/GHC/IO/Handle/Types.hs	155
 SendFile	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	202
-Seq	./src/Data/HotBox.hs	8
+Seq	./src/Data/HotBox.hs	11
 Sequ	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	467
 Sequ	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	467
 Sequ	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	476
@@ -1629,6 +1647,10 @@ SignSpace	./external-src/base-4.8.1.0/Text/Printf.hs	408
 Signal	./external-src/base-4.8.1.0/GHC/Conc/Signal.hs	32
 Single	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	446
 SingleByteCP	./external-src/base-4.8.1.0/GHC/IO/Encoding/CodePage/Table.hs	48
+Site	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	22
+Site	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	23
+Sitemap	./external-src/web-routes-0.27.9/test/Test.hs	14
+Sitemap	./src/Data/HotBox.hs	60
 Size	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	287
 Small	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Modifiers.hs	231
 Small	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Modifiers.hs	231
@@ -1728,8 +1750,8 @@ TRACE	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.
 TVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	772
 TVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	772
 Table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	60
-Table	./src/Data/HotBox.hs	15
-Table	./src/Data/HotBox.hs	15
+Table	./src/Data/HotBox.hs	18
+Table	./src/Data/HotBox.hs	18
 Tagged	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	760
 Tagged	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	760
 Tagged2	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	762
@@ -1860,6 +1882,9 @@ UINT	./external-src/base-4.8.1.0/GHC/Windows.hs	88
 UInt32	./external-src/base-4.8.1.0/System/Environment/ExecutablePath.hsc	65
 UInt32	./external-src/base-4.8.1.0/dist/build/System/Environment/ExecutablePath.hs	54
 UPrintf	./external-src/base-4.8.1.0/Text/Printf.hs	614
+URL	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	36
+URLParser	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	71
+URLParser	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	247
 US	./external-src/base-4.8.1.0/GHC/Event/Unique.hs	25
 USecs	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	204
 UnWebT	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	485
@@ -1908,6 +1933,12 @@ W8#	./external-src/base-4.8.1.0/GHC/Word.hs	53
 Weak	./external-src/base-4.8.1.0/GHC/Weak.hs	94
 Weak	./external-src/base-4.8.1.0/GHC/Weak.hs	94
 Web	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	57
+Web.Routes	./external-src/web-routes-0.27.9/Web/Routes.hs	1
+Web.Routes.Base	./external-src/web-routes-0.27.9/Web/Routes/Base.hs	14
+Web.Routes.PathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	7
+Web.Routes.QuickCheck	./external-src/web-routes-0.27.9/Web/Routes/QuickCheck.hs	1
+Web.Routes.RouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	14
+Web.Routes.Site	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	1
 WebMonad	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	506
 WebMonad	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	506
 WebT	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	383
@@ -1958,9 +1989,9 @@ _beModifyFdOnce	./external-src/base-4.8.1.0/GHC/Event/Internal.hs	157
 _bePoll	./external-src/base-4.8.1.0/GHC/Event/Internal.hs	142
 _beState	./external-src/base-4.8.1.0/GHC/Event/Internal.hs	138
 _fdCallback	./external-src/base-4.8.1.0/GHC/Event/Manager.hs	106
-_id	./src/Data/HotBox.hs	10
-_name	./src/Data/HotBox.hs	11
-_tables	./src/Data/HotBox.hs	12
+_id	./src/Data/HotBox.hs	13
+_name	./src/Data/HotBox.hs	14
+_tables	./src/Data/HotBox.hs	15
 a	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	648
 a	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	55
 a	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Class.hs	140
@@ -1980,7 +2011,8 @@ a	./external-src/base-4.8.1.0/GHC/Real.hs	197
 a	./external-src/base-4.8.1.0/GHC/TypeLits.hs	152
 a	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	89
 a	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	57
-a	./src/Data/HotBox.hs	8
+a	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	71
+a	./src/Data/HotBox.hs	11
 a1	./external-src/base-4.8.1.0/GHC/Base.hs	384
 a_path	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	56
 a_path	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	57
@@ -2068,8 +2100,8 @@ allEncodingHandlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/I
 allEncodings	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	141
 allEncodings	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	142
 allNullaryToStringTag	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	460
-allRestaurants	./src/Data/HotBox.hs	43
-allRestaurants	./src/Data/HotBox.hs	44
+allRestaurants	./src/Data/HotBox.hs	50
+allRestaurants	./src/Data/HotBox.hs	51
 allTests	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	27
 allTests	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	28
 allocArray	./external-src/base-4.8.1.0/GHC/Event/Array.hs	67
@@ -2114,6 +2146,8 @@ anyPath	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	24
 anyPath	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	248
 anyRequest	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	130
 anyRequest	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	131
+anySegment	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	82
+anySegment	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	83
 ap	./external-src/base-4.8.1.0/GHC/Base.hs	604
 ap	./external-src/base-4.8.1.0/GHC/Base.hs	605
 apEither	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	106
@@ -2220,6 +2254,9 @@ asinDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1050
 asinFloat	./external-src/base-4.8.1.0/GHC/Float.hs	996
 asinFloat	./external-src/base-4.8.1.0/GHC/Float.hs	1004
 asinh	./external-src/base-4.8.1.0/GHC/Float.hs	62
+askRouteFn	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	37
+askRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	69
+askRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	70
 askRq	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	227
 askRqEnv	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	147
 assert	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Monadic.hs	124
@@ -2359,6 +2396,8 @@ bindir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_li
 bindir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	19
 bindir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	17
 bindir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	19
+bindir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	17
+bindir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	19
 bioSelector	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	213
 bioSelector	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	254
 bit	./external-src/base-4.8.1.0/Data/Bits.hs	169
@@ -2565,6 +2604,10 @@ capacity	./external-src/base-4.8.1.0/GHC/Event/Array.hs	112
 capacity	./external-src/base-4.8.1.0/GHC/Event/Array.hs	113
 capture	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Gen/Unsafe.hs	47
 capture	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Gen/Unsafe.hs	48
+case_fromPathInfo	./external-src/web-routes-0.27.9/test/Test.hs	32
+case_fromPathInfo	./external-src/web-routes-0.27.9/test/Test.hs	33
+case_toPathInfo	./external-src/web-routes-0.27.9/test/Test.hs	27
+case_toPathInfo	./external-src/web-routes-0.27.9/test/Test.hs	28
 cast	./external-src/base-4.8.1.0/Data/Typeable.hs	104
 cast	./external-src/base-4.8.1.0/Data/Typeable.hs	105
 castCCharToChar	./external-src/base-4.8.1.0/Foreign/C/String.hs	198
@@ -2621,6 +2664,8 @@ catchIO	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_l
 catchIO	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	13
 catchIO	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	12
 catchIO	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	13
+catchIO	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	12
+catchIO	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	13
 catchIOError	./external-src/base-4.8.1.0/System/IO/Error.hs	336
 catchIOError	./external-src/base-4.8.1.0/System/IO/Error.hs	337
 catchJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	170
@@ -3098,6 +3143,8 @@ datadir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_l
 datadir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	21
 datadir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	17
 datadir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	21
+datadir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	17
+datadir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	21
 datarep	./external-src/base-4.8.1.0/Data/Data.hs	490
 datatype	./external-src/base-4.8.1.0/Data/Data.hs	503
 datatypeName	./external-src/base-4.8.1.0/GHC/Generics.hs	648
@@ -3144,6 +3191,8 @@ decodeFromSingleByte	./external-src/base-4.8.1.0/GHC/IO/Encoding/CodePage.hs	102
 decodeFromSingleByte	./external-src/base-4.8.1.0/GHC/IO/Encoding/CodePage.hs	103
 decodeJ	./external-src/aeson-0.10.0.0/benchmarks/CompareWithJSON.hs	26
 decodeJ	./external-src/aeson-0.10.0.0/benchmarks/CompareWithJSON.hs	27
+decodePathInfo	./external-src/web-routes-0.27.9/Web/Routes/Base.hs	282
+decodePathInfo	./external-src/web-routes-0.27.9/Web/Routes/Base.hs	283
 decodeStrict	./external-src/aeson-0.10.0.0/Data/Aeson.hs	120
 decodeStrict	./external-src/aeson-0.10.0.0/Data/Aeson.hs	121
 decodeStrict'	./external-src/aeson-0.10.0.0/Data/Aeson.hs	146
@@ -3454,8 +3503,8 @@ eTXTBSY	./external-src/base-4.8.1.0/Foreign/C/Error.hs	236
 eUSERS	./external-src/base-4.8.1.0/Foreign/C/Error.hs	237
 eWOULDBLOCK	./external-src/base-4.8.1.0/Foreign/C/Error.hs	238
 eXDEV	./external-src/base-4.8.1.0/Foreign/C/Error.hs	239
-echo	./src/Server-Lite/Lite.hs	62
-echo	./src/Server-Lite/Lite.hs	63
+echo	./src/Server-Lite/Lite.hs	60
+echo	./src/Server-Lite/Lite.hs	61
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	241
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	242
 efdChar	./external-src/base-4.8.1.0/GHC/Enum.hs	382
@@ -3595,6 +3644,10 @@ encodeKV	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	611
 encodeKV	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	612
 encodeMap	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	591
 encodeMap	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	595
+encodePathInfo	./external-src/web-routes-0.27.9/Web/Routes/Base.hs	247
+encodePathInfo	./external-src/web-routes-0.27.9/Web/Routes/Base.hs	248
+encodePathInfoUtf8	./external-src/web-routes-0.27.9/Web/Routes/Base.hs	251
+encodePathInfoUtf8	./external-src/web-routes-0.27.9/Web/Routes/Base.hs	252
 encodePretty	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	103
 encodePretty	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	104
 encodePretty'	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	108
@@ -3677,6 +3730,8 @@ enumNegDeltaToNatural	./external-src/base-4.8.1.0/GHC/Natural.hs	244
 env	./external-src/base-4.8.1.0/GHC/ForeignPtr.hs	112
 eof	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	260
 eof	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	262
+eof	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	86
+eof	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	87
 eofErrorType	./external-src/base-4.8.1.0/System/IO/Error.hs	197
 eofErrorType	./external-src/base-4.8.1.0/System/IO/Error.hs	198
 epollControl	./external-src/base-4.8.1.0/GHC/Event/EPoll.hsc	189
@@ -3991,8 +4046,8 @@ fileServeLazy	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileSer
 fileServeLazy	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	447
 fileServeStrict	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	458
 fileServeStrict	./external-src/happstack-server-7.4.4/src/Happstack/Server/FileServe/BuildingBlocks.hs	462
-fileServing	./src/Server-Lite/Lite.hs	121
-fileServing	./src/Server-Lite/Lite.hs	122
+fileServing	./src/Server-Lite/Lite.hs	119
+fileServing	./src/Server-Lite/Lite.hs	120
 fileType	./external-src/base-4.8.1.0/System/Posix/Internals.hs	95
 fileType	./external-src/base-4.8.1.0/System/Posix/Internals.hs	96
 fill	./external-src/base-4.8.1.0/GHC/Arr.hs	460
@@ -4276,8 +4331,8 @@ formDecode	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/M
 formDecode	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	78
 formDecodeBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	88
 formDecodeBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	89
-formPage	./src/Server-Lite/Lite.hs	77
-formPage	./src/Server-Lite/Lite.hs	78
+formPage	./src/Server-Lite/Lite.hs	75
+formPage	./src/Server-Lite/Lite.hs	76
 formatArg	./external-src/base-4.8.1.0/Text/Printf.hs	315
 formatChar	./external-src/base-4.8.1.0/Text/Printf.hs	511
 formatChar	./external-src/base-4.8.1.0/Text/Printf.hs	512
@@ -4295,6 +4350,7 @@ formatIntegral	./external-src/base-4.8.1.0/Text/Printf.hs	565
 formatIntegral	./external-src/base-4.8.1.0/Text/Printf.hs	566
 formatMillis	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	733
 formatMillis	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	734
+formatPathSegments	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	37
 formatRealFloat	./external-src/base-4.8.1.0/GHC/Float.hs	558
 formatRealFloat	./external-src/base-4.8.1.0/GHC/Float.hs	559
 formatRealFloat	./external-src/base-4.8.1.0/Text/Printf.hs	597
@@ -4307,8 +4363,8 @@ formatString	./external-src/base-4.8.1.0/Text/Printf.hs	518
 formatString	./external-src/base-4.8.1.0/Text/Printf.hs	519
 formatTimeCombined	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LogFormat.hs	25
 formatTimeCombined	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LogFormat.hs	26
-fortune	./src/Server-Lite/Lite.hs	97
-fortune	./src/Server-Lite/Lite.hs	98
+fortune	./src/Server-Lite/Lite.hs	95
+fortune	./src/Server-Lite/Lite.hs	96
 found	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	281
 found	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	282
 found	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	249
@@ -4391,6 +4447,10 @@ fromMaybeBody	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.
 fromPair	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	151
 fromPair	./external-src/aeson-pretty-0.7.2/Data/Aeson/Encode/Pretty.hs	152
 fromPath	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	108
+fromPathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	286
+fromPathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	287
+fromPathSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	242
+fromPathSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	248
 fromPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	32
 fromPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	33
 fromPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	40
@@ -4593,6 +4653,8 @@ getBinDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack
 getBinDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	26
 getBinDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	25
 getBinDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	26
+getBinDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	25
+getBinDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	26
 getBlind	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Modifiers.hs	74
 getBytes	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LazyLiner.hs	32
 getBytes	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/LazyLiner.hs	33
@@ -4664,6 +4726,8 @@ getDataDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstac
 getDataDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	28
 getDataDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	25
 getDataDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	28
+getDataDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	25
+getDataDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	28
 getDataFileName	./dist/build/autogen/Paths_hotBox.hs	32
 getDataFileName	./dist/build/autogen/Paths_hotBox.hs	33
 getDataFileName	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	32
@@ -4678,6 +4742,8 @@ getDataFileName	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_hap
 getDataFileName	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	33
 getDataFileName	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	32
 getDataFileName	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	33
+getDataFileName	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	32
+getDataFileName	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	33
 getDataFn	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	591
 getDataFn	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	594
 getDebugFlags	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	347
@@ -4755,6 +4821,8 @@ getLibDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack
 getLibDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	27
 getLibDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	25
 getLibDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	27
+getLibDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	25
+getLibDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	27
 getLibexecDir	./dist/build/autogen/Paths_hotBox.hs	25
 getLibexecDir	./dist/build/autogen/Paths_hotBox.hs	29
 getLibexecDir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	25
@@ -4769,6 +4837,8 @@ getLibexecDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happs
 getLibexecDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	29
 getLibexecDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	25
 getLibexecDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	29
+getLibexecDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	25
+getLibexecDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	29
 getLine	./external-src/base-4.8.1.0/System/IO.hs	291
 getLine	./external-src/base-4.8.1.0/System/IO.hs	292
 getLocaleEncoding	./external-src/base-4.8.1.0/GHC/IO/Encoding.hs	107
@@ -4848,6 +4918,8 @@ getSysconfDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happs
 getSysconfDir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	30
 getSysconfDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	25
 getSysconfDir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	30
+getSysconfDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	25
+getSysconfDir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	30
 getSystemEventManager	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	173
 getSystemEventManager	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	174
 getSystemEventManager_	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	181
@@ -4877,6 +4949,7 @@ getWin32ProgArgv_certainly	./external-src/base-4.8.1.0/System/Environment.hs	71
 getZipList	./external-src/base-4.8.1.0/Control/Applicative.hs	125
 gfoldl	./external-src/base-4.8.1.0/Data/Data.hs	220
 gfoldl	./external-src/base-4.8.1.0/Data/Data.hs	238
+gfromPathSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	179
 ghciStepIO	./external-src/base-4.8.1.0/GHC/GHCi.hs	29
 giveStats	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	80
 giveStats	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	95
@@ -4912,6 +4985,7 @@ gtDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1026
 gtDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1027
 gtFloat	./external-src/base-4.8.1.0/GHC/Float.hs	986
 gtFloat	./external-src/base-4.8.1.0/GHC/Float.hs	987
+gtoPathSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	178
 guard	./external-src/base-4.8.1.0/Control/Monad.hs	90
 guard	./external-src/base-4.8.1.0/Control/Monad.hs	91
 guard	./external-src/base-4.8.1.0/Text/Read/Lex.hs	52
@@ -5072,8 +5146,9 @@ handleFinalizer	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	420
 handleFinalizer	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	421
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	185
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	186
-handleUpload	./src/Server-Lite/Lite.hs	140
-handleUpload	./src/Server-Lite/Lite.hs	141
+handleSite	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	35
+handleUpload	./src/Server-Lite/Lite.hs	138
+handleUpload	./src/Server-Lite/Lite.hs	139
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	152
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	153
 happstackC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	338
@@ -5121,7 +5196,7 @@ hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	297
 hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	298
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	106
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	107
-homePage	./src/Server-Lite/Lite.hs	40
+homePage	./src/Server-Lite/Lite.hs	38
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	181
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	182
 host	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	211
@@ -5142,6 +5217,8 @@ http11	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handl
 httpOnly	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Cookie.hs	44
 https	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	102
 https	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	103
+hyphenate	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	171
+hyphenate	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	172
 iNFINITE	./external-src/base-4.8.1.0/Control/Concurrent.hs	494
 iNFINITE	./external-src/base-4.8.1.0/Control/Concurrent.hs	495
 iNFINITE	./external-src/base-4.8.1.0/GHC/Windows.hs	98
@@ -5429,8 +5506,12 @@ instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/Routing.hs	59
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	93
 instance	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	78
-instance	./src/Data/HotBox.hs	21
-instance	./src/Server-Lite/Lite.hs	148
+instance	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	181
+instance	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	39
+instance	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	50
+instance	./external-src/web-routes-0.27.9/test/Test.hs	21
+instance	./src/Data/HotBox.hs	24
+instance	./src/Server-Lite/Lite.hs	146
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	346
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	347
 int16Type	./external-src/base-4.8.1.0/Data/Data.hs	949
@@ -5988,6 +6069,8 @@ libdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_li
 libdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	20
 libdir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	17
 libdir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	20
+libdir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	17
+libdir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	20
 libexecdir	./dist/build/autogen/Paths_hotBox.hs	17
 libexecdir	./dist/build/autogen/Paths_hotBox.hs	22
 libexecdir	./external-src/QuickCheck-2.8.1/dist/build/autogen/Paths_QuickCheck.hs	17
@@ -6002,6 +6085,8 @@ libexecdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstac
 libexecdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	22
 libexecdir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	17
 libexecdir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	22
+libexecdir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	17
+libexecdir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	22
 lift	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadPrec.hs	103
 lift	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadPrec.hs	105
 liftA	./external-src/base-4.8.1.0/GHC/Base.hs	398
@@ -6024,6 +6109,8 @@ liftM4	./external-src/base-4.8.1.0/GHC/Base.hs	569
 liftM4	./external-src/base-4.8.1.0/GHC/Base.hs	570
 liftM5	./external-src/base-4.8.1.0/GHC/Base.hs	574
 liftM5	./external-src/base-4.8.1.0/GHC/Base.hs	575
+liftRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	66
+liftRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	67
 liftST	./external-src/base-4.8.1.0/GHC/ST.hs	81
 liftST	./external-src/base-4.8.1.0/GHC/ST.hs	82
 lineString	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	227
@@ -6242,8 +6329,11 @@ main	./external-src/happstack-lite-7.3.6/Setup.hs	3
 main	./external-src/happstack-server-7.4.4/Setup.hs	3
 main	./external-src/happstack-server-7.4.4/tests/Test.hs	9
 main	./external-src/happstack-server-7.4.4/tests/Test.hs	10
+main	./external-src/web-routes-0.27.9/Setup.hs	2
+main	./external-src/web-routes-0.27.9/test/Test.hs	40
+main	./external-src/web-routes-0.27.9/test/Test.hs	41
 main	./src/Play/Main.hs	3
-main	./src/Server-Lite/Lite.hs	19
+main	./src/Server-Lite/Lite.hs	21
 makeStableName	./external-src/base-4.8.1.0/System/Mem/StableName.hs	83
 makeStableName	./external-src/base-4.8.1.0/System/Mem/StableName.hs	85
 makeVersion	./external-src/base-4.8.1.0/Data/Version.hs	130
@@ -6320,6 +6410,8 @@ mapResult	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	259
 mapResult	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	260
 mapRoseResult	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	266
 mapRoseResult	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	267
+mapRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	59
+mapRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	60
 mapRqData	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	223
 mapRqData	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	224
 mapServerPartT	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	170
@@ -6535,6 +6627,8 @@ mkRealConstr	./external-src/base-4.8.1.0/Data/Data.hs	767
 mkRealConstr	./external-src/base-4.8.1.0/Data/Data.hs	768
 mkRequest	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	120
 mkRequest	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	121
+mkSitePI	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	296
+mkSitePI	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	299
 mkTextDecoder	./external-src/base-4.8.1.0/GHC/IO/Encoding/Types.hs	112
 mkTextEncoder	./external-src/base-4.8.1.0/GHC/IO/Encoding/Types.hs	115
 mkTextEncoding	./external-src/base-4.8.1.0/GHC/IO/Encoding.hs	224
@@ -6702,8 +6796,8 @@ mutatorCpuSeconds	./external-src/base-4.8.1.0/GHC/Stats.hsc	62
 mutatorCpuSeconds	./external-src/base-4.8.1.0/dist/build/GHC/Stats.hs	65
 mutatorWallSeconds	./external-src/base-4.8.1.0/GHC/Stats.hsc	65
 mutatorWallSeconds	./external-src/base-4.8.1.0/dist/build/GHC/Stats.hs	68
-myApp	./src/Server-Lite/Lite.hs	27
-myApp	./src/Server-Lite/Lite.hs	28
+myApp	./src/Server-Lite/Lite.hs	25
+myApp	./src/Server-Lite/Lite.hs	26
 myThreadId	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	472
 myThreadId	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	473
 mzero	./external-src/base-4.8.1.0/GHC/Base.hs	700
@@ -6750,6 +6844,8 @@ negateDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1023
 negateDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1024
 negateFloat	./external-src/base-4.8.1.0/GHC/Float.hs	983
 negateFloat	./external-src/base-4.8.1.0/GHC/Float.hs	984
+nestURL	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	141
+nestURL	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	142
 nestedAtomically	./external-src/base-4.8.1.0/Control/Exception/Base.hs	406
 nestedAtomically	./external-src/base-4.8.1.0/Control/Exception/Base.hs	407
 neverExpires	./external-src/happstack-server-7.4.4/src/Happstack/Server/Monads.hs	93
@@ -7168,6 +7264,8 @@ pHeader	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC8
 pHeader	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	60
 pHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	53
 pHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	54
+pToken	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	73
+pToken	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	74
 p_parameter	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	88
 p_parameter	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	89
 p_text	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	262
@@ -7247,6 +7345,7 @@ parseNonAllNullarySum	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	
 parseNullaryMatches	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	779
 parseNullaryMatches	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	780
 parsePair	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	702
+parsePathSegments	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	39
 parseProduct	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	887
 parseProduct	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	891
 parseProduct	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	683
@@ -7257,6 +7356,8 @@ parseRecord	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	812
 parseRecord	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	640
 parseResponse	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	127
 parseResponse	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	128
+parseSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	120
+parseSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	121
 parseSum	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	486
 parseSumFromString	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	510
 parseTypeMismatch	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	937
@@ -7282,8 +7383,12 @@ path	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	32
 path	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	33
 pathEls	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	132
 pathEls	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	133
+pathInfoInverse_prop	./external-src/web-routes-0.27.9/Web/Routes/QuickCheck.hs	12
+pathInfoInverse_prop	./external-src/web-routes-0.27.9/Web/Routes/QuickCheck.hs	13
 pathSeparator	./external-src/base-4.8.1.0/System/IO.hs	566
 pathSeparator	./external-src/base-4.8.1.0/System/IO.hs	568
+patternParse	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	98
+patternParse	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	99
 pause	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/TimeoutManager.hs	66
 pause	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/TimeoutManager.hs	68
 pauthinner	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI/ParseURI.hs	43
@@ -7483,8 +7588,8 @@ printTestCase	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	313
 printf	./external-src/base-4.8.1.0/Text/Printf.hs	259
 printf	./external-src/base-4.8.1.0/Text/Printf.hs	260
 prio	./external-src/base-4.8.1.0/GHC/Event/PSQ.hs	99
-processForm	./src/Server-Lite/Lite.hs	89
-processForm	./src/Server-Lite/Lite.hs	90
+processForm	./src/Server-Lite/Lite.hs	87
+processForm	./src/Server-Lite/Lite.hs	88
 prodServiceThread	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	222
 prodServiceThread	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	223
 prodding	./external-src/base-4.8.1.0/GHC/Conc/Windows.hs	214
@@ -7508,6 +7613,8 @@ prop_FromList	./external-src/QuickCheck-2.8.1/examples/Heap.hs	120
 prop_Insert	./external-src/QuickCheck-2.8.1/examples/Heap.hs	108
 prop_IsEmpty	./external-src/QuickCheck-2.8.1/examples/Heap.hs	99
 prop_Merge	./external-src/QuickCheck-2.8.1/examples/Heap.hs	117
+prop_PathInfo_isomorphism	./external-src/web-routes-0.27.9/test/Test.hs	24
+prop_PathInfo_isomorphism	./external-src/web-routes-0.27.9/test/Test.hs	25
 prop_RemoveMin	./external-src/QuickCheck-2.8.1/examples/Heap.hs	111
 prop_Size	./external-src/QuickCheck-2.8.1/examples/Heap.hs	105
 prop_ToSortedList	./external-src/QuickCheck-2.8.1/examples/Heap.hs	123
@@ -7593,8 +7700,8 @@ query	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	36
 query	./external-src/happstack-server-7.4.4/src/Happstack/Server/SURI.hs	37
 queryInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	19
 queryInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	20
-queryParams	./src/Server-Lite/Lite.hs	70
-queryParams	./src/Server-Lite/Lite.hs	71
+queryParams	./src/Server-Lite/Lite.hs	68
+queryParams	./src/Server-Lite/Lite.hs	69
 queryString	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	660
 queryString	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	661
 quickCheck	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	107
@@ -7928,6 +8035,8 @@ repeat	./external-src/base-4.8.1.0/GHC/List.hs	457
 repeat	./external-src/base-4.8.1.0/GHC/List.hs	460
 repeatFB	./external-src/base-4.8.1.0/GHC/List.hs	463
 repeatFB	./external-src/base-4.8.1.0/GHC/List.hs	464
+repeatList	./src/Data/HotBox.hs	46
+repeatList	./src/Data/HotBox.hs	47
 replaceTyVarName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1181
 replaceTyVarName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1182
 replay	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	41
@@ -7966,6 +8075,10 @@ resetErrno	./external-src/base-4.8.1.0/Foreign/C/Error.hs	270
 resize	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Gen.hs	78
 resize	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Gen.hs	79
 resolution	./external-src/base-4.8.1.0/Data/Fixed.hs	77
+resourceFromMaybe	./src/Server-Lite/Lite.hs	158
+resourceFromMaybe	./src/Server-Lite/Lite.hs	159
+resourceNotFound	./src/Server-Lite/Lite.hs	164
+resourceNotFound	./src/Server-Lite/Lite.hs	165
 resp	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	219
 resp	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	223
 responseLine	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	188
@@ -7974,8 +8087,8 @@ responseMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Inter
 responseMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	350
 restartPollLoop	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	255
 restartPollLoop	./external-src/base-4.8.1.0/GHC/Event/Thread.hs	256
-restaurants	./src/Server-Lite/Lite.hs	152
-restaurants	./src/Server-Lite/Lite.hs	153
+restaurants	./src/Server-Lite/Lite.hs	150
+restaurants	./src/Server-Lite/Lite.hs	151
 result	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	412
 result	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	413
 resultBS	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	418
@@ -8118,6 +8231,8 @@ runQuickCheckAll	./external-src/QuickCheck-2.8.1/Test/QuickCheck/All.hs	178
 runQuickCheckAll	./external-src/QuickCheck-2.8.1/Test/QuickCheck/All.hs	179
 runReaderError	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	133
 runReaderError	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	134
+runRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	54
+runRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	56
 runRqData	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	215
 runRqData	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	216
 runST	./external-src/base-4.8.1.0/Control/Monad/ST/Lazy/Imp.hs	95
@@ -8130,6 +8245,8 @@ runSTRep	./external-src/base-4.8.1.0/GHC/ST.hs	163
 runSTRep	./external-src/base-4.8.1.0/GHC/ST.hs	164
 runServerPartT	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	112
 runServerPartT	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	113
+runSite	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	56
+runSite	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	60
 runSparks	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	521
 runSparks	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	522
 runStateL	./external-src/base-4.8.1.0/Data/Traversable.hs	222
@@ -8230,6 +8347,8 @@ seek	./external-src/base-4.8.1.0/GHC/IO/Device.hs	81
 seek	./external-src/base-4.8.1.0/GHC/IO/Device.hs	82
 seek	./external-src/base-4.8.1.0/GHC/IO/FD.hs	345
 seek	./external-src/base-4.8.1.0/GHC/IO/FD.hs	346
+segment	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	78
+segment	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	79
 selName	./external-src/base-4.8.1.0/GHC/Generics.hs	659
 select	./external-src/base-4.8.1.0/Data/OldList.hs	492
 select	./external-src/base-4.8.1.0/Data/OldList.hs	493
@@ -8293,6 +8412,8 @@ setCloseOnExec	./external-src/base-4.8.1.0/System/Posix/Internals.hs	341
 setCooked	./external-src/base-4.8.1.0/System/Posix/Internals.hs	203
 setCooked	./external-src/base-4.8.1.0/System/Posix/Internals.hs	204
 setCooked	./external-src/base-4.8.1.0/System/Posix/Internals.hs	272
+setDefault	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	43
+setDefault	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	44
 setEcho	./external-src/base-4.8.1.0/GHC/IO/Device.hs	98
 setEcho	./external-src/base-4.8.1.0/GHC/IO/Device.hs	99
 setEcho	./external-src/base-4.8.1.0/GHC/IO/FD.hs	421
@@ -8446,6 +8567,8 @@ showParameters	./external-src/happstack-server-7.4.4/src/Happstack/Server/Intern
 showParameters	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	81
 showParen	./external-src/base-4.8.1.0/GHC/Show.hs	303
 showParen	./external-src/base-4.8.1.0/GHC/Show.hs	304
+showParseError	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	108
+showParseError	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	109
 showSigned	./external-src/base-4.8.1.0/GHC/Real.hs	454
 showSigned	./external-src/base-4.8.1.0/GHC/Real.hs	459
 showSignedFloat	./external-src/base-4.8.1.0/GHC/Float.hs	1136
@@ -8462,6 +8585,10 @@ showTickyStats	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	243
 showTickyStats	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	290
 showTuple	./external-src/base-4.8.1.0/Data/Typeable/Internal.hs	322
 showTuple	./external-src/base-4.8.1.0/Data/Typeable/Internal.hs	323
+showURL	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	131
+showURL	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	132
+showURLParams	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	136
+showURLParams	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	137
 showVersion	./external-src/base-4.8.1.0/Data/Version.hs	115
 showVersion	./external-src/base-4.8.1.0/Data/Version.hs	116
 showWord	./external-src/base-4.8.1.0/GHC/Show.hs	188
@@ -8744,6 +8871,12 @@ string	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	266
 string	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	268
 stringEncoding	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	745
 stringEncoding	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Instances.hs	746
+stripOverlap	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	56
+stripOverlap	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	57
+stripOverlapBS	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	62
+stripOverlapBS	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	63
+stripOverlapText	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	59
+stripOverlapText	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	60
 stripPrefix	./external-src/base-4.8.1.0/Data/OldList.hs	246
 stripPrefix	./external-src/base-4.8.1.0/Data/OldList.hs	247
 subWordC#	./external-src/base-4.8.1.0/GHC/Natural.hs	401
@@ -8814,6 +8947,8 @@ sysconfdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstac
 sysconfdir	./external-src/happstack-lite-7.3.6/dist/build/autogen/Paths_happstack_lite.hs	23
 sysconfdir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	17
 sysconfdir	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	23
+sysconfdir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	17
+sysconfdir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	23
 t	./external-src/base-4.8.1.0/Data/Foldable.hs	213
 t	./external-src/base-4.8.1.0/Data/Traversable.hs	168
 t2	./external-src/aeson-0.10.0.0/benchmarks/AesonTuples.hs	17
@@ -8826,7 +8961,7 @@ tabArr	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	36
 tabSize	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	37
 table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	94
 table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	95
-tableName	./src/Data/HotBox.hs	15
+tableName	./src/Data/HotBox.hs	18
 tagFieldName	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	490
 taggedObjectEnc	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	166
 taggedObjectEnc'	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	205
@@ -8874,8 +9009,8 @@ tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	293
 tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	294
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	269
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	270
-template	./src/Server-Lite/Lite.hs	53
-template	./src/Server-Lite/Lite.hs	54
+template	./src/Server-Lite/Lite.hs	51
+template	./src/Server-Lite/Lite.hs	52
 terminal	./external-src/QuickCheck-2.8.1/Test/QuickCheck/State.hs	18
 terminalOutput	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Text.hs	112
 terminalOutput	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Text.hs	113
@@ -9249,6 +9384,14 @@ toMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs
 toMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	98
 toParseJSON	./external-src/aeson-0.10.0.0/tests/Properties.hs	35
 toParseJSON	./external-src/aeson-0.10.0.0/tests/Properties.hs	37
+toPathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	252
+toPathInfo	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	253
+toPathInfoParams	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	260
+toPathInfoParams	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	264
+toPathInfoUtf8	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	256
+toPathInfoUtf8	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	257
+toPathSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	241
+toPathSegments	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	246
 toPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	29
 toPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	30
 toPico	./external-src/aeson-0.10.0.0/Data/Aeson/Internal/Time.hs	37
@@ -9533,6 +9676,7 @@ unPropertyM	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Monadic.hs	96
 unQr	./external-src/base-4.8.1.0/Data/Data.hs	428
 unReaderError	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	90
 unRec1	./external-src/base-4.8.1.0/GHC/Generics.hs	590
+unRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	33
 unRqData	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	142
 unSTM	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	625
 unSTM	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	626
@@ -9750,8 +9894,8 @@ up_fb	./external-src/base-4.8.1.0/GHC/Enum.hs	711
 up_fb	./external-src/base-4.8.1.0/GHC/Enum.hs	712
 up_list	./external-src/base-4.8.1.0/GHC/Enum.hs	722
 up_list	./external-src/base-4.8.1.0/GHC/Enum.hs	723
-updateFortune	./src/Server-Lite/Lite.hs	114
-updateFortune	./src/Server-Lite/Lite.hs	115
+updateFortune	./src/Server-Lite/Lite.hs	112
+updateFortune	./src/Server-Lite/Lite.hs	113
 updateHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	293
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	233
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	234
@@ -9759,8 +9903,8 @@ updateWith	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	124
 updateWith	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	125
 updater	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Clock.hs	50
 updater	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Clock.hs	51
-upload	./src/Server-Lite/Lite.hs	125
-upload	./src/Server-Lite/Lite.hs	126
+upload	./src/Server-Lite/Lite.hs	123
+upload	./src/Server-Lite/Lite.hs	124
 uprintf	./external-src/base-4.8.1.0/Text/Printf.hs	620
 uprintf	./external-src/base-4.8.1.0/Text/Printf.hs	621
 uprintfs	./external-src/base-4.8.1.0/Text/Printf.hs	626
@@ -9985,6 +10129,8 @@ version	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack
 version	./external-src/happstack-server-7.4.4/dist/build/autogen/Paths_happstack_server.hs	16
 version	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	299
 version	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	300
+version	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	15
+version	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	16
 versionBranch	./external-src/base-4.8.1.0/Data/Version.hs	77
 versionConstr	./external-src/base-4.8.1.0/Data/Data.hs	1388
 versionConstr	./external-src/base-4.8.1.0/Data/Data.hs	1389
@@ -10150,6 +10296,8 @@ withRequest	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/
 withRequest	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	123
 withResolution	./external-src/base-4.8.1.0/Data/Fixed.hs	82
 withResolution	./external-src/base-4.8.1.0/Data/Fixed.hs	83
+withRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	63
+withRouteT	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	64
 withSNat	./external-src/base-4.8.1.0/GHC/TypeLits.hs	232
 withSNat	./external-src/base-4.8.1.0/GHC/TypeLits.hs	234
 withSSymbol	./external-src/base-4.8.1.0/GHC/TypeLits.hs	237

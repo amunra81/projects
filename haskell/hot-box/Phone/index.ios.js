@@ -10,31 +10,45 @@ var {
     StyleSheet,
     Text,
     View,
-    ListView
-        
+    ListView,
+    NavigatorIOS
 } = React;
+
+var AllRests = require('./all-rests');
+var ClientRestView = require('./restaurant-client-view');
 
 var Phone = React.createClass({
 
   render: function() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-      </Text>
-      </View>
-    );
+    <NavigatorIOS style = {styles.wraper}
+      initialRoute={{
+        component: AllRests,
+        title: 'lime-s',
+        passProps: { 
+            myProp: 'foo'
+            ,onRestClicked : function(id,name) {
+            /* HERE SHOULD PUSH RESTAURANT VIEW MODEL */
+                this.navigator.push({
+                    component: ClientRestView,
+                    title: name,
+                    passProps: {
+                        id:id
+                    }
+                });
+            }
+        }
+      }}
+    />
+  );
   }
 });
 
 var styles = StyleSheet.create({
+  wraper: {
+    flex:1
+    ,justifyContent: 'center'
+  },
   container: {
     flex: 1,
     justifyContent: 'center',

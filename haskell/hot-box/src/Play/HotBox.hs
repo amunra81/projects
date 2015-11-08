@@ -6,8 +6,8 @@ import Data.HotBox
 import Data.Aeson
 import Test.QuickCheck.Test
 
-test1 = encode [ Restaurant 1 Nothing [Table "Masa 1"]
-               , Restaurant 2 (Just "Lupu") [Table "Masa 2"]
+test1 = encode [ Restaurant 1 "" [Table "Masa 1"]
+               , Restaurant 2 "Lupu" [Table "Masa 2"]
                ]
 
 ------------------------------------------------------------------------------
@@ -17,6 +17,10 @@ test1 = encode [ Restaurant 1 Nothing [Table "Masa 1"]
 tests =  [ 
             do
                 putStrLn "Test chior"
-                quickCheck ((\i-> i == i)::Int->Bool) 
+                quickCheck ((\i-> i == i)::Int->Bool)
+            ,
+            do
+                putStrLn "Test chior2"
+                quickCheck ((\i-> i == i)::Int->Bool)
          ]
 ------------------------------------------------------------------------------

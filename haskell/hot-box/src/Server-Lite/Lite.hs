@@ -14,15 +14,15 @@ import Data.Time.Clock
 import Happstack.Lite
 import Data.HotBox
 import Data.Aeson
+import Data.Foldable
 import Data.Aeson.Encode.Pretty 
+import Text.Read
 
 main =  putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) ++ "/") 
         >>= \x -> serve (Just serverConfig) myApp 
-        >>= (\u -> 
-                let s = x in -- da da, deci avem x
-                putStrLn "sda")
-
         where serverConfig = defaultServerConfig
+
+
 
 myApp :: ServerPart Response
 myApp = msum
@@ -33,7 +33,7 @@ myApp = msum
     , dir "fortune" fortune
     , dir "files"   fileServing
     , dir "upload"  upload
-    , dir "restaurants"  restaurants
+    , dir "restaurant"  restaurants
     , homePage
   ]
 
@@ -48,7 +48,7 @@ homePage =
            H.p $ a ! href "/fortune"       $ "(fortune) cookies"
            H.p $ a ! href "/files"         $ "file serving"
            H.p $ a ! href "/upload"        $ "file uploads"
-           H.p $ a ! href "/restaurants"   $ "all restaurants"
+           H.p $ a ! href "/restaurant"   $ "all restaurants"
 
 template :: Text -> Html -> Response
 template title body = toResponse $
@@ -150,4 +150,24 @@ instance (ToJSON a) => ToMessage a where
   toMessage       = encodePretty
 
 restaurants :: ServerPart Response
-restaurants =  ok $ toResponse allRestaurants
+restaurants =  
+        path parseResponse 
+        where 
+            parseResponse All          = ok $ toResponse allRestaurants
+            parseResponse (JustOne i)  = resourceFromMaybe $ 
+                                            find ((== i) . _id) allRestaurants
+
+resourceFromMaybe :: (ToMessage a) => Maybe a -> ServerPart Response
+resourceFromMaybe = maybe nothing f 
+        where 
+              nothing = resourceNotFound ("Not found yet"::String)
+              f = ok . toResponse
+
+resourceNotFound :: (ToMessage a) => a -> ServerPart Response
+resourceNotFound = notFound . toResponse
+
+data Restaurants = All | JustOne Int
+
+instance FromReqURI Restaurants where
+    fromReqURI "all" = Just All
+    fromReqURI xs = readMaybe xs >>= Just . JustOne 
