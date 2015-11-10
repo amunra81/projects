@@ -17,6 +17,7 @@ import Data.Aeson
 import Data.Foldable
 import Data.Aeson.Encode.Pretty 
 import Text.Read
+import Web.Routes
 
 main =  putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) ++ "/") 
         >>= \x -> serve (Just serverConfig) myApp 
@@ -34,6 +35,7 @@ myApp = msum
     , dir "files"   fileServing
     , dir "upload"  upload
     , dir "restaurant"  restaurants
+    , implSite _ _ _
     , homePage
   ]
 

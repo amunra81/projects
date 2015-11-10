@@ -42,15 +42,15 @@ exports.examples = [
         constructor(props) {
           super(props);
           this.state = {
-            fadeAnim: new Animated.Value(0), // opacity 0
+            fadeAnim2: new Animated.Value(0), // opacity 0
           };
         }
         componentDidMount() {
           Animated.timing(       // Uses easing functions
-            this.state.fadeAnim, // The value to drive
+            this.state.fadeAnim2, // The value to drive
             {
               toValue: 1,        // Target
-              duration: 2000,    // Configuration
+              duration: 1500,    // Configuration
             },
           ).start();             // Don't forget start!
         }
@@ -58,7 +58,7 @@ exports.examples = [
           return (
             <Animated.View   // Special animatable View
               style={{
-                opacity: this.state.fadeAnim,  // Binds
+                opacity: this.state.fadeAnim2,  // Binds
               }}>
               {this.props.children}
             </Animated.View>

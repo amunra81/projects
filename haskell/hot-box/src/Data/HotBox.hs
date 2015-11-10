@@ -8,8 +8,6 @@ import Control.Monad
 import GHC.Generics
 import Web.Routes
 
-type Seq a = [a]
-
 data Restaurant = Restaurant { _id :: Int
                              , _name :: String
                              , _tables :: [Table] 
@@ -19,7 +17,7 @@ data Table = Table { tableName :: String }
 
 data Product
 
-type Menu = Seq Product
+type Menu = [Product]
 
 instance FromJSON Table where
     parseJSON (Object v) =
@@ -56,7 +54,9 @@ allRestaurants = map toRest $ repeatList 10
                       toRest (i,n,ts) = Restaurant i n (tables ts)
                       tables xs = [ Table x | x <- xs ]
 
-data Sitemap = AllRestara | BlogPost Int deriving Generic
+data Sitemap = GetAll | GetRestaurant Int deriving Generic
 
 instance PathInfo Sitemap
+
+
 

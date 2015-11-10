@@ -14,33 +14,12 @@ var {
     NavigatorIOS
 } = React;
 
-var AllRests = require('./all-rests');
-var ClientRestView = require('./restaurant-client-view');
+var Navigation = require('./navigation');
+var {Playground} = require('./some-animation');
 
 var Phone = React.createClass({
-
   render: function() {
-    return (
-    <NavigatorIOS style = {styles.wraper}
-      initialRoute={{
-        component: AllRests,
-        title: 'lime-s',
-        passProps: { 
-            myProp: 'foo'
-            ,onRestClicked : function(id,name) {
-            /* HERE SHOULD PUSH RESTAURANT VIEW MODEL */
-                this.navigator.push({
-                    component: ClientRestView,
-                    title: name,
-                    passProps: {
-                        id:id
-                    }
-                });
-            }
-        }
-      }}
-    />
-  );
+    return ( <Playground />);
   }
 });
 
