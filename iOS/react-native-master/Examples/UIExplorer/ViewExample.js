@@ -113,7 +113,7 @@ exports.examples = [
     render: function() {
       return (
         <View style={{borderColor: '#bb0000', borderWidth: 0.5}}>
-          <View style={[styles.box, {padding: 5}]}>
+          <View style={[styles.box, {padding: 50}]}>
             <Text style={{fontSize: 11}}>5px padding</Text>
           </View>
           <View style={[styles.box, {margin: 5}]}>

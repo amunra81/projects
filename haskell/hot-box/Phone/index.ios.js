@@ -6,21 +6,26 @@
 
 var React = require('react-native');
 var {
-    AppRegistry,
-    StyleSheet,
-    Text,
-    View,
-    ListView,
-    NavigatorIOS
+   AppRegistry
+   ,StyleSheet
+   ,Text
+   ,View
+   ,ListView
+   ,NavigatorIOS
+   ,Animated
+   ,Button
 } = React;
 
 var Navigation = require('./navigation');
 var {Playground} = require('./some-animation');
+var Responder = require('./responder');
+var LongView = require('./longview');
 
 var Phone = React.createClass({
   render: function() {
-    return ( <Playground />);
-  }
+      return <LongView />;
+    }
+//end React.createClas
 });
 
 var styles = StyleSheet.create({
