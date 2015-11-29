@@ -33,7 +33,7 @@ var LongView = React.createClass({
   _previousLeft: 0,
   _previousTop: 0,
   _circleStyles: {},
-  circle: (null : ?{ setNativeProps(props: Object): void }),
+  pager: (null : ?{ setNativeProps(props: Object): void }),
   circle2: (null : ?{ setNativeProps(props: Object): void }),
 
   componentWillMount: function() {
@@ -70,44 +70,52 @@ var LongView = React.createClass({
       });
   },
 
+  setItemRef : function (item)
+  {
+      if(item){
+          item.i = 4;
+          console.log(item);
+      }
+  },
+
   render: function() {
     return (
       <View
           style={styles.container}>
         <View style={styles.circle}
             {...this._panResponder.panHandlers} >
-          <View ref={(item) => { this.circle = item; }}
+          <View ref={(item) => { this.pager = item; }}
                 style={styles.textView} >
-                <Text ref={(item) => { this.circle2 = item; }}>{' 1 \n\n---'}</Text> 
-                <Text>{' '+ this.state.direction +' \n---'}</Text>
-                <Text>{' 3 \n\n---'}</Text>
-                <Text>{' 4 \n---'}</Text>
-                <Text>{' 5 \n\n---'}</Text>
-                <Text>{' 6 \n\n---'}</Text>
-                <Text>{' 7 \n---'}</Text>
-                <Text>{' 8 \n\n---'}</Text>
-                <Text>{' 9 \n\n---'}</Text>
-                <Text>{' 10 \n\n---'}</Text>
-                <Text>{' 11 \n\n---'}</Text>
-                <Text>{' 12 \n\n---'}</Text>
-                <Text>{' 12 \n\n---'}</Text>
-                <Text>{' 13 \n\n---'}</Text>
-                <Text>{' 14 \n\n---'}</Text>
-                <Text>{' 1 \n\n---'}</Text>
-                <Text>{' 2 \n\n---'}</Text>
-                <Text>{' 3 \n\n---'}</Text>
-                <Text>{' 4 \n\n---'}</Text>
-                <Text>{' 5 \n\n---'}</Text>
-                <Text>{' 6 \n\n---'}</Text>
-                <Text>{' 7 \n\n---'}</Text>
-                <Text>{' 8 \n\n---'}</Text>
-                <Text>{' 9 \n\n---'}</Text>
-                <Text>{' 10 \n\n---'}</Text>
-                <Text>{' 11 \n\n---'}</Text>
-                <Text>{' 12 \n\n---'}</Text>
-                <Text>{' 12 \n\n---'}</Text>
-                <Text>{' 13 \n\n---'}</Text>
-                <Text>{' 14 \n\n---'}</Text>
+                <Text ref="c0">{' 1 \n\n---'}</Text> 
+                <Text ref="c1">{' '+ this.state.direction +' \n---'}</Text>
+                <Text ref="c2">{' 3 \n\n---'}</Text>
+                <Text ref="c3">{' 4 \n---'}</Text>
+                <Text ref="c4">{' 5 \n\n---'}</Text>
+                <Text ref="c5">{' 6 \n\n---'}</Text>
+                <Text ref="c6">{' 7 \n---'}</Text>
+                <Text ref="c7">{' 8 \n\n---'}</Text>
+                <Text ref="c8">{' 9 \n\n---'}</Text>
+                <Text ref="c9">{' 10 \n\n---'}</Text>
+                <Text ref="c10">{' 11 \n\n---'}</Text>
+                <Text ref="c11">{' 12 \n\n---'}</Text>
+                <Text ref="c12">{' 12 \n\n---'}</Text>
+                <Text ref="c13">{' 13 \n\n---'}</Text>
+                <Text ref="c14">{' 14 \n\n---'}</Text>
+                <Text ref="c15">{' 1 \n\n---'}</Text>
+                <Text ref="c16">{' 2 \n\n---'}</Text>
+                <Text ref="c17">{' 3 \n\n---'}</Text>
+                <Text ref="c18">{' 4 \n\n---'}</Text>
+                <Text ref="c19">{' 5 \n\n---'}</Text>
+                <Text ref="c20">{' 6 \n\n---'}</Text>
+                <Text ref="c21">{' 7 \n\n---'}</Text>
+                <Text ref="c22">{' 8 \n\n---'}</Text>
+                <Text ref="c23">{' 9 \n\n---'}</Text>
+                <Text ref="c24">{' 10 \n\n---'}</Text>
+                <Text ref="c25">{' 11 \n\n---'}</Text>
+                <Text ref="c26">{' 12 \n\n---'}</Text>
+                <Text ref="c27">{' 12 \n\n---'}</Text>
+                <Text ref="c28">{' 13 \n\n---'}</Text>
+                <Text ref="c29">{' 14 \n\n---'}</Text>
             </View>
         </View>
       </View>
@@ -122,8 +130,8 @@ var LongView = React.createClass({
     });
   },
 
-  _unHighlight: function() {
-    this.circle && this.circle.setNativeProps({
+  _unHighlight: function(obj: Object) {
+    obj && obj.setNativeProps({
       style: {
         backgroundColor: processColor(TEXTVIEW_COLOR)
       }
@@ -131,7 +139,7 @@ var LongView = React.createClass({
   },
 
   _updatePosition: function() {
-    this.circle && this.circle.setNativeProps(this._circleStyles);
+    this.pager && this.pager.setNativeProps(this._circleStyles);
   },
 
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
@@ -146,13 +154,13 @@ var LongView = React.createClass({
 
   _handlePanResponderGrant: function(e: Object, gestureState: Object) {
     this._oldGestureY = gestureState.dy;
-    this._highlight(this.circle);
+    this._highlight(this.pager);
   },
 
   _handlePanResponderMove: function(e: Object, gestureState: Object) {
     //this._circleStyles.style.left = this._previousLeft + gestureState.dx;
     this._circleStyles.style.top = this._previousTop + gestureState.dy;
-    console.log(gestureState);
+    //console.log(gestureState);
     this._updatePosition();
     this._updateMove(gestureState);
   },
@@ -163,24 +171,51 @@ var LongView = React.createClass({
         this._moveDirection = dif;
         this._oldGestureY = newGesture.dy;
         var s = this._moveDirection>=0?'DOWN':'UP';
-        console.log(s);
+        //console.log(s);
         this.setState({direction: s});
       }
-      else
-      console.log("NOTHING");
+      //else
+        //console.log("NOTHING");
   },
 
   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
-    this._unHighlight();
+    this._unHighlight(this.pager);
     //this._previousLeft += gestureState.dx;
     this._previousTop += gestureState.dy;
     this._oldGestureY = 0;
     this._updatePosition(); 
-    //this.measureMe(this.circle,"container ",
-        //() => this.measureMe(this.circle2,"item1 "));
+    //this.measureMe(this.pager,"container ",
+    //() => this.measureMe(this.circle2,"item1 "));
+    this._findTheGuy((str) => {console.log(str);});
     
-    },
-    measureMe: function(obj,prefix,callback) {
+  },
+
+  _findTheGuy: function(callback) {
+      var pager = this.pager;
+      var children = pager.props.children;
+
+      this.pager.measure((fx, fy, width, height, px, py) => {
+          var fire = (i) => { callback(children[i]);}
+
+          var func = (acc,i) => {
+              if(i>=children.length)
+                  fire(i-1);
+              else if(acc <= 0)
+                  fire(i);
+              else {
+                  var element = children[i];
+                  var item = this.refs[element.ref];
+                  item.measure((efx,efy,ewidth,eheight,epx,epy)=>{
+                       func(acc-eheight,i+1);
+                  });
+              }
+          }
+          //call the func
+          func(fy*(-1),0);
+      });
+  },
+
+    _measureMe: function(obj,prefix,callback) {
         obj.measure( (fx, fy, width, height, px, py) => {
                 console.log(prefix + 'Component width is: ' + width)
                 console.log(prefix + 'Component height is: ' + height)
@@ -199,7 +234,7 @@ var LongView = React.createClass({
                 }
             });     
     }
-
+    
 });
 
 var styles = StyleSheet.create({
