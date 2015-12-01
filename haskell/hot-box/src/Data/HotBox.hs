@@ -19,6 +19,24 @@ data Product
 
 type Menu = [Product]
 
+data User = User
+
+data UserOrder = UserOrder User [Product]
+
+data Order = Order  { _restOrder :: Restaurant
+                    , _userOrder :: [UserOrder] 
+                    }
+
+-- | FROM JSON
+
+instance FromJSON User where
+    parseJSON (Object v) = pure User 
+
+instance FromJSON UserOrder where
+    parseJSON (Object v) =
+        emptyOrder <$> v .: "user" 
+        where emptyOrder u = UserOrder u []
+
 instance FromJSON Table where
     parseJSON (Object v) =
         Table 
@@ -32,6 +50,17 @@ instance FromJSON Restaurant where
             <*> v .: "name"
             <*> v .: "tables"
     parseJSON _ = mzero
+
+-- TO JSON  
+
+instance ToJSON Product where
+    toJSON _ = object []
+
+instance ToJSON User where
+    toJSON User = object []
+
+instance ToJSON UserOrder where
+    toJSON (UserOrder user xs) = object ["user" .= user,"products" .= xs]
 
 instance ToJSON Table where
     toJSON (Table name) =
@@ -53,10 +82,3 @@ allRestaurants = map toRest $ repeatList 10
                  where 
                       toRest (i,n,ts) = Restaurant i n (tables ts)
                       tables xs = [ Table x | x <- xs ]
-
-data Sitemap = GetAll | GetRestaurant Int deriving Generic
-
-instance PathInfo Sitemap
-
-
-

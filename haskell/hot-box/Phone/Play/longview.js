@@ -122,20 +122,22 @@ var LongView = React.createClass({
     );
   },
 
-  _highlight: function(obj: Object) {
+  _highlight: function(obj: Object,callback) {
     obj && obj.setNativeProps({
       style: {
         backgroundColor: processColor(CIRCLE_HIGHLIGHT_COLOR)
       }
     });
+    callback && callback();
   },
 
-  _unHighlight: function(obj: Object) {
+  _unHighlight: function(obj: Object,callback) {
     obj && obj.setNativeProps({
       style: {
         backgroundColor: processColor(TEXTVIEW_COLOR)
       }
     });
+    callback && callback();
   },
 
   _updatePosition: function() {
@@ -178,24 +180,44 @@ var LongView = React.createClass({
         //console.log("NOTHING");
   },
 
+  _scrollToRightOne: function(item:Object){
+  },
+
   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
     this._unHighlight(this.pager);
-    //this._previousLeft += gestureState.dx;
     this._previousTop += gestureState.dy;
     this._oldGestureY = 0;
     this._updatePosition(); 
-    //this.measureMe(this.pager,"container ",
-    //() => this.measureMe(this.circle2,"item1 "));
-    this._findTheGuy((str) => {console.log(str);});
+    this._unHighlightAllChildren();
+    this._findTheGuy((str) => {
+        console.log(str);
+        this._highlight(str);
+        this._scrollToRightOne(str);
+    });
     
   },
 
+  _getRefByIx: function(i)
+  {
+      var children = this.pager.props.children;
+      return this.refs[children[i].ref];
+  },
+
+  _unHighlightAllChildren: function() {
+    var len = this.pager.props.children.length;
+    for(var i =0;i<len;i++){
+        var item = this._getRefByIx(i);
+        this._unHighlight(item);
+    }
+  },
+
   _findTheGuy: function(callback) {
+  //find the proper element
       var pager = this.pager;
       var children = pager.props.children;
 
       this.pager.measure((fx, fy, width, height, px, py) => {
-          var fire = (i) => { callback(children[i]);}
+          var fire = (i) => { callback(this.refs[children[i].ref]);}
 
           var func = (acc,i) => {
               if(i>=children.length)
@@ -205,9 +227,12 @@ var LongView = React.createClass({
               else {
                   var element = children[i];
                   var item = this.refs[element.ref];
-                  item.measure((efx,efy,ewidth,eheight,epx,epy)=>{
-                       func(acc-eheight,i+1);
-                  });
+                    item.measure((efx,efy,ewidth,eheight,epx,epy)=>{
+                        var newAcc = acc-eheight;
+                        if(newAcc<=0)
+                             fire(i);
+                        else func(acc-eheight,i+1);
+                    });
               }
           }
           //call the func
@@ -215,25 +240,25 @@ var LongView = React.createClass({
       });
   },
 
-    _measureMe: function(obj,prefix,callback) {
-        obj.measure( (fx, fy, width, height, px, py) => {
-                console.log(prefix + 'Component width is: ' + width)
-                console.log(prefix + 'Component height is: ' + height)
-                console.log(prefix + 'X offset to frame: ' + fx)
-                console.log(prefix + 'Y offset to frame: ' + fy)
-                console.log(prefix + 'X offset to page: ' + px)
-                console.log(prefix + 'Y offset to page: ' + py)
-                if(callback)
-                {
-                    console.log("TRUE");
-                    callback();
-                }
-                else
-                {
-                    console.log("FALSE");
-                }
-            });     
-    }
+  _measureMe: function(obj,prefix,callback) {
+      obj.measure( (fx, fy, width, height, px, py) => {
+              console.log(prefix + 'Component width is: ' + width)
+              console.log(prefix + 'Component height is: ' + height)
+              console.log(prefix + 'X offset to frame: ' + fx)
+              console.log(prefix + 'Y offset to frame: ' + fy)
+              console.log(prefix + 'X offset to page: ' + px)
+              console.log(prefix + 'Y offset to page: ' + py)
+              if(callback)
+              {
+                  console.log("TRUE");
+                  callback();
+              }
+              else
+              {
+                  console.log("FALSE");
+              }
+          });     
+  }
     
 });
 

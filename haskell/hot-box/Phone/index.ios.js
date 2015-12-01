@@ -16,10 +16,10 @@ var {
    ,Button
 } = React;
 
-var Navigation = require('./navigation');
-var {Playground} = require('./some-animation');
-var Responder = require('./responder');
-var LongView = require('./longview');
+var Navigation = require('./Play/navigation');
+var {Playground} = require('./Play/some-animation');
+var Responder = require('./Play/responder');
+var LongView = require('./Play/longview');
 
 var Phone = React.createClass({
   render: function() {

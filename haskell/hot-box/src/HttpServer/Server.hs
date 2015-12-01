@@ -1,5 +1,6 @@
-{-# LANGUAGE DeriveDataTypeable, GeneralizedNewtypeDeriving#-}
-{-# LANGUAGE TemplateHaskell, TypeOperators, OverloadedStrings #-}
+{-# LANGUAGE DeriveDataTypeable, GeneralizedNewtypeDeriving
+  , TemplateHaskell, TypeOperators, OverloadedStrings,GADTs #-}
+
 module Main where
 
 import Prelude                 hiding (head, id, (.))
@@ -12,7 +13,7 @@ import Data.String             (fromString)
 import Data.Text               (Text)
 import Happstack.Server
     ( Response, ServerPartT, ok, toResponse, simpleHTTP
-    , nullConf, seeOther, dir, notFound, seeOther)
+    , nullConf,Conf(..), seeOther, dir, notFound, seeOther)
 import Text.Blaze.Html4.Strict
     ((!), html, head, body, title, p, toHtml
     , toValue, ol, li, a)
@@ -33,7 +34,11 @@ data Sitemap
     | Article ArticleId
     | UserOverview
     | UserDetail Int Text
+    | Lime LimeSitemap
     deriving (Eq, Ord, Read, Show, Data, Typeable)
+
+data LimeSitemap = AllRests 
+     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 $(makeBoomerangs ''Sitemap)
 
@@ -51,5 +56,80 @@ articleId :: Router () (ArticleId :- ())
 articleId =
     xmaph ArticleId (Just . unArticleId) int
 
-{-main :: IO a-}
-main = print "asda"
+route :: Sitemap -> RouteT Sitemap (ServerPartT IO) Response
+route url =
+    case url of
+      Home                  -> homePage
+      (Article articleId)   -> articlePage articleId
+      UserOverview          -> userOverviewPage
+      (UserDetail uid name) -> userDetailPage uid name
+
+homePage :: RouteT Sitemap (ServerPartT IO) Response
+homePage = do
+  articles     <- mapM mkArticle [(ArticleId 1) .. (ArticleId 10)]
+  userOverview <- showURL UserOverview
+  ok $ toResponse $
+    html $ do
+     head $ title "Welcome Home!"
+     body $ do
+      a ! href (toValue userOverview) $ "User Overview"
+      ol $ mconcat articles
+  where
+   mkArticle articleId = do
+    url <- showURL (Article articleId)
+    return $ li $ a ! href (toValue url) $
+      toHtml $ "Article " ++ show (unArticleId articleId)
+
+articlePage :: ArticleId -> RouteT Sitemap (ServerPartT IO) Response
+articlePage (ArticleId articleId) = do
+  homeURL <- showURL Home
+  ok $ toResponse $
+    html $ do
+     head $ title (toHtml $ "Article " ++ show articleId)
+     body $ do
+      p $ toHtml $ "You are now reading article " ++ show articleId
+      clickOk homeURL
+
+userOverviewPage :: RouteT Sitemap (ServerPartT IO) Response
+userOverviewPage = do
+  users <- mapM mkUser [1 .. 10]
+  ok $ toResponse $
+    html $ do
+      head $ title "Our Users"
+      body $ ol $ mconcat users
+  where
+    mkUser userId = do
+      url <- showURL (UserDetail userId
+                      (fromString $ "user " ++ show userId))
+      return $ li $ a ! href (toValue url) $
+        toHtml $ "User " ++ show userId
+
+userDetailPage :: Int
+               -> Text
+               -> RouteT Sitemap (ServerPartT IO) Response
+userDetailPage userId userName = do
+  homeURL <- showURL Home
+  ok $ toResponse $
+    html $ do
+      head $ title (toHtml $ "User " <> userName)
+      body $ do
+        p $ toHtml $ "You are now view user detail page for " <> userName
+        clickOk homeURL
+
+clickOk homeURL = 
+        p $ do "Click "
+               a ! href (toValue homeURL) $ "here"
+               " to return home."
+
+site :: Site Sitemap (ServerPartT IO Response)
+site =
+  setDefault Home $ boomerangSite (runRouteT route) sitemap
+
+main :: IO ()
+main = do
+        putStrLn ("Listening at http://localhost:" ++ show (port nullConf) ++ "/") 
+        simpleHTTP nullConf $ msum
+            [ dir "favicon.ico" $ notFound (toResponse ())
+            , implSite "http://localhost:8000" "/route" site
+            , seeOther ("/route/" :: String) (toResponse ())
+            ]

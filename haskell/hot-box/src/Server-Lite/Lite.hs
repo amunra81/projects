@@ -23,8 +23,6 @@ main =  putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) +
         >>= \x -> serve (Just serverConfig) myApp 
         where serverConfig = defaultServerConfig
 
-
-
 myApp :: ServerPart Response
 myApp = msum
   [ 
@@ -35,7 +33,6 @@ myApp = msum
     , dir "files"   fileServing
     , dir "upload"  upload
     , dir "restaurant"  restaurants
-    , implSite _ _ _
     , homePage
   ]
 
