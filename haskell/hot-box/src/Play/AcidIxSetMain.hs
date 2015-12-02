@@ -53,17 +53,20 @@ data Post = Post
     , tags    :: [Text]
     }
     deriving (Eq, Ord, Data, Typeable)
-
 $(deriveSafeCopy 0 'base ''Post)
+
 newtype Title     = Title Text
     deriving (Eq, Ord, Data, Typeable)
 $(deriveSafeCopy 0 'base ''Title)
+
 newtype Author    = Author Text
     deriving (Eq, Ord, Data, Typeable)
 $(deriveSafeCopy 0 'base ''Author)
+
 newtype Tag       = Tag Text
     deriving (Eq, Ord, Data, Typeable)
 $(deriveSafeCopy 0 'base ''Tag)
+
 newtype WordCount = WordCount Int
     deriving (Eq, Ord, Data, Typeable)
 $(deriveSafeCopy 0 'base ''WordCount)
@@ -84,7 +87,6 @@ data Blog = Blog
     , posts      :: IxSet Post
     }
     deriving (Data, Typeable)
-
 $(deriveSafeCopy 0 'base ''Blog)
 
 initialBlogState :: Blog
@@ -92,7 +94,7 @@ initialBlogState =
     Blog { nextPostId = PostId 1
          , posts      = empty
          }
--- | create a new, empty post and add it to the database
+
 newPost :: UTCTime -> Update Blog Post
 newPost pubDate =
     do b@Blog{..} <- get
@@ -108,6 +110,7 @@ newPost pubDate =
                , posts      = IxSet.insert post posts
                }
        return post
+
 -- | update the post in the database (indexed by PostId)
 updatePost :: Post -> Update Blog ()
 updatePost updatedPost = do
@@ -115,23 +118,25 @@ updatePost updatedPost = do
   put $ b { posts =
              IxSet.updateIx (postId updatedPost) updatedPost posts
           }
+
 postById :: PostId -> Query Blog (Maybe Post)
 postById pid =
      do Blog{..} <- ask
         return $ getOne $ posts @= pid
+
 postsByStatus :: Status -> Query Blog [Post]
 postsByStatus status = do
- Blog{..} <- ask
- let posts' =
-       IxSet.toDescList (Proxy :: Proxy UTCTime) $
-         posts @= status
- return posts'
+    Blog{..} <- ask
+    let posts' = IxSet.toDescList (Proxy :: Proxy UTCTime) $ posts @= status
+    return posts'
+
 $(makeAcidic ''Blog
   [ 'newPost
   , 'updatePost
   , 'postById
   , 'postsByStatus
   ])
+
 -- | HTML template that we use to render all the
 --   pages on the site
 template :: Text -> [Html] -> Html -> Response
@@ -152,7 +157,7 @@ template title headers body =
                        ! A.method "POST"
                        ! A.action "/new" $ H.button $ "new post"
         body
-
+        
 -- | CSS for our site
 --
 -- Normally this would live in an external .css file.
@@ -191,47 +196,47 @@ edit acid = do
                 do "Could not find a post with id "
                    H.toHtml (unPostId pid)
   (Just p@(Post{..})) -> msum
-    [ do method GET
-         ok $ template "foo" [] $ do
-            case mMsg of
-                (Just msg) | msg == "saved" -> "Changes saved!"
-                _ -> ""
-            H.form ! A.enctype "multipart/form-data"
-                    ! A.method "POST"
-                    ! A.action (H.toValue $ "/edit?id=" ++
-                                    (show $ unPostId pid)) $ do
-                H.label "title" ! A.for "title"
-                H.input ! A.type_ "text"
-                        ! A.name "title"
-                        ! A.id "title"
-                        ! A.size "80"
-                        ! A.value (H.toValue title)
-                H.br
-                H.label "author" ! A.for "author"
-                H.input ! A.type_ "text"
-                        ! A.name "author"
-                        ! A.id "author"
-                        ! A.size "40"
-                        ! A.value (H.toValue author)
-                H.br
-                H.label "tags" ! A.for "tags"
-                H.input ! A.type_ "text"
-                        ! A.name "tags"
-                        ! A.id "tags"
-                        ! A.size "40"
-                        ! A.value (H.toValue $
-                                    Text.intercalate ", " tags)
-                H.br
-                H.label "body" ! A.for "body"
-            H.br
-            H.textarea ! A.cols "80"
-                        ! A.rows "20"
-                        ! A.name "body" $ H.toHtml body
-            H.br
-            H.button ! A.name "status"
-                        ! A.value "publish" $ "publish"
-            H.button ! A.name "status"
-                        ! A.value "save"    $ "save as draft"
+   [ do method GET
+        ok $ template "foo" [] $ do
+         case mMsg of
+           (Just msg) | msg == "saved" -> "Changes saved!"
+           _ -> ""
+         H.form ! A.enctype "multipart/form-data"
+                ! A.method "POST"
+                ! A.action (H.toValue $ "/edit?id=" ++
+                                 (show $ unPostId pid)) $ do
+           H.label "title" ! A.for "title"
+           H.input ! A.type_ "text"
+                   ! A.name "title"
+                   ! A.id "title"
+                   ! A.size "80"
+                   ! A.value (H.toValue title)
+           H.br
+           H.label "author" ! A.for "author"
+           H.input ! A.type_ "text"
+                   ! A.name "author"
+                   ! A.id "author"
+                   ! A.size "40"
+                   ! A.value (H.toValue author)
+           H.br
+           H.label "tags" ! A.for "tags"
+           H.input ! A.type_ "text"
+                   ! A.name "tags"
+                   ! A.id "tags"
+                   ! A.size "40"
+                   ! A.value (H.toValue $
+                               Text.intercalate ", " tags)
+           H.br
+           H.label "body" ! A.for "body"
+           H.br
+           H.textarea ! A.cols "80"
+                      ! A.rows "20"
+                      ! A.name "body" $ H.toHtml body
+           H.br
+           H.button ! A.name "status"
+                    ! A.value "publish" $ "publish"
+           H.button ! A.name "status"
+                    ! A.value "save"    $ "save as draft"
     , do method POST
          ttl   <- lookText' "title"
          athr  <- lookText' "author"
@@ -265,6 +270,7 @@ edit acid = do
                   ]
 
       where lookText' = fmap toStrict . lookText
+
 -- | create a new blog post in the database,
 --   and then redirect to /edit
 new :: AcidState Blog -> ServerPart Response
@@ -274,7 +280,8 @@ new acid = do
   post <- update' acid (NewPost now)
   let url = "/edit?id=" ++ show (unPostId $ postId post)
   seeOther url (toResponse ())
--- | render a single blog post into an HTML fragment
+
+  -- | render a single blog post into an HTML fragment
 postHtml  :: Post -> Html
 postHtml (Post{..}) =
   H.div ! A.class_ "post" $ do
@@ -297,6 +304,7 @@ postHtml (Post{..}) =
      H.span $ H.a !
        A.href (H.toValue $ "/edit?id=" ++
                 show (unPostId postId)) $ "edit this post"
+                
 -- | view a single blog post
 view :: AcidState Blog -> ServerPart Response
 view acid =
@@ -308,14 +316,13 @@ view acid =
                do "Could not find a post with id "
                   H.toHtml (unPostId pid)
          (Just p) ->
-             ok $ template (title p) [] $ do
-                 (postHtml p)
+             ok $ template (title p) [] $ (postHtml p)
+             
 -- | render all the Published posts (ordered newest to oldest)
 home :: AcidState Blog -> ServerPart Response
 home acid =
     do published <- query' acid (PostsByStatus Published)
-       ok $ template "home" [] $ do
-         mapM_ postHtml published
+       ok $ template "home" [] $ mapM_ postHtml published
 
 -- | show a list of all unpublished blog posts
 drafts :: AcidState Blog -> ServerPart Response
@@ -331,6 +338,7 @@ drafts acid =
   editDraftLink Post{..} =
     let url = (H.toValue $ "/edit?id=" ++ show (unPostId postId))
     in H.a ! A.href url $ H.toHtml title
+
 -- | route incoming requests
 route :: AcidState Blog -> ServerPart Response
 route acid =
@@ -342,6 +350,7 @@ route acid =
             , dir "drafts"      $ drafts acid
             , nullDir          >> home acid
             ]
+
 -- | start acid-state and the http server
 main :: IO ()
 main =
