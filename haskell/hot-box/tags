@@ -189,6 +189,8 @@ AssertionFailed	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	124
 AssertionFailed	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	124
 Associativity	./external-src/base-4.8.1.0/GHC/Generics.hs	695
 AsyncException	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	157
+Author	./src/Play/AcidIxSetMain.hs	61
+Author	./src/Play/AcidIxSetMain.hs	61
 A{	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	29
 B	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	44
 BA	./external-src/base-4.8.1.0/GHC/Float/ConversionUtils.hs	78
@@ -221,6 +223,8 @@ BlockedOnForeignCall	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	542
 BlockedOnMVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	530
 BlockedOnOther	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	544
 BlockedOnSTM	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	540
+Blog	./src/Play/AcidIxSetMain.hs	82
+Blog	./src/Play/AcidIxSetMain.hs	82
 Blue	./external-src/aeson-0.10.0.0/benchmarks/Compare/JsonBench.hs	21
 Body	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	309
 BodyPart	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Multipart.hs	54
@@ -443,6 +447,8 @@ CostCentresVerbose	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	143
 CostCentresVerbose	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	158
 CostCentresXML	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	145
 CostCentresXML	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	160
+CounterState	./src/Play/AcidMain.hs	22
+CounterState	./src/Play/AcidMain.hs	22
 Counterexample	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	204
 Created	./external-src/base-4.8.1.0/GHC/Event/Manager.hs	118
 Created	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	75
@@ -492,7 +498,7 @@ Data.Foldable	./external-src/base-4.8.1.0/Data/Foldable.hs	19
 Data.Function	./external-src/base-4.8.1.0/Data/Function.hs	19
 Data.Functor	./external-src/base-4.8.1.0/Data/Functor.hs	17
 Data.Functor.Identity	./external-src/base-4.8.1.0/Data/Functor/Identity.hs	32
-Data.HotBox	./src/Data/HotBox.hs	4
+Data.HotBox	./src/Data/HotBox.hs	3
 Data.IORef	./external-src/base-4.8.1.0/Data/IORef.hs	18
 Data.Int	./external-src/base-4.8.1.0/Data/Int.hs	18
 Data.Ix	./external-src/base-4.8.1.0/Data/Ix.hs	19
@@ -560,6 +566,7 @@ DotNetTime	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	334
 DotNetTime	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	334
 Down	./external-src/base-4.8.1.0/Data/Ord.hs	49
 Down	./external-src/base-4.8.1.0/Data/Ord.hs	49
+Draft	./src/Play/AcidIxSetMain.hs	41
 Dual	./external-src/base-4.8.1.0/Data/Monoid.hs	71
 Dual	./external-src/base-4.8.1.0/Data/Monoid.hs	71
 DuplexHandle	./external-src/base-4.8.1.0/GHC/IO/Handle/Types.hs	105
@@ -1225,6 +1232,8 @@ Main	./external-src/base-4.8.1.0/Setup.hs	1
 Main	./external-src/happstack-server-7.4.4/tests/Test.hs	1
 Main	./external-src/web-routes-0.27.9/test/Test.hs	3
 Main	./src/HttpServer/Server.hs	4
+Main	./src/Play/AcidIxSetMain.hs	5
+Main	./src/Play/AcidMain.hs	5
 Male	./external-src/aeson-0.10.0.0/benchmarks/Compare/JsonBench.hs	23
 MallocPtr	./external-src/base-4.8.1.0/GHC/ForeignPtr.hs	92
 Manager	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/TimeoutManager.hs	23
@@ -1240,7 +1249,7 @@ Max	./external-src/base-4.8.1.0/Data/Foldable.hs	291
 Max	./external-src/base-4.8.1.0/Data/Foldable.hs	291
 MaxAge	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Cookie.hs	56
 Maybe	./external-src/base-4.8.1.0/GHC/Base.hs	191
-Menu	./src/Data/HotBox.hs	20
+Menu	./src/Data/HotBox.hs	19
 Metadata	./external-src/aeson-0.10.0.0/examples/Twitter.hs	28
 Metadata	./external-src/aeson-0.10.0.0/examples/Twitter.hs	28
 Method	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	135
@@ -1386,8 +1395,8 @@ OrdB	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	96
 OrdB{	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	96
 OrdC	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	115
 OrdC{	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	115
-Order	./src/Data/HotBox.hs	26
-Order	./src/Data/HotBox.hs	26
+Order	./src/Data/HotBox.hs	25
+Order	./src/Data/HotBox.hs	25
 Ordered	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Modifiers.hs	111
 OrderedList	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Modifiers.hs	111
 Ordering	./external-src/base-4.8.1.0/GHC/Base.hs	166
@@ -1450,7 +1459,11 @@ Pool	./external-src/base-4.8.1.0/Foreign/Marshal/Pool.hs	71
 Pool	./external-src/base-4.8.1.0/Foreign/Marshal/Pool.hs	71
 Positive	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Modifiers.hs	145
 Positive	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Modifiers.hs	145
+Post	./src/Play/AcidIxSetMain.hs	46
+Post	./src/Play/AcidIxSetMain.hs	46
 PostFinalFailure	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	203
+PostId	./src/Play/AcidIxSetMain.hs	35
+PostId	./src/Play/AcidIxSetMain.hs	35
 PostTest	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	202
 Prec	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadPrec.hs	95
 Prefix	./external-src/base-4.8.1.0/Data/Data.hs	541
@@ -1469,7 +1482,7 @@ Product	./external-src/aeson-0.10.0.0/tests/DataFamilies/Types.hs	14
 Product	./external-src/aeson-0.10.0.0/tests/Types.hs	51
 Product	./external-src/base-4.8.1.0/Data/Monoid.hs	112
 Product	./external-src/base-4.8.1.0/Data/Monoid.hs	112
-Product	./src/Data/HotBox.hs	18
+Product	./src/Data/HotBox.hs	17
 Product'	./external-src/aeson-0.10.0.0/benchmarks/AesonCompareAutoInstances.hs	60
 Product2	./external-src/aeson-0.10.0.0/tests/Types.hs	29
 Product2	./external-src/aeson-0.10.0.0/tests/Types.hs	29
@@ -1490,6 +1503,7 @@ Proxy	./external-src/base-4.8.1.0/Data/Proxy.hs	32
 Proxy	./external-src/base-4.8.1.0/Data/Proxy.hs	32
 Ptr	./external-src/base-4.8.1.0/GHC/Ptr.hs	45
 Ptr	./external-src/base-4.8.1.0/GHC/Ptr.hs	45
+Published	./src/Play/AcidIxSetMain.hs	42
 Punc	./external-src/base-4.8.1.0/Text/Read/Lex.hs	63
 QCGen	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Random.hs	63
 QCGen	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Random.hs	63
@@ -1568,8 +1582,8 @@ ResourceExhausted	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	284
 ResourceVanished	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	299
 Response	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	195
 Response	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	196
-Restaurant	./src/Data/HotBox.hs	11
-Restaurant	./src/Data/HotBox.hs	11
+Restaurant	./src/Data/HotBox.hs	10
+Restaurant	./src/Data/HotBox.hs	10
 Restaurants	./src/Server-Lite/Lite.hs	168
 Result	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	208
 Result	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	50
@@ -1694,6 +1708,7 @@ StaticKey	./external-src/base-4.8.1.0/GHC/StaticPtr.hs	63
 StaticPtr	./external-src/base-4.8.1.0/GHC/StaticPtr.hs	54
 StaticPtr	./external-src/base-4.8.1.0/GHC/StaticPtr.hs	54
 StaticPtrInfo	./external-src/base-4.8.1.0/GHC/StaticPtr.hs	87
+Status	./src/Play/AcidIxSetMain.hs	40
 Storable	./external-src/base-4.8.1.0/Foreign/Storable.hs	75
 Storable	./external-src/base-4.8.1.0/Foreign/Storable.hs	75
 Story	./external-src/aeson-0.10.0.0/examples/Twitter.hs	41
@@ -1757,8 +1772,10 @@ TRACE	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.
 TVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	772
 TVar	./external-src/base-4.8.1.0/GHC/Conc/Sync.hs	772
 Table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	60
-Table	./src/Data/HotBox.hs	16
-Table	./src/Data/HotBox.hs	16
+Table	./src/Data/HotBox.hs	15
+Table	./src/Data/HotBox.hs	15
+Tag	./src/Play/AcidIxSetMain.hs	64
+Tag	./src/Play/AcidIxSetMain.hs	64
 Tagged	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	760
 Tagged	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	760
 Tagged2	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	762
@@ -1833,6 +1850,8 @@ TimeoutKey	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	69
 TimeoutQueue	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	82
 TimerManager	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	88
 TimerManager	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	88
+Title	./src/Play/AcidIxSetMain.hs	58
+Title	./src/Play/AcidIxSetMain.hs	58
 TitlecaseLetter	./external-src/base-4.8.1.0/Data/Char.hs	166
 ToJSON	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Class.hs	135
 ToMessage	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	94
@@ -1918,14 +1937,14 @@ UnsupportedOperation	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	297
 UppercaseLetter	./external-src/base-4.8.1.0/Data/Char.hs	164
 User	./external-src/aeson-0.10.0.0/benchmarks/Compare/JsonBench.hs	32
 User	./external-src/aeson-0.10.0.0/benchmarks/Compare/JsonBench.hs	32
-User	./src/Data/HotBox.hs	22
-User	./src/Data/HotBox.hs	22
+User	./src/Data/HotBox.hs	21
+User	./src/Data/HotBox.hs	21
 UserDetail	./src/HttpServer/Server.hs	36
 UserError	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	288
 UserID	./external-src/base-4.8.1.0/System/Posix/Types.hs	162
 UserInterrupt	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	177
-UserOrder	./src/Data/HotBox.hs	24
-UserOrder	./src/Data/HotBox.hs	24
+UserOrder	./src/Data/HotBox.hs	23
+UserOrder	./src/Data/HotBox.hs	23
 UserOverview	./src/HttpServer/Server.hs	35
 V1	./external-src/base-4.8.1.0/GHC/Generics.hs	579
 Value	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Class.hs	242
@@ -1964,6 +1983,8 @@ Word32	./external-src/base-4.8.1.0/GHC/Word.hs	394
 Word64	./external-src/base-4.8.1.0/GHC/Word.hs	551
 Word64	./external-src/base-4.8.1.0/GHC/Word.hs	670
 Word8	./external-src/base-4.8.1.0/GHC/Word.hs	53
+WordCount	./src/Play/AcidIxSetMain.hs	67
+WordCount	./src/Play/AcidIxSetMain.hs	67
 Work	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Multipart.hs	57
 WrapArrow	./external-src/base-4.8.1.0/Control/Applicative.hs	107
 WrapMonad	./external-src/base-4.8.1.0/Control/Applicative.hs	93
@@ -2002,11 +2023,12 @@ _beModifyFdOnce	./external-src/base-4.8.1.0/GHC/Event/Internal.hs	157
 _bePoll	./external-src/base-4.8.1.0/GHC/Event/Internal.hs	142
 _beState	./external-src/base-4.8.1.0/GHC/Event/Internal.hs	138
 _fdCallback	./external-src/base-4.8.1.0/GHC/Event/Manager.hs	106
-_id	./src/Data/HotBox.hs	11
-_name	./src/Data/HotBox.hs	12
-_restOrder	./src/Data/HotBox.hs	26
-_tables	./src/Data/HotBox.hs	13
-_userOrder	./src/Data/HotBox.hs	27
+_id	./src/Data/HotBox.hs	10
+_name	./src/Data/HotBox.hs	11
+_restOrder	./src/Data/HotBox.hs	25
+_tableName	./src/Data/HotBox.hs	15
+_tables	./src/Data/HotBox.hs	12
+_userOrder	./src/Data/HotBox.hs	26
 a	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	648
 a	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	55
 a	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Class.hs	140
@@ -2114,8 +2136,8 @@ allEncodingHandlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/I
 allEncodings	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	141
 allEncodings	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	142
 allNullaryToStringTag	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	460
+allRestaurants	./src/Data/HotBox.hs	76
 allRestaurants	./src/Data/HotBox.hs	77
-allRestaurants	./src/Data/HotBox.hs	78
 allTests	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	27
 allTests	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	28
 allocArray	./external-src/base-4.8.1.0/GHC/Event/Array.hs	67
@@ -2333,6 +2355,7 @@ augmentHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Intern
 augmentHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	254
 augmentIOError	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	211
 augmentIOError	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	212
+author	./src/Play/AcidIxSetMain.hs	49
 available	./external-src/base-4.8.1.0/GHC/Event/EPoll.hsc	34
 available	./external-src/base-4.8.1.0/GHC/Event/EPoll.hsc	35
 available	./external-src/base-4.8.1.0/GHC/Event/EPoll.hsc	60
@@ -2449,6 +2472,7 @@ blockingWriteRawBufferPtr	./external-src/base-4.8.1.0/GHC/IO/FD.hs	617
 blockingWriteRawBufferPtr	./external-src/base-4.8.1.0/GHC/IO/FD.hs	618
 body	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	649
 body	./external-src/happstack-server-7.4.4/src/Happstack/Server/RqData.hs	650
+body	./src/Play/AcidIxSetMain.hs	50
 bodyInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	45
 bodyInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/MessageWrap.hs	46
 bodyPartToInput	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Multipart.hs	135
@@ -3072,6 +3096,7 @@ costCentreFlags	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	252
 costCentreFlags	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	299
 count	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	309
 count	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadP.hs	312
+count	./src/Play/AcidMain.hs	22
 countLeadingZeros	./external-src/base-4.8.1.0/Data/Bits.hs	324
 countLeadingZeros	./external-src/base-4.8.1.0/Data/Bits.hs	325
 countTrailingZeros	./external-src/base-4.8.1.0/Data/Bits.hs	354
@@ -3103,6 +3128,8 @@ crlfLC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handl
 crlfLC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	171
 crlfcrlf	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Multipart.hs	41
 crlfcrlf	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Multipart.hs	42
+css	./src/Play/AcidIxSetMain.hs	161
+css	./src/Play/AcidIxSetMain.hs	162
 ctParameters	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	127
 ctSubtype	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	123
 ctType	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/RFC822Headers.hs	119
@@ -3167,6 +3194,7 @@ datadir	./external-src/web-routes-0.27.9/dist/build/autogen/Paths_web_routes.hs	
 datarep	./external-src/base-4.8.1.0/Data/Data.hs	490
 datatype	./external-src/base-4.8.1.0/Data/Data.hs	503
 datatypeName	./external-src/base-4.8.1.0/GHC/Generics.hs	648
+date	./src/Play/AcidIxSetMain.hs	51
 dateC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	332
 dateC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	333
 dateCLower	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	334
@@ -3377,6 +3405,8 @@ double2Integer	./external-src/base-4.8.1.0/GHC/Float/RealFracMethods.hs	311
 double2Integer	./external-src/base-4.8.1.0/GHC/Float/RealFracMethods.hs	312
 doubleType	./external-src/base-4.8.1.0/Data/Data.hs	893
 doubleType	./external-src/base-4.8.1.0/Data/Data.hs	894
+drafts	./src/Play/AcidIxSetMain.hs	321
+drafts	./src/Play/AcidIxSetMain.hs	322
 drop	./external-src/base-4.8.1.0/GHC/List.hs	614
 drop	./external-src/base-4.8.1.0/GHC/List.hs	616
 dropLength	./external-src/base-4.8.1.0/Data/OldList.hs	313
@@ -3524,6 +3554,8 @@ eWOULDBLOCK	./external-src/base-4.8.1.0/Foreign/C/Error.hs	238
 eXDEV	./external-src/base-4.8.1.0/Foreign/C/Error.hs	239
 echo	./src/Server-Lite/Lite.hs	61
 echo	./src/Server-Lite/Lite.hs	62
+edit	./src/Play/AcidIxSetMain.hs	183
+edit	./src/Play/AcidIxSetMain.hs	184
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	241
 editTimeouts	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	242
 efdChar	./external-src/base-4.8.1.0/GHC/Enum.hs	382
@@ -5170,6 +5202,8 @@ handleUpload	./src/Server-Lite/Lite.hs	139
 handleUpload	./src/Server-Lite/Lite.hs	140
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	152
 handlers	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Compression.hs	153
+handlers	./src/Play/AcidMain.hs	44
+handlers	./src/Play/AcidMain.hs	45
 happstackC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	338
 happstackC	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Handler.hs	339
 hasHeader	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	349
@@ -5215,6 +5249,8 @@ hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	297
 hexQuad	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	298
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	106
 ho	./external-src/happstack-server-7.4.4/src/Happstack/Server/SimpleHTTP.hs	107
+home	./src/Play/AcidIxSetMain.hs	314
+home	./src/Play/AcidIxSetMain.hs	315
 homePage	./src/HttpServer/Server.hs	67
 homePage	./src/HttpServer/Server.hs	68
 homePage	./src/Server-Lite/Lite.hs	39
@@ -5304,9 +5340,12 @@ import	./external-src/base-4.8.1.0/GHC/GHCi.hs	24
 import	./external-src/base-4.8.1.0/GHC/TypeLits.hs	49
 import	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Monads.hs	54
 import	./external-src/happstack-server-7.4.4/tests/Happstack/Server/Tests.hs	23
+import	./src/Play/AcidIxSetMain.hs	18
 inBounds	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	513
 inBounds	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Arbitrary.hs	514
 inRange	./external-src/base-4.8.1.0/GHC/Arr.hs	85
+incCountBy	./src/Play/AcidMain.hs	29
+incCountBy	./src/Play/AcidMain.hs	30
 includeTSOs	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	203
 includeTSOs	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	244
 indent	./external-src/aeson-pretty-0.7.2/cli-tool/Main.hs	15
@@ -5354,6 +5393,10 @@ initForeignEncoding	./external-src/base-4.8.1.0/GHC/IO/Encoding.hs	142
 initForeignEncoding	./external-src/base-4.8.1.0/GHC/IO/Encoding.hs	157
 initLocaleEncoding	./external-src/base-4.8.1.0/GHC/IO/Encoding.hs	142
 initLocaleEncoding	./external-src/base-4.8.1.0/GHC/IO/Encoding.hs	155
+initialBlogState	./src/Play/AcidIxSetMain.hs	90
+initialBlogState	./src/Play/AcidIxSetMain.hs	91
+initialCounterState	./src/Play/AcidMain.hs	27
+initialCounterState	./src/Play/AcidMain.hs	28
 initialStkSize	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	82
 initialStkSize	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	97
 initialize	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/TimeoutManager.hs	27
@@ -5531,7 +5574,8 @@ instance	./external-src/web-routes-0.27.9/Web/Routes/PathInfo.hs	181
 instance	./external-src/web-routes-0.27.9/Web/Routes/RouteT.hs	39
 instance	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	50
 instance	./external-src/web-routes-0.27.9/test/Test.hs	21
-instance	./src/Data/HotBox.hs	32
+instance	./src/Data/HotBox.hs	31
+instance	./src/Play/AcidIxSetMain.hs	71
 instance	./src/Server-Lite/Lite.hs	147
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	346
 insufficientCoverage	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	347
@@ -6355,6 +6399,10 @@ main	./external-src/web-routes-0.27.9/test/Test.hs	40
 main	./external-src/web-routes-0.27.9/test/Test.hs	41
 main	./src/HttpServer/Server.hs	128
 main	./src/HttpServer/Server.hs	129
+main	./src/Play/AcidIxSetMain.hs	346
+main	./src/Play/AcidIxSetMain.hs	347
+main	./src/Play/AcidMain.hs	54
+main	./src/Play/AcidMain.hs	55
 main	./src/Play/Main.hs	3
 main	./src/Server-Lite/Lite.hs	22
 makeStableName	./external-src/base-4.8.1.0/System/Mem/StableName.hs	83
@@ -6900,6 +6948,8 @@ new	./external-src/base-4.8.1.0/dist/build/GHC/Event/KQueue.hs	70
 new	./external-src/base-4.8.1.0/dist/build/GHC/Event/KQueue.hs	71
 new	./external-src/base-4.8.1.0/dist/build/GHC/Event/Poll.hs	49
 new	./external-src/base-4.8.1.0/dist/build/GHC/Event/Poll.hs	50
+new	./src/Play/AcidIxSetMain.hs	270
+new	./src/Play/AcidIxSetMain.hs	271
 newArray	./external-src/base-4.8.1.0/Foreign/Marshal/Array.hs	186
 newArray	./external-src/base-4.8.1.0/Foreign/Marshal/Array.hs	187
 newArray0	./external-src/base-4.8.1.0/Foreign/Marshal/Array.hs	195
@@ -6970,6 +7020,8 @@ newMVar	./external-src/base-4.8.1.0/GHC/MVar.hs	68
 newMVar	./external-src/base-4.8.1.0/GHC/MVar.hs	69
 newPool	./external-src/base-4.8.1.0/Foreign/Marshal/Pool.hs	75
 newPool	./external-src/base-4.8.1.0/Foreign/Marshal/Pool.hs	76
+newPost	./src/Play/AcidIxSetMain.hs	96
+newPost	./src/Play/AcidIxSetMain.hs	97
 newQCGen	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Random.hs	79
 newQCGen	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Random.hs	80
 newQSem	./external-src/base-4.8.1.0/Control/Concurrent/QSem.hs	64
@@ -7007,6 +7059,7 @@ new_	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	59
 new_	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	60
 new_ps_array	./external-src/base-4.8.1.0/GHC/Pack.hs	84
 new_ps_array	./external-src/base-4.8.1.0/GHC/Pack.hs	88
+nextPostId	./src/Play/AcidIxSetMain.hs	83
 next_page	./external-src/aeson-0.10.0.0/examples/Twitter.hs	65
 nilConstr	./external-src/base-4.8.1.0/Data/Data.hs	1077
 nilConstr	./external-src/base-4.8.1.0/Data/Data.hs	1078
@@ -7454,6 +7507,10 @@ peekCWStringLen	./external-src/base-4.8.1.0/Foreign/C/String.hs	364
 peekCWStringLen	./external-src/base-4.8.1.0/Foreign/C/String.hs	365
 peekCharBuf	./external-src/base-4.8.1.0/GHC/IO/Buffer.hs	112
 peekCharBuf	./external-src/base-4.8.1.0/GHC/IO/Buffer.hs	113
+peekCount	./src/Play/AcidMain.hs	36
+peekCount	./src/Play/AcidMain.hs	37
+peekCount'	./src/Play/AcidMain.hs	39
+peekCount'	./src/Play/AcidMain.hs	40
 peekElemOff	./external-src/base-4.8.1.0/Foreign/Storable.hs	89
 peekElemOff	./external-src/base-4.8.1.0/Foreign/Storable.hs	137
 peekEncodedCString	./external-src/base-4.8.1.0/GHC/Foreign.hs	159
@@ -7580,6 +7637,14 @@ popCountDefault	./external-src/base-4.8.1.0/Data/Bits.hs	392
 popCountDefault	./external-src/base-4.8.1.0/Data/Bits.hs	393
 port	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	99
 port	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	110
+postById	./src/Play/AcidIxSetMain.hs	118
+postById	./src/Play/AcidIxSetMain.hs	119
+postHtml	./src/Play/AcidIxSetMain.hs	278
+postHtml	./src/Play/AcidIxSetMain.hs	279
+postId	./src/Play/AcidIxSetMain.hs	47
+posts	./src/Play/AcidIxSetMain.hs	84
+postsByStatus	./src/Play/AcidIxSetMain.hs	122
+postsByStatus	./src/Play/AcidIxSetMain.hs	123
 powModNatural	./external-src/base-4.8.1.0/GHC/Natural.hs	616
 powModNatural	./external-src/base-4.8.1.0/GHC/Natural.hs	618
 powerDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1057
@@ -8058,8 +8123,8 @@ repeat	./external-src/base-4.8.1.0/GHC/List.hs	457
 repeat	./external-src/base-4.8.1.0/GHC/List.hs	460
 repeatFB	./external-src/base-4.8.1.0/GHC/List.hs	463
 repeatFB	./external-src/base-4.8.1.0/GHC/List.hs	464
+repeatList	./src/Data/HotBox.hs	72
 repeatList	./src/Data/HotBox.hs	73
-repeatList	./src/Data/HotBox.hs	74
 replaceTyVarName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1181
 replaceTyVarName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1182
 replay	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	41
@@ -8192,6 +8257,8 @@ roundTripEq	./external-src/aeson-0.10.0.0/tests/Properties.hs	50
 roundTripEq	./external-src/aeson-0.10.0.0/tests/Properties.hs	51
 route	./src/HttpServer/Server.hs	59
 route	./src/HttpServer/Server.hs	60
+route	./src/Play/AcidIxSetMain.hs	335
+route	./src/Play/AcidIxSetMain.hs	336
 rproxyServe	./external-src/happstack-server-7.4.4/src/Happstack/Server/Proxy.hs	59
 rproxyServe	./external-src/happstack-server-7.4.4/src/Happstack/Server/Proxy.hs	63
 rqBody	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	248
@@ -8836,6 +8903,7 @@ staticPtrKeys	./external-src/base-4.8.1.0/GHC/StaticPtr.hs	106
 staticPtrKeys	./external-src/base-4.8.1.0/GHC/StaticPtr.hs	107
 statsFile	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	79
 statsFile	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	94
+status	./src/Play/AcidIxSetMain.hs	52
 stdArgs	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	96
 stdArgs	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	97
 stdFD	./external-src/base-4.8.1.0/GHC/IO/FD.hs	293
@@ -8990,12 +9058,12 @@ tabArr	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	36
 tabSize	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	37
 table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	94
 table	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Function.hs	95
-tableName	./src/Data/HotBox.hs	16
 tagFieldName	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Internal.hs	490
 taggedObjectEnc	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	166
 taggedObjectEnc'	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	205
 taggedObjectPairs	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	165
 taggedObjectPairs'	./external-src/aeson-0.10.0.0/Data/Aeson/Types/Generic.hs	204
+tags	./src/Play/AcidIxSetMain.hs	53
 tail	./external-src/base-4.8.1.0/GHC/List.hs	76
 tail	./external-src/base-4.8.1.0/GHC/List.hs	77
 tailUnwords	./external-src/base-4.8.1.0/Data/OldList.hs	1124
@@ -9038,6 +9106,8 @@ tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	293
 tempRedirect	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	294
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	269
 tempRedirect	./external-src/happstack-server-7.4.4/src/Happstack/Server/Response.hs	270
+template	./src/Play/AcidIxSetMain.hs	137
+template	./src/Play/AcidIxSetMain.hs	138
 template	./src/Server-Lite/Lite.hs	52
 template	./src/Server-Lite/Lite.hs	53
 terminal	./external-src/QuickCheck-2.8.1/Test/QuickCheck/State.hs	18
@@ -9345,6 +9415,7 @@ timesNatural	./external-src/base-4.8.1.0/GHC/Natural.hs	357
 timesNatural	./external-src/base-4.8.1.0/GHC/Natural.hs	358
 timestamp	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	234
 timestamp	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	281
+title	./src/Play/AcidIxSetMain.hs	48
 tmpDir	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	102
 to	./external-src/base-4.8.1.0/GHC/Generics.hs	708
 to1	./external-src/base-4.8.1.0/GHC/Generics.hs	719
@@ -9700,6 +9771,7 @@ unOrdA	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	77
 unOrdB	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	96
 unOrdC	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Poly.hs	115
 unPar1	./external-src/base-4.8.1.0/GHC/Generics.hs	586
+unPostId	./src/Play/AcidIxSetMain.hs	35
 unProp	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	141
 unProperty	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Property.hs	80
 unPropertyM	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Monadic.hs	96
@@ -9927,6 +9999,8 @@ up_list	./external-src/base-4.8.1.0/GHC/Enum.hs	723
 updateFortune	./src/Server-Lite/Lite.hs	113
 updateFortune	./src/Server-Lite/Lite.hs	114
 updateHeaders	./external-src/happstack-server-7.4.4/src/Happstack/Server/Internal/Types.hs	293
+updatePost	./src/Play/AcidIxSetMain.hs	112
+updatePost	./src/Play/AcidIxSetMain.hs	113
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	233
 updateTimeout	./external-src/base-4.8.1.0/GHC/Event/TimerManager.hs	234
 updateWith	./external-src/base-4.8.1.0/GHC/Event/IntTable.hs	124
@@ -10171,6 +10245,8 @@ versionConstr	./external-src/base-4.8.1.0/Data/Data.hs	1389
 versionDataType	./external-src/base-4.8.1.0/Data/Data.hs	1391
 versionDataType	./external-src/base-4.8.1.0/Data/Data.hs	1392
 versionTags	./external-src/base-4.8.1.0/Data/Version.hs	91
+view	./src/Play/AcidIxSetMain.hs	301
+view	./src/Play/AcidIxSetMain.hs	302
 void	./external-src/base-4.8.1.0/Data/Functor.hs	142
 void	./external-src/base-4.8.1.0/Data/Functor.hs	143
 void	./external-src/base-4.8.1.0/Foreign/Marshal/Error.hs	80

@@ -50,6 +50,50 @@ executable trans-lite
   default-language: Haskell2010
   hs-source-dirs:   src/Server-Lite,src
 
+executable acid-ixset
+  main-is:          AcidIxSetMain.hs
+  build-depends:    base >= 4.8 && <4.9
+                    ,web-routes-th
+                    ,web-routes-boomerang
+                    ,boomerang
+                    ,web-routes-happstack
+                    ,happstack-lite
+                    ,happstack-server
+                    ,text < 1.3
+                    ,blaze-html < 0.9
+                    ,time == 1.5.0.1
+                    ,aeson >= 0.10
+                    ,aeson-pretty 
+                    ,bytestring
+                    ,web-routes
+                    ,acid-state
+                    ,mtl
+                    ,safecopy
+                    ,ixset
+  default-language: Haskell2010
+  hs-source-dirs:   src/Play,src
+
+executable acid
+  main-is:          AcidMain.hs
+  build-depends:    base >= 4.8 && <4.9
+                    ,web-routes-th
+                    ,web-routes-boomerang
+                    ,boomerang
+                    ,web-routes-happstack
+                    ,happstack-lite
+                    ,happstack-server
+                    ,text < 1.3
+                    ,blaze-html < 0.9
+                    ,time == 1.5.0.1
+                    ,aeson >= 0.10
+                    ,aeson-pretty 
+                    ,bytestring
+                    ,web-routes
+                    ,acid-state
+                    ,mtl
+                    ,safecopy
+  default-language: Haskell2010
+  hs-source-dirs:   src/Play,src
 executable trans-full
   main-is:          Server.hs
   build-depends:    base >= 4.8 && <4.9

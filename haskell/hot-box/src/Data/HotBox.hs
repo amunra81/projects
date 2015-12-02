@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric #-}
 
 module Data.HotBox where
 
@@ -13,7 +12,7 @@ data Restaurant = Restaurant { _id :: Int
                              , _tables :: [Table] 
                              }
 
-data Table = Table { tableName :: String }
+data Table = Table { _tableName :: String }
 
 data Product
 
