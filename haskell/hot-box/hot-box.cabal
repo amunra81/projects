@@ -16,7 +16,9 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Data.HotBox
+  exposed-modules:     Data.HotBox,
+                       Data.Storage,
+                       Http.Handlers
   -- other-modules:       
   -- other-extensions:    
   build-depends:       base >=4.8 && <4.9
@@ -33,8 +35,13 @@ library
                        ,bytestring
                        ,happstack-server
                        ,web-routes
+                       ,acid-state
+                       ,mtl
+                       ,safecopy
+                       ,ixset
   hs-source-dirs:      src
   default-language:    Haskell2010
+  -- ghc-options:     -Wall
 
 executable trans-lite
   main-is:          Lite.hs
@@ -95,7 +102,7 @@ executable acid
   default-language: Haskell2010
   hs-source-dirs:   src/Play,src
 executable trans-full
-  main-is:          Server.hs
+  main-is:          HttpServer.hs
   build-depends:    base >= 4.8 && <4.9
                     ,web-routes-th
                     ,web-routes-boomerang
@@ -110,8 +117,15 @@ executable trans-full
                     ,aeson-pretty 
                     ,bytestring
                     ,web-routes
+                    ,acid-state
+                    ,mtl
+                    ,safecopy
+                    ,ixset
+                    ,hotBox
+
   default-language: Haskell2010
-  hs-source-dirs:   src/HttpServer,src
+  hs-source-dirs:   src/Play
+  -- ghc-options:      -fwarn-incomplete-patterns -fwarn-incomplete-uni-patterns
 
 executable tests
   main-is:          Play/Main.hs

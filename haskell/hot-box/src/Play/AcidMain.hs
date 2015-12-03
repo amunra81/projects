@@ -4,7 +4,7 @@
 
 module Main where
 
-import Control.Applicative  ( (<$>) )
+{-import Control.Applicative  ( (<$>) )-}
 import Control.Exception    ( bracket )
 import Control.Monad        ( msum )
 import Control.Monad.Reader ( ask )
@@ -53,7 +53,11 @@ handlers acid = msum
 
 main :: IO ()
 main =
-  bracket (openLocalState initialCounterState)
-          createCheckpointAndClose
+    bracket (openLocalState initialCounterState)
+           chkPoint
            (\acid ->
                simpleHTTP nullConf (handlers acid))
+
+    where chkPoint st = do 
+                        print "checkPoint close"
+                        createCheckpointAndClose st

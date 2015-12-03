@@ -25,6 +25,10 @@ import Web.Routes
 import Web.Routes.TH           (derivePathInfo)
 import Web.Routes.Happstack    (implSite)
 import Web.Routes.Boomerang
+import Data.Acid            ( AcidState , openLocalState )
+import Data.Acid.Local      ( createCheckpointAndClose )
+import Control.Exception    ( bracket )
+import Data.Storage(Storage,initialStorageState)
 
 newtype ArticleId = ArticleId { unArticleId :: Int }
     deriving (Eq, Ord, Enum, Read, Show, Data, Typeable, PathInfo)
@@ -34,11 +38,10 @@ data Sitemap
     | Article ArticleId
     | UserOverview
     | UserDetail Int Text
-    | Lime LimeSitemap
+    | AllRests
+    | Rest Int
     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
-data LimeSitemap = AllRests 
-     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 $(makeBoomerangs ''Sitemap)
 
@@ -47,8 +50,11 @@ sitemap =
        rHome
     <> rArticle . (lit "article" </> articleId)
     <> lit "users" . users
+    <> lit "restaurants" . rests
     
     where
+      rests = rAllRests
+              <> rRest </> int
       users =  rUserOverview
             <> rUserDetail </> int . lit "-" . anyText
 
@@ -56,13 +62,13 @@ articleId :: Router () (ArticleId :- ())
 articleId =
     xmaph ArticleId (Just . unArticleId) int
 
-route :: Sitemap -> RouteT Sitemap (ServerPartT IO) Response
-route url =
-    case url of
-      Home                  -> homePage
-      (Article articleId)   -> articlePage articleId
-      UserOverview          -> userOverviewPage
-      (UserDetail uid name) -> userDetailPage uid name
+route :: AcidState Storage -> Sitemap -> RouteT Sitemap (ServerPartT IO) Response
+route _ Home                  = homePage
+route _ (Article articleId)   = articlePage articleId
+route _ UserOverview          = userOverviewPage
+route _ (UserDetail uid name) = userDetailPage uid name
+route acid AllRests           = undefined
+route acid (Rest _)           = undefined
 
 homePage :: RouteT Sitemap (ServerPartT IO) Response
 homePage = do
@@ -121,15 +127,24 @@ clickOk homeURL =
                a ! href (toValue homeURL) $ "here"
                " to return home."
 
-site :: Site Sitemap (ServerPartT IO Response)
-site =
-  setDefault Home $ boomerangSite (runRouteT route) sitemap
+site :: AcidState Storage -> Site Sitemap (ServerPartT IO Response)
+site acid =
+  setDefault Home $ boomerangSite (runRouteT $ route acid) sitemap
 
 main :: IO ()
-main = do
-        putStrLn ("Listening at http://localhost:" ++ show (port nullConf) ++ "/") 
-        simpleHTTP nullConf $ msum
-            [ dir "favicon.ico" $ notFound (toResponse ())
-            , implSite "http://localhost:8000" "/route" site
-            , seeOther ("/route/" :: String) (toResponse ())
-            ]
+main =
+    bracket (openLocalState initialStorageState)
+           chkPoint
+           doWork
+    where 
+        chkPoint st = do 
+                    print "checkPoint close"
+                    createCheckpointAndClose st
+
+        doWork acid = do
+            putStrLn ("Listening at http://localhost:" ++ show (port nullConf) ++ "/") 
+            simpleHTTP nullConf $ msum
+                [ dir "favicon.ico" $ notFound (toResponse ())
+                , implSite "http://localhost:8000" "" (site acid)
+                {-, seeOther ("/route/" :: String) (toResponse ())-}
+                ]

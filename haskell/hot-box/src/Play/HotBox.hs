@@ -6,8 +6,8 @@ import Data.HotBox
 import Data.Aeson
 import Test.QuickCheck.Test
 
-test1 = encode [ Restaurant 1 "" [Table "Masa 1"]
-               , Restaurant 2 "Lupu" [Table "Masa 2"]
+test1 = encode [ Restaurant 1 "" [Table "Masa 1"] []
+               , Restaurant 2 "Lupu" [Table "Masa 2"] []
                ]
 
 ------------------------------------------------------------------------------
