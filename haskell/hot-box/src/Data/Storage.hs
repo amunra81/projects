@@ -1,9 +1,8 @@
 {-# LANGUAGE DeriveDataTypeable,TemplateHaskell,TypeFamilies ,RecordWildCards
              ,GeneralizedNewtypeDeriving #-}
 
-module Data.Storage (Storage(..),initialStorageState,GetAllRests(..)
-                    ,GetAllUsers(..),AddNewUser(..),AddNewRest(..))
-where 
+module Data.Storage 
+where
 
 import Data.HotBox          ( Restaurant(..), User(..), UserOrder(..)
                             , Table(..), Product(..), allRestaurants )
@@ -33,7 +32,7 @@ newtype UserId = UserId { unUserId :: Int }
 
 instance Indexable Restaurant where
   empty = ixSet 
-        [ ixFun $ \r -> [ RestId $ _id r ]
+        [ ixFun $ \r -> [ RestId $ _restId r ]
         ]
 
 instance Indexable User where
@@ -66,7 +65,7 @@ getAllRests = getAll restaurants
 addNewRest :: Restaurant -> Update Storage Restaurant
 addNewRest r = 
     do s@Storage{..} <- get
-       let newR = r { _id = nextRestId }
+       let newR = r { _restId = nextRestId }
        put $ s { restaurants = IxSet.insert newR restaurants
                , nextRestId = succ nextRestId
                }

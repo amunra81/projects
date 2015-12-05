@@ -154,7 +154,7 @@ restaurants =
         where 
             parseResponse All          = ok $ toResponse allRestaurants
             parseResponse (JustOne i)  = resourceFromMaybe $ 
-                                            find ((== i) . _id) allRestaurants
+                                            find ((== i) . _restId) allRestaurants
 
 resourceFromMaybe :: (ToMessage a) => Maybe a -> ServerPart Response
 resourceFromMaybe = maybe nothing f 

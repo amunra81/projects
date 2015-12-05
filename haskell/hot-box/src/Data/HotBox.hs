@@ -6,7 +6,7 @@ import Data.Aeson
 import Control.Monad
 import Data.Data            (Data, Typeable)
 
-data Restaurant = Restaurant { _id :: Int
+data Restaurant = Restaurant { _restId :: Int
                              , _name :: String
                              , _tables :: [Table] 
                              , _menu :: Menu
