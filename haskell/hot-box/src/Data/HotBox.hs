@@ -17,11 +17,12 @@ data Table = Table { _tableName :: String }
              deriving (Eq, Ord, Data, Typeable)
 
 data Product = Product String
-            deriving (Eq, Ord, Data, Typeable)
+               deriving (Eq, Ord, Data, Typeable)
 
 type Menu = [Product]
 
-data User = User
+data User = User { _userId :: Int
+                 } deriving (Eq, Ord, Data, Typeable)
 
 data UserOrder = UserOrder User [Product]
 
@@ -32,14 +33,13 @@ data Order = Order  { _restOrder :: Restaurant
 -- | FROM JSON
 
 instance FromJSON User where
-    parseJSON (Object _) = pure User 
-    parseJSON _ = pure User
+    parseJSON (Object v) =  
+        User <$> v .: "id"
 
 instance FromJSON UserOrder where
         parseJSON (Object v) =
             emptyOrder <$> v .: "user" 
             where emptyOrder u = UserOrder u []
-
 
 instance FromJSON Table where
     parseJSON (Object v) =
@@ -60,14 +60,13 @@ instance FromJSON Product where
     parseJSON (Object v) =
         Product <$> v .: "name"
 
-
 -- TO JSON  
 
 instance ToJSON Product where
     toJSON (Product xs) = object ["name" .= xs]
 
 instance ToJSON User where
-    toJSON User = object []
+    toJSON (User id) = object ["id" .= id]
 
 instance ToJSON UserOrder where
     toJSON (UserOrder user xs) = object ["user" .= user,"products" .= xs]
@@ -85,10 +84,11 @@ repeatList 0 xs = xs
 repeatList i xs = xs ++ repeatList (i-1) xs
 
 allRestaurants :: [Restaurant]
-allRestaurants = map toRest $ repeatList 10
+allRestaurants = map toRest $ repeatList 0
                             [(1,"Zvon",["masa1","masa2"],[])
                             ,(2,"Colectiv",["t1","asdad"],[])
-                            ,(3,"La mama",["t1"],[])] 
+                            ,(3,"La mama",["t1"],[])
+                            ]
                  where 
                       toRest (i,n,ts,mn) = Restaurant i n (tables ts) mn
                       tables xs = [ Table x | x <- xs ]

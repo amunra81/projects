@@ -1,5 +1,5 @@
 {-# LANGUAGE DeriveDataTypeable, GeneralizedNewtypeDeriving
-  , TemplateHaskell, TypeOperators, OverloadedStrings,GADTs #-}
+  , TemplateHaskell, TypeOperators, OverloadedStrings,GADTs, FlexibleContexts #-}
 
 module Main where
 
@@ -12,8 +12,10 @@ import Data.Monoid             (mconcat)
 import Data.String             (fromString)
 import Data.Text               (Text)
 import Happstack.Server
-    ( Response, ServerPartT, ok, toResponse, simpleHTTP
-    , nullConf,Conf(..), seeOther, dir, notFound, seeOther)
+    ( Response, ServerPartT,ServerPart, ok, toResponse, simpleHTTP
+    , nullConf,Conf(..), seeOther, dir, notFound, seeOther,method,Method(GET,POST,PUT,DELETE)
+    , ServerMonad(askRq))
+
 import Text.Blaze.Html4.Strict
     ((!), html, head, body, title, p, toHtml
     , toValue, ol, li, a)
@@ -29,6 +31,10 @@ import Data.Acid            ( AcidState , openLocalState )
 import Data.Acid.Local      ( createCheckpointAndClose )
 import Control.Exception    ( bracket )
 import Data.Storage(Storage,initialStorageState)
+import Http.Handlers
+import Control.Monad.Trans     ( MonadTrans, lift )
+import qualified Data.ByteString.Lazy.Char8 as L
+
 
 newtype ArticleId = ArticleId { unArticleId :: Int }
     deriving (Eq, Ord, Enum, Read, Show, Data, Typeable, PathInfo)
@@ -67,8 +73,13 @@ route _ Home                  = homePage
 route _ (Article articleId)   = articlePage articleId
 route _ UserOverview          = userOverviewPage
 route _ (UserDetail uid name) = userDetailPage uid name
-route acid AllRests           = undefined
+route acid AllRests           = handleRestaurants acid
 route acid (Rest _)           = undefined
+
+handleRestaurants :: AcidState Storage -> RouteT Sitemap (ServerPartT IO) Response
+handleRestaurants acid = msum [ method GET >> (lift $ getRestaurants acid)
+                              , method POST >> (lift $ newRest acid)
+                              ]
 
 homePage :: RouteT Sitemap (ServerPartT IO) Response
 homePage = do
