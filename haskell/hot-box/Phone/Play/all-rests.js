@@ -15,7 +15,7 @@ var {
   View,
 } = React;
 
-var REQUEST_URL2 = 'http://localhost:8000/restaurant/all'
+var REQUEST_URL2 = 'http://localhost:8000/restaurants'
 
 var AllRestaurants = React.createClass({
   //mandatory

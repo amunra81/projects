@@ -18,6 +18,7 @@ import Data.Foldable
 import Data.Aeson.Encode.Pretty 
 import Text.Read
 import Web.Routes
+import qualified Play.InitialState as IS
 
 main =  putStrLn ("Listening at http://localhost:" ++ show (port serverConfig) ++ "/") 
         >>= \x -> serve (Just serverConfig) myApp 
@@ -152,9 +153,9 @@ restaurants :: ServerPart Response
 restaurants =  
         path parseResponse 
         where 
-            parseResponse All          = ok $ toResponse allRestaurants
+            parseResponse All          = ok $ toResponse IS.allRestaurants
             parseResponse (JustOne i)  = resourceFromMaybe $ 
-                                            find ((== i) . _restId) allRestaurants
+                                            find ((== (RestId i)) . _restId) IS.allRestaurants
 
 resourceFromMaybe :: (ToMessage a) => Maybe a -> ServerPart Response
 resourceFromMaybe = maybe nothing f 

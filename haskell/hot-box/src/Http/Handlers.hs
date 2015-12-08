@@ -6,7 +6,6 @@ import Happstack.Server ( Response, ServerPartT,ServerPart, ok, toResponse, simp
                         , nullConf,Conf(..), seeOther, dir, notFound, seeOther , ToMessage(..)
                         , Method(GET, POST, PUT),method,ServerMonad(askRq))
 import Happstack.Server.Types (takeRequestBody,unBody)
-import Data.HotBox      ( allRestaurants,Restaurant )
 import Data.Aeson.Encode.Pretty (encodePretty)
 import qualified Data.ByteString.Char8 as B
 import qualified Data.ByteString.Lazy.Char8 as L
@@ -18,17 +17,14 @@ import qualified Data.List as List
 import Control.Monad        (MonadPlus)
 import Control.Monad.IO.Class (liftIO)
 import Data.Aeson (decode,FromJSON,ToJSON)
-import Data.Storage         (Storage(..),initialStorageState,GetAllRests(..)
-                            ,GetAllUsers(..),AddNewUser(..),AddNewRest(..))
+import Data.Storage       
+import Data.HotBox      
+
+type Acid = AcidState Storage
 
 instance (ToJSON a) => ToMessage a where
   toContentType _ = B.pack "application/json"
   toMessage       = encodePretty
-
-getRestaurants :: AcidState Storage -> (ServerPartT IO) Response
-getRestaurants acid =  do
-        (c :: [Restaurant]) <- lift $ query' acid GetAllRests
-        ok $ toResponse c
 
 getBody :: ServerPart (Maybe L.ByteString)
 getBody = do
@@ -41,11 +37,41 @@ getBodyFromJson = do
         b <- getBody
         return (b >>= decode)
 
-newRest :: AcidState Storage -> ServerPart Response
-newRest acid = do
+getWholeStorageH :: Acid -> ServerPart Response
+getWholeStorageH acid = do
+        (c :: Storage) <- lift $ query' acid GetWholeStorage
+        ok $ toResponse c
+        
+-- | RESTAURANTS
+getRestaurantsH :: AcidState Storage -> (ServerPartT IO) Response
+getRestaurantsH acid =  do
+        (c :: [Restaurant]) <- lift $ query' acid GetAllRests
+        ok $ toResponse c
+
+getRestaurantH :: AcidState Storage -> Int -> (ServerPartT IO) Response
+getRestaurantH acid s = undefined
+
+notFound' :: ServerPart Response
+notFound' = notFound $ toResponse ("Not found" :: String)
+
+getRestByIdH :: AcidState Storage -> Int -> ServerPart Response
+getRestByIdH acid rid = do
+        (r::Maybe Restaurant) <- lift $ query' acid (GetRestById rid)
+        case r of
+         Nothing -> notFound'
+         Just rest -> ok $ toResponse rest
+
+newRestH :: AcidState Storage -> ServerPart Response
+newRestH acid = do
         (maybeR :: Maybe Restaurant) <- getBodyFromJson 
         case maybeR of
-            Just rest -> 
-                    do rest <- update' acid (AddNewRest rest)
-                       ok $ toResponse rest
-            Nothing -> notFound (toResponse (" notFound "::String))
+         Just rest -> 
+                 do rest <- update' acid (AddNewRest rest)
+                    ok $ toResponse rest
+         Nothing -> notFound'
+
+-- | ORDERS 
+getAllOrdersByRestAndTableH :: Acid -> RestId -> TableId -> ServerPart Response
+getAllOrdersByRestAndTableH acid rid tid = do
+        (c :: [Order]) <- lift $ query' acid (GetOrdersByRestAndTable rid tid)
+        ok $ toResponse c

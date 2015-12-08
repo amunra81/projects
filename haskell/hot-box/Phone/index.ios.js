@@ -23,7 +23,7 @@ var LongView = require('./Play/longview');
 
 var Phone = React.createClass({
   render: function() {
-      return <LongView />;
+      return <Navigation />;
     }
 //end React.createClas
 });

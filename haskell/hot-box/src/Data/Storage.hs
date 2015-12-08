@@ -1,11 +1,9 @@
 {-# LANGUAGE DeriveDataTypeable,TemplateHaskell,TypeFamilies ,RecordWildCards
-             ,GeneralizedNewtypeDeriving #-}
+             ,GeneralizedNewtypeDeriving,OverloadedStrings #-}
 
 module Data.Storage 
 where
 
-import Data.HotBox          ( Restaurant(..), User(..), UserOrder(..)
-                            , Table(..), Product(..), allRestaurants )
 import Data.SafeCopy        ( SafeCopy, base, deriveSafeCopy )
 import Data.Acid            ( AcidState, Query, Update
                             , makeAcidic, openLocalState )
@@ -16,35 +14,53 @@ import Data.IxSet           ( Indexable(..), IxSet(..), (@=)
                             , Proxy(..), getOne, ixFun, ixSet)
 import Data.Data            (Data, Typeable)
 import Control.Monad.State  ( get,put )
+import Data.Aeson (ToJSON(..),object,(.=))
+
+import Data.HotBox          
 
 data Storage = Storage { restaurants :: IxSet Restaurant
-                       , nextRestId  :: Int
+                       , nextRestId  :: RestId
                        , users       :: IxSet User
-                       , nextUserId  :: Int
-                       , orders      :: [UserOrder]
+                       , nextUserId  :: UserId
+                       , orders      :: IxSet Order
+                       , nextOrderId :: OrderId
                        }
-
-newtype RestaurantId = RestId { unRestId :: Int }
-    deriving (Eq, Ord, Data, Enum, Typeable)
-
-newtype UserId = UserId { unUserId :: Int }
-    deriving (Eq, Ord, Data, Enum, Typeable)
+instance ToJSON Storage where
+    toJSON Storage{..} =
+            object ["restaurants" .= IxSet.toList restaurants 
+                   ,"nextRestId" .= nextRestId
+                   ,"users" .= IxSet.toList users
+                   ,"nextOrderId" .= nextUserId
+                   ,"orders" .= IxSet.toList orders
+                   ,"nextOrderId" .= nextOrderId
+                   ]
 
 instance Indexable Restaurant where
   empty = ixSet 
-        [ ixFun $ \r -> [ RestId $ _restId r ]
+        [ ixFun $ \r -> [ _restId r ]
         ]
 
 instance Indexable User where
   empty = ixSet 
-        [ ixFun $ \r -> [ UserId $ _userId r ]
+        [ ixFun $ \r -> [ _userId r ]
         ]
   
+instance Indexable Order where
+  empty = ixSet 
+        [ ixFun $ \r -> [ _orderId r ]
+        , ixFun $ \r -> [ (_restId $ _orderRest r,_tableId $ _orderTable r) ]  
+        , ixFun $ \r -> map (_userId . _userOrder) (_userOrders r)   
+        ]
 -- | derive for safecopy
+$(deriveSafeCopy 0 'base ''RestId)
+$(deriveSafeCopy 0 'base ''UserId)
+$(deriveSafeCopy 0 'base ''TableId)
+$(deriveSafeCopy 0 'base ''OrderId)
+
 $(deriveSafeCopy 0 'base ''User)
-$(deriveSafeCopy 0 'base ''RestaurantId)
 $(deriveSafeCopy 0 'base ''Table)
 $(deriveSafeCopy 0 'base ''Restaurant)
+$(deriveSafeCopy 0 'base ''Order)
 $(deriveSafeCopy 0 'base ''UserOrder)
 $(deriveSafeCopy 0 'base ''Product)
 $(deriveSafeCopy 0 'base ''Storage)
@@ -60,6 +76,11 @@ getAllUsers = getAllUsers
 -- | get all restaurants from the storage
 getAllRests :: Query Storage [Restaurant]
 getAllRests = getAll restaurants
+
+getRestById ::  Int -> Query Storage (Maybe Restaurant)
+getRestById rid = do
+    st@Storage{..} <- ask
+    return $ getOne $ restaurants @= RestId rid
 
 -- | insert a new restaurant 
 addNewRest :: Restaurant -> Update Storage Restaurant
@@ -81,10 +102,17 @@ addNewUser user =
                }
        return newUser 
 
-$(makeAcidic ''Storage ['getAllRests,'addNewRest,'getAllUsers,'addNewUser])
+-- | orders
+getOrdersByRestAndTable :: RestId -> TableId -> Query Storage [Order]
+getOrdersByRestAndTable rid tid = 
+    do s@Storage{..} <- ask
+       return $ IxSet.toList $ orders @= (rid,tid)
 
-initialStorageState  = Storage rests nextRestId users nextRestId []
-                       where rests      = IxSet.fromList allRestaurants 
-                             nextRestId = succ $ IxSet.size rests
-                             users      = IxSet.fromList []
-                             nextUserId = succ $ IxSet.size users
+getWholeStorage :: Query Storage Storage
+getWholeStorage = ask
+ 
+
+$(makeAcidic ''Storage ['getAllRests,'addNewRest,'getAllUsers,'addNewUser
+                       ,'getRestById,'getOrdersByRestAndTable,'getWholeStorage
+                       ])
+

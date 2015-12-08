@@ -15,7 +15,7 @@ var {
   View,
 } = React;
 
-var REQUEST_URL = 'http://localhost:8000/restaurant'
+var REQUEST_URL = 'http://localhost:8000/restaurants'
 
 var RestaurantClientView = React.createClass({
 

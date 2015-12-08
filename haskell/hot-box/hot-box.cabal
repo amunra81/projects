@@ -16,9 +16,11 @@ build-type:          Simple
 cabal-version:       >=1.10
 
 library
-  exposed-modules:     Data.HotBox,
-                       Data.Storage,
-                       Http.Handlers
+  exposed-modules:     Data.HotBox
+                      ,Data.Storage
+                      ,Http.Handlers
+                      ,Play.InitialState
+                      ,Play.InitialStorageState
   -- other-modules:       
   -- other-extensions:    
   build-depends:       base >=4.8 && <4.9
@@ -118,6 +120,8 @@ executable trans-full
                     ,aeson-pretty 
                     ,bytestring
                     ,web-routes
+                    ,web-routes-th
+                    ,web-routes-happstack
                     ,acid-state
                     ,mtl
                     ,safecopy

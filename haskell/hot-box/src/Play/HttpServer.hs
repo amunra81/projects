@@ -30,11 +30,12 @@ import Web.Routes.Boomerang
 import Data.Acid            ( AcidState , openLocalState )
 import Data.Acid.Local      ( createCheckpointAndClose )
 import Control.Exception    ( bracket )
-import Data.Storage(Storage,initialStorageState)
+import Data.Storage
 import Http.Handlers
+import Data.HotBox
 import Control.Monad.Trans     ( MonadTrans, lift )
 import qualified Data.ByteString.Lazy.Char8 as L
-
+import qualified Play.InitialStorageState as ISS
 
 newtype ArticleId = ArticleId { unArticleId :: Int }
     deriving (Eq, Ord, Enum, Read, Show, Data, Typeable, PathInfo)
@@ -46,6 +47,8 @@ data Sitemap
     | UserDetail Int Text
     | AllRests
     | Rest Int
+    | OrderByRestAndTable Int Int
+    | WholeStorage
     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 
@@ -57,12 +60,14 @@ sitemap =
     <> rArticle . (lit "article" </> articleId)
     <> lit "users" . users
     <> lit "restaurants" . rests
+    <> rWholeStorage . (lit "storage")
     
     where
       rests = rAllRests
               <> rRest </> int
+              <> rOrderByRestAndTable </> int </> lit "tables" </> int </> lit "orders"
       users =  rUserOverview
-            <> rUserDetail </> int . lit "-" . anyText
+               <> rUserDetail </> int . lit "-" . anyText
 
 articleId :: Router () (ArticleId :- ())
 articleId =
@@ -74,11 +79,15 @@ route _ (Article articleId)   = articlePage articleId
 route _ UserOverview          = userOverviewPage
 route _ (UserDetail uid name) = userDetailPage uid name
 route acid AllRests           = handleRestaurants acid
-route acid (Rest _)           = undefined
+route acid (Rest i)           = lift $ getRestByIdH acid i
+route acid WholeStorage       = lift $ getWholeStorageH acid
+route acid (OrderByRestAndTable rid tid) = do
+           lift $ lift $ print $ "A intrat cu rid " ++ show rid ++ "si tid " ++ show tid
+           lift $ getAllOrdersByRestAndTableH acid (RestId rid) (TableId tid)
 
 handleRestaurants :: AcidState Storage -> RouteT Sitemap (ServerPartT IO) Response
-handleRestaurants acid = msum [ method GET >> (lift $ getRestaurants acid)
-                              , method POST >> (lift $ newRest acid)
+handleRestaurants acid = msum [ method GET >> lift (getRestaurantsH acid)
+                              , method POST >> lift (newRestH acid)
                               ]
 
 homePage :: RouteT Sitemap (ServerPartT IO) Response
@@ -144,7 +153,7 @@ site acid =
 
 main :: IO ()
 main =
-    bracket (openLocalState initialStorageState)
+    bracket (openLocalState ISS.initialStorageState)
            chkPoint
            doWork
     where 

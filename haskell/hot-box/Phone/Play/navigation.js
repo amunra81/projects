@@ -28,7 +28,7 @@ var Navigation = React.createClass({
         passProps: { 
             myProp: 'foo'
             ,onRestClicked : function(id,name) {
-            /* HERE SHOULD PUSH RESTAURANT VIEW MODEL */
+                /* HERE SHOULD PUSH RESTAURANT VIEW MODEL */
                 this.navigator.push({
                     component: ClientRestView,
                     title: name,
