@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Enumerable = require('linq');
 var Comments = require('./comment');
+
 var {
   Image,
   ListView,
@@ -73,15 +74,9 @@ var OrderView = React.createClass({
 
   renderHead: function() {
       return (
-          <View style={styles.head}>
+          <View style={[styles.head,styles.center]}>
               <Text>
-                  RestId: {this._firstOrder().restId}
-              </Text>
-              <Text>
-                  TableId: {this._firstOrder().tableId}
-              </Text>
-              <Text>
-                  OrderId: {this._firstOrder().id}
+                  HEAD
               </Text>
           </View>
       );
@@ -89,27 +84,37 @@ var OrderView = React.createClass({
 
   renderActions: function() {
       return (
-          <View style={styles.actions}>
+          <View style={[styles.actions,styles.center]}>
               <Text>ACTIONS</Text>
           </View>
       );
   },
   renderBody: function() {
-      var a = Enumerable.from(this._firstOrder().userOrders);
+      var data = this._firstOrder().userOrders;
       var i = 2;
       return (
           <View style={styles.border}>
-            <Text>Comanda</Text>
-            {a.select(x => this.renderUserOrder(x)).toArray()}
+            {data.map(x => this.renderUserOrder(x))}
           </View>
       );
   },
 
   renderUserOrder: function(userOrder){
       return (
-          <View >
-            <Text>User {userOrder.user.id}</Text>
+          <View>
+            <View name="laba">
+                <Text>User {userOrder.user.id}</Text>
+            </View>
+            <View testID="products" style={styles.products}>
+                {userOrder.products.map(x => this.renderProduct(x))}
+            </View>
           </View>
+      );
+  },
+
+  renderProduct: function(product){
+      return (
+          <Text> - {product.name}</Text>
       );
   },
 
@@ -126,24 +131,40 @@ var OrderView = React.createClass({
 });
 
 var styles = StyleSheet.create({
+  center: {
+    justifyContent:'center',
+    alignItems:'center',
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-around',
-    //alignItems: 'flex-end',
+    //justifyContent: 'space-around',
+    //alignItems: 'center',
     backgroundColor: '#dcf4ff',
     //flexWrap:'nowrap',
-    padding:20,
+    paddingTop:20,
+    position:'relative',
   },
   head: {
+    //flex:1,
     backgroundColor: '#f9dcff',
+    height:50,
+    //minHeight:100,
+    //maxHeight:100,
   },
   actions: {
+    //flex: 1,
+    height:30,
     backgroundColor: '#fff9dc',
   },
   border: {
+    flex: 1,
     backgroundColor: '#ffe7dc',
   },
+  products: {
+      paddingLeft: 20,
+      paddingBottom:10
+  }
 });
 
 module.exports = OrderView;
