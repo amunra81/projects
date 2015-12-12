@@ -3,23 +3,25 @@
 
 var React = require('react-native');
 var Enumerable = require('linq');
-var OrderDetails = require('./order-details');
-var OrderMenu = require('./order-menu');
+var Comments = require('./comment');
 
 var {
+  Image,
+  ListView,
   StyleSheet,
   Text,
+  TextInput,
+  TouchableHighlight,
   View,
+  Comment
 } = React;
 
 var HeadContainer = View;
 
-var Order = React.createClass({
-    getInitialState: function() {
-        if(this.props.state)
-            return this.props.state
-        else
-            return { 
+var OrderMenu = React.createClass({
+  //mandatory
+  getInitialState: function() {
+      return { 
                 restId : this.props.restId,
                 tableId : this.props.tableId,
                 dataSource : null,
@@ -27,6 +29,9 @@ var Order = React.createClass({
              };
   },
 
+  componentWillMount: function() {
+      //this.fetchData();
+  },
   componentDidMount: function() {
       this.fetchData();
   },
@@ -60,8 +65,6 @@ var Order = React.createClass({
   renderLoadedView: function() {
     return (
         <View style={styles.container}>
-            <OrderDetails state={this.state}/>
-            <OrderMenu />
         </View>
     );
   },
@@ -71,7 +74,7 @@ var Order = React.createClass({
       <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]}>
         <View style={[styles.head,styles.center]}>
             <Text>
-                Loading order...
+                Loading menu...
             </Text>
         </View>
       </View>
@@ -90,12 +93,10 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     //justifyContent: 'space-around',
     //alignItems: 'center',
-    backgroundColor: '#dcf4ff',
+    backgroundColor: '#dcffe7',
     //flexWrap:'nowrap',
-    //paddingTop:20,
     position:'relative',
   },
 });
-
 //dcffe7
-module.exports = Order;
+module.exports = OrderMenu;
