@@ -97,6 +97,7 @@ var OrderDetails = React.createClass({
           </View>
       );
   },
+
   renderBody: function() {
       var data = this._firstOrder().userOrders;
       var i = 2;

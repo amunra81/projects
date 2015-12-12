@@ -122,10 +122,12 @@ instance ToJSON Restaurant where
     toJSON (Restaurant i name tables menu) =
             object ["name" .= name,"id" .= i,"tables" .= tables,"menu" .= menu]
 
+--TODO split menu from order
 instance ToJSON Order where
     toJSON (Order{..}) = 
             object ["id" .= _orderId
                    ,"restId" .= _restId _orderRest
+                   ,"menu" .= _menu _orderRest
                    ,"tableId" .= _tableId _orderTable
                    ,"userOrders" .= _userOrders
                    ]

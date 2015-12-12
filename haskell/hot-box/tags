@@ -5412,8 +5412,8 @@ get	./external-src/base-4.8.1.0/Text/ParserCombinators/ReadPrec.hs	130
 getAll	./external-src/base-4.8.1.0/Data/Monoid.hs	87
 getAll	./src/Data/Storage.hs	68
 getAll	./src/Data/Storage.hs	69
-getAllOrdersByRestAndTableH	./src/Http/Handlers.hs	74
 getAllOrdersByRestAndTableH	./src/Http/Handlers.hs	75
+getAllOrdersByRestAndTableH	./src/Http/Handlers.hs	76
 getAllRests	./src/Data/Storage.hs	77
 getAllRests	./src/Data/Storage.hs	78
 getAllUsers	./src/Data/Storage.hs	73
@@ -9569,8 +9569,8 @@ repeat	./external-src/base-4.8.1.0/GHC/List.hs	457
 repeat	./external-src/base-4.8.1.0/GHC/List.hs	460
 repeatFB	./external-src/base-4.8.1.0/GHC/List.hs	463
 repeatFB	./external-src/base-4.8.1.0/GHC/List.hs	464
-repeatList	./src/Data/HotBox.hs	133
-repeatList	./src/Data/HotBox.hs	134
+repeatList	./src/Data/HotBox.hs	135
+repeatList	./src/Data/HotBox.hs	136
 replaceTyVarName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1181
 replaceTyVarName	./external-src/aeson-0.10.0.0/Data/Aeson/TH.hs	1182
 replay	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	41

@@ -21,19 +21,21 @@ var HeadContainer = View;
 var OrderMenu = React.createClass({
   //mandatory
   getInitialState: function() {
-      return { 
-                restId : this.props.restId,
-                tableId : this.props.tableId,
-                dataSource : null,
-                loaded: false
-             };
+    if(this.props.state)
+        return this.props.state
+    else
+        return { 
+            restId : this.props.restId,
+            tableId : this.props.tableId,
+            dataSource : null,
+            loaded: false
+            };
   },
 
-  componentWillMount: function() {
-      //this.fetchData();
-  },
   componentDidMount: function() {
-      this.fetchData();
+    if (!this.state.loaded) {
+        this.fetchData();
+    }
   },
 
   _requestUrl : function () {

@@ -70,8 +70,10 @@ newRestH acid = do
                     ok $ toResponse rest
          Nothing -> notFound'
 
+--TODO split menu from orders
 -- | ORDERS 
 getAllOrdersByRestAndTableH :: Acid -> RestId -> TableId -> ServerPart Response
 getAllOrdersByRestAndTableH acid rid tid = do
         (c :: [Order]) <- lift $ query' acid (GetOrdersByRestAndTable rid tid)
         ok $ toResponse c
+

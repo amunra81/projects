@@ -58,10 +58,13 @@ var Order = React.createClass({
   },
 
   renderLoadedView: function() {
+    var { dataSource, ...otherState } = this.state;
+    var { menu,restId,tableId,...orderDetails} = dataSource
+    
     return (
         <View style={styles.container}>
             <OrderDetails state={this.state}/>
-            <OrderMenu />
+            <OrderMenu restId={this.props.restId} tableId={this.props.tableId}/>
         </View>
     );
   },
