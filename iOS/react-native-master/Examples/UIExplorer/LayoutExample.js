@@ -126,8 +126,8 @@ var LayoutExample = React.createClass({
             <Circle size={15} /><Circle size={8} />
           </CircleBlock>
           <Text>flex-end</Text>
-          <CircleBlock style={{alignItems: 'flex-end', height: 30}}>
-            <Circle size={15} /><Circle size={10} /><Circle size={20} />
+          <CircleBlock style={{alignItems: 'flex-end', height: 50}}>
+            <Circle size={45} /><Circle size={10} /><Circle size={20} />
             <Circle size={17} /><Circle size={12} /><Circle size={15} />
             <Circle size={10} /><Circle size={20} /><Circle size={17} />
             <Circle size={12} /><Circle size={15} /><Circle size={10} />

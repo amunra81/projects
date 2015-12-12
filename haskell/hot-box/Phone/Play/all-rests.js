@@ -6,7 +6,6 @@
 
 var React = require('react-native');
 var {
-  AppRegistry,
   Image,
   ListView,
   StyleSheet,
@@ -69,6 +68,7 @@ var AllRestaurants = React.createClass({
       </View>
     );
   }, 
+
   constImgUrl: 'http://www.electroputeremall.ro/wp-content/uploads/2014/05/4123logo1.jpg',
 
   renderMovie: function(movie) {

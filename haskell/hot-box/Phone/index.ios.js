@@ -20,10 +20,11 @@ var Navigation = require('./Play/navigation');
 var {Playground} = require('./Play/some-animation');
 var Responder = require('./Play/responder');
 var LongView = require('./Play/longview');
+var OrderView = require('./Real/order');
 
 var Phone = React.createClass({
   render: function() {
-      return <Navigation />;
+      return <OrderView restId={1} tableId={1}/>;
     }
 //end React.createClas
 });

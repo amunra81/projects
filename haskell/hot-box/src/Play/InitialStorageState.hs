@@ -6,10 +6,10 @@ import Play.InitialState
 
 import qualified Data.IxSet as IxSet
 
-initialStorageState  = Storage rests nextRestId users nextUserId orders nextOrderId
-                       where rests      = IxSet.fromList allRestaurants 
-                             nextRestId = RestId $ succ $ IxSet.size rests
-                             users      = IxSet.fromList allUsers
-                             nextUserId = UserId $ succ $ IxSet.size users
-                             orders     = IxSet.fromList $ allOrders
-                             nextOrderId = OrderId 0
+initialStorageState  = Storage { restaurants = IxSet.fromList allRestaurants 
+                               , nextRestId  = succ $ _restId (last allRestaurants)
+                               , users       = IxSet.fromList allUsers
+                               , nextUserId  = succ $ _userId (last allUsers)
+                               , orders      = IxSet.fromList allOrders
+                               , nextOrderId = succ $ _orderId (last allOrders)
+                               }
