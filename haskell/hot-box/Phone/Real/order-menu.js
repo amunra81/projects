@@ -9,7 +9,7 @@ var {
   StyleSheet,
   Text,
   View,
-  Comment
+  TouchableHighlight,
 } = React;
 
 var HeadContainer = View;
@@ -76,11 +76,13 @@ var OrderMenu = React.createClass({
 
   renderProduct: function(product){
       return (
-          <View>
+        <TouchableHighlight onPress={() => console.log(`s-a clikuit pe ${product.name}!`) }>
+          <View style={styles.listItem}>
               <Text>
                   {product.name}
               </Text>
           </View>
+        </TouchableHighlight>
       );
   },
 
@@ -94,13 +96,13 @@ var OrderMenu = React.createClass({
 
   renderLoadingView: function() {
     return (
-      <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]}>
-        <View style={[styles.head,styles.center]}>
-            <Text>
-                Loading menu...
-            </Text>
-        </View>
-      </View>
+            <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]}>
+                <View style={[styles.head,styles.center]}>
+                    <Text>
+                        Loading menu...
+                    </Text>
+                </View>
+            </View>
     );
   }, 
 //END OF COMPONENT
@@ -113,13 +115,16 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    flexDirection: 'column',
+    //flexDirection: 'row',
     //justifyContent: 'space-around',
     //alignItems: 'center',
     backgroundColor: '#dcffe7',
     //flexWrap:'nowrap',
     position:'relative',
   },
+  listItem: {
+    backgroundColor: '#a9ffc4'
+  }
 });
 //dcffe7
 module.exports = OrderMenu;

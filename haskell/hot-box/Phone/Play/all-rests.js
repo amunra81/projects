@@ -73,7 +73,7 @@ var AllRestaurants = React.createClass({
 
   renderMovie: function(movie) {
     return (
-        <TouchableHighlight onPress={() => this.props.onRestClicked(movie.id,movie.name) }>
+        <TouchableHighlight onPress={() => alert(movie.name) }>
             <View style={styles.container}>
                 <Image style={styles.thumbnail} source={{uri: this.constImgUrl}} /> 
                 <View style={styles.rightContainer}>
