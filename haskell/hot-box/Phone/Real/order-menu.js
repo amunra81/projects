@@ -77,7 +77,7 @@ var OrderMenu = React.createClass({
   renderProduct: function(product){
       return (
         <TouchableHighlight onPress={() => console.log(`s-a clikuit pe ${product.name}!`) }>
-          <View style={styles.listItem}>
+          <View style={[styles.listItem,styles.center]}>
               <Text>
                   {product.name}
               </Text>
@@ -123,6 +123,7 @@ var styles = StyleSheet.create({
     position:'relative',
   },
   listItem: {
+    marginTop:10,
     backgroundColor: '#a9ffc4'
   }
 });
