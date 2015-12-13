@@ -1,4 +1,3 @@
-
 'use strict';
 
 var React = require('react-native');
@@ -6,12 +5,9 @@ var Enumerable = require('linq');
 var Comments = require('./comment');
 
 var {
-  Image,
   ListView,
   StyleSheet,
   Text,
-  TextInput,
-  TouchableHighlight,
   View,
   Comment
 } = React;
@@ -21,13 +17,16 @@ var HeadContainer = View;
 var OrderMenu = React.createClass({
   //mandatory
   getInitialState: function() {
-    if(this.props.state)
-        return this.props.state
+    var ls = this.toListDataSource();
+    if(this.props.state){
+        var {dataSource,...other} = this.props.state;
+        return {dataSource : ls.cloneWithRows(dataSource[0].menu),...other};
+    }
     else
         return { 
             restId : this.props.restId,
             tableId : this.props.tableId,
-            dataSource : null,
+            dataSource : ls,
             loaded: false
             };
   },
@@ -50,7 +49,7 @@ var OrderMenu = React.createClass({
     })
     .then((responseData) => {
         this.setState({
-            dataSource: responseData
+            dataSource: this.state.dataSource.cloneWithRows(responseData[0].menu)
             ,loaded: true
         });
     })
@@ -65,10 +64,32 @@ var OrderMenu = React.createClass({
   },
 
   renderLoadedView: function() {
+      var i = 5;
     return (
-        <View style={styles.container}>
-        </View>
+        <ListView 
+            style={styles.container} 
+            dataSource={this.state.dataSource}
+            renderRow={this.renderProduct}>
+        </ListView>
     );
+  },
+
+  renderProduct: function(product){
+      return (
+          <View>
+              <Text>
+                  {product.name}
+              </Text>
+          </View>
+      );
+  },
+
+  toListDataSource: function() {
+     return  new ListView.DataSource({
+                        rowHasChanged: function (row1, row2) { 
+                            return row1 !== row2 
+                        },
+      });
   },
 
   renderLoadingView: function() {

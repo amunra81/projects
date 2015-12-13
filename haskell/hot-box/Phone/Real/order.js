@@ -36,18 +36,21 @@ var Order = React.createClass({
   },
 
   fetchData: function() {
-    fetch(this._requestUrl())
-    .then((response) => {
-        console.log(response)
-        return response.json();
-    })
-    .then((responseData) => {
-        this.setState({
-            dataSource: responseData
-            ,loaded: true
-        });
-    })
+      //for(var i = 0 ; i < 10000;i++) {
+        fetch(this._requestUrl())
+        .then((response) => {
+            console.log(response)
+            return response.json();
+        })
+        .then((responseData) => {
+            this.setState({
+                dataSource: responseData
+                ,loaded: true
+            });
+        })
+      //}
     //.done();
+    
   },
 
   render: function() {

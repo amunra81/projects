@@ -6,6 +6,17 @@ import Data.Maybe
 
 -- MENUS
 
+
+menu0 = map Product
+        ["Caffè Americano" ,"Café Cubano" ,"Caffè crema" ,"Cafe Zorro" ,"Doppio" ,"Espresso Romano" ,"Guillermo"
+        ,"Ristretto" ,"Antoccino" ,"Breve" ,"Café bombón" ,"Cappuccino" ,"Cortado" ,"Latte" ,"Espressino" ,"Flat white"
+        ,"Galão" ,"Macchiato" ,"Wiener or Viennese melange" ,"Café au lait" ,"Ca phe sua da" ,"Egg coffee" ,"Eggnog latte"
+        ,"Eiskaffee" ,"Kopi susu" ,"White coffee" ,"White coffee (England)" ,"Vienna coffee" ,"Espresso con panna" ,"Coffee with espresso"
+        ,"Coffee with tea" ,"Black tie" ,"Chai latte" ,"Red tie" ,"Yuanyang" ,"Liqueur coffee" ,"Irish coffee" ,"Rüdesheimer Kaffee"
+        ,"Pharisäer" ,"Carajillo" ,"Melya" ,"Caffè Marocchino" ,"Café miel" ,"Mocha or café mocha or mochaccino" ,"Café de olla"
+        ,"Greek frappé coffee" ,"Mazagran" ,"Palazzo" ,"Ice Shot" ,"Affogato" ,"Caffè Medici" ,"Café Touba"
+        ,"Indian filter coffee" ,"Moka" ,"Shakerato" ,"Pocillo"]
+
 menu1 = map Product ["coca cola", "placinta", "cucurucu" ]
 menu2 = map Product ["capucino", "espresso", "placinta cu mere" ]
 menu3 = map Product ["koktail de mure", "vafe", "apa plata" ]
@@ -19,7 +30,7 @@ tables1 = map toTable [(1,"Table 1"),(2,"Table 2")]
 
 toRest (i,str,m) = Restaurant (RestId i) str tables1 m
 
-rest1 = (1,"Zvon Cafe",menu1)
+rest1 = (1,"Zvon Cafe",menu0)
 rest2 = (2,"Colectiv",menu2)
 rest3 = (3,"La mama",menu3)
 rest4 = (5,"La placinte",menu1)
