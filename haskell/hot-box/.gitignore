@@ -1,3 +1,5 @@
 external-src/
 state/
 tags
+cabal.config
+cabal.sandbox.config

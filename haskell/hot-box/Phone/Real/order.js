@@ -64,7 +64,7 @@ var Order = React.createClass({
     return (
         <View style={styles.container}>
             <OrderDetails state={this.state}/>
-            <OrderMenu restId={this.props.restId} tableId={this.props.tableId}/>
+            <OrderMenu state={this.state}/>
         </View>
     );
   },
