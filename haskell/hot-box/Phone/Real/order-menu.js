@@ -76,7 +76,7 @@ var OrderMenu = React.createClass({
 
   renderProduct: function(product){
       return (
-        <TouchableHighlight onPress={() => console.log(`s-a clikuit pe ${product.name}!`) }>
+        <TouchableHighlight onPress={() => console.log(`s-a clickuit pe ${product.name}!`) }>
           <View style={[styles.listItem,styles.center]}>
               <Text>
                   {product.name}

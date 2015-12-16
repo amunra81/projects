@@ -1,5 +1,7 @@
 {-# LANGUAGE DeriveDataTypeable,TemplateHaskell,TypeFamilies ,RecordWildCards
              ,GeneralizedNewtypeDeriving,OverloadedStrings #-}
+{-# LANGUAGE OverloadedStrings , TypeFamilies, FlexibleContexts #-}
+{-# LANGUAGE DeriveDataTypeable,GeneralizedNewtypeDeriving,RecordWildCards,DataKinds #-}
 
 module Data.Storage 
 where
@@ -19,48 +21,52 @@ import Data.Aeson (ToJSON(..),object,(.=))
 import Data.HotBox          
 
 data Storage = Storage { restaurants :: IxSet Restaurant
-                       , nextRestId  :: RestId
+                       , nextRestId  :: Id Restaurant
                        , users       :: IxSet User
                        , nextUserId  :: UserId
                        , orders      :: IxSet Order
                        , nextOrderId :: OrderId
                        }
+
 instance ToJSON Storage where
     toJSON Storage{..} =
-            object ["restaurants" .= IxSet.toList restaurants 
-                   ,"nextRestId" .= nextRestId
-                   ,"users" .= IxSet.toList users
-                   ,"nextOrderId" .= nextUserId
-                   ,"orders" .= IxSet.toList orders
-                   ,"nextOrderId" .= nextOrderId
+            object ["restaurants"   .= IxSet.toList restaurants 
+                   ,"nextRestId"    .= unRestId nextRestId
+                   ,"users"         .= IxSet.toList users
+                   ,"nextOrderId"   .= nextUserId
+                   ,"orders"        .= IxSet.toList orders
+                   ,"nextOrderId"   .= nextOrderId
                    ]
 
 instance Indexable Restaurant where
   empty = ixSet 
-        [ ixFun $ \r -> [ _restId r ]
+        [ ixFun $ \r -> [ getId r ]
         ]
 
 instance Indexable User where
   empty = ixSet 
-        [ ixFun $ \r -> [ _userId r ]
+        [ ixFun $ \r -> [ getId r ]
         ]
   
 instance Indexable Order where
   empty = ixSet 
-        [ ixFun $ \r -> [ _orderId r ]
-        , ixFun $ \r -> [ (_restId $ _orderRest r,_tableId $ _orderTable r) ]  
-        , ixFun $ \r -> map (_userId . _userOrder) (_userOrders r)   
+        [ ixFun $ \r -> [ getId r ]
+        , ixFun $ \r -> [ (getId $ _orderRest r,getId $ _orderTable r) ]  
+        , ixFun $ \r -> map (getId . _userOrder) (_userOrders r)   
         ]
+
 -- | derive for safecopy
 $(deriveSafeCopy 0 'base ''RestId)
 $(deriveSafeCopy 0 'base ''UserId)
 $(deriveSafeCopy 0 'base ''TableId)
 $(deriveSafeCopy 0 'base ''OrderId)
+$(deriveSafeCopy 0 'base ''OrderItemId)
 
 $(deriveSafeCopy 0 'base ''User)
 $(deriveSafeCopy 0 'base ''Table)
 $(deriveSafeCopy 0 'base ''Restaurant)
 $(deriveSafeCopy 0 'base ''Order)
+$(deriveSafeCopy 0 'base ''OrderItem)
 $(deriveSafeCopy 0 'base ''UserOrder)
 $(deriveSafeCopy 0 'base ''Product)
 $(deriveSafeCopy 0 'base ''Storage)
@@ -103,7 +109,7 @@ addNewUser user =
        return newUser 
 
 -- | orders
-getOrdersByRestAndTable :: RestId -> TableId -> Query Storage [Order]
+getOrdersByRestAndTable :: Id Restaurant -> Id Table -> Query Storage [Order]
 getOrdersByRestAndTable rid tid = 
     do s@Storage{..} <- ask
        return $ IxSet.toList $ orders @= (rid,tid)
@@ -111,8 +117,19 @@ getOrdersByRestAndTable rid tid =
 getWholeStorage :: Query Storage Storage
 getWholeStorage = ask
  
+getCurrentOrder :: Id Restaurant -> Id Table -> Query Storage (Maybe Order)
+getCurrentOrder rid tid =
+    do s@Storage{..} <- ask
+       let ret = IxSet.toDescList (Proxy :: Proxy (Id Order)) $ orders @= (rid,tid) 
+       return $ case ret of
+                 [] -> Nothing
+                 (o@Order{..}:_) -> 
+                     if _closed then Nothing
+                                else Just o 
+ 
 
-$(makeAcidic ''Storage ['getAllRests,'addNewRest,'getAllUsers,'addNewUser
-                       ,'getRestById,'getOrdersByRestAndTable,'getWholeStorage
-                       ])
+$(makeAcidic ''Storage 
+    ['getAllRests,'addNewRest,'getAllUsers,'addNewUser,'getRestById,'getOrdersByRestAndTable
+    ,'getWholeStorage,'getCurrentOrder 
+    ])
 

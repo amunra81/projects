@@ -23,14 +23,14 @@ menu3 = map Product ["koktail de mure", "vafe", "apa plata" ]
 
 -- TABLES
 
-toTable (i,name) = Table (TableId 1) name
+toTable (i,name) = Table (TableId 1) name Nothing
 tables1 = map toTable [(1,"Table 1"),(2,"Table 2")]
 
 -- RESTAURANTS
 
 toRest (i,str,m) = Restaurant (RestId i) str tables1 m
 
-rest1 = (1,"Zvon Cafe",menu0)
+rest1 = (1,"Zvon Cafe",take 10 menu0)
 rest2 = (2,"Colectiv",menu2)
 rest3 = (3,"La mama",menu3)
 rest4 = (5,"La placinte",menu1)
@@ -49,21 +49,21 @@ toOrder restList users (oid,rid,tid,uorders) =
               , _orderRest = rest
               , _orderTable = table
               , _userOrders = userOrders
+              , _closed = False
               }
         where rest = fromJust $ List.find (\r -> _restId r == RestId tid) (restList::[Restaurant])
               table = fromJust $ List.find (\r -> _tableId r == TableId tid) (_tables rest)
               menu = _menu rest
               userOrders = map toUserOrder uorders
-              toUserOrder :: (Int,[Int]) -> UserOrder
+              toUserOrder :: (Int,[(Int,Int)]) -> UserOrder
               toUserOrder (uid,products) = 
                 UserOrder { _userOrder = findUser uid
-                          , _userOrderProducts = findProducts products
+                          , _userOrderProducts = orderItems products
                           }
               findUser uid = fromJust $ List.find (\x -> _userId x == UserId uid) users
-              findProducts = map (menu !!)
+              orderItems = map (\(i,j) -> OrderItem (OrderItemId i) (menu !! j))
 
-order1 = (1, 1, 1, [(1,[0,1,0,2])
-                   ,(2,[0,2])
+order1 = (1, 1, 1, [(1,[(0,0),(1,1),(2,0),(3,2)])
+                   ,(2,[(0,0),(1,2)])
                    ])
 allOrders = map (toOrder allRestaurants allUsers) [order1]
-            

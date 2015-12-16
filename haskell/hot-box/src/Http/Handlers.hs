@@ -70,10 +70,15 @@ newRestH acid = do
                     ok $ toResponse rest
          Nothing -> notFound'
 
---TODO split menu from orders
 -- | ORDERS 
-getAllOrdersByRestAndTableH :: Acid -> RestId -> TableId -> ServerPart Response
+getAllOrdersByRestAndTableH :: Acid -> Id Restaurant -> Id Table -> ServerPart Response
 getAllOrdersByRestAndTableH acid rid tid = do
         (c :: [Order]) <- lift $ query' acid (GetOrdersByRestAndTable rid tid)
         ok $ toResponse c
 
+getCurrentOrderH :: Acid -> Id Restaurant -> Id Table -> ServerPart Response
+getCurrentOrderH acid rid tid = do
+        c <- lift $ query' acid (GetCurrentOrder rid tid)
+        case c of
+         Just o -> ok $ toResponse o
+         Nothing -> notFound'

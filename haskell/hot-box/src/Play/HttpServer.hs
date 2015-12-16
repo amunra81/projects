@@ -49,6 +49,7 @@ data Sitemap
     | Rest Int
     | OrderByRestAndTable Int Int
     | WholeStorage
+    | CurrentOrder Int Int
     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 
@@ -66,6 +67,7 @@ sitemap =
       rests = rAllRests
               <> rRest </> int
               <> rOrderByRestAndTable </> int </> lit "tables" </> int </> lit "orders"
+              <> rCurrentOrder </> int </> lit "tables" </> int </> lit "orders" </> lit "current"
       users =  rUserOverview
                <> rUserDetail </> int . lit "-" . anyText
 
@@ -84,6 +86,7 @@ route acid WholeStorage       = lift $ getWholeStorageH acid
 route acid (OrderByRestAndTable rid tid) = do
            lift $ lift $ print $ "A intrat cu rid " ++ show rid ++ "si tid " ++ show tid
            lift $ getAllOrdersByRestAndTableH acid (RestId rid) (TableId tid)
+route acid (CurrentOrder i j) = lift $ getCurrentOrderH acid (RestId i) (TableId j)
 
 handleRestaurants :: AcidState Storage -> RouteT Sitemap (ServerPartT IO) Response
 handleRestaurants acid = msum [ method GET >> lift (getRestaurantsH acid)
