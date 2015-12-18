@@ -6,8 +6,10 @@ import Data.Maybe
 
 -- MENUS
 
+mapProduct xs =  map (\(i,n) -> Product (ProdId i) n) zs
+              where zs = List.zip [1..] xs
 
-menu0 = map Product
+menu0 = mapProduct
         ["Caffè Americano" ,"Café Cubano" ,"Caffè crema" ,"Cafe Zorro" ,"Doppio" ,"Espresso Romano" ,"Guillermo"
         ,"Ristretto" ,"Antoccino" ,"Breve" ,"Café bombón" ,"Cappuccino" ,"Cortado" ,"Latte" ,"Espressino" ,"Flat white"
         ,"Galão" ,"Macchiato" ,"Wiener or Viennese melange" ,"Café au lait" ,"Ca phe sua da" ,"Egg coffee" ,"Eggnog latte"
@@ -17,9 +19,9 @@ menu0 = map Product
         ,"Greek frappé coffee" ,"Mazagran" ,"Palazzo" ,"Ice Shot" ,"Affogato" ,"Caffè Medici" ,"Café Touba"
         ,"Indian filter coffee" ,"Moka" ,"Shakerato" ,"Pocillo"]
 
-menu1 = map Product ["coca cola", "placinta", "cucurucu" ]
-menu2 = map Product ["capucino", "espresso", "placinta cu mere" ]
-menu3 = map Product ["koktail de mure", "vafe", "apa plata" ]
+menu1 = mapProduct ["coca cola", "placinta", "cucurucu" ]
+menu2 = mapProduct ["capucino", "espresso", "placinta cu mere" ]
+menu3 = mapProduct ["koktail de mure", "vafe", "apa plata" ]
 
 -- TABLES
 

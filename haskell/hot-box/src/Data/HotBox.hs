@@ -19,6 +19,9 @@ newtype UserId = UserId { unUserId :: Int }
 newtype OrderId = OrderId { unOrderId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
+newtype ProdId = ProdId { unProdId :: Int }
+    deriving (Show,Eq, Ord, Data, Enum, Typeable)
+
 newtype OrderItemId = OrderItemId { unOrderItemId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
@@ -33,7 +36,9 @@ data Restaurant = Restaurant { _restId  :: Id Restaurant
 data Table = Table { _tableId:: Id Table,_tableName :: String,currentOrder :: Maybe Order }
              deriving (Show,Eq, Ord, Data, Typeable)
 
-data Product = Product String
+data Product = Product { _prodId :: Id Product 
+                       , _productName :: String
+                       }
                deriving (Show,Eq, Ord, Data, Typeable)
 
 type Menu = [Product] 
@@ -58,6 +63,9 @@ data Order = Order  { _orderId :: Id Order
                     } deriving (Show,Eq, Ord, Data, Typeable)
 
 -- | FROM JSON
+
+instance FromJSON ProdId where
+    parseJSON v = ProdId <$> parseJSON v
 
 instance FromJSON TableId where
     parseJSON v = TableId <$> parseJSON v
@@ -97,9 +105,13 @@ instance FromJSON Restaurant where
 
 instance FromJSON Product where
     parseJSON (Object v) =
-        Product <$> v .: "name"
+        Product <$> v .: "id"
+                <*> v .: "name"
 
 -- TO JSON  
+
+instance ToJSON ProdId where
+    toJSON (ProdId i) = toJSON i
 
 instance ToJSON TableId where
     toJSON (TableId i) = toJSON i
@@ -111,7 +123,7 @@ instance ToJSON OrderId where
     toJSON (OrderId i) = toJSON i
 
 instance ToJSON Product where
-    toJSON (Product xs) = object ["name" .= xs]
+    toJSON (Product i xs) = object ["id" .= i,"name" .= xs]
 
 instance ToJSON User where
     toJSON (User id) = object ["id" .= id]
@@ -171,4 +183,8 @@ instance Identifiable Order where
 instance Identifiable OrderItem where
     type Id OrderItem =  OrderItemId
     getId = _orderItemId
+
+instance Identifiable Product where
+    type Id Product =  ProdId
+    getId = _prodId
 

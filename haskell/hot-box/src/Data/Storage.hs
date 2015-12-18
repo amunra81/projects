@@ -65,6 +65,7 @@ $(deriveSafeCopy 0 'base ''UserId)
 $(deriveSafeCopy 0 'base ''TableId)
 $(deriveSafeCopy 0 'base ''OrderId)
 $(deriveSafeCopy 0 'base ''OrderItemId)
+$(deriveSafeCopy 0 'base ''ProdId)
 
 $(deriveSafeCopy 0 'base ''User)
 $(deriveSafeCopy 0 'base ''Table)
@@ -142,6 +143,7 @@ constructOpenEmptyOrderM rid tid =
                             , _userOrders = []
                             , _closed = False
                             }
+
 closeCurrentOrderM :: Id Restaurant -> Id Table -> MaybeT (Update Storage) Order
 closeCurrentOrderM rid tid = do
     cOrder <- MaybeT $ liftQuery $ getCurrentOrder rid tid
@@ -153,10 +155,16 @@ closeCurrentOrder :: Id Restaurant -> Id Table -> Update Storage Bool
 closeCurrentOrder rid tid =  
         liftM isJust (runMaybeT $ closeCurrentOrderM rid tid)  
 
+addProductToCurrentOrderM :: Id Restaurant -> Id Table -> Id User -> Id Product -> MaybeT (Update Storage) OrderItem
+addProductToCurrentOrderM rid tid uid pid= do
+    cOrder <- MaybeT $ liftQuery $ getCurrentOrder rid tid
+    cUserOrder <- MaybeT $ return $ List.find ((== uid) . _userId . _userOrder) (_userOrders cOrder)
+    _
+
 attachUserToCurrentOrderM :: Id Restaurant -> Id Table -> Id User -> MaybeT (Update Storage) Order
 attachUserToCurrentOrderM rid tid uid = do
     -- find proper user
-    user <- MaybeT $ fmap (\s -> getOne $ users s @= uid) get
+    user <- MaybeT $ fmap (getOne . (@= uid) . users) get
     -- find current order
     cOrderM <- lift $ liftQuery $ getCurrentOrder rid tid
     cOrder <-  
