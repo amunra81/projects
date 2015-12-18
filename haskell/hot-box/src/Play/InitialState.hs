@@ -30,7 +30,7 @@ tables1 = map toTable [(1,"Table 1"),(2,"Table 2")]
 
 toRest (i,str,m) = Restaurant (RestId i) str tables1 m
 
-rest1 = (1,"Zvon Cafe",take 10 menu0)
+rest1 = (1,"Zvon Cafe",take 20 menu0)
 rest2 = (2,"Colectiv",menu2)
 rest3 = (3,"La mama",menu3)
 rest4 = (5,"La placinte",menu1)

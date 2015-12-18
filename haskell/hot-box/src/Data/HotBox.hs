@@ -117,7 +117,7 @@ instance ToJSON User where
     toJSON (User id) = object ["id" .= id]
 
 instance ToJSON OrderItem where
-    toJSON (OrderItem i product) = object ["id" .= unOrderItemId i,"name" .= product]
+    toJSON (OrderItem i product) = object ["id" .= unOrderItemId i,"product" .= product]
 
 instance ToJSON UserOrder where
     toJSON (UserOrder user xs) = object ["user" .= user,"items" .= xs]

@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings, ScopedTypeVariables #-}
-{-# LANGUAGE FlexibleInstances,UndecidableInstances #-}
+{-# LANGUAGE FlexibleInstances,UndecidableInstances,TypeFamilies #-}
 module Http.Handlers where 
 
 import Happstack.Server ( Response, ServerPartT,ServerPart, ok, toResponse, simpleHTTP
@@ -11,7 +11,7 @@ import qualified Data.ByteString.Char8 as B
 import qualified Data.ByteString.Lazy.Char8 as L
 import Control.Monad.Trans  ( MonadTrans, lift )
 import Data.Acid            ( AcidState, Query, Update
-                            , makeAcidic, openLocalState )
+                            , makeAcidic, openLocalState,EventState )
 import Data.Acid.Advanced   ( query', update' )
 import qualified Data.List as List
 import Control.Monad        (MonadPlus)
@@ -43,6 +43,7 @@ getWholeStorageH acid = do
         ok $ toResponse c
         
 -- | RESTAURANTS
+
 getRestaurantsH :: AcidState Storage -> (ServerPartT IO) Response
 getRestaurantsH acid =  do
         (c :: [Restaurant]) <- lift $ query' acid GetAllRests
@@ -55,11 +56,7 @@ notFound' :: ServerPart Response
 notFound' = notFound $ toResponse ("Not found" :: String)
 
 getRestByIdH :: AcidState Storage -> Int -> ServerPart Response
-getRestByIdH acid rid = do
-        (r::Maybe Restaurant) <- lift $ query' acid (GetRestById rid)
-        case r of
-         Nothing -> notFound'
-         Just rest -> ok $ toResponse rest
+getRestByIdH acid rid = handleQueryFromMaybe acid (GetRestById $ RestId rid)
 
 newRestH :: AcidState Storage -> ServerPart Response
 newRestH acid = do
@@ -71,14 +68,32 @@ newRestH acid = do
          Nothing -> notFound'
 
 -- | ORDERS 
+
 getAllOrdersByRestAndTableH :: Acid -> Id Restaurant -> Id Table -> ServerPart Response
 getAllOrdersByRestAndTableH acid rid tid = do
         (c :: [Order]) <- lift $ query' acid (GetOrdersByRestAndTable rid tid)
         ok $ toResponse c
 
 getCurrentOrderH :: Acid -> Id Restaurant -> Id Table -> ServerPart Response
-getCurrentOrderH acid rid tid = do
-        c <- lift $ query' acid (GetCurrentOrder rid tid)
+getCurrentOrderH acid rid tid = handleQueryFromMaybe acid (GetCurrentOrder rid tid)
+
+attachUserToCurrentOrderH :: Acid -> Id Restaurant -> Id Table -> Id User -> ServerPart Response
+attachUserToCurrentOrderH acid rid tid uid = 
+        handleUpdateFromMaybe acid (AttachUserToCurrentOrder rid tid uid)
+
+closeCurrentOrderH :: Acid -> Id Restaurant -> Id Table -> ServerPart Response
+closeCurrentOrderH acid rid tid = do
+        c <- lift $ update' acid (CloseCurrentOrder rid tid)
+        ok $ toResponse c
+
+handleQueryFromMaybe acid p = do
+        c <- lift $ query' acid p
+        case c of
+         Just o -> ok $ toResponse o
+         Nothing -> notFound'
+
+handleUpdateFromMaybe acid p = do
+        c <- lift $ update' acid p
         case c of
          Just o -> ok $ toResponse o
          Nothing -> notFound'

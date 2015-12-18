@@ -1,14 +1,14 @@
 {-# LANGUAGE DeriveDataTypeable,TemplateHaskell,TypeFamilies ,RecordWildCards
              ,GeneralizedNewtypeDeriving,OverloadedStrings #-}
 {-# LANGUAGE OverloadedStrings , TypeFamilies, FlexibleContexts #-}
-{-# LANGUAGE DeriveDataTypeable,GeneralizedNewtypeDeriving,RecordWildCards,DataKinds #-}
+{-# LANGUAGE DeriveDataTypeable,GeneralizedNewtypeDeriving,RecordWildCards,DataKinds,ScopedTypeVariables #-}
 
 module Data.Storage 
 where
 
 import Data.SafeCopy        ( SafeCopy, base, deriveSafeCopy )
 import Data.Acid            ( AcidState, Query, Update
-                            , makeAcidic, openLocalState )
+                            , makeAcidic, openLocalState,liftQuery )
 import Control.Monad.Reader ( ask )
 import qualified Data.IxSet as IxSet
 import qualified Data.List as List
@@ -17,8 +17,12 @@ import Data.IxSet           ( Indexable(..), IxSet(..), (@=)
 import Data.Data            (Data, Typeable)
 import Control.Monad.State  ( get,put )
 import Data.Aeson (ToJSON(..),object,(.=))
-
+import Control.Monad.Trans.Maybe
 import Data.HotBox          
+import Control.Monad.Trans  ( MonadTrans, lift )
+import Data.Maybe           (isJust)
+import Control.Monad        (liftM)
+
 
 data Storage = Storage { restaurants :: IxSet Restaurant
                        , nextRestId  :: Id Restaurant
@@ -83,10 +87,10 @@ getAllUsers = getAllUsers
 getAllRests :: Query Storage [Restaurant]
 getAllRests = getAll restaurants
 
-getRestById ::  Int -> Query Storage (Maybe Restaurant)
+getRestById ::  Id Restaurant -> Query Storage (Maybe Restaurant)
 getRestById rid = do
     st@Storage{..} <- ask
-    return $ getOne $ restaurants @= RestId rid
+    return $ getOne $ restaurants @= rid
 
 -- | insert a new restaurant 
 addNewRest :: Restaurant -> Update Storage Restaurant
@@ -126,10 +130,59 @@ getCurrentOrder rid tid =
                  (o@Order{..}:_) -> 
                      if _closed then Nothing
                                 else Just o 
+
+constructOpenEmptyOrderM :: Id Restaurant -> Id Table -> MaybeT (Query Storage) Order
+constructOpenEmptyOrderM rid tid = 
+    do s@Storage{..} <- ask
+       rest@Restaurant{..} <- MaybeT $ getRestById rid
+       table <- MaybeT $ return $ List.find ((== tid) . _tableId) _tables
+       return Order { _orderId = nextOrderId
+                            , _orderRest = rest
+                            , _orderTable = table
+                            , _userOrders = []
+                            , _closed = False
+                            }
+closeCurrentOrderM :: Id Restaurant -> Id Table -> MaybeT (Update Storage) Order
+closeCurrentOrderM rid tid = do
+    cOrder <- MaybeT $ liftQuery $ getCurrentOrder rid tid
+    s@Storage{..} <- get
+    put $ s { orders = IxSet.updateIx (_orderId cOrder) cOrder { _closed = True } orders}
+    return cOrder
+
+closeCurrentOrder :: Id Restaurant -> Id Table -> Update Storage Bool
+closeCurrentOrder rid tid =  
+        liftM isJust (runMaybeT $ closeCurrentOrderM rid tid)  
+
+attachUserToCurrentOrderM :: Id Restaurant -> Id Table -> Id User -> MaybeT (Update Storage) Order
+attachUserToCurrentOrderM rid tid uid = do
+    -- find proper user
+    user <- MaybeT $ fmap (\s -> getOne $ users s @= uid) get
+    -- find current order
+    cOrderM <- lift $ liftQuery $ getCurrentOrder rid tid
+    cOrder <-  
+        case cOrderM of
+            -- new order must be created created
+            Nothing ->  do
+                order <- mapMaybeT liftQuery $ constructOpenEmptyOrderM rid tid
+                s@Storage{..} <- get
+                put $ s { nextOrderId = succ nextOrderId }
+                return order { _userOrders = [UserOrder user []]}
+            -- already exists
+            Just order@Order{..} -> 
+                if isJust (List.find ((== uid) . _userId . _userOrder) _userOrders)  -- user already in order 
+                    then return order
+                    else return order { _userOrders = _userOrders ++ [UserOrder user []]}
+
+    -- update the userOrder
+    s@Storage{..} <- get
+    put $ s { orders = IxSet.updateIx (_orderId cOrder) cOrder orders}
+    return cOrder
+
+attachUserToCurrentOrder rid tid uid = runMaybeT $ attachUserToCurrentOrderM rid tid uid
  
 
 $(makeAcidic ''Storage 
     ['getAllRests,'addNewRest,'getAllUsers,'addNewUser,'getRestById,'getOrdersByRestAndTable
-    ,'getWholeStorage,'getCurrentOrder 
+    ,'getWholeStorage,'getCurrentOrder,'attachUserToCurrentOrder,'closeCurrentOrder
     ])
 

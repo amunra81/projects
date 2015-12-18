@@ -115,15 +115,15 @@ var OrderDetails = React.createClass({
                 <Text>User {userOrder.user.id}</Text>
             </View>
             <View testID="products" style={styles.products}>
-                {userOrder.products.map(x => this.renderProduct(x))}
+                {userOrder.items?userOrder.items.map(x => this.renderProduct(x)):null}
             </View>
           </View>
       );
   },
 
-  renderProduct: function(product){
+  renderProduct: function(orderItem){
       return (
-          <Text> - {product.name}</Text>
+          <Text> - {orderItem.product.name}</Text>
       );
   },
 

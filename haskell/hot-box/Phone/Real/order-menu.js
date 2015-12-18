@@ -114,7 +114,7 @@ var styles = StyleSheet.create({
     alignItems:'center',
   },
   container: {
-    flex: 1,
+    flex: 0.5,
     //flexDirection: 'row',
     //justifyContent: 'space-around',
     //alignItems: 'center',
