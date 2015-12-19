@@ -25,7 +25,7 @@ menu3 = mapProduct ["koktail de mure", "vafe", "apa plata" ]
 
 -- TABLES
 
-toTable (i,name) = Table (TableId 1) name Nothing
+toTable (i,name) = Table (TableId 1) name 
 tables1 = map toTable [(1,"Table 1"),(2,"Table 2")]
 
 -- RESTAURANTS

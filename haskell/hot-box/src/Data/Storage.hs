@@ -15,13 +15,14 @@ import Data.IxSet           ( Indexable(..), IxSet(..), (@=)
                             , Proxy(..), getOne, ixFun, ixSet)
 import Data.Data            (Data, Typeable)
 import Control.Monad.State  ( get,put )
-import Data.Aeson (ToJSON(..),object,(.=))
+import Data.Aeson (ToJSON(..),object,)
+import qualified Data.Aeson as Aeson
 import Control.Monad.Trans.Maybe
 import Data.HotBox          
 import Control.Monad.Trans  ( MonadTrans, lift )
 import Data.Maybe           (isJust)
 import Control.Monad        (liftM)
-import Control.Lens hiding  ((.=),Indexable)
+import Control.Lens hiding  (Indexable)
 
 
 data Storage = Storage { _restaurants :: IxSet Restaurant
@@ -36,12 +37,12 @@ makeLenses ''Storage
 
 instance ToJSON Storage where
     toJSON Storage{..} =
-            object ["restaurants"   .= IxSet.toList _restaurants 
-                   ,"nextRestId"    .= _unRestId _nextRestId
-                   ,"users"         .= IxSet.toList _users
-                   ,"nextOrderId"   .= _nextUserId
-                   ,"orders"        .= IxSet.toList _orders
-                   ,"nextOrderId"   .= _nextOrderId
+            object ["restaurants" Aeson..= IxSet.toList _restaurants 
+                   ,"nextRestId"  Aeson..= _unRestId _nextRestId
+                   ,"users"       Aeson..= IxSet.toList _users
+                   ,"nextOrderId" Aeson..= _nextUserId
+                   ,"orders"      Aeson..= IxSet.toList _orders
+                   ,"nextOrderId" Aeson..= _nextOrderId
                    ]
 
 instance Indexable Restaurant where
@@ -86,12 +87,9 @@ getAll f =
 getAllUsers :: Query Storage [User]
 getAllUsers = getAllUsers
 
-restaurantsG :: Getter Storage [Restaurant]
-restaurantsG = restaurants . to IxSet.toList
-
 -- | get all restaurants from the storage
 getAllRests :: Query Storage [Restaurant]
-getAllRests =  view restaurantsG
+getAllRests =  view $ restaurants . to IxSet.toList
 
 getRestById ::  Id Restaurant -> Query Storage (Maybe Restaurant)
 getRestById rid = 
@@ -99,29 +97,24 @@ getRestById rid =
 
 -- | insert a new restaurant 
 addNewRest :: Restaurant -> Update Storage Restaurant
-addNewRest r = 
-    do s@Storage{..} <- get
-       let newR = r { _restId = _nextRestId }
-       put $ s { _restaurants = IxSet.insert newR _restaurants
-               , _nextRestId = succ _nextRestId
-               }
-       return newR
+addNewRest r = do
+    nextId <- nextRestId <<%= succ -- increment id and bind the old one
+    let newR = set restId nextId r -- replace with next id
+    restaurants %= IxSet.insert newR -- insert new restaurant
+    return newR
        
  -- | insert a new user 
 addNewUser :: User -> Update Storage User
-addNewUser user = 
-    do s@Storage{..} <- get
-       let newUser = user { _userId = _nextUserId }
-       put $ s { _users = IxSet.insert newUser _users
-               , _nextUserId = succ _nextUserId
-               }
-       return newUser 
+addNewUser user = do
+       nextId <- nextUserId <<%= succ -- increment id and bind the old one
+       let newU = set userId nextId user -- replace with next id
+       users %= IxSet.insert newU -- insert new user
+       return newU
 
 -- | orders
 getOrdersByRestAndTable :: Id Restaurant -> Id Table -> Query Storage [Order]
 getOrdersByRestAndTable rid tid = 
-    do s@Storage{..} <- ask
-       return $ IxSet.toList $ _orders @= (rid,tid)
+       view $ orders . to (IxSet.toList . (@= (rid,tid)))
 
 getWholeStorage :: Query Storage Storage
 getWholeStorage = ask
@@ -129,12 +122,14 @@ getWholeStorage = ask
 getCurrentOrder :: Id Restaurant -> Id Table -> Query Storage (Maybe Order)
 getCurrentOrder rid tid =
     do s@Storage{..} <- ask
-       let ret = IxSet.toDescList (Proxy :: Proxy (Id Order)) $ _orders @= (rid,tid) 
+       {-r <-  view $ orders . to queryOrders . traversed  -}
+       (ret::[Order]) <-  view $ orders . to queryOrders 
        return $ case ret of
                  [] -> Nothing
                  (o@Order{..}:_) -> 
                      if _closed then Nothing
                                 else Just o 
+    where queryOrders o = IxSet.toDescList (Proxy :: Proxy (Id Order)) $ o @= (rid,tid)
 
 constructOpenEmptyOrderM :: Id Restaurant -> Id Table -> MaybeT (Query Storage) Order
 constructOpenEmptyOrderM rid tid = 

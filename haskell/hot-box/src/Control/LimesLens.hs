@@ -15,7 +15,6 @@ import Play.InitialStorageState
 import Data.Data            (Data, Typeable)
 import Http.Handlers
 
-
 defRest = Restaurant (RestId 3) "Name" [] []
 ss = defRest ^. restId . unRestId
 

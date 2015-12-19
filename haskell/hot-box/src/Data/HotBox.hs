@@ -16,16 +16,16 @@ newtype RestId = RestId { _unRestId :: Int }
 newtype TableId = TableId { unTableId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
-newtype UserId = UserId { unUserId :: Int }
+newtype UserId = UserId { _unUserId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
-newtype OrderId = OrderId { unOrderId :: Int }
+newtype OrderId = OrderId { _unOrderId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
-newtype ProdId = ProdId { unProdId :: Int }
+newtype ProdId = ProdId { _unProdId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
-newtype OrderItemId = OrderItemId { unOrderItemId :: Int }
+newtype OrderItemId = OrderItemId { _unOrderItemId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
 -- | Actual Data
@@ -36,7 +36,7 @@ data Restaurant = Restaurant { _restId  :: Id Restaurant
                              }
                   deriving (Show,Eq, Ord, Data, Typeable)
 
-data Table = Table { _tableId:: Id Table,_tableName :: String,currentOrder :: Maybe Order }
+data Table = Table { _tableId:: Id Table,_tableName :: String }
              deriving (Show,Eq, Ord, Data, Typeable)
 
 data Product = Product { _prodId :: Id Product 
@@ -90,10 +90,9 @@ instance FromJSON UserOrder where
 
 instance FromJSON Table where
         parseJSON (Object v) =
-            tableWithNoOrder
+            Table
             <$> v .: "id"
             <*> v .: "name"
-            where tableWithNoOrder id name = Table id name Nothing
         parseJSON _ = mzero
 
 instance FromJSON Restaurant where
@@ -132,13 +131,13 @@ instance ToJSON User where
     toJSON (User id) = object ["id" .= id]
 
 instance ToJSON OrderItem where
-    toJSON (OrderItem i product) = object ["id" .= unOrderItemId i,"product" .= product]
+    toJSON (OrderItem i product) = object ["id" .= _unOrderItemId i,"product" .= product]
 
 instance ToJSON UserOrder where
     toJSON (UserOrder user xs) = object ["user" .= user,"items" .= xs]
 
 instance ToJSON Table where
-    toJSON (Table id name _) =
+    toJSON (Table id name) =
             object ["id" .= id,"name" .= name]
 
 instance ToJSON Restaurant where
@@ -191,7 +190,7 @@ instance Identifiable Product where
     type Id Product =  ProdId
     getId = _prodId
 
--- LENSES 
+-- | LENSES 
 
 makeLenses ''RestId
 makeLenses ''UserId
