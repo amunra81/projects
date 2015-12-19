@@ -54,8 +54,8 @@ toOrder restList users (oid,rid,tid,uorders) =
               , _closed = False
               }
         where rest = fromJust $ List.find (\r -> _restId r == RestId tid) (restList::[Restaurant])
-              table = fromJust $ List.find (\r -> _tableId r == TableId tid) (_tables rest)
-              menu = _menu rest
+              table = fromJust $ List.find (\r -> _tableId r == TableId tid) (_restTables rest)
+              menu = _restMenu rest
               userOrders = map toUserOrder uorders
               toUserOrder :: (Int,[(Int,Int)]) -> UserOrder
               toUserOrder (uid,products) = 

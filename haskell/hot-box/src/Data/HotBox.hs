@@ -1,14 +1,17 @@
 {-# LANGUAGE OverloadedStrings , TypeFamilies #-}
 {-# LANGUAGE DeriveDataTypeable,GeneralizedNewtypeDeriving,RecordWildCards #-}
+{-# LANGUAGE TemplateHaskell #-}
+
 module Data.HotBox where
 
 import Data.Aeson
 import Control.Monad
 import Data.Data            (Data, Typeable)
+import Control.Lens hiding ((.=))
 
 -- | Data ID's
 
-newtype RestId = RestId { unRestId :: Int }
+newtype RestId = RestId { _unRestId :: Int }
                              deriving (Show,Eq, Ord, Data, Enum, Typeable)
 newtype TableId = TableId { unTableId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
@@ -27,9 +30,9 @@ newtype OrderItemId = OrderItemId { unOrderItemId :: Int }
 
 -- | Actual Data
 data Restaurant = Restaurant { _restId  :: Id Restaurant 
-                             , _name    :: String
-                             , _tables  :: [Table] 
-                             , _menu    :: Menu
+                             , _restName    :: String
+                             , _restTables  :: [Table] 
+                             , _restMenu    :: Menu
                              }
                   deriving (Show,Eq, Ord, Data, Typeable)
 
@@ -140,19 +143,19 @@ instance ToJSON Table where
 
 instance ToJSON Restaurant where
     toJSON r@Restaurant{..} =
-            object ["name" .= _name,"id" .= unRestId _restId,"tables" .= _tables,"menu" .= _menu]
+            object ["name" .= _restName,"id" .= _unRestId _restId,"tables" .= _restTables,"menu" .= _restMenu]
 
 --TODO split menu from order
 instance ToJSON Order where
     toJSON (Order{..}) = 
             object ["id" .= _orderId
                    ,"restId" .= restId
-                   ,"menu" .= _menu _orderRest
+                   ,"menu" .= _restMenu _orderRest
                    ,"tableId" .= _tableId _orderTable
                    ,"userOrders" .= _userOrders
                    ,"closed" .= _closed
                    ]
-            where restId = unRestId $ getId _orderRest
+            where restId = _unRestId $ getId _orderRest
 
 repeatList :: Int -> [a] -> [a]
 repeatList 0 xs = xs
@@ -188,3 +191,19 @@ instance Identifiable Product where
     type Id Product =  ProdId
     getId = _prodId
 
+-- LENSES 
+
+makeLenses ''RestId
+makeLenses ''UserId
+makeLenses ''TableId
+makeLenses ''OrderId
+makeLenses ''OrderItemId
+makeLenses ''ProdId
+
+makeLenses ''User
+makeLenses ''Table
+makeLenses ''Restaurant
+makeLenses ''Order
+makeLenses ''OrderItem
+makeLenses ''UserOrder
+makeLenses ''Product

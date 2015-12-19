@@ -1,5 +1,4 @@
-{-# LANGUAGE DeriveDataTypeable,TemplateHaskell,TypeFamilies ,RecordWildCards
-             ,GeneralizedNewtypeDeriving,OverloadedStrings #-}
+{-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings , TypeFamilies, FlexibleContexts #-}
 {-# LANGUAGE DeriveDataTypeable,GeneralizedNewtypeDeriving,RecordWildCards,DataKinds,ScopedTypeVariables #-}
 
@@ -22,24 +21,27 @@ import Data.HotBox
 import Control.Monad.Trans  ( MonadTrans, lift )
 import Data.Maybe           (isJust)
 import Control.Monad        (liftM)
+import Control.Lens hiding  ((.=),Indexable)
 
 
-data Storage = Storage { restaurants :: IxSet Restaurant
-                       , nextRestId  :: Id Restaurant
-                       , users       :: IxSet User
-                       , nextUserId  :: UserId
-                       , orders      :: IxSet Order
-                       , nextOrderId :: OrderId
+data Storage = Storage { _restaurants :: IxSet Restaurant
+                       , _nextRestId  :: Id Restaurant
+                       , _users       :: IxSet User
+                       , _nextUserId  :: UserId
+                       , _orders      :: IxSet Order
+                       , _nextOrderId :: OrderId
                        }
+
+makeLenses ''Storage
 
 instance ToJSON Storage where
     toJSON Storage{..} =
-            object ["restaurants"   .= IxSet.toList restaurants 
-                   ,"nextRestId"    .= unRestId nextRestId
-                   ,"users"         .= IxSet.toList users
-                   ,"nextOrderId"   .= nextUserId
-                   ,"orders"        .= IxSet.toList orders
-                   ,"nextOrderId"   .= nextOrderId
+            object ["restaurants"   .= IxSet.toList _restaurants 
+                   ,"nextRestId"    .= _unRestId _nextRestId
+                   ,"users"         .= IxSet.toList _users
+                   ,"nextOrderId"   .= _nextUserId
+                   ,"orders"        .= IxSet.toList _orders
+                   ,"nextOrderId"   .= _nextOrderId
                    ]
 
 instance Indexable Restaurant where
@@ -84,22 +86,24 @@ getAll f =
 getAllUsers :: Query Storage [User]
 getAllUsers = getAllUsers
 
+restaurantsG :: Getter Storage [Restaurant]
+restaurantsG = restaurants . to IxSet.toList
+
 -- | get all restaurants from the storage
 getAllRests :: Query Storage [Restaurant]
-getAllRests = getAll restaurants
+getAllRests =  view restaurantsG
 
 getRestById ::  Id Restaurant -> Query Storage (Maybe Restaurant)
-getRestById rid = do
-    st@Storage{..} <- ask
-    return $ getOne $ restaurants @= rid
+getRestById rid = 
+    view $ restaurants . to (getOne . (@= rid))
 
 -- | insert a new restaurant 
 addNewRest :: Restaurant -> Update Storage Restaurant
 addNewRest r = 
     do s@Storage{..} <- get
-       let newR = r { _restId = nextRestId }
-       put $ s { restaurants = IxSet.insert newR restaurants
-               , nextRestId = succ nextRestId
+       let newR = r { _restId = _nextRestId }
+       put $ s { _restaurants = IxSet.insert newR _restaurants
+               , _nextRestId = succ _nextRestId
                }
        return newR
        
@@ -107,9 +111,9 @@ addNewRest r =
 addNewUser :: User -> Update Storage User
 addNewUser user = 
     do s@Storage{..} <- get
-       let newUser = user { _userId = nextUserId }
-       put $ s { users = IxSet.insert newUser users
-               , nextUserId = succ nextUserId
+       let newUser = user { _userId = _nextUserId }
+       put $ s { _users = IxSet.insert newUser _users
+               , _nextUserId = succ _nextUserId
                }
        return newUser 
 
@@ -117,7 +121,7 @@ addNewUser user =
 getOrdersByRestAndTable :: Id Restaurant -> Id Table -> Query Storage [Order]
 getOrdersByRestAndTable rid tid = 
     do s@Storage{..} <- ask
-       return $ IxSet.toList $ orders @= (rid,tid)
+       return $ IxSet.toList $ _orders @= (rid,tid)
 
 getWholeStorage :: Query Storage Storage
 getWholeStorage = ask
@@ -125,7 +129,7 @@ getWholeStorage = ask
 getCurrentOrder :: Id Restaurant -> Id Table -> Query Storage (Maybe Order)
 getCurrentOrder rid tid =
     do s@Storage{..} <- ask
-       let ret = IxSet.toDescList (Proxy :: Proxy (Id Order)) $ orders @= (rid,tid) 
+       let ret = IxSet.toDescList (Proxy :: Proxy (Id Order)) $ _orders @= (rid,tid) 
        return $ case ret of
                  [] -> Nothing
                  (o@Order{..}:_) -> 
@@ -136,8 +140,8 @@ constructOpenEmptyOrderM :: Id Restaurant -> Id Table -> MaybeT (Query Storage) 
 constructOpenEmptyOrderM rid tid = 
     do s@Storage{..} <- ask
        rest@Restaurant{..} <- MaybeT $ getRestById rid
-       table <- MaybeT $ return $ List.find ((== tid) . _tableId) _tables
-       return Order { _orderId = nextOrderId
+       table <- MaybeT $ return $ List.find ((== tid) . _tableId) _restTables
+       return Order { _orderId = _nextOrderId
                             , _orderRest = rest
                             , _orderTable = table
                             , _userOrders = []
@@ -148,7 +152,7 @@ closeCurrentOrderM :: Id Restaurant -> Id Table -> MaybeT (Update Storage) Order
 closeCurrentOrderM rid tid = do
     cOrder <- MaybeT $ liftQuery $ getCurrentOrder rid tid
     s@Storage{..} <- get
-    put $ s { orders = IxSet.updateIx (_orderId cOrder) cOrder { _closed = True } orders}
+    put $ s { _orders = IxSet.updateIx (_orderId cOrder) cOrder { _closed = True } _orders}
     return cOrder
 
 closeCurrentOrder :: Id Restaurant -> Id Table -> Update Storage Bool
@@ -159,12 +163,12 @@ addProductToCurrentOrderM :: Id Restaurant -> Id Table -> Id User -> Id Product 
 addProductToCurrentOrderM rid tid uid pid= do
     cOrder <- MaybeT $ liftQuery $ getCurrentOrder rid tid
     cUserOrder <- MaybeT $ return $ List.find ((== uid) . _userId . _userOrder) (_userOrders cOrder)
-    _
+    undefined
 
 attachUserToCurrentOrderM :: Id Restaurant -> Id Table -> Id User -> MaybeT (Update Storage) Order
 attachUserToCurrentOrderM rid tid uid = do
     -- find proper user
-    user <- MaybeT $ fmap (getOne . (@= uid) . users) get
+    user <- MaybeT $ fmap (getOne . (@= uid) . _users) get
     -- find current order
     cOrderM <- lift $ liftQuery $ getCurrentOrder rid tid
     cOrder <-  
@@ -173,7 +177,7 @@ attachUserToCurrentOrderM rid tid uid = do
             Nothing ->  do
                 order <- mapMaybeT liftQuery $ constructOpenEmptyOrderM rid tid
                 s@Storage{..} <- get
-                put $ s { nextOrderId = succ nextOrderId }
+                put $ s { _nextOrderId = succ _nextOrderId }
                 return order { _userOrders = [UserOrder user []]}
             -- already exists
             Just order@Order{..} -> 
@@ -183,7 +187,7 @@ attachUserToCurrentOrderM rid tid uid = do
 
     -- update the userOrder
     s@Storage{..} <- get
-    put $ s { orders = IxSet.updateIx (_orderId cOrder) cOrder orders}
+    put $ s { _orders = IxSet.updateIx (_orderId cOrder) cOrder _orders}
     return cOrder
 
 attachUserToCurrentOrder rid tid uid = runMaybeT $ attachUserToCurrentOrderM rid tid uid
@@ -194,3 +198,4 @@ $(makeAcidic ''Storage
     ,'getWholeStorage,'getCurrentOrder,'attachUserToCurrentOrder,'closeCurrentOrder
     ])
 
+-- LENSES
