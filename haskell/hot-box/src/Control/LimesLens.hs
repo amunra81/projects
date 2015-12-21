@@ -21,11 +21,32 @@ ss = defRest ^. restId . unRestId
 defStorage :: Storage
 defStorage = initialStorageState
 
-
 restaurants' :: Getter Storage [Restaurant]
-restaurants' = restaurants . to toList
+restaurants' = restaurants .% toList
      where 
      toList = IxSet.toDescList (IxSet.Proxy :: IxSet.Proxy (Id Restaurant))
 
+orders' :: Getter Storage [Order]
+orders' = orders .% toList
+     where 
+     toList = IxSet.toDescList (IxSet.Proxy :: IxSet.Proxy (Id Order))
+
+infixr 9 .%
+
+-- | composing a 'lens like' with a function 
+(.%) :: (Profunctor p, Contravariant f) =>  -- constraints
+        (p s (f s) -> c) -- the lens like
+        -> (s -> a) -- the function 
+        -- returns 
+        -> p a (f a) -> c
+(.%) l f = l . to f 
+
 restNames :: Fold Storage Restaurant
 restNames =  restaurants' . traversed 
+
+
+
+
+
+{-type Getter s a = forall f. (Contravariant f, Functor f) => (a -> f a) -> s -> f s-}
+

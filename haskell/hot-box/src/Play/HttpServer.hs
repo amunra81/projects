@@ -95,7 +95,6 @@ route acid (CurrentOrder i j) = msum [ method GET >> (lift $ getCurrentOrderH ac
 route acid (UserInCurrentOrder i j k) = method POST >> 
                                         (lift $ attachUserToCurrentOrderH acid (RestId i) (TableId j) (UserId k))
 
-
 handleRestaurants :: AcidState Storage -> RouteT Sitemap (ServerPartT IO) Response
 handleRestaurants acid = msum [ method GET >> lift (getRestaurantsH acid)
                               , method POST >> lift (newRestH acid)

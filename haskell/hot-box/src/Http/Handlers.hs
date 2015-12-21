@@ -18,6 +18,7 @@ import Control.Monad        (MonadPlus)
 import Control.Monad.IO.Class (liftIO)
 import Data.Aeson (decode,FromJSON,ToJSON)
 import Data.Storage       
+import Control.Storage       
 import Data.HotBox      
 
 type Acid = AcidState Storage

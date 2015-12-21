@@ -18,6 +18,7 @@ cabal-version:       >=1.10
 library
   exposed-modules:     Data.HotBox
                       ,Data.Storage
+                      ,Control.Storage
                       ,Http.Handlers
                       ,Play.InitialState
                       ,Play.InitialStorageState
@@ -129,7 +130,7 @@ executable trans-full
                     ,mtl
                     ,safecopy
                     ,ixset
-                    ,hotBox
+                    --,hotBox
                     ,transformers
                     ,lens
 
