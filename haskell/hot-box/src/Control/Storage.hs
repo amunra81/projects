@@ -1,11 +1,13 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings , TypeFamilies, FlexibleContexts #-}
+{-# LANGUAGE Rank2Types #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE DeriveDataTypeable,GeneralizedNewtypeDeriving,RecordWildCards,DataKinds,ScopedTypeVariables #-}
 
 module Control.Storage where
 import Data.SafeCopy        ( SafeCopy, base, deriveSafeCopy )
-import Data.Acid            ( AcidState, Query, Update
-                            , makeAcidic, openLocalState,liftQuery )
+import Data.Acid            
 import Control.Monad.Reader ( ask )
 import qualified Data.IxSet as IxSet
 import qualified Data.List as List
@@ -22,11 +24,9 @@ import Data.Maybe           (isJust)
 import Control.Monad        (liftM)
 import Control.Lens hiding  (Indexable)
 import Data.Storage
-
-getAll :: (Ord a) => (Storage -> IxSet a) -> Query Storage [a]
-getAll f = 
-    do st <- ask
-       return $ IxSet.toList (f st)
+import Control.LimesLens
+import Control.Monad.Trans.State (StateT)
+import Control.Monad.State
 
 getAllUsers :: Query Storage [User]
 getAllUsers = getAllUsers
@@ -37,11 +37,22 @@ getAllRests =  view $ restaurants . to IxSet.toList
 
 getRestById ::  Id Restaurant -> Query Storage (Maybe Restaurant)
 getRestById rid = 
-    view $ restaurants . to (getOne . (@= rid))
+    view $ restaurants . _ixGetById rid
+
+toUpdate :: State s r -> Update s r
+toUpdate h = do
+                st <- get
+                let (r,nSt)  = runState h st
+                put nSt
+                return r
+zoomU l m = toUpdate $ zoom l m
 
 -- | insert a new restaurant 
 addNewRest :: Restaurant -> Update Storage Restaurant
 addNewRest r = do
+    -- play
+    {-rests . restHead . traversed . restId .= RestId 3-}
+    -- end play
     nextId <- nextRestId <<%= succ -- increment id and bind the old one
     let newR = set restId nextId r -- replace with next id
     restaurants %= IxSet.insert newR -- insert new restaurant
@@ -57,29 +68,13 @@ addNewUser user = do
 
 -- | orders
 getOrdersByRestAndTable :: Id Restaurant -> Id Table -> Query Storage [Order]
-getOrdersByRestAndTable rid tid = 
-       view $ orders . to (IxSet.toList . (@= (rid,tid)))
+getOrdersByRestAndTable rid tid = view $ orders .% (IxSet.toList . (@= (rid,tid)))
 
 getWholeStorage :: Query Storage Storage
 getWholeStorage = ask
- 
+
 getCurrentOrder :: Id Restaurant -> Id Table -> Query Storage (Maybe Order)
-getCurrentOrder rid tid = do
-       ret <-  viewHead (orders . to queryOrders . traversed  )
-       return $ case ret of
-                 Nothing -> Nothing
-                 Just o@Order{..} -> 
-                     if _closed then Nothing
-                                else Just o 
-    where queryOrders o = IxSet.toDescList (Proxy :: Proxy (Id Order)) $ o @= (rid,tid)
-
-viewItems l = do
-            s <- ask
-            return $ s ^.. l
-
-viewHead l = do
-            s <- ask
-            return $ s ^? l
+getCurrentOrder rid tid = view $ orders . _currentOrder rid tid
 
 constructOpenEmptyOrderM :: Id Restaurant -> Id Table -> MaybeT (Query Storage) Order
 constructOpenEmptyOrderM rid tid = 
@@ -93,51 +88,40 @@ constructOpenEmptyOrderM rid tid =
                             , _closed = False
                             }
 
-closeCurrentOrderM :: Id Restaurant -> Id Table -> MaybeT (Update Storage) Order
-closeCurrentOrderM rid tid = do
-    cOrder <- MaybeT $ liftQuery $ getCurrentOrder rid tid
-    s@Storage{..} <- get
-    put $ s { _orders = IxSet.updateIx (_orderId cOrder) cOrder { _closed = True } _orders}
-    return cOrder
-
 closeCurrentOrder :: Id Restaurant -> Id Table -> Update Storage Bool
 closeCurrentOrder rid tid =  
-        liftM isJust (runMaybeT $ closeCurrentOrderM rid tid)  
+    zoomU (orders . _currentOrder rid tid ) $ 
+    get >>= maybe (return False) 
+                  (const $ _Just . closed <.= True) 
 
-addProductToCurrentOrderM :: Id Restaurant -> Id Table -> Id User -> Id Product -> MaybeT (Update Storage) OrderItem
-addProductToCurrentOrderM rid tid uid pid= do
-    cOrder <- MaybeT $ liftQuery $ getCurrentOrder rid tid
-    cUserOrder <- MaybeT $ return $ List.find ((== uid) . _userId . _userOrder) (_userOrders cOrder)
-    undefined
-
-attachUserToCurrentOrderM :: Id Restaurant -> Id Table -> Id User -> MaybeT (Update Storage) Order
-attachUserToCurrentOrderM rid tid uid = do
-    -- find proper user
-    user <- MaybeT $ fmap (getOne . (@= uid) . _users) get
-    -- find current order
-    cOrderM <- lift $ liftQuery $ getCurrentOrder rid tid
-    cOrder <-  
-        case cOrderM of
-            -- new order must be created created
-            Nothing ->  do
-                order <- mapMaybeT liftQuery $ constructOpenEmptyOrderM rid tid
-                s@Storage{..} <- get
-                put $ s { _nextOrderId = succ _nextOrderId }
-                return order { _userOrders = [UserOrder user []]}
-            -- already exists
-            Just order@Order{..} -> 
-                if isJust (List.find ((== uid) . _userId . _userOrder) _userOrders)  -- user already in order 
-                    then return order
-                    else return order { _userOrders = _userOrders ++ [UserOrder user []]}
-
-    -- update the userOrder
-    s@Storage{..} <- get
-    put $ s { _orders = IxSet.updateIx (_orderId cOrder) cOrder _orders}
-    return cOrder
-
-attachUserToCurrentOrder rid tid uid = runMaybeT $ attachUserToCurrentOrderM rid tid uid
- 
-
+attachUserToCurrentOrder :: Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order)
+attachUserToCurrentOrder rid tid uid = runMaybeT $ do
+    -- find proper user / restaurant and table
+    user <-  liftPrism $ users . _ixGetById uid . _Just
+    (rest,table) <-  liftPrism $ restaurants . _getRestAndTable rid tid . _Just
+    currentOrderM <- use (orders . _currentOrder rid tid)
+    MaybeT $ case currentOrderM of
+     Just o -> do
+        let condition = (== uid) . _userId . _userOrder
+        let userM  = firstOf (userOrders . traversed . filtered condition) o
+        case userM of
+            Just _ -> return (Just o) -- user already attached
+            Nothing -> 
+                zoomU (orders . _ixGetById (_orderId o)) 
+                      (do
+                        _Just . userOrders .= (o ^. userOrders) ++ [UserOrder { _userOrder = user
+                                                                              , _userOrderProducts = []}]
+                        get)
+     Nothing -> do
+                nextId <- nextOrderId <<%= succ
+                orders . _ixGetById nextId <.= 
+                         Just Order { _orderId = nextId
+                                    , _orderRest = rest
+                                    , _orderTable = table
+                                    , _userOrders = []
+                                    , _closed = False
+                                    }
+    
 $(makeAcidic ''Storage 
     ['getAllRests,'addNewRest,'getAllUsers,'addNewUser,'getRestById,'getOrdersByRestAndTable
     ,'getWholeStorage,'getCurrentOrder,'attachUserToCurrentOrder,'closeCurrentOrder
