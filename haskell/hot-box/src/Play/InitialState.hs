@@ -60,6 +60,7 @@ toOrder restList users (oid,rid,tid,uorders) =
               toUserOrder :: (Int,[(Int,Int)]) -> UserOrder
               toUserOrder (uid,products) = 
                 UserOrder { _userOrder = findUser uid
+                          , _nextOrderItemId = OrderItemId 20
                           , _userOrderProducts = orderItems products
                           }
               findUser uid = fromJust $ List.find (\x -> _userId x == UserId uid) users

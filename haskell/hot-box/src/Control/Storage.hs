@@ -14,7 +14,6 @@ import qualified Data.List as List
 import Data.IxSet           ( Indexable(..), IxSet(..), (@=)
                             , Proxy(..), getOne, ixFun, ixSet)
 import Data.Data            (Data, Typeable)
-import Control.Monad.State  ( get,put )
 import Data.Aeson (ToJSON(..),object,)
 import qualified Data.Aeson as Aeson
 import Control.Monad.Trans.Maybe
@@ -39,6 +38,8 @@ getRestById ::  Id Restaurant -> Query Storage (Maybe Restaurant)
 getRestById rid = 
     view $ restaurants . _ixGetById rid
 
+returnState f = fmap f get
+
 toUpdate :: State s r -> Update s r
 toUpdate h = do
                 st <- get
@@ -47,6 +48,26 @@ toUpdate h = do
                 return r
 zoomU l m = toUpdate $ zoom l m
 
+zoomM l m = MaybeT $ zoom l m'
+             where m' = runMaybeT $ fromMM m 
+
+
+fromMaybe m = MaybeT $ return m
+fromMonad = MaybeT
+
+fromMM :: MaybeT (State s) r -> MaybeT (State (Maybe s)) r
+fromMM = MaybeT . fromM' . runMaybeT 
+
+fromM' :: State s (Maybe r) -> State (Maybe s) (Maybe r)
+fromM' m =  do
+        mSt <- get
+        case mSt of
+         Nothing -> return Nothing
+         Just st -> do
+                    let (r,nSt) = runState m st
+                    put $ Just nSt 
+                    return r    
+            
 -- | insert a new restaurant 
 addNewRest :: Restaurant -> Update Storage Restaurant
 addNewRest r = do
@@ -109,8 +130,7 @@ attachUserToCurrentOrder rid tid uid = runMaybeT $ do
             Nothing -> 
                 zoomU (orders . _ixGetById (_orderId o)) 
                       (do
-                        _Just . userOrders .= (o ^. userOrders) ++ [UserOrder { _userOrder = user
-                                                                              , _userOrderProducts = []}]
+                        _Just . userOrders %= (++ currUOrder user)
                         get)
      Nothing -> do
                 nextId <- nextOrderId <<%= succ
@@ -118,13 +138,39 @@ attachUserToCurrentOrder rid tid uid = runMaybeT $ do
                          Just Order { _orderId = nextId
                                     , _orderRest = rest
                                     , _orderTable = table
-                                    , _userOrders = []
+                                    , _userOrders = currUOrder user
                                     , _closed = False
                                     }
-    
+    where currUOrder user = [UserOrder { _userOrder = user 
+                                       ,_nextOrderItemId = OrderItemId 1
+                                       ,_userOrderProducts = []}]
+
+addProductToCurrentOrder :: Id Restaurant -> Id Table -> Id User -> Id Product -> Update Storage (Maybe Order)
+addProductToCurrentOrder rid tid uid pid = toUpdate $ runMaybeT $ 
+    zoomM (orders . _currentOrder rid tid ) $ do 
+        product <-  liftPrism $ orderRest . restMenu . traversed . filtered ((== pid) . getId)  
+        -- zoom into user order and add the product
+        zoom ( userOrders . traversed . filtered ((== uid) . getId . _userOrder)) $ do
+            -- get next order item id
+            nextId <- nextOrderItemId <<%= succ
+            let orderProduct = [OrderItem { _orderItemId = nextId , _orderItemProduct = product}]
+            -- add new product
+            userOrderProducts %= (++ orderProduct)
+        get
+
+deleteItemFromCurrentOrder :: Id Restaurant -> Id Table -> Id User -> Id OrderItem -> Update Storage (Maybe Order)
+deleteItemFromCurrentOrder rid tid uid oid = toUpdate $ runMaybeT $
+    zoomM (orders . _currentOrder rid tid ) $ do 
+        -- zoom into user order and delete
+        zoom ( userOrders . traversed . filtered ((== uid) . getId . _userOrder)) $ 
+            -- filter
+            userOrderProducts %= filter ((/= oid) . _orderItemId)
+        get
+
 $(makeAcidic ''Storage 
     ['getAllRests,'addNewRest,'getAllUsers,'addNewUser,'getRestById,'getOrdersByRestAndTable
     ,'getWholeStorage,'getCurrentOrder,'attachUserToCurrentOrder,'closeCurrentOrder
+    ,'addProductToCurrentOrder,'deleteItemFromCurrentOrder
     ])
 
 -- LENSES

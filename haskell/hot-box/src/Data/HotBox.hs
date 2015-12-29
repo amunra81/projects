@@ -54,6 +54,7 @@ data OrderItem = OrderItem { _orderItemId :: Id OrderItem
                            } deriving (Show,Eq, Ord, Data, Typeable)
 
 data UserOrder = UserOrder { _userOrder :: User 
+                           , _nextOrderItemId :: Id OrderItem
                            , _userOrderProducts :: [OrderItem]
                            } deriving (Show,Eq,Ord,Data)
 
@@ -66,6 +67,9 @@ data Order = Order  { _orderId :: Id Order
                     } deriving (Show,Eq, Ord, Data, Typeable)
 
 -- | FROM JSON
+
+instance FromJSON OrderItemId where
+    parseJSON v = OrderItemId <$> parseJSON v
 
 instance FromJSON ProdId where
     parseJSON v = ProdId <$> parseJSON v
@@ -85,8 +89,10 @@ instance FromJSON User where
 
 instance FromJSON UserOrder where
         parseJSON (Object v) =
-            emptyOrder <$> v .: "user" 
-            where emptyOrder u = UserOrder u []
+            emptyOrder 
+            <$> v .: "user" 
+            <*> v .: "nextId"
+            where emptyOrder u n = UserOrder u n []
 
 instance FromJSON Table where
         parseJSON (Object v) =
@@ -112,6 +118,9 @@ instance FromJSON Product where
 
 -- TO JSON  
 
+instance ToJSON OrderItemId where
+    toJSON (OrderItemId i) = toJSON i
+
 instance ToJSON ProdId where
     toJSON (ProdId i) = toJSON i
 
@@ -134,7 +143,7 @@ instance ToJSON OrderItem where
     toJSON (OrderItem i product) = object ["id" .= _unOrderItemId i,"product" .= product]
 
 instance ToJSON UserOrder where
-    toJSON (UserOrder user xs) = object ["user" .= user,"items" .= xs]
+    toJSON (UserOrder user i xs) = object ["user" .= user,"nextId" .= i,"items" .= xs]
 
 instance ToJSON Table where
     toJSON (Table id name) =

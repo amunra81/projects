@@ -115,6 +115,11 @@ retreat = do
         x += 10
         y += 10
 
+retreats :: StateT Game IO ()
+retreats = do
+    lift $ putStrLn "Retreat!"
+    zoom (units.traversed) $ do
+        undefined
 --real battle
 battle :: StateT Game IO ()
 battle = do

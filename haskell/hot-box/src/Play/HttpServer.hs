@@ -51,6 +51,7 @@ data Sitemap
     | WholeStorage
     | CurrentOrder Int Int
     | UserInCurrentOrder Int Int Int
+    | ItemsInCurrentOrder Int Int Int Int
     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 
@@ -71,6 +72,8 @@ sitemap =
               <> rCurrentOrder </> int </> lit "tables" </> int </> lit "orders" </> lit "current"
               <> rUserInCurrentOrder </> int </> lit "tables" </> int </> lit "orders" </> lit "current" 
                     </> lit "users" </> int
+              <> rItemsInCurrentOrder </> int </> lit "tables" </> int </> lit "orders" </> lit "current" 
+                    </> lit "users" </> int </> lit "items" </> int
       users =  rUserOverview
                <> rUserDetail </> int . lit "-" . anyText
 
@@ -89,11 +92,15 @@ route acid WholeStorage       = lift $ getWholeStorageH acid
 route acid (OrderByRestAndTable rid tid) = do
            lift $ lift $ print $ "A intrat cu rid " ++ show rid ++ "si tid " ++ show tid
            lift $ getAllOrdersByRestAndTableH acid (RestId rid) (TableId tid)
-route acid (CurrentOrder i j) = msum [ method GET >> (lift $ getCurrentOrderH acid (RestId i) (TableId j))
-                                     , method DELETE >> (lift $ closeCurrentOrderH acid (RestId i) (TableId j))
+route acid (CurrentOrder i j) = msum [ method GET >> lift (getCurrentOrderH acid (RestId i) (TableId j))
+                                     , method DELETE >> lift (closeCurrentOrderH acid (RestId i) (TableId j))
                                      ]
 route acid (UserInCurrentOrder i j k) = method POST >> 
-                                        (lift $ attachUserToCurrentOrderH acid (RestId i) (TableId j) (UserId k))
+                                        lift (attachUserToCurrentOrderH acid (RestId i) (TableId j) (UserId k))
+route acid (ItemsInCurrentOrder i j k l) = msum 
+        [ method POST >> lift (addProductToCurrentOrderH acid (RestId i) (TableId j) (UserId k) (ProdId l))
+        , method DELETE >> lift (deleteItemFromCurrentOrderH acid (RestId i) (TableId j) (UserId k) (OrderItemId l))
+        ]
 
 handleRestaurants :: AcidState Storage -> RouteT Sitemap (ServerPartT IO) Response
 handleRestaurants acid = msum [ method GET >> lift (getRestaurantsH acid)

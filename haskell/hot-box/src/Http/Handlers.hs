@@ -87,6 +87,14 @@ closeCurrentOrderH acid rid tid = do
         c <- lift $ update' acid (CloseCurrentOrder rid tid)
         ok $ toResponse c
 
+deleteItemFromCurrentOrderH :: Acid -> Id Restaurant -> Id Table -> Id User -> Id OrderItem -> ServerPart Response
+deleteItemFromCurrentOrderH acid rid tid uid oid =
+        handleUpdateFromMaybe acid (DeleteItemFromCurrentOrder rid tid uid oid)
+
+addProductToCurrentOrderH :: Acid -> Id Restaurant -> Id Table -> Id User -> Id Product -> ServerPart Response
+addProductToCurrentOrderH acid rid tid uid pid =
+        handleUpdateFromMaybe acid (AddProductToCurrentOrder rid tid uid pid)
+
 handleQueryFromMaybe acid p = do
         c <- lift $ query' acid p
         case c of

@@ -102,6 +102,9 @@ _ixBiQuery qr = lens getter setter
         setter   = foldl (flip update)
         update x = IxSet.updateIx (getId x) x
 
+_currentOrderP :: Id Restaurant -> Id Table -> Prism' (IxSet Order) Order
+_currentOrderP = undefined
+
 _currentOrder :: Id Restaurant -> Id Table -> Lens' (IxSet Order) (Maybe Order)
 _currentOrder rid tid = lens getter setter  
    where 
