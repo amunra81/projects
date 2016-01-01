@@ -20,7 +20,7 @@ var OrderMenu = React.createClass({
     var ls = this.toListDataSource();
     if(this.props.state){
         var {dataSource,...other} = this.props.state;
-        return {dataSource : ls.cloneWithRows(dataSource[0].menu),...other};
+        return {dataSource : ls.cloneWithRows(dataSource.menu),...other};
     }
     else
         return { 
@@ -38,7 +38,7 @@ var OrderMenu = React.createClass({
   },
 
   _requestUrl : function () {
-      return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders`
+      return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`
   },
 
   fetchData: function() {
@@ -49,7 +49,7 @@ var OrderMenu = React.createClass({
     })
     .then((responseData) => {
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(responseData[0].menu)
+            dataSource: this.state.dataSource.cloneWithRows(responseData.menu)
             ,loaded: true
         });
     })
@@ -76,12 +76,15 @@ var OrderMenu = React.createClass({
 
   renderProduct: function(product){
       return (
-        <TouchableHighlight onPress={() => console.log(`s-a clickuit pe ${product.name}!`) }>
-          <View style={[styles.listItem,styles.center]}>
-              <Text>
-                  {product.name}
-              </Text>
-          </View>
+          <TouchableHighlight onPress={() => { 
+            console.log(`s-a clickuit pe ${product.name}!`); 
+            this.props.productClicked(product);
+          }}>
+            <View style={[styles.listItem,styles.center]}>
+                <Text>
+                    {product.name}
+                </Text>
+            </View>
         </TouchableHighlight>
       );
   },

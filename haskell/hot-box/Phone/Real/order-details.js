@@ -31,6 +31,13 @@ var OrderDetails = React.createClass({
              };
   },
 
+  getState: function() {
+      if(this.props.state)
+          return this.props.state;
+      else
+          return this.state;
+  },
+
   componentWillMount: function() {
       //this.fetchData();
   },
@@ -60,6 +67,11 @@ var OrderDetails = React.createClass({
   },
 
   render: function() {
+    if(this.state && this.state.refreshed != this.props.state.refreshed)
+    {
+        this.setState(this.props.state);
+        return this.renderLoadedView();
+    }
     if (!this.state.loaded) {
       return this.renderLoadingView();
     }
@@ -76,15 +88,11 @@ var OrderDetails = React.createClass({
     );
   },
 
-  _firstOrder: function() {
-      return this.state.dataSource[0];
-  },
-
   renderHead: function() {
       return (
           <View style={[styles.head,styles.center]}>
               <Text>
-                  HEAD
+                  HEAD + {this.state.refreshed}
               </Text>
           </View>
       );
@@ -99,7 +107,7 @@ var OrderDetails = React.createClass({
   },
 
   renderBody: function() {
-      var data = this._firstOrder().userOrders;
+      var data = this.state.dataSource.userOrders;
       var i = 2;
       return (
           <View style={styles.order}>
@@ -115,15 +123,20 @@ var OrderDetails = React.createClass({
                 <Text>User {userOrder.user.id}</Text>
             </View>
             <View testID="products" style={styles.products}>
-                {userOrder.items?userOrder.items.map(x => this.renderProduct(x)):null}
+                {userOrder.items?userOrder.items.map(x => this.renderProduct(x,userOrder.user)):null}
             </View>
           </View>
       );
   },
 
-  renderProduct: function(orderItem){
+  renderProduct: function(orderItem,user){
       return (
-          <Text> - {orderItem.product.name}</Text>
+          <TouchableHighlight onPress={() => { 
+            console.log(`s-a clickuit pe ${orderItem.product.name} + ${user.id}!`); 
+            this.props.orderItemClicked(orderItem,user);
+          }}>
+            <Text> - {orderItem.product.name}</Text>
+        </TouchableHighlight>
       );
   },
 

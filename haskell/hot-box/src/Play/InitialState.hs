@@ -66,7 +66,7 @@ toOrder restList users (oid,rid,tid,uorders) =
               findUser uid = fromJust $ List.find (\x -> _userId x == UserId uid) users
               orderItems = map (\(i,j) -> OrderItem (OrderItemId i) (menu !! j))
 
-order1 = (1, 1, 1, [(1,[(0,0),(1,1),(2,0),(3,2)])
-                   ,(2,[(0,0),(1,2)])
+order1 = (1, 1, 1, [(1,[(5,0),(1,1),(2,0),(3,2)])
+                   ,(2,[(5,0),(1,2)])
                    ])
 allOrders = map (toOrder allRestaurants allUsers) [order1]

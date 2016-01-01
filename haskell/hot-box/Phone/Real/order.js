@@ -22,6 +22,8 @@ var Order = React.createClass({
             return { 
                 restId : this.props.restId,
                 tableId : this.props.tableId,
+                userId : this.props.userId,
+                refreshed: 0,
                 dataSource : null,
                 loaded: false
              };
@@ -31,13 +33,19 @@ var Order = React.createClass({
       this.fetchData();
   },
 
-  _requestUrl : function () {
-      return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders`
+  _requestUrl : function (id,userId) {
+    var _userId = userId?userId:this.state.userId;
+    if(!id)
+        return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`
+    else
+        return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current/users/${_userId}/items/${id}`;
   },
 
-  fetchData: function() {
-      //for(var i = 0 ; i < 10000;i++) {
-        fetch(this._requestUrl())
+  fetchData: function(id,userId) {
+        var url = this._requestUrl(id,userId);
+        var args = {method:!id?'GET':!userId?'POST':'DELETE'};
+        console.log(`calling API: url: [${url}] , args: [${JSON.stringify(args)}]`);
+        fetch(url,args)
         .then((response) => {
             console.log(response)
             return response.json();
@@ -46,11 +54,13 @@ var Order = React.createClass({
             this.setState({
                 dataSource: responseData
                 ,loaded: true
+                ,refreshed: this.state.refreshed+1
             });
         })
-      //}
-    //.done();
-    
+        .then(() => {
+            console.log(this.state.refreshed);
+        })
+        .done();
   },
 
   render: function() {
@@ -60,14 +70,25 @@ var Order = React.createClass({
     else return this.renderLoadedView();
   },
 
+  orderItemClicked: function(orderItem,user){
+    console.log(`a sarit pana sus cu ${orderItem.id} si ${user.id}`);
+    this.fetchData(orderItem.id,user.id);
+  },
+
+  productSelected: function(prod){
+    console.log(`a sarit pana sus cu ${prod.name}`);
+    this.fetchData(prod.id);
+  },
+
   renderLoadedView: function() {
     var { dataSource, ...otherState } = this.state;
     var { menu,restId,tableId,...orderDetails} = dataSource
     
     return (
         <View style={styles.container}>
-            <OrderDetails state={this.state}/>
-            <OrderMenu state={this.state}/>
+            <View style={{paddingLeft:this.state.refreshed}}><Text>{this.state.refreshed}</Text></View>
+            <OrderDetails state={this.state} orderItemClicked={ this.orderItemClicked } />
+            <OrderMenu state={this.state} productClicked={ this.productSelected }/>
         </View>
     );
   },
