@@ -70,9 +70,9 @@ var Order = React.createClass({
     else return this.renderLoadedView();
   },
 
-  orderItemClicked: function(orderItem,user){
-    console.log(`a sarit pana sus cu ${orderItem.id} si ${user.id}`);
-    this.fetchData(orderItem.id,user.id);
+  orderItemClicked: function(item,user){
+    console.log(`a sarit pana sus cu ${item.itemId} si ${user.id}`);
+    this.fetchData(item.itemId,user.id);
   },
 
   productSelected: function(prod){

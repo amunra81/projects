@@ -117,25 +117,33 @@ var OrderDetails = React.createClass({
   },
 
   renderUserOrder: function(userOrder){
+      var items = Enumerable
+                    .from(userOrder.items)
+                    .groupBy(x => x.product.id)
+                    .select(x=>{return { prodId:x.key()
+                                       ,count:x.count()
+                                       ,pname:x.last().product.name
+                                       ,itemId:x.last().id};
+                    }).toArray();
       return (
           <View>
             <View name="laba">
                 <Text>User {userOrder.user.id}</Text>
             </View>
             <View testID="products" style={styles.products}>
-                {userOrder.items?userOrder.items.map(x => this.renderProduct(x,userOrder.user)):null}
+                {items?items.map(x => this.renderProduct(x,userOrder.user)):null}
             </View>
           </View>
       );
   },
 
-  renderProduct: function(orderItem,user){
+  renderProduct: function(item,user){
       return (
           <TouchableHighlight onPress={() => { 
-            console.log(`s-a clickuit pe ${orderItem.product.name} + ${user.id}!`); 
-            this.props.orderItemClicked(orderItem,user);
+            console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
+            this.props.orderItemClicked(item,user);
           }}>
-            <Text> - {orderItem.product.name}</Text>
+            <Text> {item.count}...... {item.pname}</Text>
         </TouchableHighlight>
       );
   },
