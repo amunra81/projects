@@ -90,7 +90,6 @@ var Order = React.createClass({
 
   _onDetailsColapse: function(){
       this._onDetailsColapseToogle();
-
   },
 
   _onDetailsColapseToogle: function()
