@@ -33,7 +33,7 @@ var Order = React.createClass({
   },
 
   componentDidMount: function() {
-      LayoutAnimation.spring();
+      LayoutAnimation.linear();
       this.fetchData();
   },
 
@@ -80,21 +80,24 @@ var Order = React.createClass({
   },
 
   productSelected: function(prod){
-    LayoutAnimation.spring();
     console.log(`a sarit pana sus cu ${prod.name}`);
     this.fetchData(prod.id);
   },
 
   _onDetailsExpand: function(){
-      console.log('Expanding details...');
-      LayoutAnimation.spring();
-      this.setState({topHeight:368});
+      this._onDetailsColapseToogle();
   },
 
   _onDetailsColapse: function(){
-    console.log('Colapsing details');
-    LayoutAnimation.spring();
-    this.setState({topHeight:100});
+      this._onDetailsColapseToogle();
+  },
+
+  _onDetailsColapseToogle: function()
+  {
+      LayoutAnimation.spring();
+      var opened = this.state.opened;
+      this.setState({topHeight:opened?100:368
+                    ,opened:!opened});
   },
 
   renderLoadedView: function() {
