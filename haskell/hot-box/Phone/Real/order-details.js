@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Enumerable = require('linq');
 var Comments = require('./comment');
+var Display = require('react-native-device-display');
 
 var {
   Image,
@@ -77,21 +78,32 @@ var OrderDetails = React.createClass({
     );
   },
 
+
   renderHead: function() {
       return (
-          <View style={[styles.head,styles.center]}>
-              <Text>
-                  HEAD + {this.getState().refreshed}
-              </Text>
-          </View>
+        <TouchableHighlight onPress={() => { 
+            this.props.onExpand();
+        }}>
+            <View style={[styles.head,styles.center]}>
+                <Text>
+                    HEAD + {this.getState().refreshed}
+                </Text>
+            </View>
+        </TouchableHighlight>
       );
   },
 
   renderActions: function() {
+      var width = Display.width;
+      var height = Display.height;
       return (
-          <View style={[styles.actions,styles.center]}>
-              <Text>ACTIONS</Text>
-          </View>
+        <TouchableHighlight onPress={() => { 
+            this.props.onColapse();
+        }}>
+            <View style={[styles.actions,styles.center]}>
+                <Text>ACTIONS + W:{width} + H:{height}</Text>
+            </View>
+        </TouchableHighlight>
       );
   },
 
@@ -115,12 +127,12 @@ var OrderDetails = React.createClass({
                                        ,itemId:x.last().id};
                     }).toArray();
       return (
-          <View>
+          <View key={userOrder.user.id}>
             <View name="laba">
                 <Text>User {userOrder.user.id}</Text>
             </View>
             <View testID="products" style={styles.products}>
-                {items?items.map(x => this.renderProduct(x,userOrder.user)):null}
+                {items.map(x => this.renderProduct(x,userOrder.user))}
             </View>
           </View>
       );
@@ -128,11 +140,11 @@ var OrderDetails = React.createClass({
 
   renderProduct: function(item,user){
       return (
-          <TouchableHighlight onPress={() => { 
+          <TouchableHighlight key={item.itemId} onPress={() => { 
             console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
             this.props.orderItemClicked(item,user);
           }}>
-            <Text> {item.count}...... {item.pname}</Text>
+          <Text>{item.count}...... {item.pname}</Text>
         </TouchableHighlight>
       );
   },
@@ -157,7 +169,7 @@ var styles = StyleSheet.create({
     alignItems:'center',
   },
   container: {
-    flex: 0.7,
+    //flex: 1,
     flexDirection: 'column',
     //justifyContent: 'space-around',
     //alignItems: 'center',

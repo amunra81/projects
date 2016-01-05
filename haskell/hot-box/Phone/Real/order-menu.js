@@ -70,22 +70,23 @@ var OrderMenu = React.createClass({
 
   renderLoadedView: function() {
       var i = 5;
-    return (
-        <ListView 
-            style={styles.container} 
-            dataSource={this.getState().dataSource}
-            renderRow={this.renderProduct}>
-        </ListView>
+      return (
+        <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]} >
+            <ListView style={{flex:1}} 
+                dataSource={this.getState().dataSource}
+                renderRow={this.renderProduct}>
+            </ListView>
+        </View>
     );
   },
 
   renderProduct: function(product){
       return (
-          <TouchableHighlight onPress={() => { 
+          <TouchableHighlight key={product.id} onPress={() => { 
             console.log(`s-a clickuit pe ${product.name}!`); 
             this.props.productClicked(product);
           }}>
-            <View style={[styles.listItem,styles.center]}>
+            <View  style={[styles.listItem,styles.center]}>
                 <Text>
                     {product.name}
                 </Text>
@@ -122,7 +123,8 @@ var styles = StyleSheet.create({
     alignItems:'center',
   },
   container: {
-    flex: 0.5,
+    //flex: 1,
+    height:468,
     //flexDirection: 'row',
     //justifyContent: 'space-around',
     //alignItems: 'center',

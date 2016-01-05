@@ -5,6 +5,7 @@ var React = require('react-native');
 var Enumerable = require('linq');
 var OrderDetails = require('./order-details');
 var OrderMenu = require('./order-menu');
+var Display = require('react-native-device-display');
 
 var {
   StyleSheet,
@@ -80,15 +81,31 @@ var Order = React.createClass({
     this.fetchData(prod.id);
   },
 
+  _onDetailsExpand: function(){
+    console.log('Expanding details...');
+  },
+
+  _onDetailsColapse: function(){
+    console.log('Colapsing details');
+  },
+
   renderLoadedView: function() {
     var { dataSource, ...otherState } = this.state;
     var { menu,restId,tableId,...orderDetails} = dataSource
     
     return (
         <View style={styles.container}>
-            <View style={{paddingLeft:this.state.refreshed}}><Text>{this.state.refreshed}</Text></View>
-            <OrderDetails state={this.state} orderItemClicked={ this.orderItemClicked } />
-            <OrderMenu state={this.state} productClicked={ this.productSelected }/>
+            <View name="top" style={{height:300}}>
+                <OrderDetails 
+                    state= {this.state} 
+                    orderItemClicked= { this.orderItemClicked } 
+                    onExpand= {this._onDetailsExpand}
+                    onColapse= {this._onDetailsColapse}
+                />
+            </View>
+            <View name="bottom" style={{flex:1}}>
+                <OrderMenu state={this.state} productClicked={ this.productSelected }/>
+            </View>
         </View>
     );
   },
