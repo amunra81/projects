@@ -26,6 +26,7 @@ var Order = require('./Real/order');
 var Phone = React.createClass({
   render: function() {
       return <Order restId={1} tableId={1} userId={2}/>;
+      //return <LongView />;
     }
 //end React.createClas
 });

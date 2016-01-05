@@ -20,15 +20,12 @@ var HeadContainer = View;
 var OrderDetails = React.createClass({
   //mandatory
   getInitialState: function() {
-       if(this.props.state)
-            return this.props.state
-        else
-            return { 
-                restId : this.props.restId,
-                tableId : this.props.tableId,
-                dataSource : null,
-                loaded: false
-             };
+    return { 
+        restId : this.props.restId,
+        tableId : this.props.tableId,
+        dataSource : null,
+        loaded: false
+        };
   },
 
   getState: function() {
@@ -38,17 +35,14 @@ var OrderDetails = React.createClass({
           return this.state;
   },
 
-  componentWillMount: function() {
-      //this.fetchData();
-  },
   componentDidMount: function() {
-    if (!this.state.loaded) {
+    if (!this.getState().loaded) {
         this.fetchData();
     }
   },
 
   _requestUrl : function () {
-      return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders`
+      return `http://localhost:8000/restaurants/${this.getState().restId}/tables/${this.getState().tableId}/orders`
   },
 
   fetchData: function() {
@@ -67,12 +61,7 @@ var OrderDetails = React.createClass({
   },
 
   render: function() {
-    if(this.state && this.state.refreshed != this.props.state.refreshed)
-    {
-        this.setState(this.props.state);
-        return this.renderLoadedView();
-    }
-    if (!this.state.loaded) {
+    if (!this.getState().loaded) {
       return this.renderLoadingView();
     }
     else return this.renderLoadedView();
@@ -92,7 +81,7 @@ var OrderDetails = React.createClass({
       return (
           <View style={[styles.head,styles.center]}>
               <Text>
-                  HEAD + {this.state.refreshed}
+                  HEAD + {this.getState().refreshed}
               </Text>
           </View>
       );
@@ -107,7 +96,7 @@ var OrderDetails = React.createClass({
   },
 
   renderBody: function() {
-      var data = this.state.dataSource.userOrders;
+      var data = this.getState().dataSource.userOrders;
       var i = 2;
       return (
           <View style={styles.order}>

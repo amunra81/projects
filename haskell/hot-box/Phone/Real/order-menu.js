@@ -17,28 +17,33 @@ var HeadContainer = View;
 var OrderMenu = React.createClass({
   //mandatory
   getInitialState: function() {
-    var ls = this.toListDataSource();
-    if(this.props.state){
+    var ls = this._toListDataSource();
+    return { 
+        restId : this.props.restId,
+        tableId : this.props.tableId,
+        dataSource : ls,
+        loaded: false
+        };
+  },
+
+  getState: function() {
+      if(this.props.state){
+        var ls = this._toListDataSource();
         var {dataSource,...other} = this.props.state;
         return {dataSource : ls.cloneWithRows(dataSource.menu),...other};
-    }
-    else
-        return { 
-            restId : this.props.restId,
-            tableId : this.props.tableId,
-            dataSource : ls,
-            loaded: false
-            };
+      }
+      else
+          return this.state;
   },
 
   componentDidMount: function() {
-    if (!this.state.loaded) {
+    if (!this.getState().loaded) {
         this.fetchData();
     }
   },
 
   _requestUrl : function () {
-      return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`
+      return `http://localhost:8000/restaurants/${this.getState().restId}/tables/${this.getState().tableId}/orders/current`
   },
 
   fetchData: function() {
@@ -49,7 +54,7 @@ var OrderMenu = React.createClass({
     })
     .then((responseData) => {
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRows(responseData.menu)
+            dataSource: this.getState().dataSource.cloneWithRows(responseData.menu)
             ,loaded: true
         });
     })
@@ -57,7 +62,7 @@ var OrderMenu = React.createClass({
   },
 
   render: function() {
-    if (!this.state.loaded) {
+    if (!this.getState().loaded) {
       return this.renderLoadingView();
     }
     else return this.renderLoadedView();
@@ -68,7 +73,7 @@ var OrderMenu = React.createClass({
     return (
         <ListView 
             style={styles.container} 
-            dataSource={this.state.dataSource}
+            dataSource={this.getState().dataSource}
             renderRow={this.renderProduct}>
         </ListView>
     );
@@ -89,7 +94,7 @@ var OrderMenu = React.createClass({
       );
   },
 
-  toListDataSource: function() {
+  _toListDataSource: function() {
      return  new ListView.DataSource({
                         rowHasChanged: function (row1, row2) { 
                             return row1 !== row2 
