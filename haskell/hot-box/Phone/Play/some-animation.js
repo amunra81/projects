@@ -29,7 +29,7 @@ return (
             {scale: this.state.bounceValue},  // Map `bounceValue` to `scale`
           ]
         }}
-      />
+    />
     );
   }
   componentDidMount() {

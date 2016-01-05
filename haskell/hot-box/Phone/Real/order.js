@@ -11,6 +11,7 @@ var {
   StyleSheet,
   Text,
   View,
+  LayoutAnimation,
 } = React;
 
 var HeadContainer = View;
@@ -26,11 +27,13 @@ var Order = React.createClass({
                 userId : this.props.userId,
                 refreshed: 0,
                 dataSource : null,
-                loaded: false
+                loaded: false,
+                topHeight:300
              };
   },
 
   componentDidMount: function() {
+      LayoutAnimation.spring();
       this.fetchData();
   },
 
@@ -77,16 +80,21 @@ var Order = React.createClass({
   },
 
   productSelected: function(prod){
+    LayoutAnimation.spring();
     console.log(`a sarit pana sus cu ${prod.name}`);
     this.fetchData(prod.id);
   },
 
   _onDetailsExpand: function(){
-    console.log('Expanding details...');
+      console.log('Expanding details...');
+      LayoutAnimation.spring();
+      this.setState({topHeight:368});
   },
 
   _onDetailsColapse: function(){
     console.log('Colapsing details');
+    LayoutAnimation.spring();
+    this.setState({topHeight:100});
   },
 
   renderLoadedView: function() {
@@ -95,7 +103,7 @@ var Order = React.createClass({
     
     return (
         <View style={styles.container}>
-            <View name="top" style={{height:300}}>
+            <View name="top" style={{height:this.state.topHeight}}>
                 <OrderDetails 
                     state= {this.state} 
                     orderItemClicked= { this.orderItemClicked } 
