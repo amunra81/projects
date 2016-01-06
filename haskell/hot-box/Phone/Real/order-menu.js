@@ -71,12 +71,10 @@ var OrderMenu = React.createClass({
   renderLoadedView: function() {
       var i = 5;
       return (
-        <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]} >
-            <ListView style={{flex:1}} 
+            <ListView style={[styles.container]} 
                 dataSource={this.getState().dataSource}
                 renderRow={this.renderProduct}>
             </ListView>
-        </View>
     );
   },
 
@@ -123,7 +121,7 @@ var styles = StyleSheet.create({
     alignItems:'center',
   },
   container: {
-    //flex: 1,
+    flex: 1,
     height:468,
     //flexDirection: 'row',
     //justifyContent: 'space-around',

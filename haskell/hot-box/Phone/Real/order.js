@@ -28,8 +28,8 @@ var Order = React.createClass({
                 refreshed: 0,
                 dataSource : null,
                 loaded: false,
-                topHeight:368,
-                opened:true,
+                topHeight:100,
+                opened:false,
              };
   },
 
