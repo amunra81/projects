@@ -28,7 +28,8 @@ var Order = React.createClass({
                 refreshed: 0,
                 dataSource : null,
                 loaded: false,
-                topHeight:300
+                topHeight:368,
+                opened:true,
              };
   },
 
@@ -86,7 +87,7 @@ var Order = React.createClass({
   },
 
   _onDetailsExpand: function(){
-      this._onDetailsColapseToogle(30);
+      this._onDetailsColapseToogle(0);
   },
 
   _onDetailsColapse: function(){

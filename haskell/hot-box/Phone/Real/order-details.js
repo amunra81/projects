@@ -71,8 +71,14 @@ var OrderDetails = React.createClass({
   renderLoadedView: function() {
     return (
         <View style={styles.container}>
-            {this.renderHead()}
-            {this.renderActions()}
+            <TouchableHighlight onPress={() => { 
+                this.props.onColapse();
+            }}>
+                <View>
+                {this.renderHead()}
+                {this.renderActions()}
+                </View>
+            </TouchableHighlight>
             {this.renderBody()}
         </View>
     );
@@ -81,15 +87,11 @@ var OrderDetails = React.createClass({
 
   renderHead: function() {
       return (
-        <TouchableHighlight onPress={() => { 
-            this.props.onExpand();
-        }}>
             <View style={[styles.head,styles.center]}>
                 <Text>
                     HEAD + {this.getState().refreshed}
                 </Text>
             </View>
-        </TouchableHighlight>
       );
   },
 
@@ -97,13 +99,9 @@ var OrderDetails = React.createClass({
       var width = Display.width;
       var height = Display.height;
       return (
-        <TouchableHighlight onPress={() => { 
-            this.props.onColapse();
-        }}>
             <View style={[styles.actions,styles.center]}>
                 <Text>ACTIONS + W:{width} + H:{height}</Text>
             </View>
-        </TouchableHighlight>
       );
   },
 
