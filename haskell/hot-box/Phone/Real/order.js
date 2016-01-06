@@ -37,12 +37,13 @@ var Order = React.createClass({
       this.fetchData();
   },
 
+  _currentOrderUrl: function() {
+      return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`;
+  },
+
   _requestUrl : function (id,userId) {
-    var _userId = userId?userId:this.state.userId;
-    if(!id)
-        return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`
-    else
-        return `http://localhost:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current/users/${_userId}/items/${id}`;
+      var _userId = userId?userId:this.state.userId;
+      return this._currentOrderUrl() + (!id?``:`/users/${_userId}/items/${id}`);
   },
 
   fetchData: function(id,userId) {
@@ -85,18 +86,18 @@ var Order = React.createClass({
   },
 
   _onDetailsExpand: function(){
-      this._onDetailsColapseToogle();
+      this._onDetailsColapseToogle(30);
   },
 
   _onDetailsColapse: function(){
-      this._onDetailsColapseToogle();
+      this._onDetailsColapseToogle(0);
   },
 
-  _onDetailsColapseToogle: function()
+  _onDetailsColapseToogle: function(x)
   {
       LayoutAnimation.spring();
       var opened = this.state.opened;
-      this.setState({topHeight:opened?100:368
+      this.setState({topHeight:opened?100-x:368
                     ,opened:!opened});
   },
 
