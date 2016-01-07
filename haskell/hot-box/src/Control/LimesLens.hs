@@ -108,16 +108,33 @@ _currentOrderP = undefined
 _currentOrder :: Id Restaurant -> Id Table -> Lens' (IxSet Order) (Maybe Order)
 _currentOrder rid tid = lens getter setter  
    where 
-         getter = preview (_ixBiQuery queryOrders . _head . filtered (not . _closed))
+         getter = preview (_ixBiQuery queryOrders . _head . filtered (not . _orderClosed))
          --setter
          setter ix = maybe ix (\o -> IxSet.updateIx (getId o) o ix)  
          -- getter query function
          queryOrders ix = IxSet.toDescList (Proxy :: Proxy (Id Order)) $ ix @= (rid,tid)
+
+insertOrUpdate :: a -> (a -> Bool) -> [a] -> [a]
+insertOrUpdate y f xs = insertOrUpdate' [] xs y f where 
+    insertOrUpdate' ys [] y _  = ys ++ [y]  -- was not found
+    insertOrUpdate' ys (x:xs) y f = 
+        if f x 
+            then ys ++ [y] ++ xs -- was found
+            else insertOrUpdate' (ys ++ [x]) xs y f -- keep searching
+
+_segment :: Id User -> Lens' Order (Maybe OrderSegment)
+_segment uid = lens getter setter
+    where 
+         getter = preview (orderSegments . _head . filtered withId)
+         setter order = maybe order (updateOrder order)
+         -- tools
+         updateOrder order userOrder = over orderSegments (insertOrUpdate userOrder withId) order
+         withId = (== uid) . getId . _segmentUser
 
 _getRestAndTable :: Id Restaurant -> Id Table -> Getter (IxSet Restaurant) (Maybe (Restaurant,Table))
 _getRestAndTable rid tid = to getter
     where 
          getter ix =do 
                     rest <- view (_ixGetById rid) ix
-                    table <- firstOf (restTables . traversed . filtered ((== tid) . _tableId)) rest
+                    table <- firstOf (restTables . traversed . filtered ((== tid) . getId)) rest
                     return (rest,table)

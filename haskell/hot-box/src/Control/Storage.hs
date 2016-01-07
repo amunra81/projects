@@ -101,7 +101,7 @@ closeCurrentOrder :: Id Restaurant -> Id Table -> Update Storage Bool
 closeCurrentOrder rid tid =  
     zoomU (orders . _currentOrder rid tid ) $ 
     get >>= maybe (return False) 
-                  (const $ _Just . closed <.= True) 
+                  (const $ _Just . orderClosed <.= True) 
 
 attachUserToCurrentOrder :: Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order)
 attachUserToCurrentOrder rid tid uid = runMaybeT $ do
@@ -111,14 +111,14 @@ attachUserToCurrentOrder rid tid uid = runMaybeT $ do
     currentOrderM <- use (orders . _currentOrder rid tid)
     MaybeT $ case currentOrderM of
      Just o -> do
-        let condition = (== uid) . _userId . _userOrder
-        let userM  = firstOf (userOrders . traversed . filtered condition) o
+        let condition = (== uid) . _userId . _segmentUser
+        let userM  = firstOf (orderSegments . traversed . filtered condition) o
         case userM of
             Just _ -> return (Just o) -- user already attached
             Nothing -> 
                 zoomU (orders . _ixGetById (_orderId o)) 
                       (do
-                        _Just . userOrders %= (++ currUOrder user)
+                        _Just . orderSegments %= (++ currUOrder user)
                         get)
      Nothing -> do
                 nextId <- nextOrderId <<%= succ
@@ -126,40 +126,48 @@ attachUserToCurrentOrder rid tid uid = runMaybeT $ do
                          Just Order { _orderId = nextId
                                     , _orderRest = rest
                                     , _orderTable = table
-                                    , _userOrders = currUOrder user
-                                    , _closed = False
+                                    , _orderSegments = currUOrder user
+                                    , _orderClosed = False
                                     , _orderRequests = []
                                     }
-    where currUOrder user = [UserOrder { _userOrder = user 
-                                       ,_nextOrderItemId = OrderItemId 1
-                                       ,_userOrderProducts = []}]
+    where currUOrder user = [OrderSegment { _segmentUser = user 
+                                          , _nextOrderItemId = OrderItemId 1
+                                          , _segmentItems = []}]
 
 addProductToCurrentOrder :: Id Restaurant -> Id Table -> Id User -> Id Product -> Update Storage (Maybe Order)
 addProductToCurrentOrder rid tid uid pid = toUpdate $ runMaybeT $ 
     zoomM (orders . _currentOrder rid tid ) $ do 
         product <-  liftPrism $ orderRest . restMenu . traversed . filtered ((== pid) . getId)  
         -- zoom into user order and add the product
-        zoom ( userOrders . traversed . filtered ((== uid) . getId . _userOrder)) $ do
+        zoom ( orderSegments . traversed . filtered ((== uid) . getId . _segmentUser)) $ do
             -- get next order item id
             nextId <- nextOrderItemId <<%= succ
-            let orderProduct = [OrderItem nextId product InList]
+            let orderItem = [OrderItem nextId product InList]
             -- add new product
-            userOrderProducts %= (++ orderProduct)
+            segmentItems %= (++ orderItem)
         get
 
 deleteItemFromCurrentOrder :: Id Restaurant -> Id Table -> Id User -> Id OrderItem -> Update Storage (Maybe Order)
 deleteItemFromCurrentOrder rid tid uid oid = toUpdate $ runMaybeT $
     zoomM (orders . _currentOrder rid tid ) $ do 
         -- zoom into user order and delete
-        zoom ( userOrders . traversed . filtered ((== uid) . getId . _userOrder)) $ 
+        zoom ( orderSegments . traversed . filtered ((== uid) . getId . _segmentUser)) $ 
             -- filter
-            userOrderProducts %= filter ((/= oid) . _orderItemId)
+            segmentItems %= filter ((/= oid) . _orderItemId)
+        get
+
+approveItems :: Id Restaurant -> Id Table -> Id User -> Id OrderItem -> Update Storage (Maybe Order)
+approveItems rid tid uid oid = toUpdate $ runMaybeT $
+    zoomM (orders . _currentOrder rid tid ) $ do 
+        zoom ( orderSegments . traversed . filtered ((== uid) . getId . _segmentUser)) $ 
+            zoom ( segmentItems . traversed ) $ 
+                orderItemStatus .= Approved
         get
 
 $(makeAcidic ''Storage 
     ['getAllRests,'addNewRest,'getAllUsers,'addNewUser,'getRestById,'getOrdersByRestAndTable
     ,'getWholeStorage,'getCurrentOrder,'attachUserToCurrentOrder,'closeCurrentOrder
-    ,'addProductToCurrentOrder,'deleteItemFromCurrentOrder
+    ,'addProductToCurrentOrder,'deleteItemFromCurrentOrder,'approveItems
     ])
 
 -- LENSES

@@ -106,18 +106,18 @@ var OrderDetails = React.createClass({
   },
 
   renderBody: function() {
-      var data = this.getState().dataSource.userOrders;
+      var data = this.getState().dataSource.segments;
       var i = 2;
       return (
           <View style={styles.order}>
-            {data.map(x => this.renderUserOrder(x))}
+            {data.map(x => this.renderSegment(x))}
           </View>
       );
   },
 
-  renderUserOrder: function(userOrder){
+  renderSegment: function(segment){
       var items = Enumerable
-                    .from(userOrder.items)
+                    .from(segment.items)
                     .groupBy(x => x.product.id)
                     .select(x=>{return { prodId:x.key()
                                        ,count:x.count()
@@ -125,12 +125,12 @@ var OrderDetails = React.createClass({
                                        ,itemId:x.last().id};
                     }).toArray();
       return (
-          <View key={userOrder.user.id}>
+          <View key={segment.user.id}>
             <View name="laba">
-                <Text>User {userOrder.user.id}</Text>
+                <Text>User {segment.user.id}</Text>
             </View>
             <View testID="products" style={styles.products}>
-                {items.map(x => this.renderProduct(x,userOrder.user))}
+                {items.map(x => this.renderProduct(x,segment.user))}
             </View>
           </View>
       );

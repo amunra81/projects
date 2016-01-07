@@ -41,14 +41,13 @@ data Table = Table { _tableId :: Id Table,_tableName :: String }
              deriving (Show,Eq, Ord, Data, Typeable)
 
 type Price = Float
+type Menu = [Product] 
 
 data Product = Product { _prodId        :: Id Product 
                        , _productName   :: String
                        , _productPrice  :: Price
                        }
                deriving (Show,Eq, Ord, Data, Typeable)
-
-type Menu = [Product] 
 
 data User = User { _userId :: Id User
                  } deriving (Show,Eq, Ord, Data, Typeable)
@@ -61,10 +60,10 @@ data OrderItem = OrderItem { _orderItemId       :: Id OrderItem
                            , _orderItemStatus   :: OrderItemStatus
                            } deriving (Show,Eq, Ord,Data,Typeable)
 
-data UserOrder = UserOrder { _userOrder         :: User 
-                           , _nextOrderItemId   :: Id OrderItem
-                           , _userOrderProducts :: [OrderItem]
-                           } deriving (Show,Eq,Ord,Data)
+data OrderSegment = OrderSegment { _segmentUser     :: User 
+                                 , _nextOrderItemId :: Id OrderItem
+                                 , _segmentItems    :: [OrderItem]
+                                 } deriving (Show,Eq,Ord,Data)
 
 data UserRequest = WaiterRequest | CheckRequest
                  deriving (Show,Eq,Ord,Data)
@@ -82,10 +81,10 @@ data Request a = Request { _reqAction   :: a
 data Order = Order  { _orderId       :: Id Order
                     , _orderRest     :: Restaurant
                     , _orderTable    :: Table
-                    , _userOrders    :: [UserOrder] 
-                    , _closed        :: Bool
+                    , _orderSegments :: [OrderSegment] 
+                    , _orderClosed   :: Bool
                     , _orderRequests :: [Request UserRequest]
-                    } deriving (Show,Eq, Ord, Data, Typeable)
+                    } deriving (Show,Eq,Ord,Data,Typeable)
 
 -- | FROM JSON
 
@@ -108,12 +107,12 @@ instance FromJSON User where
     parseJSON (Object v) =  
         User <$> v .: "id"
 
-instance FromJSON UserOrder where
+instance FromJSON OrderSegment where
         parseJSON (Object v) =
             emptyOrder 
             <$> v .: "user" 
             <*> v .: "nextId"
-            where emptyOrder u n = UserOrder u n []
+            where emptyOrder u n = OrderSegment u n []
 
 instance FromJSON Table where
         parseJSON (Object v) =
@@ -168,8 +167,8 @@ instance ToJSON OrderItem where
     toJSON (OrderItem i product status) =
        object ["id" .= _unOrderItemId i,"product" .= product,"status" .= status]
 
-instance ToJSON UserOrder where
-    toJSON (UserOrder user i xs) = object ["user" .= user,"nextId" .= i,"items" .= xs]
+instance ToJSON OrderSegment where
+    toJSON (OrderSegment user i xs) = object ["user" .= user,"nextId" .= i,"items" .= xs]
 
 instance ToJSON Table where
     toJSON (Table id name) =
@@ -200,8 +199,8 @@ instance ToJSON Order where
                    ,"restId" .= restId
                    ,"menu" .= _restMenu _orderRest
                    ,"tableId" .= _tableId _orderTable
-                   ,"userOrders" .= _userOrders
-                   ,"closed" .= _closed
+                   ,"segments" .= _orderSegments
+                   ,"closed" .= _orderClosed
                    ,"requests" .= _orderRequests
                    ]
             where restId = _unRestId $ getId _orderRest
@@ -254,5 +253,5 @@ makeLenses ''Table
 makeLenses ''Restaurant
 makeLenses ''Order
 makeLenses ''OrderItem
-makeLenses ''UserOrder
+makeLenses ''OrderSegment
 makeLenses ''Product

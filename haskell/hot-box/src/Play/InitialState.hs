@@ -46,26 +46,26 @@ allUsers = map toUser [1..4]
 
 -- ORDERS
 
-toOrder restList users (oid,rid,tid,uorders) =
+toOrder restList users (oid,rid,tid,segments) =
         Order { _orderId = OrderId oid
               , _orderRest = rest
               , _orderTable = table
-              , _userOrders = userOrders
-              , _closed = False
+              , _orderSegments = userOrders
+              , _orderClosed = False
               , _orderRequests = []
               }
         where rest = fromJust $ List.find (\r -> _restId r == RestId tid) (restList::[Restaurant])
               table = fromJust $ List.find (\r -> _tableId r == TableId tid) (_restTables rest)
               menu = _restMenu rest
-              userOrders = map toUserOrder uorders
-              toUserOrder :: (Int,[(Int,Int)]) -> UserOrder
+              userOrders = map toUserOrder segments
+              toUserOrder :: (Int,[(Int,Int)]) -> OrderSegment
               toUserOrder (uid,products) = 
-                UserOrder { _userOrder = findUser uid
+                OrderSegment { _segmentUser = findUser uid
                           , _nextOrderItemId = OrderItemId 20
-                          , _userOrderProducts = orderItems products
+                          , _segmentItems = segmentItems products
                           }
               findUser uid = fromJust $ List.find (\x -> _userId x == UserId uid) users
-              orderItems = map (\(i,j) -> OrderItem (OrderItemId i) (menu !! j) InList)
+              segmentItems = map (\(i,j) -> OrderItem (OrderItemId i) (menu !! j) InList)
 
 order1 = (1, 1, 1, [(1,[(5,0),(1,1),(2,0),(3,2)])
                    ,(2,[(5,0),(1,2)])
