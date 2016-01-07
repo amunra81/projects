@@ -6,8 +6,8 @@ import Data.Maybe
 
 -- MENUS
 
-mapProduct xs =  map (\(i,n) -> Product (ProdId i) n) zs
-              where zs = List.zip [1..] xs
+mapProduct xs =  map (\(i,n,p) -> Product (ProdId i) n p) zs
+              where zs = List.zip3 [1..] xs $ cycle [10,6.4,2.4,12,6,10,11]
 
 menu0 = mapProduct
         ["Caffè Americano" ,"Café Cubano" ,"Caffè crema" ,"Cafe Zorro" ,"Doppio" ,"Espresso Romano" ,"Guillermo"
@@ -52,6 +52,7 @@ toOrder restList users (oid,rid,tid,uorders) =
               , _orderTable = table
               , _userOrders = userOrders
               , _closed = False
+              , _orderRequests = []
               }
         where rest = fromJust $ List.find (\r -> _restId r == RestId tid) (restList::[Restaurant])
               table = fromJust $ List.find (\r -> _tableId r == TableId tid) (_restTables rest)
@@ -64,7 +65,7 @@ toOrder restList users (oid,rid,tid,uorders) =
                           , _userOrderProducts = orderItems products
                           }
               findUser uid = fromJust $ List.find (\x -> _userId x == UserId uid) users
-              orderItems = map (\(i,j) -> OrderItem (OrderItemId i) (menu !! j))
+              orderItems = map (\(i,j) -> OrderItem (OrderItemId i) (menu !! j) InList)
 
 order1 = (1, 1, 1, [(1,[(5,0),(1,1),(2,0),(3,2)])
                    ,(2,[(5,0),(1,2)])

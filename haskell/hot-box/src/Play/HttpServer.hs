@@ -36,6 +36,7 @@ import Data.HotBox
 import Control.Monad.Trans     ( MonadTrans, lift )
 import qualified Data.ByteString.Lazy.Char8 as L
 import qualified Play.InitialStorageState as ISS
+import Data.Time
 
 newtype ArticleId = ArticleId { unArticleId :: Int }
     deriving (Eq, Ord, Enum, Read, Show, Data, Typeable, PathInfo)
@@ -180,6 +181,7 @@ main =
 
         doWork acid = do
             putStrLn ("Listening at http://localhost:" ++ show (port nullConf) ++ "/") 
+            fmap show getCurrentTime >>= print
             simpleHTTP nullConf $ msum
                 [ dir "favicon.ico" $ notFound (toResponse ())
                 , implSite "http://localhost:8000" "" (site acid)

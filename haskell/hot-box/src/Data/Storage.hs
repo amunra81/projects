@@ -5,7 +5,7 @@
 module Data.Storage 
 where
 
-import Data.SafeCopy        ( SafeCopy, base, deriveSafeCopy )
+import Data.SafeCopy        
 import Data.Acid            ( AcidState, Query, Update
                             , makeAcidic, openLocalState,liftQuery )
 import Control.Monad.Reader ( ask )
@@ -73,9 +73,16 @@ $(deriveSafeCopy 0 'base ''ProdId)
 $(deriveSafeCopy 0 'base ''User)
 $(deriveSafeCopy 0 'base ''Table)
 $(deriveSafeCopy 0 'base ''Restaurant)
+$(deriveSafeCopy 0 'base ''WaiterResponse)
+$(deriveSafeCopy 0 'base ''UserRequest)
+
+instance SafeCopy a => SafeCopy (Request a) where
+   putCopy (Request{..}) = contain $ do safePut _reqAction;safePut _reqTime;safePut _reqUser;safePut _response
+   getCopy = contain $ Request <$> safeGet <*> safeGet <*> safeGet <*> safeGet
+
 $(deriveSafeCopy 0 'base ''Order)
+$(deriveSafeCopy 0 'base ''OrderItemStatus)
 $(deriveSafeCopy 0 'base ''OrderItem)
 $(deriveSafeCopy 0 'base ''UserOrder)
 $(deriveSafeCopy 0 'base ''Product)
 $(deriveSafeCopy 0 'base ''Storage)
-

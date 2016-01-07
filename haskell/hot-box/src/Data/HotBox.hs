@@ -8,6 +8,7 @@ import Data.Aeson
 import Control.Monad
 import Data.Data            (Data, Typeable)
 import Control.Lens hiding ((.=))
+import Data.Time
 
 -- | Data ID's
 
@@ -29,18 +30,21 @@ newtype OrderItemId = OrderItemId { _unOrderItemId :: Int }
     deriving (Show,Eq, Ord, Data, Enum, Typeable)
 
 -- | Actual Data
-data Restaurant = Restaurant { _restId  :: Id Restaurant 
+data Restaurant = Restaurant { _restId      :: Id Restaurant 
                              , _restName    :: String
                              , _restTables  :: [Table] 
                              , _restMenu    :: Menu
                              }
                   deriving (Show,Eq, Ord, Data, Typeable)
 
-data Table = Table { _tableId:: Id Table,_tableName :: String }
+data Table = Table { _tableId :: Id Table,_tableName :: String }
              deriving (Show,Eq, Ord, Data, Typeable)
 
-data Product = Product { _prodId :: Id Product 
-                       , _productName :: String
+type Price = Float
+
+data Product = Product { _prodId        :: Id Product 
+                       , _productName   :: String
+                       , _productPrice  :: Price
                        }
                deriving (Show,Eq, Ord, Data, Typeable)
 
@@ -49,21 +53,38 @@ type Menu = [Product]
 data User = User { _userId :: Id User
                  } deriving (Show,Eq, Ord, Data, Typeable)
 
-data OrderItem = OrderItem { _orderItemId :: Id OrderItem
-                           , _orderItemProduct :: Product
-                           } deriving (Show,Eq, Ord, Data, Typeable)
+data OrderItemStatus = InList | Approved | Payed 
+                     deriving (Show,Eq,Ord,Data,Typeable)
 
-data UserOrder = UserOrder { _userOrder :: User 
-                           , _nextOrderItemId :: Id OrderItem
+data OrderItem = OrderItem { _orderItemId       :: Id OrderItem
+                           , _orderItemProduct  :: Product
+                           , _orderItemStatus   :: OrderItemStatus
+                           } deriving (Show,Eq, Ord,Data,Typeable)
+
+data UserOrder = UserOrder { _userOrder         :: User 
+                           , _nextOrderItemId   :: Id OrderItem
                            , _userOrderProducts :: [OrderItem]
                            } deriving (Show,Eq,Ord,Data)
 
+data UserRequest = WaiterRequest | CheckRequest
+                 deriving (Show,Eq,Ord,Data)
 
-data Order = Order  { _orderId :: Id Order
-                    , _orderRest :: Restaurant
-                    , _orderTable :: Table
-                    , _userOrders :: [UserOrder] 
-                    , _closed :: Bool
+data WaiterResponse = Response User UTCTime
+              deriving (Show,Eq,Ord,Data)
+
+data Request a = Request { _reqAction   :: a
+                         , _reqTime     :: UTCTime
+                         , _reqUser      :: User
+                         , _response     :: Maybe WaiterResponse
+                         }
+                 deriving (Show,Eq,Ord,Data)
+
+data Order = Order  { _orderId       :: Id Order
+                    , _orderRest     :: Restaurant
+                    , _orderTable    :: Table
+                    , _userOrders    :: [UserOrder] 
+                    , _closed        :: Bool
+                    , _orderRequests :: [Request UserRequest]
                     } deriving (Show,Eq, Ord, Data, Typeable)
 
 -- | FROM JSON
@@ -115,6 +136,7 @@ instance FromJSON Product where
     parseJSON (Object v) =
         Product <$> v .: "id"
                 <*> v .: "name"
+                <*> v .: "price"
 
 -- TO JSON  
 
@@ -134,13 +156,17 @@ instance ToJSON OrderId where
     toJSON (OrderId i) = toJSON i
 
 instance ToJSON Product where
-    toJSON (Product i xs) = object ["id" .= i,"name" .= xs]
+    toJSON (Product i xs p) = object ["id" .= i,"name" .= xs,"price" .= p]
 
 instance ToJSON User where
     toJSON (User id) = object ["id" .= id]
 
+instance ToJSON OrderItemStatus where
+    toJSON = toJSON . show 
+
 instance ToJSON OrderItem where
-    toJSON (OrderItem i product) = object ["id" .= _unOrderItemId i,"product" .= product]
+    toJSON (OrderItem i product status) =
+       object ["id" .= _unOrderItemId i,"product" .= product,"status" .= status]
 
 instance ToJSON UserOrder where
     toJSON (UserOrder user i xs) = object ["user" .= user,"nextId" .= i,"items" .= xs]
@@ -153,6 +179,20 @@ instance ToJSON Restaurant where
     toJSON r@Restaurant{..} =
             object ["name" .= _restName,"id" .= _unRestId _restId,"tables" .= _restTables,"menu" .= _restMenu]
 
+instance ToJSON WaiterResponse where
+    toJSON (Response u t) = object ["employee" .= u,"time" .= t]
+
+instance ToJSON UserRequest where 
+    toJSON = toJSON . show
+
+instance ToJSON a => ToJSON (Request a) where
+    toJSON Request{..} = 
+            object ["request" .= _reqAction
+                   ,"user" .= _reqUser
+                   ,"time" .= _reqTime
+                   ,"response" .= _response
+                   ]
+
 --TODO split menu from order
 instance ToJSON Order where
     toJSON (Order{..}) = 
@@ -162,6 +202,7 @@ instance ToJSON Order where
                    ,"tableId" .= _tableId _orderTable
                    ,"userOrders" .= _userOrders
                    ,"closed" .= _closed
+                   ,"requests" .= _orderRequests
                    ]
             where restId = _unRestId $ getId _orderRest
 

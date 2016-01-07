@@ -97,18 +97,6 @@ getWholeStorage = ask
 getCurrentOrder :: Id Restaurant -> Id Table -> Query Storage (Maybe Order)
 getCurrentOrder rid tid = view $ orders . _currentOrder rid tid
 
-constructOpenEmptyOrderM :: Id Restaurant -> Id Table -> MaybeT (Query Storage) Order
-constructOpenEmptyOrderM rid tid = 
-    do s@Storage{..} <- ask
-       rest@Restaurant{..} <- MaybeT $ getRestById rid
-       table <- MaybeT $ return $ List.find ((== tid) . _tableId) _restTables
-       return Order { _orderId = _nextOrderId
-                            , _orderRest = rest
-                            , _orderTable = table
-                            , _userOrders = []
-                            , _closed = False
-                            }
-
 closeCurrentOrder :: Id Restaurant -> Id Table -> Update Storage Bool
 closeCurrentOrder rid tid =  
     zoomU (orders . _currentOrder rid tid ) $ 
@@ -140,6 +128,7 @@ attachUserToCurrentOrder rid tid uid = runMaybeT $ do
                                     , _orderTable = table
                                     , _userOrders = currUOrder user
                                     , _closed = False
+                                    , _orderRequests = []
                                     }
     where currUOrder user = [UserOrder { _userOrder = user 
                                        ,_nextOrderItemId = OrderItemId 1
@@ -153,7 +142,7 @@ addProductToCurrentOrder rid tid uid pid = toUpdate $ runMaybeT $
         zoom ( userOrders . traversed . filtered ((== uid) . getId . _userOrder)) $ do
             -- get next order item id
             nextId <- nextOrderItemId <<%= succ
-            let orderProduct = [OrderItem { _orderItemId = nextId , _orderItemProduct = product}]
+            let orderProduct = [OrderItem nextId product InList]
             -- add new product
             userOrderProducts %= (++ orderProduct)
         get
