@@ -53,6 +53,7 @@ data Sitemap
     | CurrentOrder Int Int
     | UserInCurrentOrder Int Int Int
     | ItemsInCurrentOrder Int Int Int Int
+    | ItemsApproval Int Int Int
     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 
@@ -62,7 +63,7 @@ sitemap :: Router () (Sitemap :- ())
 sitemap =
        rHome
     <> rArticle . (lit "article" </> articleId)
-    <> lit "users" . users
+    <> lit "users" . usersX
     <> lit "restaurants" . rests
     <> rWholeStorage . (lit "storage")
     
@@ -70,12 +71,13 @@ sitemap =
       rests = rAllRests
               <> rRest </> int
               <> rOrderByRestAndTable </> int </> lit "tables" </> int </> lit "orders"
-              <> rCurrentOrder </> int </> lit "tables" </> int </> lit "orders" </> lit "current"
-              <> rUserInCurrentOrder </> int </> lit "tables" </> int </> lit "orders" </> lit "current" 
-                    </> lit "users" </> int
-              <> rItemsInCurrentOrder </> int </> lit "tables" </> int </> lit "orders" </> lit "current" 
-                    </> lit "users" </> int </> lit "items" </> int
-      users =  rUserOverview
+              <> rCurrentOrder </> currentOrder
+              <> rUserInCurrentOrder </> currentOrder </> users
+              <> rItemsApproval </> currentOrder </> users </> lit "items" </> "approved"
+              <> rItemsInCurrentOrder </> currentOrder </> users </> lit "items" </> int
+      currentOrder =  int </> lit "tables" </> int </> lit "orders" </> lit "current"
+      users =  lit "users" </> int
+      usersX =  rUserOverview
                <> rUserDetail </> int . lit "-" . anyText
 
 articleId :: Router () (ArticleId :- ())

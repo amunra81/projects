@@ -95,6 +95,9 @@ addProductToCurrentOrderH :: Acid -> Id Restaurant -> Id Table -> Id User -> Id 
 addProductToCurrentOrderH acid rid tid uid pid =
         handleUpdateFromMaybe acid (AddProductToCurrentOrder rid tid uid pid)
 
+approveItemsH :: Acid -> Id Restaurant -> Id Table -> Id User -> ServerPart Response
+approveItemsH acid rid tid = handleUpdateFromMaybe acid . ApproveItems rid tid 
+
 handleQueryFromMaybe acid p = do
         c <- lift $ query' acid p
         case c of

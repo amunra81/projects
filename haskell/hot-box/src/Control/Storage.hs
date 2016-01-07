@@ -156,8 +156,8 @@ deleteItemFromCurrentOrder rid tid uid oid = toUpdate $ runMaybeT $
             segmentItems %= filter ((/= oid) . _orderItemId)
         get
 
-approveItems :: Id Restaurant -> Id Table -> Id User -> Id OrderItem -> Update Storage (Maybe Order)
-approveItems rid tid uid oid = toUpdate $ runMaybeT $
+approveItems :: Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order)
+approveItems rid tid uid = toUpdate $ runMaybeT $
     zoomM (orders . _currentOrder rid tid ) $ do 
         zoom ( orderSegments . traversed . filtered ((== uid) . getId . _segmentUser)) $ 
             zoom ( segmentItems . traversed ) $ 
