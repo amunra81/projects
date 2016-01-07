@@ -4122,8 +4122,8 @@ array_'	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	141
 array_'	./external-src/aeson-0.10.0.0/Data/Aeson/Parser/Internal.hs	142
 articleId	./src/Play/HttpServer.hs	83
 articleId	./src/Play/HttpServer.hs	84
-articlePage	./src/Play/HttpServer.hs	129
 articlePage	./src/Play/HttpServer.hs	130
+articlePage	./src/Play/HttpServer.hs	131
 as	./external-src/lens-4.13/src/Control/Lens/Lens.hs	367
 asContentType	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	480
 asContentType	./external-src/happstack-lite-7.3.6/Happstack/Lite.hs	482
@@ -5103,7 +5103,7 @@ clearState	./external-src/acid-state-0.14.0/examples/RemoteCommon.hs	31
 clearState	./external-src/acid-state-0.14.0/examples/RemoteCommon.hs	32
 clearState	./external-src/acid-state-0.14.0/examples/StressTest.hs	37
 clearState	./external-src/acid-state-0.14.0/examples/StressTest.hs	38
-clickOk	./src/Play/HttpServer.hs	165
+clickOk	./src/Play/HttpServer.hs	166
 clip	./external-src/time-1.5.0.1/lib/Data/Time/Calendar/Private.hs	42
 clip	./external-src/time-1.5.0.1/lib/Data/Time/Calendar/Private.hs	43
 clipDates	./external-src/time-1.5.0.1/test/Test/ClipDates.hs	32
@@ -8331,8 +8331,8 @@ handleFinalizer	./external-src/base-4.8.1.0/GHC/IO/Handle/Internals.hs	421
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	185
 handleJust	./external-src/base-4.8.1.0/Control/Exception/Base.hs	186
 handleQueryFromMaybe	./src/Http/Handlers.hs	101
-handleRestaurants	./src/Play/HttpServer.hs	108
 handleRestaurants	./src/Play/HttpServer.hs	109
+handleRestaurants	./src/Play/HttpServer.hs	110
 handleSite	./external-src/web-routes-0.27.9/Web/Routes/Site.hs	35
 handleToCommChannel	./external-src/acid-state-0.14.0/src/Data/Acid/Remote.hs	153
 handleToCommChannel	./external-src/acid-state-0.14.0/src/Data/Acid/Remote.hs	154
@@ -8429,8 +8429,8 @@ holesOnOf	./external-src/lens-4.13/src/Control/Lens/Plated.hs	653
 holesOnOf	./external-src/lens-4.13/src/Control/Lens/Plated.hs	657
 home	./src/Play/AcidIxSetMain.hs	322
 home	./src/Play/AcidIxSetMain.hs	323
-homePage	./src/Play/HttpServer.hs	113
 homePage	./src/Play/HttpServer.hs	114
+homePage	./src/Play/HttpServer.hs	115
 homePage	./src/Server-Lite/Lite.hs	40
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	181
 hopelessIndexError	./external-src/base-4.8.1.0/GHC/Arr.hs	182
@@ -10382,8 +10382,8 @@ main	./src/Play/AcidIxSetMain.hs	355
 main	./src/Play/AcidIxSetMain.hs	356
 main	./src/Play/AcidMain.hs	54
 main	./src/Play/AcidMain.hs	55
-main	./src/Play/HttpServer.hs	174
 main	./src/Play/HttpServer.hs	175
+main	./src/Play/HttpServer.hs	176
 main	./src/Play/Main.hs	3
 main	./src/Server-Lite/Lite.hs	23
 makeAcidic	./external-src/acid-state-0.14.0/src/Data/Acid/TemplateHaskell.hs	45
@@ -13773,8 +13773,8 @@ sinhDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1043
 sinhDouble	./external-src/base-4.8.1.0/GHC/Float.hs	1053
 sinhFloat	./external-src/base-4.8.1.0/GHC/Float.hs	997
 sinhFloat	./external-src/base-4.8.1.0/GHC/Float.hs	1007
-site	./src/Play/HttpServer.hs	170
 site	./src/Play/HttpServer.hs	171
+site	./src/Play/HttpServer.hs	172
 sitemap	./src/Play/HttpServer.hs	62
 sitemap	./src/Play/HttpServer.hs	63
 size	./external-src/QuickCheck-2.8.1/examples/Heap.hs	39
@@ -15561,14 +15561,14 @@ usedSeed	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	69
 usedSize	./external-src/QuickCheck-2.8.1/Test/QuickCheck/Test.hs	70
 user	./external-src/base-4.8.1.0/GHC/RTS/Flags.hsc	239
 user	./external-src/base-4.8.1.0/dist/build/GHC/RTS/Flags.hs	286
-userDetailPage	./src/Play/HttpServer.hs	153
-userDetailPage	./src/Play/HttpServer.hs	156
+userDetailPage	./src/Play/HttpServer.hs	154
+userDetailPage	./src/Play/HttpServer.hs	157
 userError	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	337
 userError	./external-src/base-4.8.1.0/GHC/IO/Exception.hs	338
 userErrorType	./external-src/base-4.8.1.0/System/IO/Error.hs	210
 userErrorType	./external-src/base-4.8.1.0/System/IO/Error.hs	211
-userOverviewPage	./src/Play/HttpServer.hs	139
 userOverviewPage	./src/Play/HttpServer.hs	140
+userOverviewPage	./src/Play/HttpServer.hs	141
 uses	./external-src/lens-4.13/src/Control/Lens/Getter.hs	362
 uses	./external-src/lens-4.13/src/Control/Lens/Getter.hs	363
 ut1ToLocalTime	./external-src/time-1.5.0.1/lib/Data/Time/LocalTime/LocalTime.hs	60

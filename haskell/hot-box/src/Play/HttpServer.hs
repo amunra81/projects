@@ -65,7 +65,7 @@ sitemap =
     <> rArticle . (lit "article" </> articleId)
     <> lit "users" . usersX
     <> lit "restaurants" . rests
-    <> rWholeStorage . (lit "storage")
+    <> rWholeStorage . lit "storage"
     
     where
       rests = rAllRests
@@ -104,6 +104,7 @@ route acid (ItemsInCurrentOrder i j k l) = msum
         [ method POST >> lift (addProductToCurrentOrderH acid (RestId i) (TableId j) (UserId k) (ProdId l))
         , method DELETE >> lift (deleteItemFromCurrentOrderH acid (RestId i) (TableId j) (UserId k) (OrderItemId l))
         ]
+route acid (ItemsApproval i j k ) = method POST >> lift (approveItemsH acid (RestId i) (TableId j) (UserId k))
 
 handleRestaurants :: AcidState Storage -> RouteT Sitemap (ServerPartT IO) Response
 handleRestaurants acid = msum [ method GET >> lift (getRestaurantsH acid)
