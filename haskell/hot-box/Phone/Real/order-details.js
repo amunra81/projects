@@ -99,9 +99,11 @@ var OrderDetails = React.createClass({
       var width = Display.width;
       var height = Display.height;
       return (
-            <View style={[styles.actions,styles.center]}>
-                <Text>ACTIONS + W:{width} + H:{height}</Text>
-            </View>
+          <View style={[styles.actions,styles.center]}>
+              <View name="approve" />
+              <View name="pay" />
+              <Text>ACTIONS + W:{width} + H:{height}</Text>
+          </View>
       );
   },
 
@@ -116,13 +118,17 @@ var OrderDetails = React.createClass({
   },
 
   renderSegment: function(segment){
+      var approved = xs => !xs.any(x=>x.status == "InList");
+      
       var items = Enumerable
                     .from(segment.items)
                     .groupBy(x => x.product.id)
                     .select(x=>{return { prodId:x.key()
                                        ,count:x.count()
                                        ,pname:x.last().product.name
-                                       ,itemId:x.last().id};
+                                       ,itemId:x.last().id
+                                       ,approved:approved(x)
+                                       };
                     }).toArray();
       return (
           <View key={segment.user.id}>
@@ -142,7 +148,7 @@ var OrderDetails = React.createClass({
             console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
             this.props.orderItemClicked(item,user);
           }}>
-          <Text>{item.count}...... {item.pname}</Text>
+            <Text style={item.approved?{}:{opacity:0.5}}>{item.count}...... {item.pname} [{item.approved.toString()}]</Text>
         </TouchableHighlight>
       );
   },

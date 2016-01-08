@@ -1,5 +1,5 @@
-{-# LANGUAGE TemplateHaskell #-}
-{-# LANGUAGE RecordWildCards #-}
+{-[># LANGUAGE TemplateHaskell #<]-}
+{-[># LANGUAGE RecordWildCards #<]-}
 {-# LANGUAGE Rank2Types #-}
 {-# LANGUAGE FlexibleContexts #-}
 
@@ -19,6 +19,7 @@ import Data.Data            (Data, Typeable)
 import Control.Monad.Trans  (lift)
 import Control.Monad.Trans.Maybe
 import Control.Monad.State.Class
+import Control.Monad (liftM)
 
 defRest = Restaurant (RestId 3) "Name" [] []
 ss = defRest ^. restId . unRestId
@@ -46,28 +47,6 @@ infixr 9 .%
         -> p a (f a) -> c
 (.%) l f = l . to f 
 
-rests :: Lens' Storage [Restaurant]
-rests = lens undefined undefined
-
-restHead :: Lens' [Restaurant] (Maybe Restaurant)
-restHead = undefined
-
-fMap,fMap2 :: (a -> b -> c) -> a -> c
-fMap = undefined
-fMap2 = undefined
-
-fMapMerge = fMap2 . fMap2 . fMap2
-
-sMap :: (a -> c) -> f a -> b
-sMap = undefined
-
-sMapC = (.) sMap sMap
-
-_head2 :: Prism' [a] a
-_head2 =  prism' setter getter
-    where setter b = undefined  
-          getter = undefined
-
 viewItems l = do
             s <- ask
             return $ s ^.. l
@@ -81,11 +60,7 @@ liftPrism l = do
                 let p = preview l s
                 MaybeT $ return p
 
-usePrism l = get >>= return . preview l
-
-viewHead l = do
-            s <- ask
-            return $ s ^? l
+usePrism l = liftM (preview l) get
 
 _ixGetById :: (Ord a,Typeable k,Typeable a,Indexable a) => k -> Lens' (IxSet a) (Maybe a)
 _ixGetById uid = lens getter setter
