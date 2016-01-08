@@ -54,6 +54,7 @@ data Sitemap
     | UserInCurrentOrder Int Int Int
     | ItemsInCurrentOrder Int Int Int Int
     | ItemsApproval Int Int Int
+    | ItemsPayment Int Int Int
     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 
@@ -74,11 +75,12 @@ sitemap =
               <> rCurrentOrder </> currentOrder
               <> rUserInCurrentOrder </> currentOrder </> users
               <> rItemsApproval </> currentOrder </> users </> lit "items" </> "approved"
+              <> rItemsPayment </> currentOrder </> users </> lit "items" </> "payed"
               <> rItemsInCurrentOrder </> currentOrder </> users </> lit "items" </> int
-      currentOrder =  int </> lit "tables" </> int </> lit "orders" </> lit "current"
-      users =  lit "users" </> int
-      usersX =  rUserOverview
-               <> rUserDetail </> int . lit "-" . anyText
+
+      currentOrder  =  int </> lit "tables" </> int </> lit "orders" </> lit "current"
+      users         =  lit "users" </> int
+      usersX        =  rUserOverview <> rUserDetail </> int . lit "-" . anyText
 
 articleId :: Router () (ArticleId :- ())
 articleId =

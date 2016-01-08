@@ -156,18 +156,27 @@ deleteItemFromCurrentOrder rid tid uid oid = toUpdate $ runMaybeT $
             segmentItems %= filter ((/= oid) . _orderItemId)
         get
 
-approveItems :: Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order)
-approveItems rid tid uid = toUpdate $ runMaybeT $
+updateOrderItems :: Id Restaurant -> Id Table -> Id User -> MaybeT (State OrderItem) () 
+                 -> Update Storage (Maybe Order)
+updateOrderItems rid tid uid m = toUpdate $ runMaybeT $
     zoomM (orders . _currentOrder rid tid ) $ do 
         zoom ( orderSegments . traversed . filtered ((== uid) . getId . _segmentUser)) $ 
-            zoom ( segmentItems . traversed ) $ 
-                orderItemStatus .= Approved
+             zoom ( segmentItems . traversed ) m
         get
+
+approveItems ::  Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order)
+approveItems rid tid uid = updateOrderItems rid tid uid $ 
+                            orderItemStatus .= Approved
+
+payItems ::  Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order)
+payItems rid tid uid = updateOrderItems rid tid uid $ 
+                            orderItemStatus .= Payed
+
+-- | Make acids
 
 $(makeAcidic ''Storage 
     ['getAllRests,'addNewRest,'getAllUsers,'addNewUser,'getRestById,'getOrdersByRestAndTable
     ,'getWholeStorage,'getCurrentOrder,'attachUserToCurrentOrder,'closeCurrentOrder
-    ,'addProductToCurrentOrder,'deleteItemFromCurrentOrder,'approveItems
+    ,'addProductToCurrentOrder,'deleteItemFromCurrentOrder,'approveItems,'payItems
     ])
 
--- LENSES

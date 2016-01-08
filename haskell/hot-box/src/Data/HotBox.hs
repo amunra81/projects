@@ -37,7 +37,8 @@ data Restaurant = Restaurant { _restId      :: Id Restaurant
                              }
                   deriving (Show,Eq, Ord, Data, Typeable)
 
-data Table = Table { _tableId :: Id Table,_tableName :: String }
+data Table = Table { _tableId :: Id Table
+                   , _tableName :: String }
              deriving (Show,Eq, Ord, Data, Typeable)
 
 type Price = Float
@@ -69,20 +70,20 @@ data UserRequest = WaiterRequest | CheckRequest
                  deriving (Show,Eq,Ord,Data)
 
 data WaiterResponse = Response User UTCTime
-              deriving (Show,Eq,Ord,Data)
+                    deriving (Show,Eq,Ord,Data)
 
 data Request a = Request { _reqAction   :: a
                          , _reqTime     :: UTCTime
-                         , _reqUser      :: User
-                         , _response     :: Maybe WaiterResponse
+                         , _reqUser     :: User
+                         , _response    :: Maybe WaiterResponse
                          }
                  deriving (Show,Eq,Ord,Data)
 
 data Order = Order  { _orderId       :: Id Order
                     , _orderRest     :: Restaurant
                     , _orderTable    :: Table
-                    , _orderSegments :: [OrderSegment] 
                     , _orderClosed   :: Bool
+                    , _orderSegments :: [OrderSegment] 
                     , _orderRequests :: [Request UserRequest]
                     } deriving (Show,Eq,Ord,Data,Typeable)
 
