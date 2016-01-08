@@ -86,23 +86,32 @@ var OrderDetails = React.createClass({
 
 
   renderHead: function() {
+      var width = Display.width;
+      var height = Display.height;
       return (
             <View style={[styles.head,styles.center]}>
                 <Text>
-                    HEAD + {this.getState().refreshed}
+                    HEAD + {this.getState().refreshed} + [W:{width} + H:{height}]
                 </Text>
             </View>
       );
   },
 
+  renderGeneralAction: function (text,name,onPress){
+      return (
+            <View name={name} style={{flex:1,alignItems:'center'}}>
+                <TouchableHighlight onPress={onPress}>
+                    <Text> {text} </Text>
+                </TouchableHighlight>
+            </View>
+      );
+  },
+
   renderActions: function() {
-      var width = Display.width;
-      var height = Display.height;
       return (
           <View style={[styles.actions,styles.center]}>
-              <View name="approve" />
-              <View name="pay" />
-              <Text>ACTIONS + W:{width} + H:{height}</Text>
+              {this.renderGeneralAction('[Approve]','approve',this.props.onApprove)}
+              {this.renderGeneralAction('[Pay]','approve',this.props.onPay)}
           </View>
       );
   },
@@ -148,7 +157,9 @@ var OrderDetails = React.createClass({
             console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
             this.props.orderItemClicked(item,user);
           }}>
-            <Text style={item.approved?{}:{opacity:0.5}}>{item.count}...... {item.pname} [{item.approved.toString()}]</Text>
+          <Text style={item.approved?{}:{opacity:0.5}}>
+              {item.count}...... {item.pname} 
+          </Text>
         </TouchableHighlight>
       );
   },
@@ -190,7 +201,10 @@ var styles = StyleSheet.create({
     //maxHeight:100,
   },
   actions: {
-    //flex: 1,
+    justifyContent: 'space-between',
+    //alignItems: 'stretch',
+    flexDirection: 'row',
+    flex: 1,
     height:30,
     backgroundColor: '#fff9dc',
   },

@@ -76,7 +76,7 @@ var Order = React.createClass({
     else return this.renderLoadedView();
   },
 
-  orderItemClicked: function(item,user){
+  _orderItemClicked: function(item,user){
     console.log(`a sarit pana sus cu ${item.itemId} si ${user.id}`);
     this.fetchData(item.itemId,user.id);
   },
@@ -102,22 +102,42 @@ var Order = React.createClass({
                     ,opened:!opened});
   },
 
+  _onApprove : function()
+  {
+      console.log('Approved');
+  },
+
+  _onPay : function()
+  {
+      console.log('Payed');
+  },
+
   renderLoadedView: function() {
-    var { dataSource, ...otherState } = this.state;
-    var { menu,restId,tableId,...orderDetails} = dataSource
-    
+    //var { dataSource, ...otherState } = this.state;
+    //var { menu,restId,tableId,...orderDetails} = dataSource
+      
+    // Props for inner children
+    var orderMenuProps = {
+          productClicked    : this.productSelected  
+        , state             : this.state
+    };
+    var orderDetailsProps = {
+          orderItemClicked  : this._orderItemClicked  
+        , onExpand          : this._onDetailsExpand
+        , onColapse         : this._onDetailsColapse
+        , state             : this.state
+        , onApprove         : this._onApprove
+        , onPay             : this._onPay
+    };
+
+    //render children
     return (
         <View style={styles.container}>
             <View name="top" style={{height:this.state.topHeight}}>
-                <OrderDetails 
-                    state= {this.state} 
-                    orderItemClicked= { this.orderItemClicked } 
-                    onExpand= {this._onDetailsExpand}
-                    onColapse= {this._onDetailsColapse}
-                />
+                <OrderDetails {...orderDetailsProps}/>
             </View>
             <View name="bottom" style={{flex:1}}>
-                <OrderMenu state={this.state} productClicked={ this.productSelected }/>
+                <OrderMenu {...orderMenuProps}/>
             </View>
         </View>
     );
