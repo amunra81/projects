@@ -39,7 +39,7 @@ var Order = React.createClass({
   },
 
   _currentOrderUrl: function() {
-      return `http://192.168.2.100:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`;
+      return `http://192.168.2.191:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`;
   },
 
   _withAction : function() { return { 

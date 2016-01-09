@@ -157,7 +157,7 @@ var OrderDetails = React.createClass({
             console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
             this.props.orderItemClicked(item,user);
           }}>
-          <Text style={item.approved?{}:{opacity:0.5}}>
+          <Text style={{color:item.approved?'black':'gray'}}>
               {item.count}...... {item.pname} 
           </Text>
         </TouchableHighlight>
