@@ -153,8 +153,10 @@ deleteItemFromCurrentOrder rid tid uid oid = toUpdate $ runMaybeT $
         -- zoom into user order and delete
         zoom ( orderSegments . traversed . filtered ((== uid) . getId . _segmentUser)) $ 
             -- filter
-            segmentItems %= filter ((/= oid) . _orderItemId)
+            segmentItems %= filter (\item -> diffrentId item || alreadyApproved item)
         get
+    where diffrentId = (/= oid) . _orderItemId
+          alreadyApproved = (== Approved) . _orderItemStatus 
 
 updateOrderItems :: Id Restaurant -> Id Table -> Id User -> MaybeT (State OrderItem) () 
                  -> Update Storage (Maybe Order)

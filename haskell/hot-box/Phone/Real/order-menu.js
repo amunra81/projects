@@ -132,6 +132,7 @@ var styles = StyleSheet.create({
   },
   listItem: {
     marginTop:10,
+    marginBottom:10,
     backgroundColor: '#a9ffc4'
   }
 });
