@@ -12,6 +12,7 @@ var {
   Text,
   View,
   LayoutAnimation,
+  PanResponder,
 } = React;
 
 var HeadContainer = View;
@@ -32,7 +33,9 @@ var Order = React.createClass({
                 opened:false,
              };
   },
-
+  componentWillMount: function() {
+    this._bottomResponder = this._getResponder();
+  },
   componentDidMount: function() {
       LayoutAnimation.linear();
       this.fetchData(this._withAction().currentOrder());
@@ -144,10 +147,10 @@ var Order = React.createClass({
     //render children
     return (
         <View style={styles.container}>
-            <View name="top" style={{height:this.state.topHeight}}>
+            <View name="top" style={{height:this.state.topHeight}} >
                 <OrderDetails {...orderDetailsProps}/>
             </View>
-            <View name="bottom" style={{flex:1}}>
+            <View name="bottom" style={{flex:1}} {...this._bottomResponder.panHandlers}>
                 <OrderMenu {...orderMenuProps}/>
             </View>
         </View>
@@ -165,6 +168,69 @@ var Order = React.createClass({
       </View>
     );
   }, 
+
+  _logWithState: function (text) {
+    console.log(text);
+    //this.setState({lastMessage : text});
+  },
+
+  // RESPONDER
+  _getResponder : function() {
+    return PanResponder.create({
+        // Ask to be the responder:
+        onStartShouldSetPanResponder        : (evt, gestureState) => {
+            this._logWithState("startShouldSet*");
+            return  false
+        },
+        onStartShouldSetPanResponderCapture : (evt, gestureState) => {
+            this._logWithState("startShouldSet*Capture");
+            return  true
+        },
+        onMoveShouldSetPanResponder         : (evt, gestureState) => {
+            this._logWithState("moveShouldSet*");
+            return  false
+        },
+        onMoveShouldSetPanResponderCapture  : (evt, gestureState) => {
+            this._logWithState("moveShouldSet*Capture");
+            return  false
+        },
+        onPanResponderGrant                 : (evt, gestureState) => {
+            // The guesture has started. Show visual feedback so the user knows
+            // what is happening!
+
+            // gestureState.{x,y}0 will be set to zero now
+            this._logWithState("onPanResponderGrant");
+        },
+        onPanResponderMove                  : (evt, gestureState) => {
+            // The most recent move distance is gestureState.move{X,Y}
+
+            // The accumulated gesture distance since becoming responder is
+            // gestureState.d{x,y}
+            this._logWithState("onPanResponderMove");
+        },
+        onPanResponderTerminationRequest    : (evt, gestureState) => {
+            this._logWithState("onPanResponderTerminationRequest");
+            return  true;
+        },
+
+        onPanResponderRelease               : (evt, gestureState) => {
+            // The user has released all touches while this view is the
+            // responder. This typically means a gesture has succeeded
+            this._logWithState("onPanResponderRelease");
+        },
+        onPanResponderTerminate             : (evt, gestureState) => {
+            // Another component has become the responder, so this gesture
+            // should be cancelled
+            this._logWithState("onPanResponderTerminate");
+        },
+        onShouldBlockNativeResponder        : (evt, gestureState) => {
+            // Returns whether this component should block native components from becoming the JS
+            // responder. Returns true by default. Is currently only supported on android.
+            this._logWithState("onShouldBlockNativeResponder");
+            return true;
+        },
+    });
+  },
 //END OF COMPONENT
 });
 

@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var Enumerable = require('linq');
-var Comments = require('./comment');
 
 var {
   ListView,

@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var Enumerable = require('linq');
-var Comments = require('./comment');
 var Display = require('react-native-device-display');
 
 var {
@@ -13,7 +12,6 @@ var {
   TextInput,
   TouchableHighlight,
   View,
-  Comment
 } = React;
 
 var HeadContainer = View;
@@ -91,7 +89,7 @@ var OrderDetails = React.createClass({
       return (
             <View style={[styles.head,styles.center]}>
                 <Text>
-                    HEAD + {this.getState().refreshed} + [W:{width} + H:{height}]
+                    {this.getState().lastMessage} + {this.getState().refreshed} + [W:{width} + H:{height}]
                 </Text>
             </View>
       );
