@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var Enumerable = require('linq');
-var Display = require('react-native-device-display');
+//var Display = require('react-native-device-display');
 
 var {
   Image,
@@ -84,12 +84,10 @@ var OrderDetails = React.createClass({
 
 
   renderHead: function() {
-      var width = Display.width;
-      var height = Display.height;
       return (
             <View style={[styles.head,styles.center]}>
                 <Text>
-                    {this.getState().lastMessage} + {this.getState().refreshed} + [W:{width} + H:{height}]
+                    {this.getState().lastMessage} + {this.getState().refreshed}   
                 </Text>
             </View>
       );

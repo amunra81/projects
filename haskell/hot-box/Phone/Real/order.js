@@ -5,7 +5,7 @@ var React = require('react-native');
 var Enumerable = require('linq');
 var OrderDetails = require('./order-details');
 var OrderMenu = require('./order-menu');
-var Display = require('react-native-device-display');
+//var Display = require('react-native-device-display');
 
 var {
   StyleSheet,
@@ -184,7 +184,7 @@ var Order = React.createClass({
         },
         onStartShouldSetPanResponderCapture : (evt, gestureState) => {
             this._logWithState("startShouldSet*Capture");
-            return  true
+            return  false
         },
         onMoveShouldSetPanResponder         : (evt, gestureState) => {
             this._logWithState("moveShouldSet*");
