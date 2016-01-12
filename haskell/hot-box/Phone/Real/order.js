@@ -29,35 +29,35 @@ var Order = React.createClass({
                 refreshed: 0,
                 dataSource : null,
                 loaded: false,
-                topHeight:100,
-                opened:false,
              };
-  },
-  componentWillMount: function() {
-    this._bottomResponder = this._getResponder();
-  },
-  componentDidMount: function() {
-      LayoutAnimation.linear();
-      this.fetchData(this._withAction().currentOrder());
-  },
+    },
 
-  _currentOrderUrl: function() {
-      return `http://192.168.2.191:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`;
-  },
+    //FIELDS
+    _serverAddress : "excuse.ro",
+    //_serverAddress : "localhost",
+    _topViewStyle: {style: {height:100}},
+    _topView: (null : ?{ setNativeProps(props: Object): void }),
+    _topOpened: false,
+    _oldGestureY: 0,
+    _moveDirection : 0,
+    _expanedWidth: 500,
+    _colapsedWidth: 100,
+    _highlightWidth: 50,
 
-  _withAction : function() { return { 
-      currentOrder : () => 
-        [ this._currentOrderUrl() , "GET"]
-      
-      , addItem :  (prodId) => 
-        [ this._currentOrderUrl() + `/users/${this.state.userId}/items/${prodId}` , "POST"]
+    componentWillMount: function() {
+        this._bottomResponder = this._getResponder(()=>this._topOpened);
+        this._topResponder = this._getResponder((()=>!this._topOpened));
+    },
 
-      , removeItem : (itemId,userId) =>
-        [ this._currentOrderUrl() + `/users/${userId}/items/${itemId}` , "DELETE"]
+    componentDidMount: function() {
+        LayoutAnimation.linear();
+        this.fetchData(this._withAction().currentOrder());
+    
+    },
 
-      , approveItems : () =>
-        [ this._currentOrderUrl() + `/users/${this.state.userId}/items/approved` , "POST"]
-  };},
+    _currentOrderUrl: function() {
+        return `http://${this._serverAddress}:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`;
+    },
 
   fetchData: function(action) {
         var url = action[0];
@@ -98,30 +98,36 @@ var Order = React.createClass({
     this.fetchData(this._withAction().addItem(prod.id));
   },
 
+  
   _onDetailsExpand: function(){
-      this._onDetailsColapseToogle(0);
+      LayoutAnimation.spring();
+      this._topViewStyle.style.height = this._expanedWidth;
+      this._topView.setNativeProps(this._topViewStyle);
+      this._topOpened = true;
   },
 
   _onDetailsColapse: function(){
-      this._onDetailsColapseToogle(0);
-  },
-
-  _onDetailsColapseToogle: function(x)
-  {
       LayoutAnimation.spring();
-      var opened = this.state.opened;
-      this.setState({topHeight:opened?100-x:368
-                    ,opened:!opened});
+      this._topViewStyle.style.height = this._colapsedWidth;
+      this._topView.setNativeProps(this._topViewStyle);
+      this._topOpened = false;
   },
 
-  _onApprove : function()
-  {
+  _onDetailsColapseToogle: function(x) {
+      LayoutAnimation.spring();
+      var opened = this._topOpened;
+
+      this._topViewStyle.style.height = opened?this._colapsedWidth-x:this._expanedWidth;
+      this._topView.setNativeProps(this._topViewStyle);
+      this._topOpened = !opened
+  },
+
+  _onApprove : function() {
     this.fetchData(this._withAction().approveItems());
     console.log('Approved');
   },
 
-  _onPay : function()
-  {
+  _onPay : function() {
       console.log('Payed');
   },
 
@@ -137,8 +143,8 @@ var Order = React.createClass({
 
     var orderDetailsProps = {
           orderItemClicked  : this._orderItemClicked  
-        , onExpand          : this._onDetailsExpand
-        , onColapse         : this._onDetailsColapse
+        , onExpand          : () => this._onDetailsColapseToogle(0)
+        , onColapse         : () => this._onDetailsColapseToogle(0)
         , state             : this.state
         , onApprove         : this._onApprove
         , onPay             : this._onPay
@@ -147,7 +153,8 @@ var Order = React.createClass({
     //render children
     return (
         <View style={styles.container}>
-            <View name="top" style={{height:this.state.topHeight}} >
+            <View name="top" ref={x=>this._topView = x} {...this._topViewStyle} 
+                {...this._topResponder.panHandlers} >
                 <OrderDetails {...orderDetailsProps}/>
             </View>
             <View name="bottom" style={{flex:1}} {...this._bottomResponder.panHandlers}>
@@ -174,8 +181,24 @@ var Order = React.createClass({
     //this.setState({lastMessage : text});
   },
 
+  _updateMove: function(newGesture:Object) {
+      var dif = newGesture.dy - this._oldGestureY;
+      if(dif!=0) {
+        this._moveDirection = dif;
+        this._oldGestureY = newGesture.dy;
+        var s = this._moveDirection>=0?'DOWN':'UP';
+        console.log(s);
+      }
+  },
+
+  _highlightBottom: function() {
+    LayoutAnimation.easeInEaseOut();
+    this._topViewStyle.style.height += (this._topOpened?-1:1)*this._highlightWidth; 
+    this._topView.setNativeProps(this._topViewStyle);
+  },
+
   // RESPONDER
-  _getResponder : function() {
+  _getResponder : function(shouldRespond) {
     return PanResponder.create({
         // Ask to be the responder:
         onStartShouldSetPanResponder        : (evt, gestureState) => {
@@ -184,7 +207,7 @@ var Order = React.createClass({
         },
         onStartShouldSetPanResponderCapture : (evt, gestureState) => {
             this._logWithState("startShouldSet*Capture");
-            return  false
+            return  shouldRespond();
         },
         onMoveShouldSetPanResponder         : (evt, gestureState) => {
             this._logWithState("moveShouldSet*");
@@ -199,23 +222,34 @@ var Order = React.createClass({
             // what is happening!
 
             // gestureState.{x,y}0 will be set to zero now
-            this._logWithState("onPanResponderGrant");
+            this._logWithState("onPanResponderGrant"); 
+            this._oldGestureY = gestureState.dy;
+            this._highlightBottom();
+            //this._highlight(this.pager);
+
         },
         onPanResponderMove                  : (evt, gestureState) => {
             // The most recent move distance is gestureState.move{X,Y}
 
             // The accumulated gesture distance since becoming responder is
             // gestureState.d{x,y}
-            this._logWithState("onPanResponderMove");
+            var offset = this._topViewStyle.style.height + gestureState.dy
+            this._topView.setNativeProps({style:{height:offset}});
+            this._updateMove(gestureState);
+            this._logWithState("onPanResponderMove");  
         },
         onPanResponderTerminationRequest    : (evt, gestureState) => {
             this._logWithState("onPanResponderTerminationRequest");
             return  true;
         },
-
         onPanResponderRelease               : (evt, gestureState) => {
+            this._updateMove(gestureState);
             // The user has released all touches while this view is the
             // responder. This typically means a gesture has succeeded
+            if(this._moveDirection>=0)
+                this._onDetailsExpand();
+            else
+                this._onDetailsColapse();
             this._logWithState("onPanResponderRelease");
         },
         onPanResponderTerminate             : (evt, gestureState) => {
@@ -232,6 +266,20 @@ var Order = React.createClass({
     });
   },
 //END OF COMPONENT
+  _withAction : function() { return { 
+      currentOrder : () => 
+        [ this._currentOrderUrl() , "GET"]
+      
+      , addItem :  (prodId) => 
+        [ this._currentOrderUrl() + `/users/${this.state.userId}/items/${prodId}` , "POST"]
+
+      , removeItem : (itemId,userId) =>
+        [ this._currentOrderUrl() + `/users/${userId}/items/${itemId}` , "DELETE"]
+
+      , approveItems : () =>
+        [ this._currentOrderUrl() + `/users/${this.state.userId}/items/approved` , "POST"] };
+  },
+
 });
 
 var styles = StyleSheet.create({

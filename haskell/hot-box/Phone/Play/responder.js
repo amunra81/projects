@@ -100,6 +100,8 @@ var PanResponderExample = React.createClass({
   _handlePanResponderMove: function(e: Object, gestureState: Object) {
     this._circleStyles.style.left = this._previousLeft + gestureState.dx;
     this._circleStyles.style.top = this._previousTop + gestureState.dy;
+    //console.log(gestureState);
+    console.log(gestureState.dx+":"+gestureState.dy);
     this._updatePosition();
   },
   _handlePanResponderEnd: function(e: Object, gestureState: Object) {

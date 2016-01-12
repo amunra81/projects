@@ -69,14 +69,10 @@ var OrderDetails = React.createClass({
   renderLoadedView: function() {
     return (
         <View style={styles.container}>
-            <TouchableHighlight onPress={() => { 
-                this.props.onColapse();
-            }}>
                 <View>
                 {this.renderHead()}
                 {this.renderActions()}
                 </View>
-            </TouchableHighlight>
             {this.renderBody()}
         </View>
     );
