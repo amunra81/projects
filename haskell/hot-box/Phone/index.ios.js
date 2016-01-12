@@ -22,13 +22,15 @@ var Responder = require('./Play/responder');
 var LongView = require('./Play/longview');
 var OrderDetails = require('./Real/order-details');
 var Order = require('./Real/order');
+var SlideList = require('./Real/Controls/slide-list');
 
 var Phone = React.createClass({
   render: function() {
-      return <Order restId={1} tableId={1} userId={2}/>;
+      //return <Order restId={1} tableId={1} userId={2}/>;
       //return <LongView />;
       //return <Playground />;
       //return <Responder />;
+      return <SlideList/>;
     }
 //end React.createClas
 });
