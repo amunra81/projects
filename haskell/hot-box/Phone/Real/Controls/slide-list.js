@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react-native');
+var Linq = require('linq');
 //const UIManager = require('NativeModules').UIManager;
 
 var {
@@ -13,35 +14,6 @@ var {
 
 module.exports = React.createClass({
 
-  _currentOrderUrl: function() {
-      return `http://localhost:8000/restaurants/1/tables/1/orders/current`;
-  },
-
-  getInitialState: function() {
-      return  {
-          dataSource:null,
-          loaded:false
-      };
-  },
-
-  fetchData: function() {
-        var url = this._currentOrderUrl();
-        var args = "GET";
-        console.log(`calling API: url: [${url}] , args: [${JSON.stringify(args)}]`);
-        fetch(url,args)
-        .then((response) => {
-            console.log(response)
-            return response.json();
-        })
-        .then((responseData) => {
-            this.setState({
-                dataSource: responseData.menu
-                ,loaded: true
-                ,refreshed: this.state.refreshed+1
-            });
-        })
-        .done();
-  },
   _panResponder: {},
 
   componentWillMount: function() {
@@ -55,21 +27,19 @@ module.exports = React.createClass({
     });
   },
 
-  componentDidMount: function() {
-      this.fetchData();
+  render: function() {
+
+      return (<View style={styles.container}>
+                {this.props.dataSource.map( x => this.renderItem(x))} 
+              </View>);
   },
 
-  render: function() {
-      if(!this.state.loaded)
-          return this.renderLoading();
-      else
-          return this.renderLoaded();
-  },
-  renderLoading:function () {
-      return (<View style={styles.container}><Text> Loading .... </Text></View>);
-  },
-  renderLoaded:function () {
-      return (<View style={styles.container}><Text> Loaded !!!!! </Text></View>);
+  renderItem: function(item) {
+      return  (
+          <View key={this.props.getItemKey(item)}>
+              {this.props.renderItem(item)}
+          </View>
+      );
   },
 
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {

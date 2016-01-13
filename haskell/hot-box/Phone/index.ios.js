@@ -22,7 +22,7 @@ var Responder = require('./Play/responder');
 var LongView = require('./Play/longview');
 var OrderDetails = require('./Real/order-details');
 var Order = require('./Real/order');
-var SlideList = require('./Real/Controls/slide-list');
+var SlideListPlay = require('./Play/slide-list-play');
 
 var Phone = React.createClass({
   render: function() {
@@ -30,7 +30,7 @@ var Phone = React.createClass({
       //return <LongView />;
       //return <Playground />;
       //return <Responder />;
-      return <SlideList/>;
+      return <SlideListPlay/>;
     }
 //end React.createClas
 });
