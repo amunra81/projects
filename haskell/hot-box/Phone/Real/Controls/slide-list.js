@@ -16,6 +16,9 @@ module.exports = React.createClass({
 
   _panResponder: {},
 
+  getInitialState: function() {
+    return { currentPage: 0 };
+  },
   componentWillMount: function() {
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder  : this._handleStartShouldSetPanResponder,
@@ -28,15 +31,29 @@ module.exports = React.createClass({
   },
 
   render: function() {
+    //{this.props.dataSource.map( x => this.renderItem(x))} 
+    return (<View style={styles.container} >
+                <View><Text>{this.props.pageSize}</Text></View>
+                {this.renderPage(0,{name:"pula"})}
+                {this.renderPage(1,{...this._panResponder.panHandlers})}
+                {this.renderPage(2)}
+            </View>
+    );
+  },
 
-      return (<View style={styles.container}>
-                {this.props.dataSource.map( x => this.renderItem(x))} 
-              </View>);
+  renderPage: function(pageNo,props) {
+      var extraProps = {pageNo:pageNo,...props};
+      var text = `Page: ${pageNo}`;
+      return  (
+          <View {...extraProps}>
+              <Text>{  text }</Text>
+          </View>
+      );
   },
 
   renderItem: function(item) {
       return  (
-          <View key={this.props.getItemKey(item)}>
+          <View key={this.props.getItemKey(item)} >
               {this.props.renderItem(item)}
           </View>
       );
@@ -53,16 +70,15 @@ module.exports = React.createClass({
   },
 
   _handlePanResponderGrant: function(e: Object, gestureState: Object) {
-    this._oldGestureY = gestureState.dy;
-    this._highlight(this.pager);
+      console.log('grnd');
   },
 
   _handlePanResponderMove: function(e: Object, gestureState: Object) {
-    //this._circleStyles.style.left = this._previousLeft + gestureState.dx;
-    this._circleStyles.style.top = this._previousTop + gestureState.dy;
-    //console.log(gestureState);
-    this._updatePosition();
-    this._updateMove(gestureState);
+      console.log('grnd');
+  },
+
+  _handlePanResponderEnd: function(e: Object, gestureState: Object) {
+
   },
 });
 

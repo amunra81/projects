@@ -58,9 +58,10 @@ module.exports = React.createClass({
   },
   renderLoaded:function () {
       var props = 
-          { dataSource : this.state.dataSource
-          , renderItem : this.renderMenuItem 
-          , getItemKey :  x => x.id
+          { dataSource      : this.state.dataSource
+          , renderItem      : this.renderMenuItem 
+          , getItemKey      :  x => x.id
+          , pageSize        :  5
           };
       return (<SlideList {...props} />);
   },
