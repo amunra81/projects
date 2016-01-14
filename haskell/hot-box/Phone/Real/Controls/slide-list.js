@@ -60,10 +60,9 @@ module.exports = React.createClass({
   },
 
   renderItem: function(item) {
-              //{this.props.renderItem(item.item)}
       return  (
           <View key={this.props.getItemKey(item.item)} >
-              <Text>{item.pos + ' ' + item.item.name }</Text>
+              {this.props.renderItem(item.item)}
           </View>
       );
   },
