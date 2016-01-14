@@ -40,21 +40,30 @@ module.exports = React.createClass({
             </View>
     );
   },
-
+  //Enumerable.From(['a','b','c','d','e','f']).Zip(Enumerable.Range(0,10),"a,b=>a+':'+b")
   renderPage: function(pageNo,props) {
-      var extraProps = {pageNo:pageNo,...props};
-      var text = `Page: ${pageNo}`;
-      return  (
-          <View {...extraProps}>
-              <Text>{  text }</Text>
-          </View>
-      );
+    var extraProps = {pageNo:pageNo,...props};
+    var text = `Page: ${pageNo}`;
+    var {pageSize,dataSource} = this.props;
+    var some = (pageNo>=0?
+                    Linq.from(dataSource).zip(Linq.range(0,dataSource.length-1),(a,b) => {return {item:a,pos:b};})
+                    .skip(pageNo*this.props.pageSize)
+                    .take(pageSize)
+                :   Linq.empty()).toArray();
+    var i = 3;
+    return (
+        <View {...extraProps}>
+            <Text key="ss">{text}</Text>
+            {some.map(this.renderItem)}
+        </View>
+    );
   },
 
   renderItem: function(item) {
+              //{this.props.renderItem(item.item)}
       return  (
-          <View key={this.props.getItemKey(item)} >
-              {this.props.renderItem(item)}
+          <View key={this.props.getItemKey(item.item)} >
+              <Text>{item.pos + ' ' + item.item.name }</Text>
           </View>
       );
   },
