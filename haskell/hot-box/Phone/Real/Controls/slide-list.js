@@ -29,7 +29,6 @@ module.exports = React.createClass({
   getInitialState: function() {
       return { 
                 currentPage: 0,
-                //containerDims: null,
              };
   },
   componentWillMount: function() {
@@ -43,63 +42,34 @@ module.exports = React.createClass({
     });
   },
 
-  //componentDidMount: function() {
-      //console.log("did");
-       ////if(!this.state.containerDims) 
-        ////setTimeout(this.measureContainer);
-  //},
-
-  //measureContainer: function() {
-      //this.container.measure((fx, fy, width, height, px, py) => {
-          //var str =  `measured: (fx:${fx} fy:${fy} width:${width} height:${height} px:${px} py:${py})`;
-          //console.log(str);
-          //this.setState({containerDims:{width:width,height:height}});
-      //});
-  //},
-
-  //render: function() {
-    //return this.state.containerDims?this.renderPages():this.renderMeasuring();
-  //},
-
-  //renderMeasuring: function() {
-    //console.log("measuring...");
-    //return (
-        //<View ref={x=>this.container = x} style={styles.container} onLayout={this._onLayout}>
-            //<Text > Measuring ... </Text>       
-            //<View ref={x=> this.tt = x} style={{backgroundColor:'green',height:100}}>
-                //<Text> Measuring ... </Text>       
-            //</View>
-        //</View>
-    //);
-  //},
-
   render: function() {
-    //{this.props.dataSource.map( x => this.renderItem(x))} 
-    //<View><Text >{this.props.pageSize} + {this.state.containerDims.height}</Text></View>
       return (<View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
                 <View ref={x=>this.movingPart = x} name='moving-part' >
                     {this.renderPage(0,{name:"pula",style:{backgroundColor:'red'}}
-                                    ,x=>this.prevPage = x)}
+                                    ,x=>this.prevPage = x,this.props.renderPrevPage)}
                     {this.renderPage(1,{style:{backgroundColor:'green'},...this._panResponder.panHandlers}
-                                    ,x=>this.currentPage = x)}
+                                    ,x=>this.currentPage = x,this.props.renderCurrentPage)}
                     {this.renderPage(2,{style:{backgroundColor:'yellow'}}
-                                    ,x=>this.nextPage = x)}
+                                    ,x=>this.nextPage = x,this.props.renderNextPage)}
 
                 </View>
             </View>
     );
   },
 
-  //_withCommonStyle: function(propsP) {
-    //var {style,props} = propsP;
-    //var commonStyle = {
-            ////top:-this.state.containerDims.height,
-            //height:this.state.containerDims.height,
-            //width:this.state.containerDims.width,
-    //}
+  renderPage: function(pageNo,props,refHandler,render) {
+    //var props = this._withCommonStyle(propsP);
+    var extraProps = {pageNo:pageNo,...props};
 
-    //return {style: [commonStyle,style],...props};
-  //},
+    var {pageSize,dataSource} = this.props;
+
+    return (
+        <View ref={refHandler} {...extraProps}>
+            { render() /*some.map(this.renderItem)*/}
+        </View>
+    );
+  },
+
 
   _setHeghts : function (nativEvent)
   {
@@ -113,35 +83,6 @@ module.exports = React.createClass({
       this.currentPage.setNativeProps(pagesHeight);
       this.nextPage.setNativeProps(pagesHeight);
       this.movingPart.setNativeProps(movingPartTop);
-  },
-
-  //Enumerable.From(['a','b','c','d','e','f']).Zip(Enumerable.Range(0,10),"a,b=>a+':'+b")
-  renderPage: function(pageNo,props,refHandler) {
-    //var props = this._withCommonStyle(propsP);
-    var extraProps = {pageNo:pageNo,...props};
-
-    var text = `Page: ${pageNo}`;
-    var {pageSize,dataSource} = this.props;
-    var some = (pageNo>=0?
-                    Linq.from(dataSource).zip(Linq.range(0,dataSource.length-1),(a,b) => {return {item:a,pos:b};})
-                    .skip(pageNo*this.props.pageSize)
-                    .take(pageSize)
-                :   Linq.empty()).toArray();
-    var i = 3;
-    return (
-        <View ref={refHandler} {...extraProps}>
-            <Text key="ss">{text}</Text>
-            {some.map(this.renderItem)}
-        </View>
-    );
-  },
-
-  renderItem: function(item) {
-      return  (
-          <View key={this.props.getItemKey(item.item)} >
-              {this.props.renderItem(item.item)}
-          </View>
-      );
   },
 
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
@@ -161,8 +102,9 @@ module.exports = React.createClass({
   },
 
   _setMovingTop:function(offset) {
-      this.offset = offset;
-      var top = (-this.dims.height) + offset;
+      this.offset   = offset;
+      var top       = (-this.dims.height) + offset;
+
       this.movingPart.setNativeProps({style: {top:top}});
   },
   _handlePanResponderMove: function(e: Object, gestureState: Object) {
@@ -179,8 +121,8 @@ module.exports = React.createClass({
           top = this.dims.height;
       } 
       else if(this._moveDirection<0 && this.offset <= 0 ){
+          //finger UP
           top = - this.dims.height;
-        //finger UP
       }
 
       this._setMovingTop(top);
@@ -188,9 +130,10 @@ module.exports = React.createClass({
   _updateMoveDirection: function(newGesture:Object) {
       var dif = newGesture.dy - this._oldGestureY;
       if(dif!=0) {
-        this._moveDirection = dif;
-        this._oldGestureY = newGesture.dy;
-        var s = this._moveDirection>=0?'DOWN':'UP';
+        this._moveDirection     = dif;
+        this._oldGestureY       = newGesture.dy;
+        var s                   = this._moveDirection>=0?'DOWN':'UP';
+
         console.log(s + " : offset: " + this.offset );
       }
   },

@@ -2,7 +2,8 @@
 
 var React = require('react-native');
 var SlideList = require('../Real/Controls/slide-list');
-//const UIManager = require('NativeModules').UIManager;
+var Linq = require('linq');
+//coanst UIManager = require('NativeModules').UIManager;
 
 var {
   PanResponder,
@@ -14,7 +15,7 @@ var {
 module.exports = React.createClass({
 
   _currentOrderUrl: function() {
-      return `http://localhost:8000/restaurants/1/tables/1/orders/current`;
+      return `http://excuse.ro:8000/restaurants/1/tables/1/orders/current`;
   },
 
   getInitialState: function() {
@@ -61,13 +62,37 @@ module.exports = React.createClass({
           { dataSource      : this.state.dataSource
           , renderItem      : this.renderMenuItem 
           , getItemKey      :  x => x.id
-          , pageSize        :  5
+          , renderPrevPage      : () => this.renderPage(0,{})
+          , renderCurrentPage   : () => this.renderPage(1,{})
+          , renderNextPage      : () => this.renderPage(2,{})
           };
       return (<SlideList {...props} />);
   },
 
-  renderMenuItem: function (menuItem) {
-      return <Text>{menuItem.name}</Text>;
+  renderPage: function(pageNo,props)
+  {
+    var extraProps = {pageNo:pageNo,...props};
+
+    var text = `Page: ${pageNo}`;
+    var pageSize = 5;
+    var dataSource = this.state.dataSource;
+
+    var some = (pageNo>=0?
+                    Linq.from(dataSource).zip(Linq.range(0,dataSource.length-1),(a,b) => {return {item:a,pos:b};})
+                    .skip(pageNo*pageSize)
+                    .take(pageSize)
+               :    Linq.empty()).toArray();
+
+    return (
+        <View {...extraProps}>
+            <Text key="ss">{text}</Text>
+            { some.map(this.renderMenuItem)}
+        </View>
+    );
+  },
+
+  renderMenuItem: function (item) {
+      return <Text key={item.item.id}>{item.item.name}</Text>;
   }
 
 });
