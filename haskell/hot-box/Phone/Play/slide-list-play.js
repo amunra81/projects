@@ -21,7 +21,8 @@ module.exports = React.createClass({
   getInitialState: function() {
       return  {
           dataSource:null,
-          loaded:false
+          loaded:false,
+          currentPage:0,
       };
   },
 
@@ -58,13 +59,14 @@ module.exports = React.createClass({
       return (<View style={styles.container}><Text> Loading .... </Text></View>);
   },
   renderLoaded:function () {
+      var currentPage = this.state.currentPage
       var props = 
           { dataSource      : this.state.dataSource
           , renderItem      : this.renderMenuItem 
           , getItemKey      :  x => x.id
-          , renderPrevPage      : () => this.renderPage(0,{})
-          , renderCurrentPage   : () => this.renderPage(1,{})
-          , renderNextPage      : () => this.renderPage(2,{})
+          , renderPrevPage      : () => this.renderPage(currentPage - 1,{})
+          , renderCurrentPage   : () => this.renderPage(currentPage,{})
+          , renderNextPage      : () => this.renderPage(currentPage+1,{})
           };
       return (<SlideList {...props} />);
   },
