@@ -50,7 +50,7 @@ var Order = React.createClass({
     },
 
     componentDidMount: function() {
-        LayoutAnimation.linear();
+        //LayoutAnimation.linear();
         this.fetchData(this._withAction().currentOrder());
     
     },
