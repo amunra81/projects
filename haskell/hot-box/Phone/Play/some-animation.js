@@ -24,10 +24,11 @@ return (
       <Animated.Image                         // Base: Image, Text, View
         source={{uri: 'http://i.imgur.com/XMKOH81.jpg'}}
         style={{
-          flex: 1,
-          transform: [                        // `transform` is an ordered array
-            {scale: this.state.bounceValue},  // Map `bounceValue` to `scale`
-          ]
+            flex: 1,
+            opacity: this.state.bounceValue,
+         /* transform: [                        // `transform` is an ordered array*/
+            //{scale: this.state.bounceValue},  // Map `bounceValue` to `scale`
+          /*]*/
         }}
     />
     );
@@ -37,7 +38,7 @@ return (
     Animated.spring(                          // Base: spring, decay, timing
       this.state.bounceValue,                 // Animate `bounceValue`
       {
-        toValue: 0.8,                         // Animate to smaller size
+        toValue: 0.5,                         // Animate to smaller size
         friction: 3,                          // Bouncier spring
         tension: 100
       }

@@ -12,6 +12,7 @@ var {
   View,
   TouchableHighlight,
   LayoutAnimation,
+  Animated,
 } = React;
 
 
@@ -29,8 +30,16 @@ module.exports = React.createClass({
   getInitialState: function() {
       return { 
                 currentPage: 0,
+                top:new Animated.Value(0),
              };
   },
+
+  componentDidUpdate: function() {
+    console.log("didUpdate");
+    if(this.dims)
+        this.state.top.setValue(-this.dims.height);
+  },
+
   componentWillMount: function() {
     this._panResponder = PanResponder.create({
       onStartShouldSetPanResponder  : this._handleStartShouldSetPanResponder,
@@ -43,16 +52,17 @@ module.exports = React.createClass({
   },
 
   render: function() {
+      console.log("render");
       return (<View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
-                <View ref={x=>this.movingPart = x} name='moving-part' >
-                    {this.renderPage(0,{name:"pula",style:{backgroundColor:'red'}}
+                <Animated.View ref={x=>this.movingPart = x} name='moving-part' style={{top:this.state.top}}>
+                    {this.renderPage(0,{name:"pula",style:{backgroundColor:'green'}}
                                     ,x=>this.prevPage = x,this.props.renderPrevPage)}
                     {this.renderPage(1,{style:{backgroundColor:'green'},...this._panResponder.panHandlers}
                                     ,x=>this.currentPage = x,this.props.renderCurrentPage)}
-                    {this.renderPage(2,{style:{backgroundColor:'yellow'}}
+                    {this.renderPage(2,{style:{backgroundColor:'green'}}
                                     ,x=>this.nextPage = x,this.props.renderNextPage)}
 
-                </View>
+                </Animated.View>
             </View>
     );
   },
@@ -77,12 +87,14 @@ module.exports = React.createClass({
       console.log(`OnLayout: ${JSON.stringify(this.dims)}`);
 
       var pagesHeight = {style:{height:this.dims.height}};
-      var movingPartTop = {style:{top:-this.dims.height}};
 
       this.prevPage.setNativeProps(pagesHeight);
       this.currentPage.setNativeProps(pagesHeight);
       this.nextPage.setNativeProps(pagesHeight);
-      this.movingPart.setNativeProps(movingPartTop);
+
+      //var movingPartTop = {style:{top:-this.dims.height}};
+      //this.movingPart.setNativeProps(movingPartTop);
+      this.state.top.setValue(-this.dims.height);
   },
 
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
@@ -101,12 +113,23 @@ module.exports = React.createClass({
       //this._setMovingTop(0);
   },
 
-  _setMovingTop:function(offset) {
+  _setMovingTop:function(offset,scrollCallBack) {
       this.offset   = offset;
       var top       = (-this.dims.height) + offset;
 
-      this.movingPart.setNativeProps({style: {top:top}});
+      //this.movingPart.setNativeProps({style: {top:top}});
+      if(scrollCallBack)
+        Animated.timing(                          // Base: spring, decay, timing
+            this.state.top,                 // Animate `bounceValue`
+            {
+                toValue: top,                         // Animate to smaller size
+                duration: 150,                          // Bouncier spring
+                delay: 0
+            }).start(scrollCallBack);         
+      else
+        this.state.top.setValue(top);
   },
+
   _handlePanResponderMove: function(e: Object, gestureState: Object) {
       //console.log(gestureState);
       this._setMovingTop(gestureState.dy);
@@ -114,7 +137,7 @@ module.exports = React.createClass({
   },
 
   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
-      LayoutAnimation.easeInEaseOut();
+      //LayoutAnimation.easeInEaseOut();
       var top = 0;
       if(this._moveDirection>=0 && this.offset >=0) {
           //finger DOWN
@@ -125,7 +148,9 @@ module.exports = React.createClass({
           top = - this.dims.height;
       }
 
-      this._setMovingTop(top);
+      this._setMovingTop(top,x => {
+          this.props.onScrolled(-top);
+      });
   },
   _updateMoveDirection: function(newGesture:Object) {
       var dif = newGesture.dy - this._oldGestureY;

@@ -22,7 +22,8 @@ module.exports = React.createClass({
       return  {
           dataSource:null,
           loaded:false,
-          currentPage:0,
+          currentPage:1,
+          refreshed: 0
       };
   },
 
@@ -61,18 +62,23 @@ module.exports = React.createClass({
   renderLoaded:function () {
       var currentPage = this.state.currentPage
       var props = 
-          { dataSource      : this.state.dataSource
-          , renderItem      : this.renderMenuItem 
-          , getItemKey      :  x => x.id
+          { dataSource          : this.state.dataSource
+          , renderItem          : this.renderMenuItem 
+          , getItemKey          :  x => x.id
           , renderPrevPage      : () => this.renderPage(currentPage - 1,{})
           , renderCurrentPage   : () => this.renderPage(currentPage,{})
           , renderNextPage      : () => this.renderPage(currentPage+1,{})
+          , onScrolled          : x =>  {
+              //
+              console.log(`s-a terminat cu: ${JSON.stringify(x)}`);
+              if(x!=0)
+                this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
+          }
           };
       return (<SlideList {...props} />);
   },
 
-  renderPage: function(pageNo,props)
-  {
+  renderPage: function(pageNo,props) {
     var extraProps = {pageNo:pageNo,...props};
 
     var text = `Page: ${pageNo}`;
