@@ -26,11 +26,11 @@ var SlideListPlay = require('./Play/slide-list-play');
 
 var Phone = React.createClass({
   render: function() {
-      //return <Order restId={1} tableId={1} userId={2}/>;
+      return <Order restId={1} tableId={1} userId={2}/>;
       //return <LongView />;
       //return <Playground />;
       //return <Responder />;
-      return <SlideListPlay/>;
+      //return <SlideListPlay/>;
     }
 //end React.createClas
 });

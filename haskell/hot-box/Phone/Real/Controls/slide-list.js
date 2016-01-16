@@ -56,10 +56,11 @@ module.exports = React.createClass({
 
   render: function() {
       return (<View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
-                <Animated.View ref={ x=>this.movingPart = x } name='moving-part' style={{top:this.state.top}}>
+          <Animated.View ref={ x=>this.movingPart = x } name='moving-part' style={{top:this.state.top}}
+              {...this._panResponder.panHandlers}>
                     {this.renderPage(0,{style:{}}
                                     ,x=>this.prevPage = x,this.props.renderPrevPage)}
-                    {this.renderPage(1,{style:{},...this._panResponder.panHandlers}
+                    {this.renderPage(1,{style:{}}
                                     ,x=>this.currentPage = x,this.props.renderCurrentPage)}
                     {this.renderPage(2,{style:{}}
                                     ,x=>this.nextPage = x,this.props.renderNextPage)}
@@ -134,8 +135,8 @@ module.exports = React.createClass({
                 value,                 
                 {
                     toValue: toValue,                         
-                    duration: 200,                          // default 500 ms
-                    easing: Easing.inOut(Easing.linear),
+                    duration: 300,                          // default 500 ms
+                    easing: Easing.out(Easing.exp),
                     delay: 0
                 }).start(callback);         
           },
@@ -200,8 +201,8 @@ var styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flex:1,
         alignItems:'stretch',
-        backgroundColor: '#dcf4ff',
-        marginTop: 20,
+        backgroundColor: '#dcffe7',
+        //marginTop: 20,
         overflow:'hidden',
     }
 });

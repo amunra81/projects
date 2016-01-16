@@ -5,6 +5,7 @@ var React = require('react-native');
 var Enumerable = require('linq');
 var OrderDetails = require('./order-details');
 var OrderMenu = require('./order-menu');
+var OrderMenuSlide = require('./order-menu-slide');
 //var Display = require('react-native-device-display');
 
 var {
@@ -158,7 +159,7 @@ var Order = React.createClass({
                 <OrderDetails {...orderDetailsProps}/>
             </View>
             <View name="bottom" style={{flex:1}} {...this._bottomResponder.panHandlers}>
-                <OrderMenu {...orderMenuProps}/>
+                <OrderMenuSlide {...orderMenuProps}/>
             </View>
         </View>
     );

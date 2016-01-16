@@ -70,8 +70,8 @@ module.exports = React.createClass({
           , renderNextPage      : () => this.renderPage(currentPage+1,{})
           , onScrolled          : x =>  {
               if(x!=0)
-                setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1:currentPage+1}))
-                //this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
+                //setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1:currentPage+1}))
+                this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
           }
           };
       return (<SlideList {...props} />);
