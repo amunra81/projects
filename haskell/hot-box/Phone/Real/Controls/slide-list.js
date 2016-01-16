@@ -13,6 +13,7 @@ var {
   TouchableHighlight,
   LayoutAnimation,
   Animated,
+  Easing,
 } = React;
 
 
@@ -36,7 +37,10 @@ module.exports = React.createClass({
 
   componentDidUpdate: function() {
     if(this.dims)
+        {
+        //LayoutAnimation.spring();
         this.state.top.setValue(-this.dims.height);
+        }
   },
 
   componentWillMount: function() {
@@ -53,11 +57,11 @@ module.exports = React.createClass({
   render: function() {
       return (<View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
                 <Animated.View ref={ x=>this.movingPart = x } name='moving-part' style={{top:this.state.top}}>
-                    {this.renderPage(0,{style:{backgroundColor:'red'}}
+                    {this.renderPage(0,{style:{}}
                                     ,x=>this.prevPage = x,this.props.renderPrevPage)}
-                    {this.renderPage(1,{style:{backgroundColor:'green'},...this._panResponder.panHandlers}
+                    {this.renderPage(1,{style:{},...this._panResponder.panHandlers}
                                     ,x=>this.currentPage = x,this.props.renderCurrentPage)}
-                    {this.renderPage(2,{style:{backgroundColor:'yellow'}}
+                    {this.renderPage(2,{style:{}}
                                     ,x=>this.nextPage = x,this.props.renderNextPage)}
 
                 </Animated.View>
@@ -116,15 +120,44 @@ module.exports = React.createClass({
 
       //this.movingPart.setNativeProps({style: {top:top}});
       if(scrollCallBack)
-        Animated.timing(                          // Base: spring, decay, timing
-            this.state.top,                 // Animate `bounceValue`
-            {
-                toValue: top,                         // Animate to smaller size
-                duration: 150,                          // Bouncier spring
-                delay: 0
-            }).start(scrollCallBack);         
+          this._animate(this.state.top,top,scrollCallBack).timing();
       else
-        this.state.top.setValue(top);
+          this.state.top.setValue(top);
+      console.log(Easing);
+      console.log(Easing.inOut(Easing.ease));
+  },
+
+  _animate: function(value,toValue,callback) {
+      return {
+          timing : () => {
+            Animated.timing(                          
+                value,                 
+                {
+                    toValue: toValue,                         
+                    duration: 200,                          // default 500 ms
+                    easing: Easing.inOut(Easing.linear),
+                    delay: 0
+                }).start(callback);         
+          },
+          decay : () => {
+            Animated.decay(           
+                value,                 
+                {
+                    toValue: toValue,                       
+                    velocity: 0.1,                          
+                    deceleration: 0.997
+                }).start(callback);    
+          },
+          spring : () => {
+            Animated.spring(           
+                value,                 
+                {
+                    toValue: toValue,                       
+                    friction: 5,  //default 7                          
+                    tension: 40   // default 40
+                }).start(callback);    
+          }
+      }
   },
 
   _handlePanResponderMove: function(e: Object, gestureState: Object) {
