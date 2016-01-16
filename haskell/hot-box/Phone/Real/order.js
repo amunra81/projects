@@ -76,9 +76,6 @@ var Order = React.createClass({
                 ,refreshed: this.state.refreshed+1
             });
         })
-        .then(() => {
-            console.log(this.state.refreshed);
-        })
         .done();
   },
 
@@ -187,8 +184,8 @@ var Order = React.createClass({
       if(dif!=0) {
         this._moveDirection = dif;
         this._oldGestureY = newGesture.dy;
-        var s = this._moveDirection>=0?'DOWN':'UP';
-        console.log(s);
+        //var s = this._moveDirection>=0?'DOWN':'UP';
+        //console.log(s);
       }
   },
 
@@ -203,19 +200,19 @@ var Order = React.createClass({
     return PanResponder.create({
         // Ask to be the responder:
         onStartShouldSetPanResponder        : (evt, gestureState) => {
-            this._logWithState("startShouldSet*");
+            //console.log("startShouldSet*");
             return  false
         },
         onStartShouldSetPanResponderCapture : (evt, gestureState) => {
-            this._logWithState("startShouldSet*Capture");
+            //console.log("startShouldSet*Capture");
             return  shouldRespond();
         },
         onMoveShouldSetPanResponder         : (evt, gestureState) => {
-            this._logWithState("moveShouldSet*");
+            //console.log("moveShouldSet*");
             return  false
         },
         onMoveShouldSetPanResponderCapture  : (evt, gestureState) => {
-            this._logWithState("moveShouldSet*Capture");
+            //console.log("moveShouldSet*Capture");
             return  false
         },
         onPanResponderGrant                 : (evt, gestureState) => {
@@ -223,7 +220,7 @@ var Order = React.createClass({
             // what is happening!
 
             // gestureState.{x,y}0 will be set to zero now
-            this._logWithState("onPanResponderGrant"); 
+            console.log("onPanResponderGrant"); 
             this._oldGestureY = gestureState.dy;
             this._highlightBottom();
             //this._highlight(this.pager);
@@ -237,10 +234,10 @@ var Order = React.createClass({
             var offset = this._topViewStyle.style.height + gestureState.dy
             this._topView.setNativeProps({style:{height:offset}});
             this._updateMove(gestureState);
-            this._logWithState("onPanResponderMove");  
+            //console.log("onPanResponderMove");  
         },
         onPanResponderTerminationRequest    : (evt, gestureState) => {
-            this._logWithState("onPanResponderTerminationRequest");
+            //console.log("onPanResponderTerminationRequest");
             return  true;
         },
         onPanResponderRelease               : (evt, gestureState) => {
@@ -251,17 +248,17 @@ var Order = React.createClass({
                 this._onDetailsExpand();
             else
                 this._onDetailsColapse();
-            this._logWithState("onPanResponderRelease");
+            //console.log("onPanResponderRelease");
         },
         onPanResponderTerminate             : (evt, gestureState) => {
             // Another component has become the responder, so this gesture
             // should be cancelled
-            this._logWithState("onPanResponderTerminate");
+            //console.log("onPanResponderTerminate");
         },
         onShouldBlockNativeResponder        : (evt, gestureState) => {
             // Returns whether this component should block native components from becoming the JS
             // responder. Returns true by default. Is currently only supported on android.
-            this._logWithState("onShouldBlockNativeResponder");
+            //console.log("onShouldBlockNativeResponder");
             return true;
         },
     });

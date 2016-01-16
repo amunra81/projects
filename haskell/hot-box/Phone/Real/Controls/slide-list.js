@@ -76,7 +76,6 @@ module.exports = React.createClass({
 
     var {pageSize,dataSource} = this.props;
     var rendered = render();
-    console.log(`Render page# ${pageNo} -> ${rendered}`);
     return (
         <View ref={refHandler} {...extraProps}>
             {rendered}
@@ -88,7 +87,7 @@ module.exports = React.createClass({
   _setHeghts : function (nativEvent)
   {
       this.dims = nativEvent.nativeEvent.layout;
-      console.log(`OnLayout: ${JSON.stringify(this.dims)}`);
+      console.log(`OnLayout Changed: ${JSON.stringify(this.dims)}`);
 
       var pagesHeight = {style:{height:this.dims.height}};
 
@@ -110,9 +109,6 @@ module.exports = React.createClass({
   },
 
   _handlePanResponderGrant: function(e: Object, gestureState: Object) {
-      console.log('grnd');
-      //this should be removed
-      //this._setMovingTop(0);
   },
 
   _setMovingTop:function(offset,scrollCallBack) {
@@ -124,8 +120,6 @@ module.exports = React.createClass({
           this._animate(this.state.top,top,scrollCallBack).timing();
       else
           this.state.top.setValue(top);
-      console.log(Easing);
-      console.log(Easing.inOut(Easing.ease));
   },
 
   _animate: function(value,toValue,callback) {
@@ -135,8 +129,8 @@ module.exports = React.createClass({
                 value,                 
                 {
                     toValue: toValue,                         
-                    duration: 300,                          // default 500 ms
-                    easing: Easing.out(Easing.exp),
+                    duration: 150,                          // default 500 ms
+                    easing: Easing.out(Easing.linear),
                     delay: 0
                 }).start(callback);         
           },
@@ -168,6 +162,8 @@ module.exports = React.createClass({
   },
 
   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
+      if(this.offset==0) 
+          return ;
       //LayoutAnimation.easeInEaseOut();
       var top = 0;
       if(this._moveDirection>=0 && this.offset >=0) {
@@ -190,7 +186,7 @@ module.exports = React.createClass({
         this._oldGestureY       = newGesture.dy;
         var s                   = this._moveDirection>=0?'DOWN':'UP';
 
-        console.log(s + " : offset: " + this.offset );
+        //console.log(s + " : offset: " + this.offset );
       }
   },
 });

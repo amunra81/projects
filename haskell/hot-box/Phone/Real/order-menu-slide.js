@@ -86,13 +86,13 @@ var OrderMenu = React.createClass({
       var currentPage = this.getState().currentPage
       var props = 
           { 
-            renderPrevPage      : () => this.renderPage(currentPage - 1,{})
-          , renderCurrentPage   : () => this.renderPage(currentPage,{})
-          , renderNextPage      : () => this.renderPage(currentPage+1,{})
-          , onScrolled          : x =>  {
+            renderPrevPage      : ( ) => this.renderPage(currentPage - 1,{})
+          , renderCurrentPage   : ( ) => this.renderPage(currentPage,{})
+          , renderNextPage      : ( ) => this.renderPage(currentPage+1,{})
+          , onScrolled          :  x  => {
               if(x!=0)
-                //setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1:currentPage+1}))
-                this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
+                setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1:currentPage+1}))
+                //this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
           }
           };
       return (<SlideList {...props} />);
@@ -120,6 +120,16 @@ var OrderMenu = React.createClass({
   },
 
   renderProduct: function(product){
+      return (
+            <View key={product.id} style={[styles.listItem,styles.center]}>
+                <Text>
+                    {product.name}
+                </Text>
+            </View>
+      );
+  },
+
+  renderProductClassic: function(product){
       return (
           <TouchableHighlight key={product.id} onPress={() => { 
             console.log(`s-a clickuit pe ${product.name}!`); 
