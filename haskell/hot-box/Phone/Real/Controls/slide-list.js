@@ -35,7 +35,6 @@ module.exports = React.createClass({
   },
 
   componentDidUpdate: function() {
-    console.log("didUpdate");
     if(this.dims)
         this.state.top.setValue(-this.dims.height);
   },
@@ -52,10 +51,9 @@ module.exports = React.createClass({
   },
 
   render: function() {
-      console.log("render");
       return (<View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
-                <Animated.View ref={x=>this.movingPart = x} name='moving-part' style={{top:this.state.top}}>
-                    {this.renderPage(0,{name:"pula",style:{backgroundColor:'red'}}
+                <Animated.View ref={ x=>this.movingPart = x } name='moving-part' style={{top:this.state.top}}>
+                    {this.renderPage(0,{style:{backgroundColor:'red'}}
                                     ,x=>this.prevPage = x,this.props.renderPrevPage)}
                     {this.renderPage(1,{style:{backgroundColor:'green'},...this._panResponder.panHandlers}
                                     ,x=>this.currentPage = x,this.props.renderCurrentPage)}
@@ -93,8 +91,6 @@ module.exports = React.createClass({
       this.currentPage.setNativeProps(pagesHeight);
       this.nextPage.setNativeProps(pagesHeight);
 
-      //var movingPartTop = {style:{top:-this.dims.height}};
-      //this.movingPart.setNativeProps(movingPartTop);
       this.state.top.setValue(-this.dims.height);
   },
 

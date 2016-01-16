@@ -22,7 +22,7 @@ module.exports = React.createClass({
       return  {
           dataSource:null,
           loaded:false,
-          currentPage:1,
+          currentPage:0,
           refreshed: 0
       };
   },
@@ -69,8 +69,6 @@ module.exports = React.createClass({
           , renderCurrentPage   : () => this.renderPage(currentPage,{})
           , renderNextPage      : () => this.renderPage(currentPage+1,{})
           , onScrolled          : x =>  {
-              //
-              console.log(`s-a terminat cu: ${JSON.stringify(x)}`);
               if(x!=0)
                 this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
           }
@@ -81,9 +79,9 @@ module.exports = React.createClass({
   renderPage: function(pageNo,props) {
     var extraProps = {pageNo:pageNo,...props};
 
-    var text = `Page: ${pageNo}`;
     var pageSize = 5;
     var dataSource = this.state.dataSource;
+    var text = `Page: ${pageNo}/${dataSource.length/pageSize}`;
 
     var some = (pageNo>=0?
                     Linq.from(dataSource).zip(Linq.range(0,dataSource.length-1),(a,b) => {return {item:a,pos:b};})
