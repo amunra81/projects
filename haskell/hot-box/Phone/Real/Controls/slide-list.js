@@ -55,11 +55,11 @@ module.exports = React.createClass({
       console.log("render");
       return (<View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
                 <Animated.View ref={x=>this.movingPart = x} name='moving-part' style={{top:this.state.top}}>
-                    {this.renderPage(0,{name:"pula",style:{backgroundColor:'green'}}
+                    {this.renderPage(0,{name:"pula",style:{backgroundColor:'red'}}
                                     ,x=>this.prevPage = x,this.props.renderPrevPage)}
                     {this.renderPage(1,{style:{backgroundColor:'green'},...this._panResponder.panHandlers}
                                     ,x=>this.currentPage = x,this.props.renderCurrentPage)}
-                    {this.renderPage(2,{style:{backgroundColor:'green'}}
+                    {this.renderPage(2,{style:{backgroundColor:'yellow'}}
                                     ,x=>this.nextPage = x,this.props.renderNextPage)}
 
                 </Animated.View>
@@ -72,10 +72,11 @@ module.exports = React.createClass({
     var extraProps = {pageNo:pageNo,...props};
 
     var {pageSize,dataSource} = this.props;
-
+    var rendered = render();
+    console.log(`Render page# ${pageNo} -> ${rendered}`);
     return (
         <View ref={refHandler} {...extraProps}>
-            { render() /*some.map(this.renderItem)*/}
+            {rendered}
         </View>
     );
   },

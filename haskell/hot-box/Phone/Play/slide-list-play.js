@@ -90,13 +90,15 @@ module.exports = React.createClass({
                     .skip(pageNo*pageSize)
                     .take(pageSize)
                :    Linq.empty()).toArray();
-
-    return (
-        <View {...extraProps}>
-            <Text key="ss">{text}</Text>
-            { some.map(this.renderMenuItem)}
-        </View>
-    );
+    if(some.length>0)
+        return (
+            <View {...extraProps}>
+                <Text key="ss">{text}</Text>
+                { some.map(this.renderMenuItem)}
+            </View>
+        );
+    else
+        return null;
   },
 
   renderMenuItem: function (item) {
