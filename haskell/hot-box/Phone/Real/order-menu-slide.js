@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Linq = require('linq');
 var SlideList = require('./Controls/slide-list');
+var SlideButton = require('./Controls/slide-button');
 
 var {
   ListView,
@@ -109,7 +110,6 @@ var OrderMenu = React.createClass({
                     .take(pageSize)
                :    Linq.empty()).toArray();
     if(some.length>0)
-        //<Text key="ss">{text}</Text>
         return (
             <View style={styles.container} {...props}>
                 { some.map(x => this.renderProduct(x.item))}
@@ -120,21 +120,32 @@ var OrderMenu = React.createClass({
   },
 
   renderProduct: function(product){
+      var renderMainItem  = () => {
       return (
-            <View key={product.id} style={[styles.listItem,styles.center]}>
+            <View>
                 <Text>
                     {product.name}
                 </Text>
             </View>
+      );};
+
+      var props = {
+          key        : product.id,
+          style      : [styles.listItem,styles.center],
+          renderMain : renderMainItem
+      };
+
+      return (
+          <SlideButton {...props}/>
       );
   },
 
   renderProductClassic: function(product){
       return (
-          <TouchableHighlight key={product.id} onPress={() => { 
-            console.log(`s-a clickuit pe ${product.name}!`); 
-            this.props.productClicked(product);
-          }}>
+        <TouchableHighlight key={product.id} onPress={() => { 
+          console.log(`s-a clickuit pe ${product.name}!`); 
+          this.props.productClicked(product);
+        }}>
             <View  style={[styles.listItem,styles.center]}>
                 <Text>
                     {product.name}

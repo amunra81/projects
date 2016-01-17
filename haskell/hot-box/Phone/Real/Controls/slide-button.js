@@ -24,7 +24,11 @@ var SlideButton = React.createClass({
   },
 
   render: function() {
-      return null
+      return (
+          <View {...this.props}>
+              {this.props.renderMain()}
+          </View>
+      );
   },
 
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
