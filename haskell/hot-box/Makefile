@@ -1,5 +1,5 @@
 all:
 	cabal build
 	./gentags
-	(cd Phone && react-native bundle)
+	# (cd Phone && react-native bundle)
 
