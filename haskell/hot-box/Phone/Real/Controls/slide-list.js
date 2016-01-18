@@ -122,6 +122,34 @@ module.exports = React.createClass({
           this.state.top.setValue(top);
   },
 
+
+  _handlePanResponderMove: function(e: Object, gestureState: Object) {
+      //console.log(gestureState);
+      this._setMovingTop(gestureState.dy);
+      this._updateMoveDirection(gestureState);
+      var velocityStr = `Vy ${gestureState.vy} - Vx ${gestureState.vx}`;
+      console.log(velocityStr);
+  },
+
+  _handlePanResponderEnd: function(e: Object, gestureState: Object) {
+      if(this.offset==0) 
+          return ;
+      //LayoutAnimation.easeInEaseOut();
+      var top = 0;
+      if(this._moveDirection>=0 && this.offset >=0) {
+          //finger DOWN
+          top = this.dims.height;
+      } 
+      else if(this._moveDirection<0 && this.offset <= 0 ){
+          //finger UP
+          top = - this.dims.height;
+      }
+
+      this._setMovingTop(top,x => {
+          this.props.onScrolled(-top);
+      });
+  },
+
   _animate: function(value,toValue,callback) {
       return {
           timing : () => {
@@ -153,31 +181,6 @@ module.exports = React.createClass({
                 }).start(callback);    
           }
       }
-  },
-
-  _handlePanResponderMove: function(e: Object, gestureState: Object) {
-      //console.log(gestureState);
-      this._setMovingTop(gestureState.dy);
-      this._updateMoveDirection(gestureState);
-  },
-
-  _handlePanResponderEnd: function(e: Object, gestureState: Object) {
-      if(this.offset==0) 
-          return ;
-      //LayoutAnimation.easeInEaseOut();
-      var top = 0;
-      if(this._moveDirection>=0 && this.offset >=0) {
-          //finger DOWN
-          top = this.dims.height;
-      } 
-      else if(this._moveDirection<0 && this.offset <= 0 ){
-          //finger UP
-          top = - this.dims.height;
-      }
-
-      this._setMovingTop(top,x => {
-          this.props.onScrolled(-top);
-      });
   },
   _updateMoveDirection: function(newGesture:Object) {
       var dif = newGesture.dy - this._oldGestureY;

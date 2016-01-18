@@ -25,7 +25,7 @@ var {
   View,
 } = React;
 
-var NUM_BOBBLES = 5;
+var NUM_BOBBLES = 8;
 var RAD_EACH = Math.PI / 2 / (NUM_BOBBLES - 2);
 var RADIUS = 160;
 var BOBBLE_SPOTS = [...Array(NUM_BOBBLES)].map((_, i) => {  // static positions

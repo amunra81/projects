@@ -10,6 +10,7 @@ var {
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   TouchableHighlight,
   View,
 } = React;
@@ -92,9 +93,9 @@ var OrderDetails = React.createClass({
   renderGeneralAction: function (text,name,onPress){
       return (
             <View name={name} style={{flex:1,alignItems:'center'}}>
-                <TouchableHighlight onPress={onPress}>
+                <TouchableOpacity onPress={onPress}>
                     <Text> {text} </Text>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
       );
   },
@@ -145,14 +146,14 @@ var OrderDetails = React.createClass({
 
   renderProduct: function(item,user){
       return (
-          <TouchableHighlight key={item.itemId} onPress={() => { 
+          <TouchableOpacity key={item.itemId} onPress={() => { 
             console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
             this.props.orderItemClicked(item,user);
           }}>
           <Text style={{color:item.approved?'black':'gray'}}>
               {item.count}...... {item.pname} 
           </Text>
-        </TouchableHighlight>
+        </TouchableOpacity>
       );
   },
 

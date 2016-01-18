@@ -90,7 +90,7 @@ class Circle extends React.Component {
         onResponderGrant: () => {
           this.state.pan.setValue({x: 0, y: 0});           // reset                (step1: uncomment)
           this.state.pan.setOffset(this.props.restLayout); // offset from onLayout (step1: uncomment)
-          this.longTimer = setTimeout(this._onLongPress, 300);
+          this.longTimer = setTimeout(this._onLongPress, 100);
         },
         onResponderRelease: () => {
           if (!this.state.panResponder) {

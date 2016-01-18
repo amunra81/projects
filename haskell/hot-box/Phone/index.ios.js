@@ -16,13 +16,16 @@ var {
    ,Button
 } = React;
 
-var Navigation = require('./Play/navigation');
-var {Playground} = require('./Play/some-animation');
-var Responder = require('./Play/responder');
-var LongView = require('./Play/longview');
-var OrderDetails = require('./Real/order-details');
-var Order = require('./Real/order');
-var SlideListPlay = require('./Play/slide-list-play');
+var Navigation      = require('./Play/navigation'       );
+var {Playground}    = require('./Play/some-animation'   );
+var Responder       = require('./Play/responder'        );
+var LongView        = require('./Play/longview'         );
+var OrderDetails    = require('./Real/order-details'    );
+var Order           = require('./Real/order'            );
+var SlideListPlay   = require('./Play/slide-list-play'  );
+
+
+
 
 var Phone = React.createClass({
   render: function() {

@@ -11,6 +11,7 @@ var {
   Text,
   View,
   TouchableHighlight,
+  TouchableOpacity,
 } = React;
 
 var HeadContainer = View;
@@ -121,12 +122,17 @@ var OrderMenu = React.createClass({
 
   renderProduct: function(product){
       var renderMainItem  = () => {
-      return (
+        return (
+        <TouchableOpacity onPress={() => { 
+          console.log(`s-a clickuit pe ${product.name}!`); 
+          this.props.productClicked(product);
+        }}>
             <View>
                 <Text>
                     {product.name}
                 </Text>
             </View>
+        </TouchableOpacity>
       );};
 
       var props = {

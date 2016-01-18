@@ -32,7 +32,7 @@ class AnExChained extends React.Component {
       stickers: [new Animated.ValueXY()],                    // 1 leader
     };
     var stickerConfig = {tension: 2, friction: 3};           // soft spring
-    for (var i = 0; i < 4; i++) {                            // 4 followers
+    for (var i = 0; i < 2; i++) {                            // 2 followers
       var sticker = new Animated.ValueXY();
       Animated.spring(sticker, {
         ...stickerConfig,
