@@ -34,8 +34,8 @@ var PanResponderExample = React.createClass({
       onPanResponderRelease: this._handlePanResponderEnd,
       onPanResponderTerminate: this._handlePanResponderEnd,
     });
-    this._previousLeft = 20;
-    this._previousTop = 84;
+    this._previousLeft = 120;
+    this._previousTop = 184;
     this._circleStyles = {
       style: {
         left: this._previousLeft,
@@ -116,9 +116,13 @@ var styles = StyleSheet.create({
   circle: {
     width: CIRCLE_SIZE,
     height: CIRCLE_SIZE,
-//borderRadius: CIRCLE_SIZE / 2,
+    borderRadius: CIRCLE_SIZE/2,
     backgroundColor: CIRCLE_COLOR,
     position: 'absolute',
+    transform: [
+        {scaleY: 0.5},
+        {scaleX:2}
+    ],
     left: 10,
     top: 0,
   },
