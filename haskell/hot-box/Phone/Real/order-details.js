@@ -203,7 +203,10 @@ var styles = StyleSheet.create({
   },
   order: {
     flex: 1,
-    backgroundColor: '#ffe7dc',
+    //backgroundColor: '#ffe7dc',
+    backgroundColor: '#eeeeef',
+    backgroundColor: '#ebebf2',
+    backgroundColor: '#eaeaf3',
   },
   products: {
       paddingLeft: 20,

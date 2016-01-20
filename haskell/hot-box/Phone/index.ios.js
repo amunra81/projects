@@ -30,12 +30,12 @@ var StretchPlay     = require('./Play/stretch'          );
 
 var Phone = React.createClass({
   render: function() {
-      //return <Order restId={1} tableId={1} userId={2}/>;
+      return <Order restId={1} tableId={1} userId={2}/>;
       //return <LongView />;
       //return <Playground />;
       //return <Responder />;
       //return <SlideListPlay/>;
-      return <StretchPlay />;
+      //return <StretchPlay />;
     }
 //end React.createClas
 });

@@ -13,17 +13,21 @@ var {
 
 var Stretch = React.createClass({
     getInitialState: function(){
-        var offset = 35
+        var value = new Animated.Value(this.OFFSET);
         return {
-            topOffset : new Animated.Value(-offset),
-            bottomOffset : new Animated.Value(offset),
+            topOffset : value.interpolate({
+                            inputRange: [-100,0,100],
+                            outputRange: [100,0,-100]
+                        }),
+            bottomOffset : value,
+            width: new Animated.Value(this.WIDTH),
+
         };
     },
 
+    OFFSET : 100,
     WIDTH : 100,
     HEIGHT : 50,
-    CIRCLE_LEFT : 10,
-    CIRCLE_TOP : 85,
 
   _panResponder: {},
 
@@ -43,31 +47,34 @@ var Stretch = React.createClass({
       return StyleSheet.create({
         container: {
             flex:1,
-            backgroundColor:'#dcf4ff'
+            //backgroundColor:'#dcf4ff'
         },
-        box: {
-            width:this.WIDTH,
+        visibleBox: {
+            //width:this.WIDTH,
             height:this.HEIGHT,
             top:200,
             left:100,
-            backgroundColor:'#f9dcff'
+            backgroundColor:'#f9dcff',
+        },
+        box:{
+            //width:this.WIDTH,
+            height:this.HEIGHT,
+            backgroundColor:'#dcf4ff',
+            position:'absolute',
         },
         circleBox: {
-            width:this.WIDTH,
-            height:this.HEIGHT,
-            left:-this.CIRCLE_LEFT,
-            borderRadius:50,
-            backgroundColor:'#dcf4ff'
+            //width:this.WIDTH,
+            height:this.HEIGHT*2,
+            //left:-this.CIRCLE_LEFT,
+            borderRadius:this.HEIGHT,
         },
         top: {
-            //top:-35,
-            position:'absolute',
+            //top:this.HEIGHT,
             //backgroundColor:'green'
         },
         bottom: {
-            //top:this.state.OFFSET,
+            top:-this.HEIGHT,
             //backgroundColor:'blue',
-            position:'absolute'
         }
       });
   },
@@ -76,14 +83,19 @@ var Stretch = React.createClass({
   },
 
   render: function() {
-      return (<View style={this.styles.container}>
-                <View style={[this.styles.box]}>
-                    <Animated.View name="up" style={[this.styles.circleBox,this.styles.top,
-                        {top:this.state.topOffset}]}/>
-                    <Animated.View name="up" style={[this.styles.circleBox,this.styles.bottom,
-                        {top:this.state.bottomOffset}]} />
-                </View>
-              </View>);
+    return (
+    <View style={this.styles.container} {...this._panResponder.panHandlers}>
+        <Animated.View style={[this.styles.visibleBox,{width:this.state.width}]}>
+            <Animated.View name="upBox" style={[this.styles.box,
+                {top:this.state.topOffset},{width:this.state.width}]}>
+                <Animated.View style={[this.styles.circleBox,this.styles.top,{width:this.state.width}]}/>
+            </Animated.View>
+            <Animated.View name="downBox" style={[this.styles.box,
+                {top:this.state.bottomOffset},{width:this.state.width}]} >
+                <Animated.View style={[this.styles.circleBox,this.styles.bottom,{width:this.state.width}]}/>
+            </Animated.View>
+        </Animated.View>
+    </View>);
   },
 
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
@@ -97,17 +109,26 @@ var Stretch = React.createClass({
   },
 
   _handlePanResponderGrant: function(e: Object, gestureState: Object) {
-    this._oldGestureY = gestureState.dy;
-    this._highlight(this.pager);
   },
 
-  _handlePanResponderMove: function(e: Object, gestureState: Object) {
-    //this._circleStyles.style.left = this._previousLeft + gestureState.dx;
-    this._circleStyles.style.top = this._previousTop + gestureState.dy;
-    //console.log(gestureState);
-    this._updatePosition();
-    this._updateMove(gestureState);
+   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
+       console.log(`width:${this.state.width._value} offset:{this.state.bottomOffset._value}`);
+       return;
+        Animated.spring(                          // Base: spring, decay, timing
+        this.state.bottomOffset,                 // Animate `bounceValue`
+        {
+            toValue: this.OFFSET,                         // Animate to smaller size
+            friction: 3,                          // Bouncier spring
+            tension: 100
+        }
+        ).start();                                // Start the animation
   },
+  _handlePanResponderMove: function(e: Object, gestureState: Object) {
+      console.log("pi;aa");
+      this.state.bottomOffset.setValue(this.OFFSET+gestureState.dy);
+      //this.state.width.setValue(this.WIDTH+gestureState.dx);
+  },
+  
 });
 
 // #dcf4ff #f9dcff #fff9dc #ffe7dc
