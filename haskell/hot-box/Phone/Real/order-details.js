@@ -70,10 +70,10 @@ var OrderDetails = React.createClass({
   renderLoadedView: function() {
     return (
         <View style={styles.container}>
-                <View>
-                {this.renderHead()}
-                {this.renderActions()}
-                </View>
+            <View>
+            {this.renderHead()}
+            {this.renderActions()}
+            </View>
             {this.renderBody()}
         </View>
     );

@@ -4,7 +4,7 @@
 var React = require('react-native');
 var Enumerable = require('linq');
 var OrderDetails = require('./order-details');
-var OrderMenu = require('./order-menu');
+var OrderMenu = require('./order-menu-classic');
 var OrderMenuSlide = require('./order-menu-slide');
 //var Display = require('react-native-device-display');
 

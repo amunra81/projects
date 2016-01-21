@@ -5,6 +5,9 @@ var Linq = require('linq');
 var SlideList = require('./Controls/slide-list');
 var SlideButton = require('./Controls/slide-button');
 
+var BlurView = require('react-native-blur').BlurView;
+var VibrancyView = require('react-native-blur').VibrancyView;
+
 var {
   ListView,
   StyleSheet,
@@ -12,6 +15,7 @@ var {
   View,
   TouchableHighlight,
   TouchableOpacity,
+  Image,
 } = React;
 
 var HeadContainer = View;
@@ -95,13 +99,19 @@ var OrderMenu = React.createClass({
               if(x!=0)
                 setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1:currentPage+1}))
                 //this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
-          }
+            }
           };
-      return (<SlideList {...props} />);
+
+          //var background = 'http://img05.deviantart.net/f218/i/2012/302/5/a/colorful_background_by_yuimi_chan-d5jd40b.jpg';
+          var background = 'http://thumbs.dreamstime.com/z/lime-fruit-slices-background-eps-vector-illustration-32259119.jpg';
+          return (
+            <Image source={{uri:background}} style={styles.container}>
+                <SlideList {...props} />
+            </Image>);
   },
 
   renderPage: function(pageNo,props) {
-    var pageSize = 10;
+    var pageSize = 6;
     var dataSource = this.getState().dataSource.menu;
     var text = `Page: ${pageNo}/${dataSource.length/pageSize}`;
 
@@ -121,18 +131,20 @@ var OrderMenu = React.createClass({
   },
 
   renderProduct: function(product){
+          //<BlurView blurType="xlight" style={styles.containerBlur}>
+        //</BlurView>
       var renderMainItem  = () => {
         return (
-        <TouchableOpacity onPress={() => { 
-          console.log(`s-a clickuit pe ${product.name}!`); 
-          this.props.productClicked(product);
-        }}>
-            <View>
-                <Text>
-                    {product.name}
-                </Text>
-            </View>
-        </TouchableOpacity>
+            <TouchableOpacity onPress={() => { 
+            console.log(`s-a clickuit pe ${product.name}!`); 
+            this.props.productClicked(product);
+            }}>
+                <View style={styles.containerBlur}>
+                    <Text style={{color:'black'}}>
+                        {product.name}
+                    </Text>
+                </View>
+            </TouchableOpacity>
       );};
 
       var props = {
@@ -142,7 +154,7 @@ var OrderMenu = React.createClass({
       };
 
       return (
-          <SlideButton {...props}/>
+            <SlideButton {...props}/>
       );
   },
 
@@ -191,17 +203,28 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     height:468,
+    width:320,
     //flexDirection: 'row',
-    //justifyContent: 'space-around',
+    justifyContent: 'space-around',
     //alignItems: 'center',
-    backgroundColor: '#dcffe7',
+    //backgroundColor: '#dcffe7',
     //flexWrap:'nowrap',
     position:'relative',
   },
+  containerBlur: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems:'center',
+    justifyContent: 'center',
+    //backgroundColor: 'transparent',
+    height:75,
+    width:320,
+    backgroundColor: '#EFF9F9'
+  },
   listItem: {
-    marginTop:15,
-    marginBottom:15,
-    backgroundColor: '#a9ffc4'
+    //marginTop:5,
+    //marginBottom:15,
+    //backgroundColor: '##EFF9F9'
   }
 });
 //dcffe7

@@ -55,7 +55,8 @@ module.exports = React.createClass({
   },
 
   render: function() {
-      return (<View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
+      return (
+          <View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
           <Animated.View ref={ x=>this.movingPart = x } name='moving-part' style={{top:this.state.top}}
               {...this._panResponder.panHandlers}>
                     {this.renderPage(0,{style:{}}
@@ -86,8 +87,10 @@ module.exports = React.createClass({
 
   _setHeghts : function (nativEvent)
   {
+      console.log(`OnLayout Changed: ${JSON.stringify(nativEvent.nativeEvent.layout)}`);
+      if(this.dims && this.dims.height==nativEvent.nativeEvent.layout)
+          return;
       this.dims = nativEvent.nativeEvent.layout;
-      console.log(`OnLayout Changed: ${JSON.stringify(this.dims)}`);
 
       var pagesHeight = {style:{height:this.dims.height}};
 
@@ -200,7 +203,7 @@ var styles = StyleSheet.create({
         justifyContent: 'flex-start',
         flex:1,
         alignItems:'stretch',
-        backgroundColor: '#dcffe7',
+        //backgroundColor: 'transparent',
         //marginTop: 20,
         overflow:'hidden',
     }

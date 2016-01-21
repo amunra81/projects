@@ -24,6 +24,7 @@ var OrderDetails    = require('./Real/order-details'    );
 var Order           = require('./Real/order'            );
 var SlideListPlay   = require('./Play/slide-list-play'  );
 var StretchPlay     = require('./Play/stretch'          );
+var Blur            = require('./Play/blur'             );
 
 
 
@@ -36,6 +37,7 @@ var Phone = React.createClass({
       //return <Responder />;
       //return <SlideListPlay/>;
       //return <StretchPlay />;
+      //return <Blur />;
     }
 //end React.createClas
 });
