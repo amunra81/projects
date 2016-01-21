@@ -35,7 +35,6 @@ var OrderMenu = React.createClass({
 
   getState: function() {
       if(this.props.state){
-        var ls = this._toListDataSource();
         return this._merge(this.state,this.props.state);
       }
       else

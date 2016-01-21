@@ -2,6 +2,7 @@
 
 var React = require('react-native');
 var Enumerable = require('linq');
+var {merge,without} = require('./common');
 //var Display = require('react-native-device-display');
 
 var {
@@ -61,34 +62,24 @@ var OrderDetails = React.createClass({
   },
 
   render: function() {
-    if (!this.getState().loaded) {
-      return this.renderLoadingView();
-    }
-    else return this.renderLoadedView();
+      return (
+          <View {...without("state",this.props)}>
+              {!this.getState().loaded?this.renderLoadingView():this.renderView()}
+          </View>
+      );
   },
 
-  renderLoadedView: function() {
+  renderView: function() {
     return (
         <View style={styles.container}>
             <View>
-            {this.renderHead()}
-            {this.renderActions()}
+                {this.renderActions()}
             </View>
             {this.renderBody()}
         </View>
     );
   },
 
-
-  renderHead: function() {
-      return (
-            <View style={[styles.head,styles.center]}>
-                <Text>
-                    {this.getState().lastMessage} + {this.getState().refreshed}   
-                </Text>
-            </View>
-      );
-  },
 
   renderGeneralAction: function (text,name,onPress){
       return (
@@ -181,17 +172,9 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     //justifyContent: 'space-around',
     //alignItems: 'center',
-    backgroundColor: '#dcf4ff',
     //flexWrap:'nowrap',
-    paddingTop:20,
+    //paddingTop:20,
     position:'relative',
-  },
-  head: {
-    //flex:1,
-    backgroundColor: '#f9dcff',
-    height:50,
-    //minHeight:100,
-    //maxHeight:100,
   },
   actions: {
     justifyContent: 'space-between',

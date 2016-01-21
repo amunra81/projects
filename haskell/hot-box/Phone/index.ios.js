@@ -26,11 +26,17 @@ var SlideListPlay   = require('./Play/slide-list-play'  );
 var StretchPlay     = require('./Play/stretch'          );
 var Blur            = require('./Play/blur'             );
 
-
-
+var HTOP = 20;
 
 var Phone = React.createClass({
   render: function() {
+      return (
+          <View style={{flex:1,marginTop:HTOP}}>
+              { this.renderApp() }
+          </View>
+      );
+  },
+  renderApp: function() {
       return <Order restId={1} tableId={1} userId={2}/>;
       //return <LongView />;
       //return <Playground />;
@@ -38,31 +44,12 @@ var Phone = React.createClass({
       //return <SlideListPlay/>;
       //return <StretchPlay />;
       //return <Blur />;
-    }
+  }
+
 //end React.createClas
 });
 
 var styles = StyleSheet.create({
-  wraper: {
-    flex:1
-    ,justifyContent: 'center'
-  },
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
 });
 
 AppRegistry.registerComponent('Phone', () => Phone);

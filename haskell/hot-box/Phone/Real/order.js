@@ -6,6 +6,7 @@ var Enumerable = require('linq');
 var OrderDetails = require('./order-details');
 var OrderMenu = require('./order-menu-classic');
 var OrderMenuSlide = require('./order-menu-slide');
+var OrderHead = require('./order-head');
 //var Display = require('react-native-device-display');
 
 var {
@@ -14,14 +15,15 @@ var {
   View,
   LayoutAnimation,
   PanResponder,
+  Animated,
 } = React;
 
-var HeadContainer = View;
+var ServerAddress = "excuse.ro";
 
 var Order = React.createClass({
     getInitialState: function() {
         if(this.props.state)
-            return this.props.state
+            return this.props.state;
         else
             return { 
                 restId : this.props.restId,
@@ -30,12 +32,13 @@ var Order = React.createClass({
                 refreshed: 0,
                 dataSource : null,
                 loaded: false,
+                containerHeight:-1,
+                headHeight:-1,
+                contentTop : new Animated.Value(0),
              };
     },
 
     //FIELDS
-    _serverAddress : "excuse.ro",
-    //_serverAddress : "localhost",
     _topViewStyle: {style: {height:100}},
     _topView: (null : ?{ setNativeProps(props: Object): void }),
     _topOpened: false,
@@ -53,11 +56,10 @@ var Order = React.createClass({
     componentDidMount: function() {
         //LayoutAnimation.linear();
         this.fetchData(this._withAction().currentOrder());
-    
     },
 
     _currentOrderUrl: function() {
-        return `http://${this._serverAddress}:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`;
+        return `http://${ServerAddress}:8000/restaurants/${this.state.restId}/tables/${this.state.tableId}/orders/current`;
     },
 
   fetchData: function(action) {
@@ -79,23 +81,15 @@ var Order = React.createClass({
         .done();
   },
 
-  render: function() {
-    if (!this.state.loaded) {
-      return this.renderLoadingView();
-    }
-    else return this.renderLoadedView();
-  },
-
   _orderItemClicked: function(item,user){
     console.log(`a sarit pana sus cu ${item.itemId} si ${user.id}`);
     this.fetchData(this._withAction().removeItem(item.itemId,user.id));
   },
 
-  productSelected: function(prod){
+  _onProductSelected: function(prod){
     console.log(`a sarit pana sus cu ${prod.name}`);
     this.fetchData(this._withAction().addItem(prod.id));
   },
-
   
   _onDetailsExpand: function(){
       LayoutAnimation.spring();
@@ -129,54 +123,84 @@ var Order = React.createClass({
       console.log('Payed');
   },
 
-  renderLoadedView: function() {
-    //var { dataSource, ...otherState } = this.state;
-    //var { menu,restId,tableId,...orderDetails} = dataSource
-      
+  render: function() {
+      var properView = !this.state.loaded?this.renderLoadingView():this.renderView();
+      return (
+        <View style={styles.container} onLayout={this._onContainerLayout}>
+            {properView}
+        </View>
+      );
+  },
+
+  renderView: function() {
     // Props for inner children
+    var contentHeight = this.state.containerHeight-this.state.headHeight;
+
     var orderMenuProps = {
-          productClicked    : this.productSelected  
+          productClicked    : this._onProductSelected  
         , state             : this.state
     };
 
     var orderDetailsProps = {
           orderItemClicked  : this._orderItemClicked  
-        , onExpand          : () => this._onDetailsColapseToogle(0)
-        , onColapse         : () => this._onDetailsColapseToogle(0)
         , state             : this.state
         , onApprove         : this._onApprove
         , onPay             : this._onPay
+        , style             : {height:contentHeight}
     };
 
+    var orderHeadProps = {
+          state             : this.state
+        , onExpand          : () => this._onDetailsColapseToogle(0)
+        , onColapse         : () => this._onDetailsColapseToogle(0)
+        , onLayout           : this._onHeadLayout 
+        , style             : [{height:this.state.containerHeight-this.state.headHeight}]
+        ,...this._topResponder.panHandlers
+    };
+
+            //<View name="top" ref={x=>this._topView = x} {...this._topViewStyle} 
+                //{...this._topResponder.panHandlers} >
+            //</View>
+            //<View name="bottom" style={{flex:1}} {...this._bottomResponder.panHandlers}>
+            //</View>
     //render children
     return (
-        <View style={styles.container}>
-            <View name="top" ref={x=>this._topView = x} {...this._topViewStyle} 
-                {...this._topResponder.panHandlers} >
-                <OrderDetails {...orderDetailsProps}/>
-            </View>
-            <View name="bottom" style={{flex:1}} {...this._bottomResponder.panHandlers}>
-                <OrderMenuSlide {...orderMenuProps}/>
-            </View>
+        <View ref={x => this._topView = x} >
+            <OrderDetails   {...orderDetailsProps } />
+            <OrderHead      {...orderHeadProps    } />
+            <OrderMenuSlide {...orderMenuProps    } />
         </View>
     );
   },
 
   renderLoadingView: function() {
     return (
-      <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]}>
-        <View style={[styles.head,styles.center]}>
-            <Text>
-                Loading order...
-            </Text>
-        </View>
+      <View>
+          <OrderHead state={this.state} onLayout={this._onHeadLayout}/>
+          <View style={{flex:1}} >
+              <Text>
+                  Loading order...
+              </Text>
+          </View>
       </View>
     );
   }, 
 
-  _logWithState: function (text) {
-    console.log(text);
-    //this.setState({lastMessage : text});
+  _onHeadLayout: function(event) {
+      var newHeight = event.nativeEvent.layout.height;
+      var oldHeight = this.state.containerHeight
+      console.log(`_onHeadLayout (new height:${newHeight}) (old height:${oldHeight})`);
+      if(oldHeight != newHeight)
+          this.setState({headHeight:newHeight});
+  },
+
+  _onContainerLayout: function(event) {
+      var newHeight = event.nativeEvent.layout.height;
+      var oldHeight = this.state.containerHeight
+      console.log(`_onContainerLayout (new height:${newHeight}) (old height:${oldHeight})`);
+      if(oldHeight != newHeight)
+          this.setState({containerHeight:newHeight});
+      
   },
 
   _updateMove: function(newGesture:Object) {
@@ -293,7 +317,7 @@ var styles = StyleSheet.create({
     backgroundColor: '#dcf4ff',
     //flexWrap:'nowrap',
     //paddingTop:20,
-    position:'relative',
+    //position:'relative',
   },
 });
 
