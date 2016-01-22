@@ -72,9 +72,7 @@ var OrderDetails = React.createClass({
   renderView: function() {
     return (
         <View style={styles.container}>
-            <View>
-                {this.renderActions()}
-            </View>
+            {this.renderActions()}
             {this.renderBody()}
         </View>
     );
@@ -168,19 +166,19 @@ var styles = StyleSheet.create({
     alignItems:'center',
   },
   container: {
-    //flex: 1,
-    flexDirection: 'column',
+    flex: 1,
+    //flexDirection: 'column',
     //justifyContent: 'space-around',
     //alignItems: 'center',
     //flexWrap:'nowrap',
     //paddingTop:20,
-    position:'relative',
+    //position:'relative',
   },
   actions: {
     justifyContent: 'space-between',
     //alignItems: 'stretch',
     flexDirection: 'row',
-    flex: 1,
+    //flex: 1,
     height:30,
     backgroundColor: '#fff9dc',
   },

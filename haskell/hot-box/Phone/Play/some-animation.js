@@ -46,4 +46,4 @@ return (
   }
 }
 
-module.exports = {Playground:Playground};
+module.exports = Playground;

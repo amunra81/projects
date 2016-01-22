@@ -2,12 +2,11 @@
 'use strict';
 
 var React = require('react-native');
-var Enumerable = require('linq');
-var OrderDetails = require('./order-details');
-var OrderMenu = require('./order-menu-classic');
-var OrderMenuSlide = require('./order-menu-slide');
-var OrderHead = require('./order-head');
-//var Display = require('react-native-device-display');
+
+var { OrderDetails
+    ,OrderMenu
+    ,OrderHead } = require('../lime-s').Real;
+//var { Linq } = require('../lime-s').Stack;
 
 var {
   StyleSheet,
@@ -34,12 +33,11 @@ var Order = React.createClass({
                 loaded: false,
                 containerHeight:-1,
                 headHeight:-1,
-                contentTop : new Animated.Value(0),
+                contentOffset : new Animated.Value(0),
              };
     },
 
     //FIELDS
-    _topViewStyle: {style: {height:100}},
     _topView: (null : ?{ setNativeProps(props: Object): void }),
     _topOpened: false,
     _oldGestureY: 0,
@@ -93,25 +91,20 @@ var Order = React.createClass({
   
   _onDetailsExpand: function(){
       LayoutAnimation.spring();
-      this._topViewStyle.style.height = this._expanedWidth;
-      this._topView.setNativeProps(this._topViewStyle);
       this._topOpened = true;
+      this._ensureContentPosition();
   },
 
   _onDetailsColapse: function(){
       LayoutAnimation.spring();
-      this._topViewStyle.style.height = this._colapsedWidth;
-      this._topView.setNativeProps(this._topViewStyle);
       this._topOpened = false;
+      this._ensureContentPosition();
   },
 
   _onDetailsColapseToogle: function(x) {
       LayoutAnimation.spring();
-      var opened = this._topOpened;
-
-      this._topViewStyle.style.height = opened?this._colapsedWidth-x:this._expanedWidth;
-      this._topView.setNativeProps(this._topViewStyle);
-      this._topOpened = !opened
+      this._topOpened = !this._topOpened;
+      this._ensureContentPosition();
   },
 
   _onApprove : function() {
@@ -134,8 +127,6 @@ var Order = React.createClass({
 
   renderView: function() {
     // Props for inner children
-    var contentHeight = this.state.containerHeight-this.state.headHeight;
-
     var orderMenuProps = {
           productClicked    : this._onProductSelected  
         , state             : this.state
@@ -146,17 +137,18 @@ var Order = React.createClass({
         , state             : this.state
         , onApprove         : this._onApprove
         , onPay             : this._onPay
-        , style             : {height:contentHeight}
+        , style             : {height:this._getContentHeight()} //,backgroundColor:'red'}
     };
 
     var orderHeadProps = {
           state             : this.state
         , onExpand          : () => this._onDetailsColapseToogle(0)
         , onColapse         : () => this._onDetailsColapseToogle(0)
-        , onLayout           : this._onHeadLayout 
-        , style             : [{height:this.state.containerHeight-this.state.headHeight}]
+        , onLayout          : this._onHeadLayout 
+        , style             : [{height:this._getContentHeight()}]
         ,...this._topResponder.panHandlers
     };
+    console.log(this._topResponder.panHandlers);
 
             //<View name="top" ref={x=>this._topView = x} {...this._topViewStyle} 
                 //{...this._topResponder.panHandlers} >
@@ -164,13 +156,26 @@ var Order = React.createClass({
             //<View name="bottom" style={{flex:1}} {...this._bottomResponder.panHandlers}>
             //</View>
     //render children
+
+
     return (
-        <View ref={x => this._topView = x} >
+        <Animated.View ref={x => this._topView = x} style={{top:this.state.contentOffset}}>
             <OrderDetails   {...orderDetailsProps } />
             <OrderHead      {...orderHeadProps    } />
-            <OrderMenuSlide {...orderMenuProps    } />
-        </View>
+            <OrderMenu      {...orderMenuProps    } />
+        </Animated.View>
     );
+  },
+
+  _getContentHeight: function () {
+      return this.state.containerHeight-this.state.headHeight;
+  },
+
+  _layoutInitialized: function() {
+      var ret =  this.state && this.state.containerHeight > -1 && this.state.headHeight > -1;
+      if(!ret)
+          console.log("WARNING! : layout not initialized");
+      return ret;
   },
 
   renderLoadingView: function() {
@@ -186,12 +191,25 @@ var Order = React.createClass({
     );
   }, 
 
+  componentWillUpdate: function(arg) {
+      console.log('WILL UPDATE ' + arg );
+      this._ensureContentPosition();
+  },
+
   _onHeadLayout: function(event) {
       var newHeight = event.nativeEvent.layout.height;
-      var oldHeight = this.state.containerHeight
+      var oldHeight = this.state.headHeight
       console.log(`_onHeadLayout (new height:${newHeight}) (old height:${oldHeight})`);
-      if(oldHeight != newHeight)
+      if(oldHeight != newHeight) {
           this.setState({headHeight:newHeight});
+      }
+  },
+
+  _ensureContentPosition() {
+      if(this._layoutInitialized()) {
+          var value = this._topOpened?0:-this._getContentHeight();
+          this.state.contentOffset.setValue(value);
+      }
   },
 
   _onContainerLayout: function(event) {
@@ -208,15 +226,17 @@ var Order = React.createClass({
       if(dif!=0) {
         this._moveDirection = dif;
         this._oldGestureY = newGesture.dy;
-        //var s = this._moveDirection>=0?'DOWN':'UP';
-        //console.log(s);
       }
+  },
+
+  _getHighlightOffset : function() {
+     return (this._topOpened?-1:1)*this._highlightWidth;
   },
 
   _highlightBottom: function() {
     LayoutAnimation.easeInEaseOut();
-    this._topViewStyle.style.height += (this._topOpened?-1:1)*this._highlightWidth; 
-    this._topView.setNativeProps(this._topViewStyle);
+    var offsetVal = this.state.contentOffset;
+    offsetVal.setValue( offsetVal._value + this._getHighlightOffset());
   },
 
   // RESPONDER
@@ -229,7 +249,7 @@ var Order = React.createClass({
         },
         onStartShouldSetPanResponderCapture : (evt, gestureState) => {
             //console.log("startShouldSet*Capture");
-            return  shouldRespond();
+            return  true;
         },
         onMoveShouldSetPanResponder         : (evt, gestureState) => {
             //console.log("moveShouldSet*");
@@ -246,8 +266,8 @@ var Order = React.createClass({
             // gestureState.{x,y}0 will be set to zero now
             console.log("onPanResponderGrant"); 
             this._oldGestureY = gestureState.dy;
+            this._prevOffset = this.state.contentOffset._value;
             this._highlightBottom();
-            //this._highlight(this.pager);
 
         },
         onPanResponderMove                  : (evt, gestureState) => {
@@ -255,8 +275,10 @@ var Order = React.createClass({
 
             // The accumulated gesture distance since becoming responder is
             // gestureState.d{x,y}
-            var offset = this._topViewStyle.style.height + gestureState.dy
-            this._topView.setNativeProps({style:{height:offset}});
+            //var offset = this.state.contentOffset._value + gestureState.dy
+            var offset = this._prevOffset + gestureState.dy + this._getHighlightOffset();
+
+            this.state.contentOffset.setValue(offset);
             this._updateMove(gestureState);
             //console.log("onPanResponderMove");  
         },
