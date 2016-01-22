@@ -20,7 +20,7 @@ var OrderHead = React.createClass({
       else
         return this.state;
   },
-  //asda
+
   getInitialState: function() {
       return  {
           dataSource:null,
