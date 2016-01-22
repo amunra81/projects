@@ -42,9 +42,7 @@ var Order = React.createClass({
     _topOpened: false,
     _oldGestureY: 0,
     _moveDirection : 0,
-    _expanedWidth: 500,
-    _colapsedWidth: 100,
-    _highlightWidth: 50,
+    _highlightWidth: 100,
 
     componentWillMount: function() {
         this._bottomResponder = this._getResponder(()=>this._topOpened);
@@ -142,8 +140,8 @@ var Order = React.createClass({
 
     var orderHeadProps = {
           state             : this.state
-        , onExpand          : () => this._onDetailsColapseToogle(0)
-        , onColapse         : () => this._onDetailsColapseToogle(0)
+        //, onExpand          : () => this._onDetailsColapseToogle(0)
+        //, onColapse         : () => this._onDetailsColapseToogle(0)
         , onLayout          : this._onHeadLayout 
         , style             : [{height:this._getContentHeight()}]
         ,...this._topResponder.panHandlers

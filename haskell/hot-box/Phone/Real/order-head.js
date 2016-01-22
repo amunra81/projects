@@ -29,8 +29,6 @@ var OrderHead = React.createClass({
   },
 
   render: function() {
-      var ss = "Asdasa";
-      console.log(ss);
       return (
         <View {...without("state",this.props)} style={[styles.container,styles.center]}>
             { !this.getState().loaded?this.renderLoading():this.renderView()}
@@ -55,7 +53,7 @@ var OrderHead = React.createClass({
 var styles = StyleSheet.create({
     container: {
         flexDirection:'column',
-        height:80,
+        height:40,
         backgroundColor: '#f9dcff',
     },
     center: {
