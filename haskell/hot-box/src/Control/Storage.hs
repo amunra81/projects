@@ -26,6 +26,8 @@ import Data.Storage
 import Control.LimesLens
 import Control.Monad.Trans.State (StateT)
 import Control.Monad.State
+import Data.Time
+import Data.Maybe
 
 getAllUsers :: Query Storage [User]
 getAllUsers = getAllUsers
@@ -166,6 +168,7 @@ updateOrderItems rid tid uid m = toUpdate $ runMaybeT $
              zoom ( segmentItems . traversed ) m
         get
 
+
 approveItems ::  Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order)
 approveItems rid tid uid = updateOrderItems rid tid uid $ 
                             orderItemStatus .= Approved
@@ -174,11 +177,29 @@ payItems ::  Id Restaurant -> Id Table -> Id User -> Update Storage (Maybe Order
 payItems rid tid uid = updateOrderItems rid tid uid $ 
                             orderItemStatus .= Payed
 
--- | Make acids
+addUserRequest :: Id Restaurant -> Id Table -> Id User -> (RequestAction,UTCTime) -> Update Storage (Maybe Order)
+addUserRequest rid tid uid (act,time) = toUpdate $ runMaybeT $ do
+    --TODO should be a user from segments
+    user <-  liftPrism $ users . _ixGetById uid . _Just
+    zoomM (orders . _currentOrder rid tid ) $ do
+        orderRequests %= (++ [ Request act time user Nothing ])
+        get
 
+addWaiterResponse :: Id Restaurant -> Id Table -> Id User -> (RequestAction,UTCTime) -> Update Storage (Maybe Order)
+addWaiterResponse rid tid uid (act,time) = toUpdate $ runMaybeT $ do
+    --TODO should be the waiter of this restaurant
+    user <-  liftPrism $ users . _ixGetById uid . _Just
+    zoomM (orders . _currentOrder rid tid ) $ do
+        zoom ( orderRequests . traversed . filtered properRequest ) $
+            response .= Nothing
+        get
+    where properRequest userReq = (userReq ^. reqAction == act) && isNothing (userReq ^. response)
+
+-- | MAKE ACIDS
 $(makeAcidic ''Storage 
     ['getAllRests,'addNewRest,'getAllUsers,'addNewUser,'getRestById,'getOrdersByRestAndTable
     ,'getWholeStorage,'getCurrentOrder,'attachUserToCurrentOrder,'closeCurrentOrder
     ,'addProductToCurrentOrder,'deleteItemFromCurrentOrder,'approveItems,'payItems
+    ,'addUserRequest,'addWaiterResponse
     ])
 

@@ -66,25 +66,25 @@ data OrderSegment = OrderSegment { _segmentUser     :: User
                                  , _segmentItems    :: [OrderItem]
                                  } deriving (Show,Eq,Ord,Data)
 
-data UserRequest = WaiterRequest | CheckRequest
-                 deriving (Show,Eq,Ord,Data)
+data RequestAction = WaiterRequest | CheckRequest
+                   deriving (Show,Eq,Ord,Data)
 
 data WaiterResponse = Response User UTCTime
                     deriving (Show,Eq,Ord,Data)
 
-data Request a = Request { _reqAction   :: a
-                         , _reqTime     :: UTCTime
-                         , _reqUser     :: User
-                         , _response    :: Maybe WaiterResponse
-                         }
-                 deriving (Show,Eq,Ord,Data)
+data UserRequest a = Request { _reqAction   :: a
+                             , _reqTime     :: UTCTime
+                             , _reqUser     :: User
+                             , _response    :: Maybe WaiterResponse
+                             }
+                   deriving (Show,Eq,Ord,Data)
 
 data Order = Order  { _orderId       :: Id Order
                     , _orderRest     :: Restaurant
                     , _orderTable    :: Table
                     , _orderClosed   :: Bool
                     , _orderSegments :: [OrderSegment] 
-                    , _orderRequests :: [Request UserRequest]
+                    , _orderRequests :: [UserRequest RequestAction]
                     } deriving (Show,Eq,Ord,Data,Typeable)
 
 -- | FROM JSON
@@ -182,10 +182,10 @@ instance ToJSON Restaurant where
 instance ToJSON WaiterResponse where
     toJSON (Response u t) = object ["employee" .= u,"time" .= t]
 
-instance ToJSON UserRequest where 
+instance ToJSON RequestAction where 
     toJSON = toJSON . show
 
-instance ToJSON a => ToJSON (Request a) where
+instance ToJSON a => ToJSON (UserRequest a) where
     toJSON Request{..} = 
             object ["request" .= _reqAction
                    ,"user" .= _reqUser
@@ -256,3 +256,6 @@ makeLenses ''Order
 makeLenses ''OrderItem
 makeLenses ''OrderSegment
 makeLenses ''Product
+makeLenses ''UserRequest
+makeLenses ''RequestAction
+makeLenses ''WaiterResponse

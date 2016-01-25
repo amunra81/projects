@@ -26,7 +26,7 @@ import Web.Routes
     , runRouteT, Site(..), setDefault, mkSitePI)
 import Web.Routes.TH           (derivePathInfo)
 import Web.Routes.Happstack    (implSite)
-import Web.Routes.Boomerang
+import Web.Routes.Boomerang ((</>),Router,(:-),(<>),lit,int,anyText,xmaph,boomerangSite)
 import Data.Acid            ( AcidState , openLocalState )
 import Data.Acid.Local      ( createCheckpointAndClose )
 import Control.Exception    ( bracket )
@@ -55,6 +55,8 @@ data Sitemap
     | ItemsInCurrentOrder Int Int Int Int
     | ItemsApproval Int Int Int
     | ItemsPayment Int Int Int
+    | UserRequest Int Int Int Text
+    | WaiterResponse Int Int Int Text
     deriving (Eq, Ord, Read, Show, Data, Typeable)
 
 
@@ -69,18 +71,20 @@ sitemap =
     <> rWholeStorage . lit "storage"
     
     where
-      rests = rAllRests
-              <> rRest </> int
-              <> rOrderByRestAndTable </> int </> lit "tables" </> int </> lit "orders"
-              <> rCurrentOrder </> currentOrder
-              <> rUserInCurrentOrder </> currentOrder </> users
-              <> rItemsApproval </> currentOrder </> users </> lit "items" </> "approved"
-              <> rItemsPayment </> currentOrder </> users </> lit "items" </> "payed"
-              <> rItemsInCurrentOrder </> currentOrder </> users </> lit "items" </> int
+    rests = rAllRests
+     <> rRest                </> int
+     <> rOrderByRestAndTable </> int          </> lit "tables" </> int </> lit "orders"
+     <> rCurrentOrder        </> currentOrder
+     <> rUserInCurrentOrder  </> currentOrder </> users
+     <> rItemsApproval       </> currentOrder </> users </> lit "items"    </> "approved"
+     <> rItemsPayment        </> currentOrder </> users </> lit "items"    </> "payed"
+     <> rItemsInCurrentOrder </> currentOrder </> users </> lit "items"    </> int
+     <> rUserRequest         </> currentOrder </> users </> lit "requests" </> anyText
+     <> rWaiterResponse      </> currentOrder </> users </> lit "response" </> anyText
 
-      currentOrder  =  int </> lit "tables" </> int </> lit "orders" </> lit "current"
-      users         =  lit "users" </> int
-      usersX        =  rUserOverview <> rUserDetail </> int . lit "-" . anyText
+    currentOrder  =  int </> lit "tables" </> int </> lit "orders" </> lit "current"
+    users         =  lit "users" </> int
+    usersX        =  rUserOverview <> rUserDetail </> int . lit "-" . anyText
 
 articleId :: Router () (ArticleId :- ())
 articleId =
@@ -107,6 +111,9 @@ route acid (ItemsInCurrentOrder i j k l) = msum
         , method DELETE >> lift (deleteItemFromCurrentOrderH acid (RestId i) (TableId j) (UserId k) (OrderItemId l))
         ]
 route acid (ItemsApproval i j k ) = method POST >> lift (approveItemsH acid (RestId i) (TableId j) (UserId k))
+route acid (UserRequest i j k l ) = method POST >> lift (addUserRequestH acid (RestId i) (TableId j) (UserId k) l)
+route acid (WaiterResponse i j k l ) = 
+            method POST >> lift (addWaiterResponseH acid (RestId i) (TableId j) (UserId k) l)
 
 handleRestaurants :: AcidState Storage -> RouteT Sitemap (ServerPartT IO) Response
 handleRestaurants acid = msum [ method GET >> lift (getRestaurantsH acid)

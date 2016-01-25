@@ -73,9 +73,9 @@ $(deriveSafeCopy 0 'base ''User)
 $(deriveSafeCopy 0 'base ''Table)
 $(deriveSafeCopy 0 'base ''Restaurant)
 $(deriveSafeCopy 0 'base ''WaiterResponse)
-$(deriveSafeCopy 0 'base ''UserRequest)
+$(deriveSafeCopy 0 'base ''RequestAction)
 
-instance SafeCopy a => SafeCopy (Request a) where
+instance SafeCopy a => SafeCopy (UserRequest a) where
    putCopy (Request{..}) = contain $ do safePut _reqAction;safePut _reqTime;safePut _reqUser;safePut _response
    getCopy = contain $ Request <$> safeGet <*> safeGet <*> safeGet <*> safeGet
 

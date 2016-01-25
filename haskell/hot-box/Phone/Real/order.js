@@ -17,7 +17,8 @@ var {
   Animated,
 } = React;
 
-var ServerAddress = "excuse.ro";
+var ServerAddress = "localhost";
+//var ServerAddress = "excuse.ro";
 
 var Order = React.createClass({
     getInitialState: function() {
@@ -110,8 +111,14 @@ var Order = React.createClass({
     console.log('Approved');
   },
 
-  _onPay : function() {
-      console.log('Payed');
+  _onWaiterRequest : function() {
+    this.fetchData(this._withAction().addRequest(this.state.userId,UserRequests.WaiterRequest));
+    console.log('_onWaiterRequest');
+  },
+
+  _onCheckRequest : function() {
+    this.fetchData(this._withAction().addRequest(this.state.userId,UserRequests.CheckRequest));
+    console.log('_onWaiterRequest');
   },
 
   render: function() {
@@ -134,7 +141,8 @@ var Order = React.createClass({
           orderItemClicked  : this._orderItemClicked  
         , state             : this.state
         , onApprove         : this._onApprove
-        , onPay             : this._onPay
+        , onWaiterRequest   : this._onWaiterRequest
+        , onCheckRequest   : this._onCheckRequest
         , style             : {height:this._getContentHeight()} //,backgroundColor:'red'}
     };
 
@@ -147,14 +155,6 @@ var Order = React.createClass({
         ,...this._topResponder.panHandlers
     };
     console.log(this._topResponder.panHandlers);
-
-            //<View name="top" ref={x=>this._topView = x} {...this._topViewStyle} 
-                //{...this._topResponder.panHandlers} >
-            //</View>
-            //<View name="bottom" style={{flex:1}} {...this._bottomResponder.panHandlers}>
-            //</View>
-    //render children
-
 
     return (
         <Animated.View ref={x => this._topView = x} style={{top:this.state.contentOffset}}>
@@ -318,11 +318,19 @@ var Order = React.createClass({
       , removeItem : (itemId,userId) =>
         [ this._currentOrderUrl() + `/users/${userId}/items/${itemId}` , "DELETE"]
 
+      , addRequest : (userId,action) =>
+        [ this._currentOrderUrl() + `/users/${userId}/requests/${action}` , "POST"]
+
       , approveItems : () =>
         [ this._currentOrderUrl() + `/users/${this.state.userId}/items/approved` , "POST"] };
   },
 
 });
+
+var UserRequests = {
+      WaiterRequest : 'WaiterRequest'
+    , CheckRequest : 'CheckRequest'
+    };
 
 var styles = StyleSheet.create({
   center: {

@@ -20,6 +20,8 @@ import Data.Aeson (decode,FromJSON,ToJSON)
 import Data.Storage       
 import Control.Storage       
 import Data.HotBox      
+import Data.Time
+import Data.Text               (Text)
 
 type Acid = AcidState Storage
 
@@ -97,6 +99,22 @@ addProductToCurrentOrderH acid rid tid uid pid =
 
 approveItemsH :: Acid -> Id Restaurant -> Id Table -> Id User -> ServerPart Response
 approveItemsH acid rid tid = handleUpdateFromMaybe acid . ApproveItems rid tid 
+
+addUserRequestH :: Acid -> Id Restaurant -> Id Table -> Id User -> Text -> ServerPart Response
+addUserRequestH = requestReponseAction AddUserRequest
+
+addWaiterResponseH :: Acid -> Id Restaurant -> Id Table -> Id User -> Text -> ServerPart Response
+addWaiterResponseH = requestReponseAction AddWaiterResponse
+
+requestReponseAction acidHandler acid rid tid uid = root
+        where 
+        root "WaiterRequest"    = doWork WaiterRequest
+        root "CheckRequest"     = doWork CheckRequest
+        root _                  = notFound'
+
+        doWork act  = do   
+            time <- lift getCurrentTime
+            handleUpdateFromMaybe acid $ acidHandler rid tid uid (act,time) 
 
 handleQueryFromMaybe acid p = do
         c <- lift $ query' acid p

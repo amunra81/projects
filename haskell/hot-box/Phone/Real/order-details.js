@@ -93,7 +93,8 @@ var OrderDetails = React.createClass({
       return (
           <View style={[styles.actions,styles.center]}>
               {this.renderGeneralAction('[Approve]','approve',this.props.onApprove)}
-              {this.renderGeneralAction('[Pay]','approve',this.props.onPay)}
+              {this.renderGeneralAction('[Waiter]','approve',this.props.onWaiterRequest)}
+              {this.renderGeneralAction('[Check please]','approve',this.props.onCheckRequest)}
           </View>
       );
   },
