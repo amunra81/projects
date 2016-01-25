@@ -17,8 +17,8 @@ var {
   Animated,
 } = React;
 
-var ServerAddress = "localhost";
-//var ServerAddress = "excuse.ro";
+//var ServerAddress = "localhost";
+var ServerAddress = "excuse.ro";
 
 var Order = React.createClass({
     getInitialState: function() {
