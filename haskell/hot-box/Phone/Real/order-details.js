@@ -64,20 +64,43 @@ var OrderDetails = React.createClass({
   render: function() {
       return (
           <View {...without("state",this.props)}>
-              {!this.getState().loaded?this.renderLoadingView():this.renderView()}
-          </View>
+              <Image resizeMode={Image.resizeMode.stretch} 
+                  source={imgs.background} 
+                  style={{width:320,height:548}}>
+                  <Image
+                      source={imgs.statusBar}
+                      style={{height:20,backgroundColor:'transparent'}}
+                      >
+                  </Image>
+               {!this.getState().loaded?this.renderLoadingView():this.renderView()}
+             </Image>
+         </View>
       );
   },
 
   renderView: function() {
+            //{this.renderActions()}
     return (
         <View style={styles.container}>
-            {this.renderActions()}
+            {this.renderTop()}
             {this.renderBody()}
         </View>
     );
   },
-
+  
+  renderTop: function() {
+      return (
+        <View>
+        <View style={styles.user} >
+            <Text style={styles.userCaption}>Bogdan Manole</Text>
+        </View>
+        <Image style={[styles.actions,{width:320}]} source={imgs.actionsBar}>
+            <Text style={styles.actionItem}> { '> Call the Waiter <' } </Text>
+            <Text style={styles.actionItem}> { '> Check please <' } </Text>
+        </Image>
+        </View>
+      );
+  },
 
   renderGeneralAction: function (text,name,onPress){
       return (
@@ -104,11 +127,19 @@ var OrderDetails = React.createClass({
       var i = 2;
       return (
           <View style={styles.order}>
-            {data.map(x => this.renderSegment(x))}
+            {data.map(x => this.renderSegmentWithImg(x))}
           </View>
       );
   },
 
+  renderSegmentWithImg: function(segment){
+      return null;
+      return (
+          <Image key={segment.user.id} style={{height:30,alignItems:'center'}} source={require('../img/design/d.png')}>
+                <Text style={{color:'#debdc2'}}>Irish Prub Radio</Text>
+            </Image>
+      );
+  },
   renderSegment: function(segment){
       var approved = xs => !xs.any(x=>x.status == "InList");
       
@@ -160,7 +191,11 @@ var OrderDetails = React.createClass({
   }, 
 //END OF COMPONENT
 });
-
+var imgs = {
+    statusBar : require('../img/design/statusBar.png'),
+    background : require('../img/design/gradient.png'),
+    actionsBar : require('../img/design/actions-bg.png'),
+}
 var styles = StyleSheet.create({
   center: {
     justifyContent:'center',
@@ -174,25 +209,44 @@ var styles = StyleSheet.create({
     //flexWrap:'nowrap',
     //paddingTop:20,
     //position:'relative',
-  },
-  actions: {
-    justifyContent: 'space-between',
-    //alignItems: 'stretch',
-    flexDirection: 'row',
-    //flex: 1,
-    height:30,
-    backgroundColor: '#fff9dc',
+    backgroundColor:'transparent'
   },
   order: {
     flex: 1,
     //backgroundColor: '#ffe7dc',
-    backgroundColor: '#eeeeef',
-    backgroundColor: '#ebebf2',
-    backgroundColor: '#eaeaf3',
+    //backgroundColor: '#eeeeef',
+    //backgroundColor: '#ebebf2',
+    //backgroundColor: '#eaeaf3',
   },
   products: {
       paddingLeft: 20,
       paddingBottom:10
+  },
+  actionItem : {
+      fontSize: 15,
+      color: 'white',
+      fontFamily : 'Dosis-Book',
+      //fontStyle: 'Bold'
+  },
+  actions : {
+      height:40,
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-around',
+      marginLeft:7,
+  },
+  user : {
+      height:80,
+      alignItems:'center',
+      justifyContent:'center'
+  },
+  userCaption :{
+      fontSize:20,
+      color:'#debdc2',
+      fontFamily:'Dosis-Extralight',
+      textShadowColor: 'black',
+      textShadowOffset:{width:0,height:1},
+      textShadowRadius:3
   }
 });
 //dcffe7

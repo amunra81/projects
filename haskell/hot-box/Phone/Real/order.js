@@ -14,6 +14,7 @@ var {
   View,
   LayoutAnimation,
   PanResponder,
+  StatusBarIOS,
   Animated,
 } = React;
 
@@ -40,7 +41,7 @@ var Order = React.createClass({
 
     //FIELDS
     _topView: (null : ?{ setNativeProps(props: Object): void }),
-    _topOpened: false,
+    _topOpened: true,
     _oldGestureY: 0,
     _moveDirection : 0,
     _highlightWidth: 100,
@@ -206,6 +207,8 @@ var Order = React.createClass({
   _ensureContentPosition() {
       if(this._layoutInitialized()) {
           var value = this._topOpened?0:-this._getContentHeight();
+          var statusBarContentStyle = this._topOpened?'light-content':'default';
+          StatusBarIOS.setStyle(statusBarContentStyle,true);
           this.state.contentOffset.setValue(value);
       }
   },

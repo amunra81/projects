@@ -23,6 +23,13 @@
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8D232B5D508946358800EB98 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FA58FA7BF8442FA470837E /* libRNBlur.a */; };
+		A96F72B11C57ED76002D0E90 /* Dosis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AA1C57E6B2002D0E90 /* Dosis-Bold.ttf */; };
+		A96F72B21C57ED79002D0E90 /* Dosis-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AB1C57E6B2002D0E90 /* Dosis-Book.ttf */; };
+		A96F72B31C57ED82002D0E90 /* Dosis-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AC1C57E6B2002D0E90 /* Dosis-ExtraBold.ttf */; };
+		A96F72B41C57ED82002D0E90 /* Dosis-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AD1C57E6B2002D0E90 /* Dosis-ExtraLight.ttf */; };
+		A96F72B51C57ED82002D0E90 /* Dosis-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */; };
+		A96F72B61C57ED82002D0E90 /* Dosis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */; };
+		A96F72B71C57ED82002D0E90 /* Dosis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +142,13 @@
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		960C500D128C425987AD76E7 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
+		A96F72AA1C57E6B2002D0E90 /* Dosis-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Bold.ttf"; sourceTree = SOURCE_ROOT; };
+		A96F72AB1C57E6B2002D0E90 /* Dosis-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Book.ttf"; sourceTree = "<group>"; };
+		A96F72AC1C57E6B2002D0E90 /* Dosis-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-ExtraBold.ttf"; sourceTree = "<group>"; };
+		A96F72AD1C57E6B2002D0E90 /* Dosis-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-ExtraLight.ttf"; sourceTree = "<group>"; };
+		A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Light.ttf"; sourceTree = "<group>"; };
+		A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Medium.ttf"; sourceTree = "<group>"; };
+		A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-SemiBold.ttf"; sourceTree = "<group>"; };
 		C4FA58FA7BF8442FA470837E /* libRNBlur.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBlur.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -243,6 +257,7 @@
 		13B07FAE1A68108700A75B9A /* Phone */ = {
 			isa = PBXGroup;
 			children = (
+				A96F72A91C57E69B002D0E90 /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -315,6 +330,20 @@
 				00E356EE1AD99517003FC87E /* PhoneTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A96F72A91C57E69B002D0E90 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				A96F72AA1C57E6B2002D0E90 /* Dosis-Bold.ttf */,
+				A96F72AB1C57E6B2002D0E90 /* Dosis-Book.ttf */,
+				A96F72AC1C57E6B2002D0E90 /* Dosis-ExtraBold.ttf */,
+				A96F72AD1C57E6B2002D0E90 /* Dosis-ExtraLight.ttf */,
+				A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */,
+				A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */,
+				A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */,
+			);
+			name = Fonts;
 			sourceTree = "<group>";
 		};
 		A9ACBB8F1C4FEB9B00BDF7DF /* Products */ = {
@@ -539,8 +568,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A96F72B21C57ED79002D0E90 /* Dosis-Book.ttf in Resources */,
+				A96F72B11C57ED76002D0E90 /* Dosis-Bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A96F72B51C57ED82002D0E90 /* Dosis-Light.ttf in Resources */,
+				A96F72B61C57ED82002D0E90 /* Dosis-Medium.ttf in Resources */,
+				A96F72B71C57ED82002D0E90 /* Dosis-SemiBold.ttf in Resources */,
+				A96F72B31C57ED82002D0E90 /* Dosis-ExtraBold.ttf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A96F72B41C57ED82002D0E90 /* Dosis-ExtraLight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

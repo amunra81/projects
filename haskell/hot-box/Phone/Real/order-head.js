@@ -53,8 +53,9 @@ var OrderHead = React.createClass({
 var styles = StyleSheet.create({
     container: {
         flexDirection:'column',
-        height:80,
+        height:60,
         backgroundColor: '#f9dcff',
+        backgroundColor: '#c0afc4'
     },
     center: {
         justifyContent:'center',

@@ -30,9 +30,12 @@ var HTOP = 20;
 
 var Phone = React.createClass({
   render: function() {
+              //<View style={{backgroundColor:'#c0afc4',height:HTOP}}/>
       return (
-          <View style={{flex:1,overflow:'hidden',marginTop:HTOP}}>
-                { this.renderApp() }
+          <View style={{flex:1,overflow:'hidden'}}>
+              <View style={{flex:1,overflow:'hidden'}}>
+                  { this.renderApp() }
+              </View>
           </View>
       );
   },
