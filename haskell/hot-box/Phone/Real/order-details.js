@@ -94,7 +94,7 @@ var OrderDetails = React.createClass({
         <View style={styles.user} >
             <Text style={styles.userCaption}>Bogdan Manole</Text>
         </View>
-        <Image style={[styles.actions,{width:320}]} source={imgs.actionsBar}>
+        <Image style={[styles.actions]} source={imgs.actionsBar}>
             <Text style={styles.actionItem}> { '> Call the Waiter <' } </Text>
             <Text style={styles.actionItem}> { '> Check please <' } </Text>
         </Image>
@@ -122,24 +122,34 @@ var OrderDetails = React.createClass({
       );
   },
 
+  renderBodyTemp: function() {
+      return (
+        <View >
+          <Image source={imgs.darkRow} style={styles.row}></Image>
+          <Image  source={imgs.lightRow} style={styles.row}></Image>
+          <Image source={imgs.darkRow} style={styles.row}></Image>
+          <Image  source={imgs.lightRow} style={styles.row}></Image>
+          <Image source={imgs.darkRow} style={styles.row}></Image>
+          <Image  source={imgs.lightRow} style={styles.row}></Image>
+          <Image source={imgs.darkRow} style={styles.row}></Image>
+          <Image  source={imgs.lightRow} style={styles.row}></Image>
+          <Image source={imgs.darkRow} style={styles.row}></Image>
+          <Image  source={imgs.lightRow} style={styles.row}></Image>
+          <Image source={imgs.darkRow} style={styles.row}></Image>
+        </View>
+      );
+  },
+
   renderBody: function() {
-      var data = this.getState().dataSource.segments;
+      var data = this.getState().dataSource.segments.filter( x => x.user.id == this.getState().userId);
       var i = 2;
       return (
           <View style={styles.order}>
-            {data.map(x => this.renderSegmentWithImg(x))}
+            {data.map(x => this.renderSegment(x))}
           </View>
       );
   },
 
-  renderSegmentWithImg: function(segment){
-      return null;
-      return (
-          <Image key={segment.user.id} style={{height:30,alignItems:'center'}} source={require('../img/design/d.png')}>
-                <Text style={{color:'#debdc2'}}>Irish Prub Radio</Text>
-            </Image>
-      );
-  },
   renderSegment: function(segment){
       var approved = xs => !xs.any(x=>x.status == "InList");
       
@@ -149,31 +159,33 @@ var OrderDetails = React.createClass({
                     .select(x=>{return { prodId:x.key()
                                        ,count:x.count()
                                        ,pname:x.last().product.name
+                                       ,pprice:x.last().product.price
                                        ,itemId:x.last().id
                                        ,approved:approved(x)
                                        };
                     }).toArray();
       return (
           <View key={segment.user.id}>
-            <View name="laba">
-                <Text>User {segment.user.id}</Text>
-            </View>
-            <View testID="products" style={styles.products}>
-                {items.map(x => this.renderProduct(x,segment.user))}
-            </View>
+                {items.map((x,i) => this.renderProduct(x,segment.user,i))}
           </View>
       );
   },
 
-  renderProduct: function(item,user){
-      return (
+  renderProduct: function(item,user,i){
+     var imgSource = i%2!=0?imgs.darkRow:imgs.lightRow;
+     return (
           <TouchableOpacity key={item.itemId} onPress={() => { 
             console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
             this.props.orderItemClicked(item,user);
           }}>
-          <Text style={{color:item.approved?'black':'gray'}}>
-              {item.count}...... {item.pname} 
-          </Text>
+            <Image source={imgSource} style={styles.row}>
+                <Text style={styles.itemText}>
+                    {item.count} x {item.pname} 
+                </Text>
+                <Text style={styles.itemText}>
+                    {item.pprice} RON
+                </Text>
+            </Image>
         </TouchableOpacity>
       );
   },
@@ -193,9 +205,15 @@ var OrderDetails = React.createClass({
 });
 var imgs = {
     statusBar : require('../img/design/statusBar.png'),
-    background : require('../img/design/gradient.png'),
+    background : require('../img/design/gradient-warmer.png'),
     actionsBar : require('../img/design/actions-bg.png'),
-}
+    lightRow : require('../img/design/light-row-bg.png'),
+    darkRow : require('../img/design/dark-row-bg.png'),
+};
+
+var L_OFFSET = 5;
+var ROW_WIDTH = 315; //TODO dynamic this
+
 var styles = StyleSheet.create({
   center: {
     justifyContent:'center',
@@ -223,7 +241,7 @@ var styles = StyleSheet.create({
       paddingBottom:10
   },
   actionItem : {
-      fontSize: 15,
+      fontSize: 16,
       color: 'white',
       fontFamily : 'Dosis-Book',
       //fontStyle: 'Bold'
@@ -232,8 +250,31 @@ var styles = StyleSheet.create({
       height:40,
       flexDirection:'row',
       alignItems:'center',
-      justifyContent:'space-around',
-      marginLeft:7,
+      justifyContent:'space-between',
+      marginLeft:L_OFFSET,
+      paddingLeft:10,
+      paddingRight:10,
+      width:ROW_WIDTH,
+  },
+  itemText : {
+      fontSize: 16,
+      fontFamily: 'Dosis-Light',
+      color:'#debdc2',
+  },
+  itemText : {
+      fontSize: 16,
+      fontFamily: 'Dosis-Light',
+      color:'#debdc2',
+  },
+  row : {
+      height:40,
+      flexDirection:'row',
+      alignItems:'center',
+      justifyContent:'space-between',
+      marginLeft:L_OFFSET,
+      paddingLeft:10, 
+      paddingRight:10, 
+      width:ROW_WIDTH,
   },
   user : {
       height:80,
@@ -243,7 +284,7 @@ var styles = StyleSheet.create({
   userCaption :{
       fontSize:20,
       color:'#debdc2',
-      fontFamily:'Dosis-Extralight',
+      fontFamily:'Dosis-light',
       textShadowColor: 'black',
       textShadowOffset:{width:0,height:1},
       textShadowRadius:3
