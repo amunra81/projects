@@ -30,6 +30,8 @@
 		A96F72B51C57ED82002D0E90 /* Dosis-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */; };
 		A96F72B61C57ED82002D0E90 /* Dosis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */; };
 		A96F72B71C57ED82002D0E90 /* Dosis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */; };
+		A9FC61DB1C5E0F3D0035BAA0 /* Nexa Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9FC61D91C5E0F3D0035BAA0 /* Nexa Bold.otf */; };
+		A9FC61DC1C5E0F3D0035BAA0 /* Nexa Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9FC61DA1C5E0F3D0035BAA0 /* Nexa Light.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +151,8 @@
 		A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Light.ttf"; sourceTree = "<group>"; };
 		A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Medium.ttf"; sourceTree = "<group>"; };
 		A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-SemiBold.ttf"; sourceTree = "<group>"; };
+		A9FC61D91C5E0F3D0035BAA0 /* Nexa Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Bold.otf"; sourceTree = "<group>"; };
+		A9FC61DA1C5E0F3D0035BAA0 /* Nexa Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Light.otf"; sourceTree = "<group>"; };
 		C4FA58FA7BF8442FA470837E /* libRNBlur.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBlur.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -335,6 +339,8 @@
 		A96F72A91C57E69B002D0E90 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A9FC61D91C5E0F3D0035BAA0 /* Nexa Bold.otf */,
+				A9FC61DA1C5E0F3D0035BAA0 /* Nexa Light.otf */,
 				A96F72AA1C57E6B2002D0E90 /* Dosis-Bold.ttf */,
 				A96F72AB1C57E6B2002D0E90 /* Dosis-Book.ttf */,
 				A96F72AC1C57E6B2002D0E90 /* Dosis-ExtraBold.ttf */,
@@ -571,10 +577,12 @@
 				A96F72B21C57ED79002D0E90 /* Dosis-Book.ttf in Resources */,
 				A96F72B11C57ED76002D0E90 /* Dosis-Bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				A9FC61DB1C5E0F3D0035BAA0 /* Nexa Bold.otf in Resources */,
 				A96F72B51C57ED82002D0E90 /* Dosis-Light.ttf in Resources */,
 				A96F72B61C57ED82002D0E90 /* Dosis-Medium.ttf in Resources */,
 				A96F72B71C57ED82002D0E90 /* Dosis-SemiBold.ttf in Resources */,
 				A96F72B31C57ED82002D0E90 /* Dosis-ExtraBold.ttf in Resources */,
+				A9FC61DC1C5E0F3D0035BAA0 /* Nexa Light.otf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				A96F72B41C57ED82002D0E90 /* Dosis-ExtraLight.ttf in Resources */,
 			);

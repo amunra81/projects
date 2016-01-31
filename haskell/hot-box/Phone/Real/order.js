@@ -41,7 +41,7 @@ var Order = React.createClass({
 
     //FIELDS
     _topView: (null : ?{ setNativeProps(props: Object): void }),
-    _topOpened: true,
+    _topOpened: false,
     _oldGestureY: 0,
     _moveDirection : 0,
     _highlightWidth: 100,
@@ -207,8 +207,9 @@ var Order = React.createClass({
   _ensureContentPosition() {
       if(this._layoutInitialized()) {
           var value = this._topOpened?0:-this._getContentHeight();
-          var statusBarContentStyle = this._topOpened?'light-content':'default';
-          StatusBarIOS.setStyle(statusBarContentStyle,true);
+          //var statusBarContentStyle = this._topOpened?'light-content':'default';
+          StatusBarIOS.setStyle('light-content',true);
+          //StatusBarIOS.setHidden(!this._topOpened,false);
           this.state.contentOffset.setValue(value);
       }
   },
@@ -343,6 +344,7 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    borderColor: '#4b4c54',
     //justifyContent: 'space-around',
     //alignItems: 'center',
     backgroundColor: '#dcf4ff',

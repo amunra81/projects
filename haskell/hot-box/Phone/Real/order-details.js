@@ -3,6 +3,7 @@
 var React = require('react-native');
 var Enumerable = require('linq');
 var {merge,without} = require('./common');
+var numeral = require('numeral');
 //var Display = require('react-native-device-display');
 
 var {
@@ -64,14 +65,13 @@ var OrderDetails = React.createClass({
   render: function() {
       return (
           <View {...without("state",this.props)}>
-              <Image resizeMode={Image.resizeMode.stretch} 
+              <Image 
                   source={imgs.background} 
                   style={{width:320,height:548}}>
                   <Image
                       source={imgs.statusBar}
                       style={{height:20,backgroundColor:'transparent'}}
-                      >
-                  </Image>
+                  />
                {!this.getState().loaded?this.renderLoadingView():this.renderView()}
              </Image>
          </View>
@@ -159,7 +159,7 @@ var OrderDetails = React.createClass({
                     .select(x=>{return { prodId:x.key()
                                        ,count:x.count()
                                        ,pname:x.last().product.name
-                                       ,pprice:x.last().product.price
+                                       ,pprice:numeral(x.count() * x.last().product.price.toFixed(4)).format('0.[00]')
                                        ,itemId:x.last().id
                                        ,approved:approved(x)
                                        };
@@ -205,6 +205,7 @@ var OrderDetails = React.createClass({
 });
 var imgs = {
     statusBar : require('../img/design/statusBar.png'),
+    //background : require('../img/design/ceva.png'),
     background : require('../img/design/gradient-warmer.png'),
     actionsBar : require('../img/design/actions-bg.png'),
     lightRow : require('../img/design/light-row-bg.png'),

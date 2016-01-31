@@ -11,6 +11,7 @@
     "npm": "^3.5.3",
     "react-native": "^0.18.0-rc",
     "react-native-blur": "^0.7.9",
-    "react-native-canvas": "^0.0.5"
+    "react-native-canvas": "^0.0.5",
+    "numeral":"^1.5.3"
   }
 }

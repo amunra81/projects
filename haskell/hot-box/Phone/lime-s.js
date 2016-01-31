@@ -2,7 +2,7 @@
 
 
 
-module.exports = {
+var Limes = {
 
     Real : { OrderDetails       : require('./Real/order-details'        )
            , Common             : require('./Real/common'               ) 
@@ -10,6 +10,8 @@ module.exports = {
            , OrderMenu          : require('./Real/order-menu-slide'     ) 
            , OrderHead          : require('./Real/order-head'           ) 
            , Order              : require('./Real/order'                ) 
+           , SlideList          : require('./Real/Controls/slide-list'  ) 
+           , SlideButton        : require('./Real/Controls/slide-button') 
     },
 
     Play : { Navigation         : require('./Play/navigation'           ) 
@@ -23,4 +25,6 @@ module.exports = {
 
     Stack: { Linq               : require('linq'                        ) 
     },
-}
+ }
+
+ module.exports = Limes;

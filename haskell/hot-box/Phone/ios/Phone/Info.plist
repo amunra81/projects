@@ -50,6 +50,8 @@
 		<string>Dosis-Light.ttf</string>
 		<string>Dosis-Medium.ttf</string>
 		<string>Dosis-SemiBold.ttf</string>
+		<string>Nexa Bold.otf</string>
+		<string>Nexa Light.otf</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

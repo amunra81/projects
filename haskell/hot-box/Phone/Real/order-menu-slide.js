@@ -1,7 +1,10 @@
 'use strict';
 
 var React = require('react-native');
+
+
 var Linq = require('linq');
+var {merge} = require('./common');
 var SlideList = require('./Controls/slide-list');
 var SlideButton = require('./Controls/slide-button');
 
@@ -35,7 +38,7 @@ var OrderMenu = React.createClass({
 
   getState: function() {
       if(this.props.state){
-        return this._merge(this.state,this.props.state);
+        return merge(this.state,this.props.state);
       }
       else
           return this.state;
