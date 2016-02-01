@@ -111,7 +111,7 @@ var OrderMenu = React.createClass({
   },
 
   renderPage: function(pageNo,props) {
-    var pageSize = 6;
+    var pageSize = 12;
     var dataSource = this.getState().dataSource.menu;
     var text = `Page: ${pageNo}/${dataSource.length/pageSize}`;
 
@@ -123,32 +123,48 @@ var OrderMenu = React.createClass({
     if(some.length>0)
         return (
             <View style={styles.container} {...props}>
-                { some.map(x => this.renderProduct(x.item))}
+                {
+                    this.mapInPairs(some,(x,y) => this.renderProduct(x.item,y && y.item))
+                }
             </View>
         );
     else
         return null;
   },
 
-  renderProduct: function(product){
+  mapInPairs: function(ar,render) {
+      if(ar.length == 0)
+          return [];
+      else {
+          var head = [render(ar[0],ar.length>1 && ar[1])];
+          var tail = ar.length<=2?[]:this.mapInPairs(ar.slice(2,ar.length),render);
+
+          return head.concat(tail); 
+      }
+  },
+
+  renderProduct: function(p1,p2){
           //<BlurView blurType="xlight" style={styles.containerBlur}>
         //</BlurView>
       var renderMainItem  = () => {
         return (
             <TouchableOpacity onPress={() => { 
             console.log(`s-a clickuit pe ${product.name}!`); 
-            this.props.productClicked(product);
+            this.props.productClicked(p1);
             }}>
                 <View style={styles.containerBlur}>
                     <Text style={{color:'black'}}>
-                        {product.name}
+                        {p1.name + " - " }
+                    </Text>
+                    <Text>
+                        {p2 && p2.name}
                     </Text>
                 </View>
             </TouchableOpacity>
       );};
 
       var props = {
-          key        : product.id,
+          key        : p1.id,
           style      : [styles.listItem,styles.center],
           renderMain : renderMainItem
       };
