@@ -149,7 +149,7 @@ var OrderMenu = React.createClass({
       var renderMainItem  = () => {
         return (
             <TouchableOpacity onPress={() => { 
-            console.log(`s-a clickuit pe ${product.name}!`); 
+            console.log(`s-a clickuit pe ${p1.name}!`); 
             this.props.productClicked(p1);
             }}>
                 <View style={styles.containerBlur}>

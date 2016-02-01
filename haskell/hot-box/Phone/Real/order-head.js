@@ -3,6 +3,7 @@
 
 var React = require('react-native');
 var {merge,without} = require('./common');
+var Linq = require('linq');
 //const UIManager = require('NativeModules').UIManager;
 
 var {
@@ -42,6 +43,13 @@ var OrderHead = React.createClass({
   },
 
   renderView: function() {
+      var total = Linq.from(
+                            Linq.from(this.getState().dataSource.segments)
+                            .first(seg => seg.user.id == this.getState().userId ).items)
+                            .sum(item => item.product.price);
+                        
+
+                      
       return (
         <View style={styles.subcontainer}>
             <View style={{flexDirection:'row',alignItems:'flex-end'}}>
@@ -58,7 +66,7 @@ var OrderHead = React.createClass({
                     <Text style={styles.amount}> DE PLATA </Text>
                 </View>
                 <Text style={styles.titleLight}>
-                    35
+                    {total.toFixed(2)}
                 </Text>
             </View>
         </View>
