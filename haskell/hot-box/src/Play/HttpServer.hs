@@ -14,7 +14,7 @@ import Data.Text               (Text)
 import Happstack.Server
     ( Response, ServerPartT,ServerPart, ok, toResponse, simpleHTTP
     , nullConf,Conf(..), seeOther, dir, notFound, seeOther,method,Method(GET,POST,PUT,DELETE)
-    , ServerMonad(askRq))
+    , ServerMonad(askRq),serveDirectory,Browsing(..))
 
 import Text.Blaze.Html4.Strict
     ((!), html, head, body, title, p, toHtml
@@ -195,7 +195,9 @@ main =
             putStrLn ("Listening at http://localhost:" ++ show (port nullConf) ++ "/") 
             fmap show getCurrentTime >>= print
             simpleHTTP nullConf $ msum
-                [ dir "favicon.ico" $ notFound (toResponse ())
+                [ 
+                 dir "favicon.ico" $ notFound (toResponse ())
+                {-,dir "imgs" $ serveDirectory EnableBrowsing ["index.html"] "~"-}
                 , implSite "http://localhost:8000" "" (site acid)
                 {-, seeOther ("/route/" :: String) (toResponse ())-}
                 ]

@@ -104,12 +104,10 @@ var OrderMenu = React.createClass({
             }
           };
 
-          //var background = 'http://img05.deviantart.net/f218/i/2012/302/5/a/colorful_background_by_yuimi_chan-d5jd40b.jpg';
-          var background = 'http://thumbs.dreamstime.com/z/lime-fruit-slices-background-eps-vector-illustration-32259119.jpg';
           return (
-            <Image source={{uri:background}} style={styles.container}>
+            <View source={imgs.bgDomolitComplet} style={styles.container}>
                 <SlideList {...props} />
-            </Image>);
+            </View>);
   },
 
   renderPage: function(pageNo,props) {
@@ -197,6 +195,13 @@ var OrderMenu = React.createClass({
 //END OF COMPONENT
 });
 
+var imgs = {
+    bg : require("../img/design/Bottom/bg.png"),
+    bgDomolit : require("../img/design/Bottom/bg-domolit.png"),
+    bgComplet : require("../img/design/Bottom/bg-complet.png"),
+    //bgDomolitComplet : require("../img/design/Bottom/bg-domolit-complet.png"),
+}
+
 var styles = StyleSheet.create({
   center: {
     justifyContent:'center',
@@ -204,14 +209,15 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    height:468,
-    width:320,
+    //marginTop:-10,
+    //height:400,
+    //width:320,
     //flexDirection: 'row',
     justifyContent: 'space-around',
     //alignItems: 'center',
     //backgroundColor: '#dcffe7',
     //flexWrap:'nowrap',
-    position:'relative',
+    backgroundColor:'transparent'
   },
   containerBlur: {
     flex: 1,

@@ -71,9 +71,12 @@ var styles = StyleSheet.create({
 
     container: {
         flexDirection:'column',
-        height:80,
-        backgroundColor: '#f9dcff',
-        backgroundColor: '#35363a'
+        height:85,
+        //backgroundColor: '#f9dcff',
+        //backgroundColor: '#35363a',
+        backgroundColor: '#343539',
+        //backgroundColor: 'transparent',
+        opacity:0.99
     },
     subcontainer: {
         flex:1,

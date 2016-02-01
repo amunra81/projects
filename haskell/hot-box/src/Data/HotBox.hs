@@ -41,12 +41,14 @@ data Table = Table { _tableId :: Id Table
                    , _tableName :: String }
              deriving (Show,Eq, Ord, Data, Typeable)
 
-type Price = Float
-type Menu = [Product] 
+type Price  = Float
+type Menu   = [Product] 
+type Image  = String
 
 data Product = Product { _prodId        :: Id Product 
                        , _productName   :: String
                        , _productPrice  :: Price
+                       , _productImage  :: Image
                        }
                deriving (Show,Eq, Ord, Data, Typeable)
 
@@ -137,6 +139,7 @@ instance FromJSON Product where
         Product <$> v .: "id"
                 <*> v .: "name"
                 <*> v .: "price"
+                <*> v .: "image"
 
 -- TO JSON  
 
@@ -156,7 +159,7 @@ instance ToJSON OrderId where
     toJSON (OrderId i) = toJSON i
 
 instance ToJSON Product where
-    toJSON (Product i xs p) = object ["id" .= i,"name" .= xs,"price" .= p]
+    toJSON (Product i xs p img) = object ["id" .= i,"name" .= xs,"price" .= p, "image" .= img]
 
 instance ToJSON User where
     toJSON (User id) = object ["id" .= id]

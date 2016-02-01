@@ -16,6 +16,7 @@ var {
   PanResponder,
   StatusBarIOS,
   Animated,
+  Image,
 } = React;
 
 //var ServerAddress = "localhost";
@@ -144,7 +145,7 @@ var Order = React.createClass({
         , onApprove         : this._onApprove
         , onWaiterRequest   : this._onWaiterRequest
         , onCheckRequest   : this._onCheckRequest
-        , style             : {height:this._getContentHeight()} //,backgroundColor:'red'}
+        , style             : {height:this._getContentHeight(),overflow:'hidden'} //,backgroundColor:'red'}
     };
 
     var orderHeadProps = {
@@ -160,8 +161,10 @@ var Order = React.createClass({
     return (
         <Animated.View ref={x => this._topView = x} style={{top:this.state.contentOffset}}>
             <OrderDetails   {...orderDetailsProps } />
-            <OrderHead      {...orderHeadProps    } />
-            <OrderMenu      {...orderMenuProps    } />
+            <Image source={imgs.bgDomolitComplet} >
+                <OrderHead      {...orderHeadProps    } />
+                <OrderMenu      {...orderMenuProps    } />
+            </Image>
         </Animated.View>
     );
   },
@@ -347,12 +350,20 @@ var styles = StyleSheet.create({
     borderColor: '#4b4c54',
     //justifyContent: 'space-around',
     //alignItems: 'center',
-    backgroundColor: '#dcf4ff',
+    //backgroundColor: '#dcf4ff',
+    backgroundColor: '#343539',
     //flexWrap:'nowrap',
     //paddingTop:20,
     //position:'relative',
   },
 });
+
+var imgs = {
+    bg : require("../img/design/Bottom/bg.png"),
+    bgDomolit : require("../img/design/Bottom/bg-domolit.png"),
+    bgComplet : require("../img/design/Bottom/bg-complet.png"),
+    bgDomolitComplet : require("../img/design/Bottom/bg-domolit-complet.png"),
+};
 
 //dcffe7
 module.exports = Order;

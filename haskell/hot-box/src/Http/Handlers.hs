@@ -4,7 +4,7 @@ module Http.Handlers where
 
 import Happstack.Server ( Response, ServerPartT,ServerPart, ok, toResponse, simpleHTTP
                         , nullConf,Conf(..), seeOther, dir, notFound, seeOther , ToMessage(..)
-                        , Method(GET, POST, PUT),method,ServerMonad(askRq))
+                        , Method(GET, POST, PUT),method,ServerMonad(askRq),serveDirectory,Browsing(..))
 import Happstack.Server.Types (takeRequestBody,unBody)
 import Data.Aeson.Encode.Pretty (encodePretty)
 import qualified Data.ByteString.Char8 as B
@@ -127,3 +127,4 @@ handleUpdateFromMaybe acid p = do
         case c of
          Just o -> ok $ toResponse o
          Nothing -> notFound'
+

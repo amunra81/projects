@@ -6,7 +6,7 @@ import Data.Maybe
 
 -- MENUS
 
-mapProduct xs =  map (\(i,n,p) -> Product (ProdId i) n p) zs
+mapProduct xs =  map (\(i,n,p) -> Product (ProdId i) n p "") zs
               where zs = List.zip3 [1..] xs $ cycle [10,6.4,2.4,12,6,10,11]
 
 menu0 = mapProduct
