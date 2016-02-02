@@ -4,12 +4,13 @@ var React = require('react-native');
 
 
 var Linq = require('linq');
-var {merge} = require('./common');
+var {merge,mapInPairs} = require('./common');
 var SlideList = require('./Controls/slide-list');
 var SlideButton = require('./Controls/slide-button');
 
 var BlurView = require('react-native-blur').BlurView;
 var VibrancyView = require('react-native-blur').VibrancyView;
+var OrderLine = require('./order-line');
 
 var {
   ListView,
@@ -99,7 +100,7 @@ var OrderMenu = React.createClass({
           , renderNextPage      : ( ) => this.renderPage(currentPage+1,{})
           , onScrolled          :  x  => {
               if(x!=0)
-                setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1:currentPage+1}))
+                setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1 : currentPage+1}))
                 //this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
             }
           };
@@ -107,7 +108,8 @@ var OrderMenu = React.createClass({
           return (
             <View source={imgs.bgDomolitComplet} style={styles.container}>
                 <SlideList {...props} />
-            </View>);
+            </View>
+          );
   },
 
   renderPage: function(pageNo,props) {
@@ -124,7 +126,7 @@ var OrderMenu = React.createClass({
         return (
             <View style={styles.container} {...props}>
                 {
-                    this.mapInPairs(some,(x,y) => this.renderProduct(x.item,y && y.item))
+                    mapInPairs(some,(x,y) => this.renderProduct(x.item,y && y.item))
                 }
             </View>
         );
@@ -132,18 +134,38 @@ var OrderMenu = React.createClass({
         return null;
   },
 
-  mapInPairs: function(ar,render) {
-      if(ar.length == 0)
-          return [];
-      else {
-          var head = [render(ar[0],ar.length>1 && ar[1])];
-          var tail = ar.length<=2?[]:this.mapInPairs(ar.slice(2,ar.length),render);
-
-          return head.concat(tail); 
-      }
-  },
-
   renderProduct: function(p1,p2){
+      var renderMainItem  = () => {
+        return (
+            <TouchableOpacity onPress={() => { 
+            console.log(`s-a clickuit pe ${p1.name}!`); 
+            this.props.productClicked(p1);
+            }}>
+                <View style={styles.containerBlur}>
+                    <Text style={{color:'black'}}>
+                        {p1.name + " - " }
+                    </Text>
+                    <Text>
+                        {p2 && p2.name}
+                    </Text>
+                </View>
+            </TouchableOpacity>
+      );};
+
+      var props = {
+          key        : p1.id,
+          //style      : [styles.listItem,styles.center],
+          //renderMain : renderMainItem
+          p1         : p1,
+          p2         : p2,
+      };
+
+      return (
+            <OrderLine {...props}/>
+      );
+  },
+  
+  renderProductOld: function(p1,p2){
           //<BlurView blurType="xlight" style={styles.containerBlur}>
         //</BlurView>
       var renderMainItem  = () => {

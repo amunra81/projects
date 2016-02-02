@@ -17,7 +17,17 @@ var Common = {
       }
       return ret;
   },
-  
+
+  mapInPairs: function(ar,render) {
+      if(ar.length == 0)
+          return [];
+      else {
+          var head = [render(ar[0],ar.length>1 && ar[1])];
+          var tail = ar.length<=2?[]:Common.mapInPairs(ar.slice(2,ar.length),render);
+
+          return head.concat(tail); 
+      }
+  },
 };
 
 module.exports = Common;
