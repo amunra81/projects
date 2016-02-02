@@ -163,7 +163,7 @@ var Order = React.createClass({
             <OrderDetails   {...orderDetailsProps } />
             <Image source={imgs.bgDomolitComplet} >
                 <OrderHead      {...orderHeadProps    } />
-                <OrderMenu      {...orderMenuProps    } />
+                    <OrderMenu      {...orderMenuProps    } />
             </Image>
         </Animated.View>
     );

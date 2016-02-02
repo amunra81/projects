@@ -113,7 +113,7 @@ var OrderMenu = React.createClass({
   },
 
   renderPage: function(pageNo,props) {
-    var pageSize = 12;
+    var pageSize = 8;
     var dataSource = this.getState().dataSource.menu;
     var text = `Page: ${pageNo}/${dataSource.length/pageSize}`;
 
@@ -124,7 +124,7 @@ var OrderMenu = React.createClass({
                :    Linq.empty()).toArray();
     if(some.length>0)
         return (
-            <View style={styles.container} {...props}>
+            <View style={styles.pageContainer} {...props}>
                 {
                     mapInPairs(some,(x,y) => this.renderProduct(x.item,y && y.item))
                 }
@@ -135,22 +135,6 @@ var OrderMenu = React.createClass({
   },
 
   renderProduct: function(p1,p2){
-      var renderMainItem  = () => {
-        return (
-            <TouchableOpacity onPress={() => { 
-            console.log(`s-a clickuit pe ${p1.name}!`); 
-            this.props.productClicked(p1);
-            }}>
-                <View style={styles.containerBlur}>
-                    <Text style={{color:'black'}}>
-                        {p1.name + " - " }
-                    </Text>
-                    <Text>
-                        {p2 && p2.name}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-      );};
 
       var props = {
           key        : p1.id,
@@ -158,6 +142,7 @@ var OrderMenu = React.createClass({
           //renderMain : renderMainItem
           p1         : p1,
           p2         : p2,
+          productClicked : this.props.productClicked
       };
 
       return (
@@ -165,37 +150,6 @@ var OrderMenu = React.createClass({
       );
   },
   
-  renderProductOld: function(p1,p2){
-          //<BlurView blurType="xlight" style={styles.containerBlur}>
-        //</BlurView>
-      var renderMainItem  = () => {
-        return (
-            <TouchableOpacity onPress={() => { 
-            console.log(`s-a clickuit pe ${p1.name}!`); 
-            this.props.productClicked(p1);
-            }}>
-                <View style={styles.containerBlur}>
-                    <Text style={{color:'black'}}>
-                        {p1.name + " - " }
-                    </Text>
-                    <Text>
-                        {p2 && p2.name}
-                    </Text>
-                </View>
-            </TouchableOpacity>
-      );};
-
-      var props = {
-          key        : p1.id,
-          style      : [styles.listItem,styles.center],
-          renderMain : renderMainItem
-      };
-
-      return (
-            <SlideButton {...props}/>
-      );
-  },
-
   renderProductClassic: function(product){
       return (
         <TouchableHighlight key={product.id} onPress={() => { 
@@ -241,11 +195,7 @@ var imgs = {
 }
 
 var styles = StyleSheet.create({
-  center: {
-    justifyContent:'center',
-    alignItems:'center',
-  },
-  container: {
+   container: {
     flex: 1,
     //marginTop:-10,
     //height:400,
@@ -255,23 +205,17 @@ var styles = StyleSheet.create({
     //alignItems: 'center',
     //backgroundColor: '#dcffe7',
     //flexWrap:'nowrap',
-    backgroundColor:'transparent'
-  },
-  containerBlur: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems:'center',
-    justifyContent: 'center',
-    //backgroundColor: 'transparent',
-    height:75,
-    width:320,
-    backgroundColor: '#EFF9F9'
-  },
-  listItem: {
-    //marginTop:5,
-    //marginBottom:15,
-    //backgroundColor: '##EFF9F9'
-  }
-});
+    backgroundColor:'transparent',
+    
+   },
+   pageContainer: {
+       flex:1,
+       flexDirection:'column',
+       justifyContent: 'space-around',
+       //backgroundColor:'blue',
+       backgroundColor:'transparent',
+       //paddingTop:2,
+   }
+ });
 //dcffe7
 module.exports = OrderMenu;

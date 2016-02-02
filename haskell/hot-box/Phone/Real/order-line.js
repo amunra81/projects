@@ -39,34 +39,38 @@ var OrderLine = React.createClass({
 
   renderOneProduct: function() {
       return (
-            <TouchableOpacity onPress={() => { 
-            console.log(`s-a clickuit pe ${this.props.p1.name}!`); 
-            this.props.productClicked(p1);
-            }}>
                 <View style={styles.containerBlur}>
-                    <Text style={{color:'black'}}>
-                        {this.props.p1.name }
-                    </Text>
+                    <View style={[styles.listItem,styles.singleItem]}>
+                        <Text style={styles.itemText}>
+                            {this.props.p1.name }
+                        </Text>
+                    </View>
                 </View>
-            </TouchableOpacity>
       );
   },
 
   renderTwoProducts: function() {
-      return (
-            <TouchableOpacity onPress={() => { 
-            console.log(`s-a clickuit pe ${this.props.p1.name}!`); 
-            this.props.productClicked(p1);
-            }}>
-                <View style={styles.containerBlur}>
-                    <Text style={{color:'black'}}>
-                        {this.props.p1.name + " - " }
+      var p1 = this.props.p1;
+      var p2 = this.props.p2;
+      var onPressed = (p) => { 
+                    console.log(`s-a clickuit pe ${p.name}!`); 
+                    this.props.productClicked(p);
+      };
+      var renderProduct = (p,buttonStyle) => { 
+          return (
+            <TouchableOpacity style={buttonStyle} 
+                onPress={()=>onPressed(p)} >
+                    <Text style={styles.itemText}>
+                        {p.name + " " + p.price}
                     </Text>
-                    <Text>
-                        { this.props.p2.name}
-                    </Text>
-                </View>
             </TouchableOpacity>
+          );
+      };
+      return (
+          <View style={styles.containerBlur}>
+                {renderProduct(p1,[styles.listItem,styles.leftItem])}
+                {renderProduct(p2,[styles.listItem,styles.rightItem])}
+            </View>
       );
   },
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
@@ -99,32 +103,37 @@ var styles = StyleSheet.create({
     alignItems:'center',
   },
   container: {
-    flex: 1,
-    //marginTop:-10,
-    //height:400,
-    //width:320,
-    //flexDirection: 'row',
-    justifyContent: 'space-around',
-    //alignItems: 'center',
-    //backgroundColor: '#dcffe7',
-    //flexWrap:'nowrap',
-    backgroundColor:'transparent'
+    //flex: 1,
+    alignItems:'stretch',
+    //justifyContent:'center'
+    //backgroundColor:'green',
   },
   containerBlur: {
-    flex: 1,
+    //flex: 1,
     flexDirection: 'row',
-    alignItems:'center',
-    justifyContent: 'center',
-    //backgroundColor: 'transparent',
-    height:75,
-    width:320,
-    backgroundColor: '#EFF9F9'
+    //backgroundColor:'red',
+    //marginBottom:10,
   },
   listItem: {
-    //marginTop:5,
-    //marginBottom:15,
-    //backgroundColor: '##EFF9F9'
-  }
+      flex:1,
+      backgroundColor: '#EFF9F9',
+      //pentru text
+      justifyContent:'center',
+      alignItems:'center',
+      height:120.5,
+      overflow:'hidden',
+  },
+  singleItem: {
+  },
+  leftItem: {
+      marginRight: 0.5,
+  },
+  rightItem: {
+      //marginLeft: 0.3,
+  },
+  itemText: {
+      fontFamily: 'Nexa Light'
+  },
 });
 
 module.exports = OrderLine;

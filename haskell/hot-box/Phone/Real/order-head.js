@@ -57,7 +57,7 @@ var OrderHead = React.createClass({
                     ZVON 
                 </Text>
                 <Text style={styles.titleLight}>
-                    {' Cafe'}
+                    {' Coffee'}
                 </Text>
             </View>
             <View style={{flexDirection:'row',alignItems:'center'}}>
