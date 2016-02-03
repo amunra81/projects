@@ -18,12 +18,13 @@ var Common = {
       return ret;
   },
 
-  mapInPairs: function(ar,render) {
+  mapInPairs: function(ar,render,index) {
+      var i = index?index:0;
       if(ar.length == 0)
           return [];
       else {
-          var head = [render(ar[0],ar.length>1 && ar[1])];
-          var tail = ar.length<=2?[]:Common.mapInPairs(ar.slice(2,ar.length),render);
+          var head = [render(ar[0],ar.length>1 && ar[1],i)];
+          var tail = ar.length<=2?[]:Common.mapInPairs(ar.slice(2,ar.length),render,i+1);
 
           return head.concat(tail); 
       }

@@ -11,6 +11,7 @@ var SlideButton = require('./Controls/slide-button');
 var BlurView = require('react-native-blur').BlurView;
 var VibrancyView = require('react-native-blur').VibrancyView;
 var OrderLine = require('./order-line');
+var Swiper = require('react-native-swiper')
 
 var {
   ListView,
@@ -34,6 +35,7 @@ var OrderMenu = React.createClass({
         loaded: false ,
         //only on state
         currentPage: 0,
+        pageSize: 8,
         };
   },
 
@@ -88,8 +90,42 @@ var OrderMenu = React.createClass({
     if (!this.getState().loaded) {
       return this.renderLoadingView();
     }
-    else return this.renderLoadedView();
+    //else return this.renderLoadedView();
+    else return this.renderWithSwipe();
   },
+  currentIndex: 0,
+  renderWithSwipe : function () {
+      var currentPage = this.getState().currentPage
+      var len = this.getState().dataSource.menu.length;
+      var swiperHeight = this.getState().containerHeight - this.getState().headHeight;
+
+      return (
+            <Swiper horizontal={false} loop={false} pagingEnabled={true} bounces={true} 
+                scrollsToTop={true}  index={this.currentIndex} height={swiperHeight}
+                renderPagination={(i,t,ctx) => {
+                    //this.setState({currentPage:i});
+                    //console.log(i + " " + a + " " + b  );
+                    //console.log(b.state.index);
+                    var index = ctx.state.index;
+                    if(index != this.currentIndex)
+                        {
+                            console.log("am schimbat" + this.currentIndex + " cu " +  index);
+                            this.currentIndex = index;
+                        }
+                }}
+                >
+                { 
+                    Linq.range(0,(len/8-1) + (len%8>0?1:0)).select( x => {
+                    return (
+                        <View syle={styles.container} key={x}>
+                            {this.renderPage(x,{style:[styles.pageContainer,{height:swiperHeight}]})}
+                        </View>
+                    );}).toArray()
+                }
+            </Swiper>
+      );
+  },
+
 
   renderLoadedView: function() {
       var currentPage = this.getState().currentPage
@@ -99,8 +135,12 @@ var OrderMenu = React.createClass({
           , renderCurrentPage   : ( ) => this.renderPage(currentPage,{})
           , renderNextPage      : ( ) => this.renderPage(currentPage+1,{})
           , onScrolled          :  x  => {
-              if(x!=0)
+            if(x!=0){
                 setTimeout(()=> this.setState({currentPage: x < 0? currentPage -1 : currentPage+1}))
+            }
+            else {
+                setTimeout(()=> this.setState({currentPage: currentPage}))
+            }
                 //this.setState({currentPage: x < 0? currentPage -1:currentPage+1});
             }
           };
@@ -113,7 +153,7 @@ var OrderMenu = React.createClass({
   },
 
   renderPage: function(pageNo,props) {
-    var pageSize = 8;
+    var pageSize = this.state.pageSize;
     var dataSource = this.getState().dataSource.menu;
     var text = `Page: ${pageNo}/${dataSource.length/pageSize}`;
 
@@ -124,9 +164,9 @@ var OrderMenu = React.createClass({
                :    Linq.empty()).toArray();
     if(some.length>0)
         return (
-            <View style={styles.pageContainer} {...props}>
+            <View {...props}>
                 {
-                    mapInPairs(some,(x,y) => this.renderProduct(x.item,y && y.item))
+                    mapInPairs(some,(x,y,i) => this.renderProduct(x.item,y && y.item,i))
                 }
             </View>
         );
@@ -134,16 +174,18 @@ var OrderMenu = React.createClass({
         return null;
   },
 
-  renderProduct: function(p1,p2){
-
+  renderProduct: function(p1,p2,i){
       var props = {
-          key        : p1.id,
+          key        : i,
           //style      : [styles.listItem,styles.center],
           //renderMain : renderMainItem
           p1         : p1,
           p2         : p2,
-          productClicked : this.props.productClicked
+          productClicked : this.props.productClicked,
+          height     : (this.getState().containerHeight - this.getState().headHeight) / (this.state.pageSize/2)
       };
+
+      console.log("HEIGHT" + props.height);
 
       return (
             <OrderLine {...props}/>
@@ -196,24 +238,23 @@ var imgs = {
 
 var styles = StyleSheet.create({
    container: {
-    flex: 1,
+       //flex: 1,
     //marginTop:-10,
     //height:400,
     //width:320,
     //flexDirection: 'row',
-    justifyContent: 'space-around',
+    //justifyContent: 'space-around',
     //alignItems: 'center',
     //backgroundColor: '#dcffe7',
     //flexWrap:'nowrap',
-    backgroundColor:'transparent',
-    
+       backgroundColor:'green',
    },
    pageContainer: {
-       flex:1,
-       flexDirection:'column',
+       //flex:1,
+       //height:100,
+       //flexDirection:'column',
        justifyContent: 'space-around',
-       //backgroundColor:'blue',
-       backgroundColor:'transparent',
+       //backgroundColor:'',
        //paddingTop:2,
    }
  });

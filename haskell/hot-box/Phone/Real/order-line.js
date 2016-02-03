@@ -9,8 +9,12 @@ var {
   Text,
   TouchableOpacity,
   View,
+  Image,
 } = React;
 
+
+var BlurView = require('react-native-blur').BlurView;
+var VibrancyView = require('react-native-blur').VibrancyView;
 
 var OrderLine = React.createClass({
 
@@ -49,6 +53,7 @@ var OrderLine = React.createClass({
       );
   },
 
+
   renderTwoProducts: function() {
       var p1 = this.props.p1;
       var p2 = this.props.p2;
@@ -56,15 +61,24 @@ var OrderLine = React.createClass({
                     console.log(`s-a clickuit pe ${p.name}!`); 
                     this.props.productClicked(p);
       };
+
+      var pla
       var renderProduct = (p,buttonStyle) => { 
+          var placeHolder = `https://unsplash.it/640/240?image=${p.id}1`
+            //var placeHolder = `https://placeholdit.imgix.net/~text?txtsize=33&bg=292929&txtclr=e3e3e3&txt=${p.name}&w=350&h=150`; 
           return (
             <TouchableOpacity style={buttonStyle} 
                 onPress={()=>onPressed(p)} >
-                    <Text style={styles.itemText}>
-                        {p.name + " " + p.price}
-                    </Text>
+                <Image  style={[{width:160,height:this.props.height}]} source={{uri:placeHolder}}>
+                    <View>
+                        
+                    </View>
+                </Image>
             </TouchableOpacity>
           );
+                //<Text style={styles.itemText}>
+                    //{p.name}
+                //</Text>
       };
       return (
           <View style={styles.containerBlur}>
@@ -115,23 +129,26 @@ var styles = StyleSheet.create({
     //marginBottom:10,
   },
   listItem: {
-      flex:1,
       backgroundColor: '#EFF9F9',
       //pentru text
       justifyContent:'center',
       alignItems:'center',
-      height:120.5,
+      //height:120,
       overflow:'hidden',
   },
   singleItem: {
   },
   leftItem: {
+      //flex:1,
+      width:160,
       marginRight: 0.5,
   },
   rightItem: {
+      flex:1
       //marginLeft: 0.3,
   },
   itemText: {
+      //flex:1,
       fontFamily: 'Nexa Light'
   },
 });

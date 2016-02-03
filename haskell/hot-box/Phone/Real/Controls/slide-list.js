@@ -55,16 +55,17 @@ module.exports = React.createClass({
   },
 
   render: function() {
+      LayoutAnimation.easeInEaseOut();
       return (
           <View ref={x=>this.container = x} style={styles.container} onLayout={ this._setHeghts }>
-          <Animated.View ref={ x=>this.movingPart = x } name='moving-part' style={{top:this.state.top}}
-              {...this._panResponder.panHandlers}>
-                    {this.renderPage(0,{style:{}}
-                                    ,x=>this.prevPage = x,this.props.renderPrevPage)}
-                    {this.renderPage(1,{style:{}}
-                                    ,x=>this.currentPage = x,this.props.renderCurrentPage)}
-                    {this.renderPage(2,{style:{}}
-                                    ,x=>this.nextPage = x,this.props.renderNextPage)}
+                <Animated.View ref={ x=>this.movingPart = x } name='moving-part' style={{top:this.state.top}}
+                    {...this._panResponder.panHandlers}>
+                        {this.renderPage(0,{style:{}}
+                                        ,x=>this.prevPage = x,this.props.renderPrevPage)}
+                        {this.renderPage(1,{style:{}}
+                                        ,x=>this.currentPage = x,this.props.renderCurrentPage)}
+                        {this.renderPage(2,{style:{}}
+                                        ,x=>this.nextPage = x,this.props.renderNextPage)}
 
                 </Animated.View>
             </View>
@@ -111,12 +112,14 @@ module.exports = React.createClass({
     return true;
   },
 
+  tempTop : 0,
   _handlePanResponderGrant: function(e: Object, gestureState: Object) {
+      this.tempTop = this.state.top._value;
   },
 
   _setMovingTop:function(offset,scrollCallBack) {
       this.offset   = offset;
-      var top       = (-this.dims.height) + offset;
+      var top       = (this.tempTop) + offset;
 
       //this.movingPart.setNativeProps({style: {top:top}});
       if(scrollCallBack)
@@ -130,13 +133,15 @@ module.exports = React.createClass({
       //console.log(gestureState);
       this._setMovingTop(gestureState.dy);
       this._updateMoveDirection(gestureState);
-      var velocityStr = `Vy ${gestureState.vy} - Vx ${gestureState.vx}`;
-      console.log(velocityStr);
+      //var velocityStr = `Vy ${gestureState.vy} - Vx ${gestureState.vx}`;
+      //console.log(velocityStr);
   },
 
   _handlePanResponderEnd: function(e: Object, gestureState: Object) {
       if(this.offset==0) 
-          return ;
+          {
+              return ;
+          }
       //LayoutAnimation.easeInEaseOut();
       var top = 0;
       if(this._moveDirection>=0 && this.offset >=0) {

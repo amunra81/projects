@@ -84,7 +84,7 @@ var OrderMenu = React.createClass({
             console.log(`s-a clickuit pe ${product.name}!`); 
             this.props.productClicked(product);
           }}>
-            <View  style={[styles.listItem,styles.center]}>
+          <View  style={[styles.listItem,styles.center]}>
                 <Text>
                     {product.name}
                 </Text>

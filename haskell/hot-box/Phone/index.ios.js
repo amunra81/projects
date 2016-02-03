@@ -25,6 +25,8 @@ var Order           = require('./Real/order'            );
 var SlideListPlay   = require('./Play/slide-list-play'  );
 var StretchPlay     = require('./Play/stretch'          );
 var Blur            = require('./Play/blur'             );
+var Swiper          = require('./Play/swiper'           );
+var SwiperPag       = require('./Play/pagination-swipe' );
 
 var HTOP = 20;
 
@@ -46,6 +48,8 @@ var Phone = React.createClass({
       //return <SlideListPlay/>;
       //return <StretchPlay />;
       //return <Blur />;
+      //return <Swiper />;
+      //return <SwiperPag />;
   }
 
 //end React.createClas
