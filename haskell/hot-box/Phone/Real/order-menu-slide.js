@@ -182,7 +182,8 @@ var OrderMenu = React.createClass({
           p1         : p1,
           p2         : p2,
           productClicked : this.props.productClicked,
-          height     : (this.getState().containerHeight - this.getState().headHeight) / (this.state.pageSize/2)
+
+          height     : -1.5 + (this.getState().containerHeight - this.getState().headHeight) / (this.state.pageSize/2)
       };
 
       console.log("HEIGHT" + props.height);

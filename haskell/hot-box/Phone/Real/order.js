@@ -161,7 +161,7 @@ var Order = React.createClass({
     return (
         <Animated.View ref={x => this._topView = x} style={{top:this.state.contentOffset}}>
             <OrderDetails   {...orderDetailsProps } />
-            <Image source={imgs.bgDomolitComplet} >
+            <Image source={imgs.bgDomolitComplet} style={{overflow:'visible'}}>
                 <OrderHead      {...orderHeadProps    } />
                     <OrderMenu      {...orderMenuProps    } />
             </Image>

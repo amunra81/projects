@@ -63,18 +63,39 @@ var OrderLine = React.createClass({
       };
 
       var pla
-      var renderProduct = (p,buttonStyle) => { 
+      var renderProduct = (p,buttonStyle,justifyText) => { 
           var placeHolder = `https://unsplash.it/640/240?image=${p.id}1`
-            //var placeHolder = `https://placeholdit.imgix.net/~text?txtsize=33&bg=292929&txtclr=e3e3e3&txt=${p.name}&w=350&h=150`; 
+          var width = 160;
+          var itemStyle =[styles.listItem,{width:width,height:this.props.height},buttonStyle];
+          var textColor ='rgba(256,256,256,1)'; 
+          var bkgColor = 'rgba(21,21,23,0.70)';
+          var borderWidth = 0;
+          var paddingText = 10;
           return (
-            <TouchableOpacity style={buttonStyle} 
-                onPress={()=>onPressed(p)} >
-                <Image  style={[{width:160,height:this.props.height}]} source={{uri:placeHolder}}>
-                    <View>
-                        
+                <Image  style={itemStyle} source={{uri:placeHolder}}>
+                    <View 
+                        style={{
+                            width:width,
+                            height:this.props.height/4,backgroundColor:bkgColor,
+                            alignItems:justifyText,
+                            justifyContent: 'center',
+                            marginBottom:10,
+                            borderColor:'black',
+                            borderTopWidth:borderWidth,
+                            borderBottomWidth:borderWidth,
+                            
+                        }}>
+                        <Text style={{
+                            color: textColor,
+                            fontFamily:'Nexa Bold',
+                            fontSize:15,
+                            paddingRight:paddingText,
+                            paddingLeft: paddingText}}
+                            >
+                            {p.name}
+                        </Text>
                     </View>
                 </Image>
-            </TouchableOpacity>
           );
                 //<Text style={styles.itemText}>
                     //{p.name}
@@ -82,8 +103,8 @@ var OrderLine = React.createClass({
       };
       return (
           <View style={styles.containerBlur}>
-                {renderProduct(p1,[styles.listItem,styles.leftItem])}
-                {renderProduct(p2,[styles.listItem,styles.rightItem])}
+                {renderProduct(p1,styles.leftItem,'center')}
+                {renderProduct(p2,styles.rightItem,'center')}
             </View>
       );
   },
@@ -131,8 +152,8 @@ var styles = StyleSheet.create({
   listItem: {
       backgroundColor: '#EFF9F9',
       //pentru text
-      justifyContent:'center',
-      alignItems:'center',
+      justifyContent:'flex-end',
+      //alignItems:'flex-end',
       //height:120,
       overflow:'hidden',
   },
@@ -141,7 +162,7 @@ var styles = StyleSheet.create({
   leftItem: {
       //flex:1,
       width:160,
-      marginRight: 0.5,
+      //marginRight: 1,
   },
   rightItem: {
       flex:1

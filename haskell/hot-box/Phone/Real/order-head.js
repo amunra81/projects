@@ -34,6 +34,9 @@ var OrderHead = React.createClass({
       return (
         <View {...without("state",this.props)} style={[styles.container]}>
             { !this.getState().loaded?this.renderLoading():this.renderView()}
+            <View style={styles.footer}>
+                <Image source={require("../img/design/Roz.png")} style={{top:-1.5}}/>
+            </View>
         </View>
       );
   },
@@ -78,13 +81,31 @@ var OrderHead = React.createClass({
 var styles = StyleSheet.create({
 
     container: {
+        borderTopColor:"#4b4c54",
+        borderTopWidth:1,
         flexDirection:'column',
         height:85,
         //backgroundColor: '#f9dcff',
         //backgroundColor: '#35363a',
         backgroundColor: '#343539',
         //backgroundColor: 'transparent',
-        opacity:0.99
+        opacity:0.99,
+        
+        shadowColor: "#000000",
+        shadowOpacity: 0.8,
+        shadowRadius: 1,
+        shadowOffset: {
+        height: 0,
+        width: 0,
+        }
+    },
+    footer: {
+        height:1,
+        backgroundColor:'transparent',
+        backgroundColor:'#4b4c54',
+        overflow:'visible',
+        alignItems:'flex-end',
+        paddingRight:16,
     },
     subcontainer: {
         flex:1,

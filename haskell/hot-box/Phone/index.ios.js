@@ -27,7 +27,8 @@ var StretchPlay     = require('./Play/stretch'          );
 var Blur            = require('./Play/blur'             );
 var Swiper          = require('./Play/swiper'           );
 var SwiperPag       = require('./Play/pagination-swipe' );
-
+var TText           = require('./Play/text-transparent' );
+var TKit            = require('./Play/shadow'           );
 var HTOP = 20;
 
 var Phone = React.createClass({
@@ -41,7 +42,9 @@ var Phone = React.createClass({
       );
   },
   renderApp: function() {
+      
       return <Order restId={1} tableId={1} userId={2}/>;
+
       //return <LongView />;
       //return <Playground />;
       //return <Responder />;
@@ -50,6 +53,8 @@ var Phone = React.createClass({
       //return <Blur />;
       //return <Swiper />;
       //return <SwiperPag />;
+      //return <TText />;
+      //return <TKit />;
   }
 
 //end React.createClas
