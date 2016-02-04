@@ -32,7 +32,7 @@ var OrderHead = React.createClass({
 
   render: function() {
       return (
-        <View {...without("state",this.props)} style={[styles.container]}>
+        <View {...without("state",this.props)} style={[styles.container,this.props.style]}>
             { !this.getState().loaded?this.renderLoading():this.renderView()}
             <View style={styles.footer}>
                 <Image source={require("../img/design/Roz.png")} style={{top:-1.5}}/>
@@ -84,16 +84,16 @@ var styles = StyleSheet.create({
         borderTopColor:"#4b4c54",
         borderTopWidth:1,
         flexDirection:'column',
-        height:85,
+        height:85, // THIS IS FIXED!!!!
         //backgroundColor: '#f9dcff',
         //backgroundColor: '#35363a',
-        backgroundColor: '#343539',
+        backgroundColor: 'rgba(52, 53, 57,1.9)',
         //backgroundColor: 'transparent',
-        opacity:0.99,
+        //opacity:0.79,
         
         shadowColor: "#000000",
         shadowOpacity: 0.8,
-        shadowRadius: 1,
+        shadowRadius: 2,
         shadowOffset: {
         height: 0,
         width: 0,

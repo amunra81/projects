@@ -137,6 +137,7 @@ var Order = React.createClass({
     var orderMenuProps = {
           productClicked    : this._onProductSelected  
         , state             : this.state
+        , style             : {backgroundColor:'transparent',top:this.state.headHeight}
     };
 
     var orderDetailsProps = {
@@ -153,7 +154,7 @@ var Order = React.createClass({
         //, onExpand          : () => this._onDetailsColapseToogle(0)
         //, onColapse         : () => this._onDetailsColapseToogle(0)
         , onLayout          : this._onHeadLayout 
-        , style             : [{height:this._getContentHeight()}]
+        , style             : [{top:-this._getContentHeight()}]
         ,...this._topResponder.panHandlers
     };
     console.log(this._topResponder.panHandlers);
@@ -162,8 +163,8 @@ var Order = React.createClass({
         <Animated.View ref={x => this._topView = x} style={{top:this.state.contentOffset}}>
             <OrderDetails   {...orderDetailsProps } />
             <Image source={imgs.bgDomolitComplet} style={{overflow:'visible'}}>
+                <OrderMenu      {...orderMenuProps    } />
                 <OrderHead      {...orderHeadProps    } />
-                    <OrderMenu      {...orderMenuProps    } />
             </Image>
         </Animated.View>
     );

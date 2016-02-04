@@ -39,6 +39,9 @@ var OrderMenu = React.createClass({
         };
   },
 
+  _productCounts : [],
+  currentIndex: 0,
+  
   getState: function() {
       if(this.props.state){
         return merge(this.state,this.props.state);
@@ -53,13 +56,6 @@ var OrderMenu = React.createClass({
  * @param finalObj
  * @returns obj3 a new object based on fromObj and finalObj 
  */
-  _merge: function (fromObj,finalObj){
-    var obj3 = {};
-    for (var attrname in fromObj) { obj3[attrname] = fromObj[attrname]; }
-    for (var attrname in finalObj) { obj3[attrname] = finalObj[attrname]; }
-    return obj3;
-  },
-
 
   componentDidMount: function() {
     if (!this.getState().loaded) {
@@ -93,13 +89,15 @@ var OrderMenu = React.createClass({
     //else return this.renderLoadedView();
     else return this.renderWithSwipe();
   },
-  currentIndex: 0,
+
   renderWithSwipe : function () {
+      this.productCounts = this._countProducts();
       var currentPage = this.getState().currentPage
       var len = this.getState().dataSource.menu.length;
       var swiperHeight = this.getState().containerHeight - this.getState().headHeight;
 
       return (
+          <View style={this.props.style}>
             <Swiper horizontal={false} loop={false} pagingEnabled={true} bounces={true} 
                 scrollsToTop={true}  index={this.currentIndex} height={swiperHeight}
                 renderPagination={(i,t,ctx) => {
@@ -116,6 +114,7 @@ var OrderMenu = React.createClass({
                 >
                 { 
                     Linq.range(0,(len/8-1) + (len%8>0?1:0)).select( x => {
+
                     return (
                         <View syle={styles.container} key={x}>
                             {this.renderPage(x,{style:[styles.pageContainer,{height:swiperHeight}]})}
@@ -123,9 +122,16 @@ var OrderMenu = React.createClass({
                     );}).toArray()
                 }
             </Swiper>
+        </View>
       );
   },
 
+  _countProducts : function() {
+      var segment = Linq.from(this.getState().dataSource.segments).first(x => x.user.id == this.getState().userId);
+
+      var ret = Linq.from(segment.items).groupBy(x => x.product.id).select(x=>{return {id:x.key(),count:x.count()}});
+      return ret.toArray();
+  },
 
   renderLoadedView: function() {
       var currentPage = this.getState().currentPage
@@ -175,18 +181,22 @@ var OrderMenu = React.createClass({
   },
 
   renderProduct: function(p1,p2,i){
+
+      var getCount = p => {
+          console.log(this.productCounts);
+          var pcount = Linq.from(this.productCounts).firstOrDefault( x => x.id == p.id);
+          return pcount?pcount.count:0;
+      };
       var props = {
           key        : i,
           //style      : [styles.listItem,styles.center],
           //renderMain : renderMainItem
-          p1         : p1,
-          p2         : p2,
+          p1         : merge({count:getCount(p1)},p1),
+          p2         : merge({count:getCount(p2)},p2),
           productClicked : this.props.productClicked,
 
           height     : -1.5 + (this.getState().containerHeight - this.getState().headHeight) / (this.state.pageSize/2)
       };
-
-      console.log("HEIGHT" + props.height);
 
       return (
             <OrderLine {...props}/>
@@ -257,6 +267,7 @@ var styles = StyleSheet.create({
        justifyContent: 'space-around',
        //backgroundColor:'',
        //paddingTop:2,
+       overflow:'hidden'
    }
  });
 //dcffe7

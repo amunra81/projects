@@ -85,7 +85,8 @@ var OrderLine = React.createClass({
                             borderBottomWidth:borderWidth,
                             
                         }}>
-                        <Text style={{
+                            {this.renderCircle(p)}
+                            <Text style={{
                             color: textColor,
                             fontFamily:'Nexa Bold',
                             fontSize:15,
@@ -107,6 +108,19 @@ var OrderLine = React.createClass({
                 {renderProduct(p2,styles.rightItem,'center')}
             </View>
       );
+  },
+  renderCircle : function(product) {
+    if(product.count && product.count > 0)
+        return (
+                <View name="cerc" style={styles.circle}>
+                    <Text name="quantity" style={styles.quantity}>
+                        {product.count}
+                    </Text>
+                </View>
+        );
+    else 
+        return null;
+
   },
   _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
     // Should we become active when the user presses down on the circle?
@@ -172,6 +186,28 @@ var styles = StyleSheet.create({
       //flex:1,
       fontFamily: 'Nexa Light'
   },
-});
+  circle: {
+      width:20,
+      height:20,
+      backgroundColor:'rgba(240,64,59,0.9)',
+      borderRadius:10,
+      marginLeft:140,
+      marginTop:-15,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderColor: 'rgba(21,21,23,0.5)',
+      //borderWidth: 1,
+      //borderBottomWidth: 0,
+  },
+  quantity: {
+      marginTop:4,
+      flex:1,
+      backgroundColor:'transparent',
+      fontFamily:'Nexa Bold',
+      fontSize:14,
+      color:'white',
+      textAlign: 'center',
+  },
+  });
 
 module.exports = OrderLine;
