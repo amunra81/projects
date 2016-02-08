@@ -47,7 +47,7 @@ var OrderLine = React.createClass({
       };
 
       var renderProduct = (p,buttonStyle,justifyText) => { 
-          var placeHolder = `https://unsplash.it/640/240?image=${p.id}1`
+          var placeHolder = `https://unsplash.it/640/240?image=${p.product.id}1`
           var width = 160;
           var itemStyle =[styles.listItem,{width:width,height:this.props.height},buttonStyle];
           var textColor ='rgba(256,256,256,1)'; 
@@ -56,7 +56,7 @@ var OrderLine = React.createClass({
           var paddingText = 10;
 
           return (
-              <TouchableOpacity onPress={ ()=> onPressed(p)}>
+              <TouchableOpacity onPress={ ()=> onPressed(p.product)}>
                 <Image  style={itemStyle} source={{uri:placeHolder}}>
                     <View 
                         style={{
@@ -70,7 +70,7 @@ var OrderLine = React.createClass({
                             borderBottomWidth:borderWidth,
                             
                         }}>
-                            {this.renderCircle(p)}
+                            {this.renderCircle(p.count)}
                             <Text style={{
                             color: textColor,
                             fontFamily:'Nexa Bold',
@@ -78,7 +78,7 @@ var OrderLine = React.createClass({
                             paddingRight:paddingText,
                             paddingLeft: paddingText}}
                             >
-                            {p.name}
+                            {p.product.name}
                         </Text>
                     </View>
                 </Image>
@@ -95,12 +95,12 @@ var OrderLine = React.createClass({
             </View>
       );
   },
-  renderCircle : function(product) {
-    if(product.count && product.count > 0)
+  renderCircle : function(count) {
+    if(count && count > 0)
         return (
                 <View name="cerc" style={styles.circle}>
                     <Text name="quantity" style={styles.quantity}>
-                        {product.count}
+                        {count}
                     </Text>
                 </View>
         );

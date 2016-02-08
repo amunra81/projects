@@ -30,38 +30,6 @@ var OrderDetails = React.createClass({
         };
   },
 
-  getState: function() {
-      if(this.props.state)
-          return this.props.state;
-      else
-          return this.state;
-  },
-
-  componentDidMount: function() {
-    if (!this.getState().loaded) {
-        this.fetchData();
-    }
-  },
-
-  _requestUrl : function () {
-      return `http://localhost:8000/restaurants/${this.getState().restId}/tables/${this.getState().tableId}/orders`
-  },
-
-  fetchData: function() {
-    fetch(this._requestUrl())
-    .then((response) => {
-        console.log(response)
-        return response.json();
-    })
-    .then((responseData) => {
-        this.setState({
-            dataSource: responseData
-            ,loaded: true
-        });
-    })
-    //.done();
-  },
-
   render: function() {
       return (
           <View {...without("state",this.props)}>
@@ -72,7 +40,7 @@ var OrderDetails = React.createClass({
                       source={imgs.statusBar}
                       style={{height:20,backgroundColor:'transparent'}}
                   />
-               {!this.getState().loaded?this.renderLoadingView():this.renderView()}
+               {this.renderView()}
              </Image>
          </View>
       );
@@ -123,42 +91,28 @@ var OrderDetails = React.createClass({
   },
 
   renderBody: function() {
-      var data = this.getState().dataSource.segments.filter( x => x.user.id == this.getState().userId);
-      var i = 2;
+      var data = this.props.ds.filter( x => x.userId == this.props.userId);
       return (
           <View style={styles.order}>
-            {data.map(x => this.renderSegment(x))}
+              {this.renderSegment(data[0])}
           </View>
       );
   },
 
   renderSegment: function(segment){
-      var approved = xs => !xs.any(x=>x.status == "InList");
-      
-      var items = Enumerable
-                    .from(segment.items)
-                    .groupBy(x => x.product.id)
-                    .select(x=>{return { prodId:x.key()
-                                       ,count:x.count()
-                                       ,pname:x.last().product.name
-                                       ,pprice:numeral(x.count() * x.last().product.price.toFixed(4)).format('0.[00]')
-                                       ,itemId:x.last().id
-                                       ,approved:approved(x)
-                                       };
-                    }).toArray();
       return (
-          <View key={segment.user.id}>
-                {items.map((x,i) => this.renderProduct(x,segment.user,i))}
+          <View key={segment.userId}>
+                {segment.items.map((x,i) => this.renderProduct(x,segment.userId,i))}
           </View>
       );
   },
 
-  renderProduct: function(item,user,i){
+  renderProduct: function(item,userId,i){
      var imgSource = i%2!=0?imgs.darkRow:imgs.lightRow;
      return (
           <TouchableOpacity key={item.itemId} onPress={() => { 
-            console.log(`s-a clickuit pe ${item.pname} + ${user.id}!`); 
-            this.props.orderItemClicked(item,user);
+            console.log(`s-a clickuit pe ${item.pname} + ${userId}!`); 
+            this.props.orderItemClicked(item,userId);
           }}>
             <Image source={imgSource} style={styles.row}>
                 <Text style={styles.itemText}>
@@ -172,17 +126,6 @@ var OrderDetails = React.createClass({
       );
   },
 
-  renderLoadingView: function() {
-    return (
-      <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]}>
-        <View style={[styles.head,styles.center]}>
-            <Text>
-                Loading order details...
-            </Text>
-        </View>
-      </View>
-    );
-  }, 
 //END OF COMPONENT
 });
 var imgs = {

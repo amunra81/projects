@@ -6,7 +6,6 @@ var React = require('react-native');
 var { OrderDetails
     ,OrderMenu
     ,OrderHead } = require('../lime-s').Real;
-//var { Linq } = require('../lime-s').Stack;
 
 var {
   StyleSheet,
@@ -19,6 +18,10 @@ var {
   Image,
   TouchableOpacity,
 } = React;
+
+var {transformDataSource
+    ,snapshot
+    } = require('./common');
 
 //var ServerAddress = "localhost";
 var ServerAddress = "excuse.ro";
@@ -63,17 +66,31 @@ var Order = React.createClass({
     },
 
   fetchData: function(action) {
+        var fetchStart = new Date().getTime();
         var url = action[0];
         var args = {method:action[1]};
         console.log(`calling API: url: [${url}] , args: [${JSON.stringify(args)}]`);
         fetch(url,args)
         .then((response) => {
-            console.log(response)
             return response.json();
         })
         .then((responseData) => {
+            //calculate fetching time
+            var fetchEnd = new Date().getTime();
+            var fetchingTime = fetchEnd - fetchStart;
+            console.log('Fetching time ' + fetchingTime);
+
+            //transform ds
+            var start = new Date().getTime();
+            var transformedDs = transformDataSource(responseData,this.state.userId);
+            var end = new Date().getTime();
+            var time = end - start;
+            console.log('Ds transformation time' + time);
+
+            //set state
             this.setState({
                 dataSource: responseData
+                ,ds:transformedDs
                 ,loaded: true
                 ,refreshed: this.state.refreshed+1
             });
@@ -81,10 +98,10 @@ var Order = React.createClass({
         .done();
   },
 
-  _orderItemClicked: function(item,user){
-    console.log(`a sarit pana sus cu ${item.itemId} si ${user.id}`);
+  _orderItemClicked: function(item,userId){
+    console.log(`a sarit pana sus cu ${item.itemId} si ${userId}`);
     //this.setState({refreshed:this.state.refreshed-1});
-    this.fetchData(this._withAction().removeItem(item.itemId,user.id));
+    this.fetchData(this._withAction().removeItem(item.itemId,userId));
   },
 
   _onProductSelected: function(prod){
@@ -134,38 +151,38 @@ var Order = React.createClass({
         </View>
       );
   },
-
+  
   renderView: function() {
     // Props for inner children
     var orderMenuProps = {
           productClicked    : this._onProductSelected  
-        , state             : this.state
+        , ds                : this.state.ds.menu
         , style             : {backgroundColor:'transparent',top:this.state.headHeight}
+        , containerHeight   : this.state.containerHeight
+        , headHeight        : this.state.headHeight
     };
 
+                //containerHeight:-1,
+                //headHeight:-1,
     var orderDetailsProps = {
           orderItemClicked  : this._orderItemClicked  
-        , state             : this.state
+        , ds                : this.state.ds.details
+        , userId            : this.state.userId
         , onApprove         : this._onApprove
         , onWaiterRequest   : this._onWaiterRequest
-        , onCheckRequest   : this._onCheckRequest
-        , style             : {height:this._getContentHeight(),overflow:'hidden'} //,backgroundColor:'red'}
+        , onCheckRequest    : this._onCheckRequest
+        , style             : {height:this._getContentHeight(),overflow:'hidden'}   
     };
 
     var orderHeadProps = {
-          state             : this.state
-        //, onExpand          : () => this._onDetailsColapseToogle(0)
-        //, onColapse         : () => this._onDetailsColapseToogle(0)
-        , onLayout          : this._onHeadLayout 
+          onLayout          : this._onHeadLayout 
         , style             : [{top:-this._getContentHeight()}]
+        , total             : this.state.ds.total
+        , userId            : this.state.userId
+        , refreshed         : this.state.refreshed
         ,...this._topResponder.panHandlers
     };
-    console.log(this._topResponder.panHandlers);
 
-            //<View  style={orderDetailsProps.style}>
-                    //<TouchableOpacity style={{width:100,height:200,backgroundColor:'red'}} 
-                        //onPress={()=>orderMenuProps.productClicked(1)}/>
-            //</View>
     return (
         <Animated.View ref={x => this._topView = x} style={{top:this.state.contentOffset}}>
             <OrderDetails   {...orderDetailsProps } />
@@ -207,7 +224,7 @@ var Order = React.createClass({
 
   componentWillUpdate: function(arg) {
       console.log('WILL UPDATE ' + arg );
-      this._ensureContentPosition();
+      //this._ensureContentPosition();
   },
 
   _onHeadLayout: function(event) {

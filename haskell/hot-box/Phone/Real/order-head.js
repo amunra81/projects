@@ -17,24 +17,10 @@ var {
 
 var OrderHead = React.createClass({
 
-  getState: function() {
-      if(this.props.state)
-        return merge(this.state,this.props.state);
-      else
-        return this.state;
-  },
-
-  getInitialState: function() {
-      return  {
-          dataSource:null,
-          loaded:false
-      };
-  },
-
   render: function() {
       return (
         <View {...without("state",this.props)} style={[styles.container,this.props.style]}>
-            { !this.getState().loaded?this.renderLoading():this.renderView()}
+            { this.renderView() }
             <View style={styles.footer}>
                 <Image source={require("../img/design/Roz.png")} style={{top:-1.5}}/>
             </View>
@@ -47,11 +33,7 @@ var OrderHead = React.createClass({
   },
 
   renderView: function() {
-      var total = Linq.from(
-                            Linq.from(this.getState().dataSource.segments)
-                            .first(seg => seg.user.id == this.getState().userId ).items)
-                            .sum(item => item.product.price);
-                      
+      var total =  this.props.total;                     
       return (
         <View style={styles.subcontainer}>
             <View style={{flexDirection:'row',alignItems:'flex-end'}}>
@@ -59,7 +41,7 @@ var OrderHead = React.createClass({
                     ZVON 
                 </Text>
                 <Text style={styles.titleLight}>
-                    {' Coffee' } 
+                    {' Coffee ' + this.props.refreshed  } 
                 </Text>
             </View>
             <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -68,7 +50,7 @@ var OrderHead = React.createClass({
                         <Text style={styles.amount}> DE PLATA </Text>
                     </View>
                 <Text style={styles.titleLight}>
-                    {total.toFixed(2)}
+                    {total}
                 </Text>
             </View>
         </View>
