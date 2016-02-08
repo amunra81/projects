@@ -17,6 +17,7 @@ var {
   StatusBarIOS,
   Animated,
   Image,
+  TouchableOpacity,
 } = React;
 
 //var ServerAddress = "localhost";
@@ -82,11 +83,13 @@ var Order = React.createClass({
 
   _orderItemClicked: function(item,user){
     console.log(`a sarit pana sus cu ${item.itemId} si ${user.id}`);
+    //this.setState({refreshed:this.state.refreshed-1});
     this.fetchData(this._withAction().removeItem(item.itemId,user.id));
   },
 
   _onProductSelected: function(prod){
     console.log(`a sarit pana sus cu ${prod.name}`);
+    //setTimeout(()=>this.setState({refreshed:this.state.refreshed+1}));
     this.fetchData(this._withAction().addItem(prod.id));
   },
   
@@ -159,17 +162,25 @@ var Order = React.createClass({
     };
     console.log(this._topResponder.panHandlers);
 
+            //<View  style={orderDetailsProps.style}>
+                    //<TouchableOpacity style={{width:100,height:200,backgroundColor:'red'}} 
+                        //onPress={()=>orderMenuProps.productClicked(1)}/>
+            //</View>
     return (
         <Animated.View ref={x => this._topView = x} style={{top:this.state.contentOffset}}>
             <OrderDetails   {...orderDetailsProps } />
             <Image source={imgs.bgDomolitComplet} style={{overflow:'visible'}}>
-                <OrderMenu      {...orderMenuProps    } />
+               <OrderMenu      {...orderMenuProps    } />
                 <OrderHead      {...orderHeadProps    } />
             </Image>
         </Animated.View>
     );
   },
 
+                //<View style={orderDetailsProps.style}>
+                    //<TouchableOpacity style={{width:100,height:200,backgroundColor:'red'}} 
+                        //onPress={()=>orderMenuProps.productClicked(1)}/>
+                //</View>
   _getContentHeight: function () {
       return this.state.containerHeight-this.state.headHeight;
   },

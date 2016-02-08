@@ -1,4 +1,5 @@
 'use strict';
+var Linq = require('linq');
 
 var Common = {
   merge: function (fromObj,finalObj){
@@ -29,6 +30,28 @@ var Common = {
           return head.concat(tail); 
       }
   },
+
+  transformDetails: function(order) {
+    var approved = xs => !xs.any(x=>x.status == "InList");
+    var {segments,menu} = ds;
+    var segs = segments.map( x => {
+        return {
+            userId : x.user.id,
+            items: Linq.from(x.items)
+                .groupBy(x => x.product.id).select(x=>
+                { return {prodId:x.key()
+                         ,count:x.count()
+                         ,pname:x.last().product.name
+                         ,pprice:
+                            numeral(x.count() * x.last().product.price.toFixed(4)).format('0.[00]')
+                         ,itemId:x.last().id
+                         ,approved:approved(x)
+                         };
+                }).toArray(),
+        };
+    });
+    return segs;
+  }
 };
 
 module.exports = Common;

@@ -13,23 +13,7 @@ var {
 } = React;
 
 
-var BlurView = require('react-native-blur').BlurView;
-var VibrancyView = require('react-native-blur').VibrancyView;
-
 var OrderLine = React.createClass({
-
-  _panResponder: {},
-
-  componentWillMount: function() {
-    this._panResponder = PanResponder.create({
-      onStartShouldSetPanResponder  : this._handleStartShouldSetPanResponder,
-      onMoveShouldSetPanResponder   : this._handleMoveShouldSetPanResponder,
-      onPanResponderGrant           : this._handlePanResponderGrant,
-      onPanResponderMove            : this._handlePanResponderMove,
-      onPanResponderRelease         : this._handlePanResponderEnd,
-      onPanResponderTerminate       : this._handlePanResponderEnd,
-    });
-  },
 
   render: function() {
     return this.renderView();
@@ -62,7 +46,6 @@ var OrderLine = React.createClass({
                     this.props.productClicked(p);
       };
 
-      var pla
       var renderProduct = (p,buttonStyle,justifyText) => { 
           var placeHolder = `https://unsplash.it/640/240?image=${p.id}1`
           var width = 160;
@@ -71,7 +54,9 @@ var OrderLine = React.createClass({
           var bkgColor = 'rgba(21,21,23,0.70)';
           var borderWidth = 0;
           var paddingText = 10;
+
           return (
+              <TouchableOpacity onPress={ ()=> onPressed(p)}>
                 <Image  style={itemStyle} source={{uri:placeHolder}}>
                     <View 
                         style={{
@@ -97,6 +82,7 @@ var OrderLine = React.createClass({
                         </Text>
                     </View>
                 </Image>
+            </TouchableOpacity>
           );
                 //<Text style={styles.itemText}>
                     //{p.name}

@@ -122,24 +122,6 @@ var OrderDetails = React.createClass({
       );
   },
 
-  renderBodyTemp: function() {
-      return (
-        <View >
-          <Image source={imgs.darkRow} style={styles.row}></Image>
-          <Image  source={imgs.lightRow} style={styles.row}></Image>
-          <Image source={imgs.darkRow} style={styles.row}></Image>
-          <Image  source={imgs.lightRow} style={styles.row}></Image>
-          <Image source={imgs.darkRow} style={styles.row}></Image>
-          <Image  source={imgs.lightRow} style={styles.row}></Image>
-          <Image source={imgs.darkRow} style={styles.row}></Image>
-          <Image  source={imgs.lightRow} style={styles.row}></Image>
-          <Image source={imgs.darkRow} style={styles.row}></Image>
-          <Image  source={imgs.lightRow} style={styles.row}></Image>
-          <Image source={imgs.darkRow} style={styles.row}></Image>
-        </View>
-      );
-  },
-
   renderBody: function() {
       var data = this.getState().dataSource.segments.filter( x => x.user.id == this.getState().userId);
       var i = 2;

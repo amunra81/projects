@@ -8,8 +8,6 @@ var {merge,mapInPairs} = require('./common');
 var SlideList = require('./Controls/slide-list');
 var SlideButton = require('./Controls/slide-button');
 
-var BlurView = require('react-native-blur').BlurView;
-var VibrancyView = require('react-native-blur').VibrancyView;
 var OrderLine = require('./order-line');
 var Swiper = require('react-native-swiper')
 
@@ -95,7 +93,7 @@ var OrderMenu = React.createClass({
       var currentPage = this.getState().currentPage
       var len = this.getState().dataSource.menu.length;
       var swiperHeight = this.getState().containerHeight - this.getState().headHeight;
-
+ 
       return (
           <View style={this.props.style}>
             <Swiper horizontal={false} loop={false} pagingEnabled={true} bounces={true} 
@@ -152,7 +150,7 @@ var OrderMenu = React.createClass({
           };
 
           return (
-            <View source={imgs.bgDomolitComplet} style={styles.container}>
+            <View source={imgs.bgDomolitComplet} style={[styles.container,{flex:1}]}>
                 <SlideList {...props} />
             </View>
           );
@@ -181,7 +179,6 @@ var OrderMenu = React.createClass({
   },
 
   renderProduct: function(p1,p2,i){
-
       var getCount = p => {
           console.log(this.productCounts);
           var pcount = Linq.from(this.productCounts).firstOrDefault( x => x.id == p.id);

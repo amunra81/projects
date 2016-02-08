@@ -12,6 +12,7 @@ var {
   Text,
   View,
   Image,
+  TouchableOpacity,
 } = React;
 
 var OrderHead = React.createClass({
@@ -50,8 +51,6 @@ var OrderHead = React.createClass({
                             Linq.from(this.getState().dataSource.segments)
                             .first(seg => seg.user.id == this.getState().userId ).items)
                             .sum(item => item.product.price);
-                        
-
                       
       return (
         <View style={styles.subcontainer}>
@@ -60,14 +59,14 @@ var OrderHead = React.createClass({
                     ZVON 
                 </Text>
                 <Text style={styles.titleLight}>
-                    {' Coffee'}
+                    {' Coffee' } 
                 </Text>
             </View>
             <View style={{flexDirection:'row',alignItems:'center'}}>
-                <View style={{alignItems:'flex-end',paddingRight:3,paddingBottom:2}}>
-                    <Text style={styles.amount}> TOTAL </Text>
-                    <Text style={styles.amount}> DE PLATA </Text>
-                </View>
+                    <View style={{alignItems:'flex-end',paddingRight:3,paddingBottom:2}}>
+                        <Text style={styles.amount}> TOTAL </Text>
+                        <Text style={styles.amount}> DE PLATA </Text>
+                    </View>
                 <Text style={styles.titleLight}>
                     {total.toFixed(2)}
                 </Text>
