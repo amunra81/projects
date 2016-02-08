@@ -32,7 +32,7 @@ var OrderDetails = React.createClass({
 
   render: function() {
       return (
-          <View {...without("state",this.props)}>
+          <View {...this.props}>
               <Image 
                   source={imgs.background} 
                   style={{width:320,height:548}}>

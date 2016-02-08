@@ -19,7 +19,7 @@ var OrderHead = React.createClass({
 
   render: function() {
       return (
-        <View {...without("state",this.props)} style={[styles.container,this.props.style]}>
+        <View {...this.props} style={[styles.container,this.props.style]}>
             { this.renderView() }
             <View style={styles.footer}>
                 <Image source={require("../img/design/Roz.png")} style={{top:-1.5}}/>
@@ -33,7 +33,7 @@ var OrderHead = React.createClass({
   },
 
   renderView: function() {
-      var total =  this.props.total;                     
+      var total =  this.props.total;    
       return (
         <View style={styles.subcontainer}>
             <View style={{flexDirection:'row',alignItems:'flex-end'}}>

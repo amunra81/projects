@@ -3,9 +3,9 @@
 
 var React = require('react-native');
 
-var { OrderDetails
-    ,OrderMenu
-    ,OrderHead } = require('../lime-s').Real;
+var OrderDetails = require('./order-details');
+var OrderHead = require('./order-head');
+var OrderMenu = require('./order-menu-slide');
 
 var {
   StyleSheet,
@@ -222,9 +222,12 @@ var Order = React.createClass({
     );
   }, 
 
+  componentDidUpdate: function(arg) {
+      console.log('DID UPDATE ' + arg );
+  },
   componentWillUpdate: function(arg) {
       console.log('WILL UPDATE ' + arg );
-      //this._ensureContentPosition();
+      this._ensureContentPosition();
   },
 
   _onHeadLayout: function(event) {
