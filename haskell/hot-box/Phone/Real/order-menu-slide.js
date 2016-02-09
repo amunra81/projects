@@ -15,6 +15,7 @@ var {
   TouchableHighlight,
   TouchableOpacity,
   Image,
+  LayoutAnimation,
 } = React;
 
 var HeadContainer = View;
@@ -56,6 +57,8 @@ var OrderMenu = React.createClass({
     if(index != this.currentIndex) {
         console.log("am schimbat" + this.currentIndex + " cu " +  index);
         this.currentIndex = index;
+        //if(this.state.openedProdId!=0)
+            //this.setState({openedProdId:0});
     }
   },
 
@@ -81,35 +84,25 @@ var OrderMenu = React.createClass({
   renderProduct: function(p1,p2,i){
       var props = {
           key        : i,
-          //style      : [styles.listItem,styles.center],
-          //renderMain : renderMainItem
           p1         : p1,
           p2         : p2,
           productClicked : this.props.productClicked,
 
           height     : -1.5 + (this.props.containerHeight - this.props.headHeight) / (8/2),
           openedProdId: this.state.openedProdId,
+          toogleProductId : this._toogleProdId
       };
       return (
             <OrderLine {...props}/>
       );
   },
-  
-  renderProductClassic: function(product){
-      return (
-        <TouchableHighlight key={product.id} onPress={() => { 
-          console.log(`s-a clickuit pe ${product.name}!`); 
-          this.props.productClicked(product);
-        }}>
-            <View  style={[styles.listItem,styles.center]}>
-                <Text>
-                    {product.name}
-                </Text>
-            </View>
-        </TouchableHighlight>
-      );
-  },
 
+  _toogleProdId : function(p) {
+    //LayoutAnimation.linear();
+    LayoutAnimation.easeInEaseOut();
+    this.setState({openedProdId : this.state.openedProdId==p?0:p});
+  },
+  
   _toListDataSource: function() {
      return  new ListView.DataSource({
                         rowHasChanged: function (row1, row2) { 
@@ -120,13 +113,13 @@ var OrderMenu = React.createClass({
 
   renderLoadingView: function() {
     return (
-            <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]}>
-                <View style={[styles.head,styles.center]}>
-                    <Text>
-                        Loading menu...
-                    </Text>
-                </View>
-            </View>
+    <View style={[styles.container,{justifyContent:'center',alignItems:'stretch'}]}>
+        <View style={[styles.head,styles.center]}>
+            <Text>
+                Loading menu...
+            </Text>
+        </View>
+    </View>
     );
   }, 
 //END OF COMPONENT
@@ -140,27 +133,13 @@ var imgs = {
 }
 
 var styles = StyleSheet.create({
-   container: {
-       //flex: 1,
-    //marginTop:-10,
-    //height:400,
-    //width:320,
-    //flexDirection: 'row',
-    //justifyContent: 'space-around',
-    //alignItems: 'center',
-    //backgroundColor: '#dcffe7',
-    //flexWrap:'nowrap',
-       backgroundColor:'green',
-   },
-   pageContainer: {
-       //flex:1,
-       //height:100,
-       //flexDirection:'column',
-       justifyContent: 'space-around',
-       //backgroundColor:'',
-       //paddingTop:2,
-       overflow:'hidden'
-   }
+    container: {
+      backgroundColor:'green',
+    },
+    pageContainer: {
+      justifyContent: 'space-around',
+      overflow:'hidden'
+    }
  });
 //dcffe7
 module.exports = OrderMenu;
