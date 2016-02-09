@@ -10,6 +10,7 @@ var {
   TouchableOpacity,
   View,
   Image,
+  Animated,
 } = React;
 
 
@@ -20,80 +21,63 @@ var OrderLine = React.createClass({
   },
 
   renderView:function () {
-      return (<View {...this.props} style={[styles.center,styles.container]}>
-                {this.props.p2?this.renderTwoProducts():this.renderOneProduct()}
+    return (<View {...this.props} style={[styles.center,styles.container]}>
+                {this.props.p2?this.renderPairs():this.renderSingle()}
               </View>);
   },
 
-  renderOneProduct: function() {
-      return (
-                <View style={styles.containerBlur}>
-                    <View style={[styles.listItem,styles.singleItem]}>
-                        <Text style={styles.itemText}>
-                            {this.props.p1.name }
-                        </Text>
-                    </View>
-                </View>
-      );
+  renderSingle: function() {
+    return 
+    <View style={styles.containerBlur}>
+        <View style={[styles.listItem,styles.singleItem]}>
+            <Text style={styles.itemText}>
+                {this.props.p1.name }
+            </Text>
+        </View>
+    </View>
   },
 
 
-  renderTwoProducts: function() {
+  renderPairs: function() {
       var p1 = this.props.p1;
       var p2 = this.props.p2;
+
       var onPressed = (p) => { 
-                    console.log(`s-a clickuit pe ${p.name}!`); 
-                    this.props.productClicked(p);
+          this.props.toogleProductId && this.props.toogleProductId(p.id);
       };
 
-      var renderProduct = (p,buttonStyle,justifyText) => { 
-          var placeHolder = `https://unsplash.it/640/240?image=${p.product.id}1`
-          var width = 160;
-          var itemStyle =[styles.listItem,{width:width,height:this.props.height},buttonStyle];
-          var textColor ='rgba(256,256,256,1)'; 
-          var bkgColor = 'rgba(21,21,23,0.70)';
-          var borderWidth = 0;
-          var paddingText = 10;
+      var closedStyle = { flex : 0.0001 };
+      var openedStyle = { flex : 1 };
 
-          return (
-              <TouchableOpacity onPress={ ()=> onPressed(p.product)}>
-                <Image  style={itemStyle} source={{uri:placeHolder}}>
-                    <View 
-                        style={{
-                            width:width,
-                            height:this.props.height/4,backgroundColor:bkgColor,
-                            alignItems:justifyText,
-                            justifyContent: 'center',
-                            marginBottom:10,
-                            borderColor:'black',
-                            borderTopWidth:borderWidth,
-                            borderBottomWidth:borderWidth,
-                            
-                        }}>
-                            {this.renderCircle(p.count)}
-                            <Text style={{
-                            color: textColor,
-                            fontFamily:'Nexa Bold',
-                            fontSize:15,
-                            paddingRight:paddingText,
-                            paddingLeft: paddingText}}
-                            >
-                            {p.product.name}
-                        </Text>
-                    </View>
-                </Image>
-            </TouchableOpacity>
-          );
-                //<Text style={styles.itemText}>
-                    //{p.name}
-                //</Text>
-      };
       return (
-          <View style={styles.containerBlur}>
-                {renderProduct(p1,styles.leftItem,'center')}
-                {renderProduct(p2,styles.rightItem,'center')}
-            </View>
+          <View style={[styles.containerBlur]}>
+                {this.renderProduct(p1,this.isClosed(p1)?closedStyle:openedStyle,onPressed)}
+                {this.renderProduct(p2,this.isClosed(p2)?closedStyle:openedStyle,onPressed)}
+          </View>
       );
+  },
+
+  isClosed : function (p) {
+     return !this.props.openedProdId || this.props.openedProdId != p.product.id;
+  },
+
+  renderProduct: function(p,customStyle,onPressed) {
+    var placeHolder = `https://unsplash.it/640/240?image=${p.product.id}1`
+
+    return (
+        <TouchableOpacity style={customStyle} onPress={ ()=> onPressed(p.product)}>
+            <Image  style={[styles.listItem,{height:this.props.height}]} 
+                    source={{uri:placeHolder}}>
+                <View style={[{ height:this.props.height/4},styles.detailView]}>
+                    {this.renderCircle(p.count)}
+
+                    <Text style={styles.captionText} >
+                        {p.product.name}
+                    </Text>
+                </View>
+            </Image>
+        </TouchableOpacity>
+    );
   },
   renderCircle : function(count) {
     if(count && count > 0)
@@ -146,6 +130,7 @@ var styles = StyleSheet.create({
   containerBlur: {
     //flex: 1,
     flexDirection: 'row',
+    width: 320,
     //backgroundColor:'red',
     //marginBottom:10,
   },
@@ -159,13 +144,30 @@ var styles = StyleSheet.create({
   },
   singleItem: {
   },
+  detailView: {
+    alignItems:'center',
+    justifyContent: 'center',
+    marginBottom:10,
+    borderColor:'black',
+    borderTopWidth:0,
+    borderBottomWidth:0,
+    backgroundColor: 'rgba(21,21,23,0.70)'
+  },
+  paddingText: 10,
+  captionText: {
+    color: 'rgba(256,256,256,1)',
+    fontFamily:'Nexa Bold',
+    fontSize:15,
+    paddingRight:10,
+    paddingLeft: 10,
+  },
   leftItem: {
-      //flex:1,
-      width:160,
+      flex:1,
+      //width:160,
       //marginRight: 1,
   },
   rightItem: {
-      flex:1
+      flex:1,
       //marginLeft: 0.3,
   },
   itemText: {

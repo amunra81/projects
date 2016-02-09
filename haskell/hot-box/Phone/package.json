@@ -10,9 +10,8 @@
     "linq": "^3.0.5",
     "npm": "^3.5.3",
     "numeral": "^1.5.3",
-    "react-native": "^0.18.0-rc",
+    "react-native": "^0.20.0-rc1",
     "react-native-blur": "^0.7.9",
-    "react-native-canvas": "^0.0.5",
     "react-native-swiper": "^1.4.3"
   }
 }

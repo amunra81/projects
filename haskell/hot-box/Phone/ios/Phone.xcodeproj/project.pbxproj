@@ -22,16 +22,19 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		8D232B5D508946358800EB98 /* libRNBlur.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FA58FA7BF8442FA470837E /* libRNBlur.a */; };
-		A96F72B11C57ED76002D0E90 /* Dosis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AA1C57E6B2002D0E90 /* Dosis-Bold.ttf */; };
-		A96F72B21C57ED79002D0E90 /* Dosis-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AB1C57E6B2002D0E90 /* Dosis-Book.ttf */; };
-		A96F72B31C57ED82002D0E90 /* Dosis-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AC1C57E6B2002D0E90 /* Dosis-ExtraBold.ttf */; };
-		A96F72B41C57ED82002D0E90 /* Dosis-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AD1C57E6B2002D0E90 /* Dosis-ExtraLight.ttf */; };
-		A96F72B51C57ED82002D0E90 /* Dosis-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */; };
-		A96F72B61C57ED82002D0E90 /* Dosis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */; };
-		A96F72B71C57ED82002D0E90 /* Dosis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */; };
-		A9FC61DB1C5E0F3D0035BAA0 /* Nexa Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9FC61D91C5E0F3D0035BAA0 /* Nexa Bold.otf */; };
-		A9FC61DC1C5E0F3D0035BAA0 /* Nexa Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A9FC61DA1C5E0F3D0035BAA0 /* Nexa Light.otf */; };
+		A933D2AB1C6A37C000807C71 /* Dosis-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2A41C6A37C000807C71 /* Dosis-Bold.ttf */; };
+		A933D2AC1C6A37C000807C71 /* Dosis-Book.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2A51C6A37C000807C71 /* Dosis-Book.ttf */; };
+		A933D2AD1C6A37C000807C71 /* Dosis-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2A61C6A37C000807C71 /* Dosis-ExtraBold.ttf */; };
+		A933D2AE1C6A37C000807C71 /* Dosis-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2A71C6A37C000807C71 /* Dosis-ExtraLight.ttf */; };
+		A933D2AF1C6A37C000807C71 /* Dosis-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2A81C6A37C000807C71 /* Dosis-Light.ttf */; };
+		A933D2B01C6A37C000807C71 /* Dosis-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2A91C6A37C000807C71 /* Dosis-Medium.ttf */; };
+		A933D2B11C6A37C000807C71 /* Dosis-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2AA1C6A37C000807C71 /* Dosis-SemiBold.ttf */; };
+		A933D2BE1C6A37E000807C71 /* Nexa Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2BC1C6A37E000807C71 /* Nexa Bold.otf */; };
+		A933D2BF1C6A37E000807C71 /* Nexa Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = A933D2BD1C6A37E000807C71 /* Nexa Light.otf */; };
+		A933D2C91C6A391300807C71 /* BlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C21C6A391300807C71 /* BlurView.m */; };
+		A933D2CA1C6A391300807C71 /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C41C6A391300807C71 /* BlurViewManager.m */; };
+		A933D2CB1C6A391300807C71 /* VibrancyView.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C61C6A391300807C71 /* VibrancyView.m */; };
+		A933D2CC1C6A391300807C71 /* VibrancyViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C81C6A391300807C71 /* VibrancyViewManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -112,13 +115,6 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		A9ACBB9C1C4FEB9B00BDF7DF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 960C500D128C425987AD76E7 /* RNBlur.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = A68BD7BC1BC31318005F02DF;
-			remoteInfo = RNBlur;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -143,17 +139,23 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		960C500D128C425987AD76E7 /* RNBlur.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNBlur.xcodeproj; path = "../node_modules/react-native-blur/ios/RNBlur.xcodeproj"; sourceTree = "<group>"; };
-		A96F72AA1C57E6B2002D0E90 /* Dosis-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Bold.ttf"; sourceTree = SOURCE_ROOT; };
-		A96F72AB1C57E6B2002D0E90 /* Dosis-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Book.ttf"; sourceTree = "<group>"; };
-		A96F72AC1C57E6B2002D0E90 /* Dosis-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-ExtraBold.ttf"; sourceTree = "<group>"; };
-		A96F72AD1C57E6B2002D0E90 /* Dosis-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-ExtraLight.ttf"; sourceTree = "<group>"; };
-		A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Light.ttf"; sourceTree = "<group>"; };
-		A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Medium.ttf"; sourceTree = "<group>"; };
-		A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-SemiBold.ttf"; sourceTree = "<group>"; };
-		A9FC61D91C5E0F3D0035BAA0 /* Nexa Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Bold.otf"; sourceTree = "<group>"; };
-		A9FC61DA1C5E0F3D0035BAA0 /* Nexa Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Light.otf"; sourceTree = "<group>"; };
-		C4FA58FA7BF8442FA470837E /* libRNBlur.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNBlur.a; sourceTree = "<group>"; };
+		A933D2A41C6A37C000807C71 /* Dosis-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Bold.ttf"; sourceTree = "<group>"; };
+		A933D2A51C6A37C000807C71 /* Dosis-Book.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Book.ttf"; sourceTree = "<group>"; };
+		A933D2A61C6A37C000807C71 /* Dosis-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-ExtraBold.ttf"; sourceTree = "<group>"; };
+		A933D2A71C6A37C000807C71 /* Dosis-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-ExtraLight.ttf"; sourceTree = "<group>"; };
+		A933D2A81C6A37C000807C71 /* Dosis-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Light.ttf"; sourceTree = "<group>"; };
+		A933D2A91C6A37C000807C71 /* Dosis-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-Medium.ttf"; sourceTree = "<group>"; };
+		A933D2AA1C6A37C000807C71 /* Dosis-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dosis-SemiBold.ttf"; sourceTree = "<group>"; };
+		A933D2BC1C6A37E000807C71 /* Nexa Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Bold.otf"; sourceTree = "<group>"; };
+		A933D2BD1C6A37E000807C71 /* Nexa Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nexa Light.otf"; sourceTree = "<group>"; };
+		A933D2C11C6A391300807C71 /* BlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurView.h; sourceTree = "<group>"; };
+		A933D2C21C6A391300807C71 /* BlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurView.m; sourceTree = "<group>"; };
+		A933D2C31C6A391300807C71 /* BlurViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlurViewManager.h; sourceTree = "<group>"; };
+		A933D2C41C6A391300807C71 /* BlurViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlurViewManager.m; sourceTree = "<group>"; };
+		A933D2C51C6A391300807C71 /* VibrancyView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VibrancyView.h; sourceTree = "<group>"; };
+		A933D2C61C6A391300807C71 /* VibrancyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VibrancyView.m; sourceTree = "<group>"; };
+		A933D2C71C6A391300807C71 /* VibrancyViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VibrancyViewManager.h; sourceTree = "<group>"; };
+		A933D2C81C6A391300807C71 /* VibrancyViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VibrancyViewManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,7 +180,6 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
-				8D232B5D508946358800EB98 /* libRNBlur.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -261,7 +262,8 @@
 		13B07FAE1A68108700A75B9A /* Phone */ = {
 			isa = PBXGroup;
 			children = (
-				A96F72A91C57E69B002D0E90 /* Fonts */,
+				A933D2C01C6A390500807C71 /* Blur */,
+				A933D2991C6A375D00807C71 /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -302,7 +304,6 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
-				960C500D128C425987AD76E7 /* RNBlur.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -336,28 +337,35 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A96F72A91C57E69B002D0E90 /* Fonts */ = {
+		A933D2991C6A375D00807C71 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				A9FC61D91C5E0F3D0035BAA0 /* Nexa Bold.otf */,
-				A9FC61DA1C5E0F3D0035BAA0 /* Nexa Light.otf */,
-				A96F72AA1C57E6B2002D0E90 /* Dosis-Bold.ttf */,
-				A96F72AB1C57E6B2002D0E90 /* Dosis-Book.ttf */,
-				A96F72AC1C57E6B2002D0E90 /* Dosis-ExtraBold.ttf */,
-				A96F72AD1C57E6B2002D0E90 /* Dosis-ExtraLight.ttf */,
-				A96F72AE1C57E6B2002D0E90 /* Dosis-Light.ttf */,
-				A96F72AF1C57E6B2002D0E90 /* Dosis-Medium.ttf */,
-				A96F72B01C57E6B2002D0E90 /* Dosis-SemiBold.ttf */,
+				A933D2BC1C6A37E000807C71 /* Nexa Bold.otf */,
+				A933D2BD1C6A37E000807C71 /* Nexa Light.otf */,
+				A933D2A61C6A37C000807C71 /* Dosis-ExtraBold.ttf */,
+				A933D2A71C6A37C000807C71 /* Dosis-ExtraLight.ttf */,
+				A933D2A91C6A37C000807C71 /* Dosis-Medium.ttf */,
+				A933D2AA1C6A37C000807C71 /* Dosis-SemiBold.ttf */,
+				A933D2A51C6A37C000807C71 /* Dosis-Book.ttf */,
+				A933D2A41C6A37C000807C71 /* Dosis-Bold.ttf */,
+				A933D2A81C6A37C000807C71 /* Dosis-Light.ttf */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
 		};
-		A9ACBB8F1C4FEB9B00BDF7DF /* Products */ = {
+		A933D2C01C6A390500807C71 /* Blur */ = {
 			isa = PBXGroup;
 			children = (
-				A9ACBB9D1C4FEB9B00BDF7DF /* libRNBlur.a */,
+				A933D2C11C6A391300807C71 /* BlurView.h */,
+				A933D2C21C6A391300807C71 /* BlurView.m */,
+				A933D2C31C6A391300807C71 /* BlurViewManager.h */,
+				A933D2C41C6A391300807C71 /* BlurViewManager.m */,
+				A933D2C51C6A391300807C71 /* VibrancyView.h */,
+				A933D2C61C6A391300807C71 /* VibrancyView.m */,
+				A933D2C71C6A391300807C71 /* VibrancyViewManager.h */,
+				A933D2C81C6A391300807C71 /* VibrancyViewManager.m */,
 			);
-			name = Products;
+			name = Blur;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -469,10 +477,6 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
-				{
-					ProductGroup = A9ACBB8F1C4FEB9B00BDF7DF /* Products */;
-					ProjectRef = 960C500D128C425987AD76E7 /* RNBlur.xcodeproj */;
-				},
 			);
 			projectRoot = "";
 			targets = (
@@ -553,13 +557,6 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A9ACBB9D1C4FEB9B00BDF7DF /* libRNBlur.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRNBlur.a;
-			remoteRef = A9ACBB9C1C4FEB9B00BDF7DF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -574,17 +571,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A96F72B21C57ED79002D0E90 /* Dosis-Book.ttf in Resources */,
-				A96F72B11C57ED76002D0E90 /* Dosis-Bold.ttf in Resources */,
+				A933D2AC1C6A37C000807C71 /* Dosis-Book.ttf in Resources */,
+				A933D2AB1C6A37C000807C71 /* Dosis-Bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				A9FC61DB1C5E0F3D0035BAA0 /* Nexa Bold.otf in Resources */,
-				A96F72B51C57ED82002D0E90 /* Dosis-Light.ttf in Resources */,
-				A96F72B61C57ED82002D0E90 /* Dosis-Medium.ttf in Resources */,
-				A96F72B71C57ED82002D0E90 /* Dosis-SemiBold.ttf in Resources */,
-				A96F72B31C57ED82002D0E90 /* Dosis-ExtraBold.ttf in Resources */,
-				A9FC61DC1C5E0F3D0035BAA0 /* Nexa Light.otf in Resources */,
+				A933D2BE1C6A37E000807C71 /* Nexa Bold.otf in Resources */,
+				A933D2AF1C6A37C000807C71 /* Dosis-Light.ttf in Resources */,
+				A933D2B01C6A37C000807C71 /* Dosis-Medium.ttf in Resources */,
+				A933D2B11C6A37C000807C71 /* Dosis-SemiBold.ttf in Resources */,
+				A933D2AD1C6A37C000807C71 /* Dosis-ExtraBold.ttf in Resources */,
+				A933D2BF1C6A37E000807C71 /* Nexa Light.otf in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				A96F72B41C57ED82002D0E90 /* Dosis-ExtraLight.ttf in Resources */,
+				A933D2AE1C6A37C000807C71 /* Dosis-ExtraLight.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,7 +600,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "../node_modules/react-native/packager/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -622,6 +619,10 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				A933D2C91C6A391300807C71 /* BlurView.m in Sources */,
+				A933D2CA1C6A391300807C71 /* BlurViewManager.m in Sources */,
+				A933D2CC1C6A391300807C71 /* VibrancyViewManager.m in Sources */,
+				A933D2CB1C6A391300807C71 /* VibrancyView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,10 +664,6 @@
 				INFOPLIST_FILE = PhoneTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Phone.app/Phone";
@@ -685,10 +682,6 @@
 				INFOPLIST_FILE = PhoneTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/$(TARGET_NAME)\"",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Phone.app/Phone";
@@ -706,7 +699,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				INFOPLIST_FILE = Phone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -727,7 +719,6 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
 				INFOPLIST_FILE = Phone/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -777,9 +768,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -818,9 +808,8 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
-					"$(SRCROOT)/../node_modules/react-native-blur/ios",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;

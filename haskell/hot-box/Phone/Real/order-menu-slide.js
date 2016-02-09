@@ -24,37 +24,41 @@ var OrderMenu = React.createClass({
   _productCounts : [],
   currentIndex: 0,
   
-/**
- * Overwrites obj1's values with obj2's and adds obj2's if non existent in obj1
- * @param fromObj
- * @param finalObj
- * @returns obj3 a new object based on fromObj and finalObj 
- */
+  getInitialState: function() {
+      return {
+          openedProdId : 0,
+      }
+  },
 
   render: function() {
-      var swiperHeight = this.props.containerHeight - this.props.headHeight;
-      return (
-          <View style={this.props.style}>
-              <Swiper 
-                  horizontal={false}  loop={false}              
-                  pagingEnabled={true} bounces={true} 
-                  scrollsToTop={true} index={this.currentIndex} 
-                  height={swiperHeight} renderPagination={(i,t,ctx) => {
-                    //console.log(i + " " + a + " " + b  );
-                    //console.log(b.state.index);
-                    var index = ctx.state.index;
-                    if(index != this.currentIndex)
-                        {
-                            console.log("am schimbat" + this.currentIndex + " cu " +  index);
-                            this.currentIndex = index;
-                        }
-                }}
-                >
-                { this.props.ds.slice(0).map(x => this.renderPage(x)) }
-            </Swiper>
-        </View>
-      );
+    var props = {
+        horizontal        : false,
+        loop              : false,
+        bounces           : true,
+        pagingEnabled     : true,
+        scrollsToTop      : true,
+        index             : this.currentIndex,
+        height            : this.props.containerHeight - this.props.headHeight,
+        renderPagination  : this._paginationRender
+    };
+
+    return (
+    <View style={this.props.style}>
+        <Swiper {...props}>
+            { this.props.ds.slice(0).map(x => this.renderPage(x)) }
+        </Swiper>
+    </View>
+    )
   },
+
+  _paginationRender: function (i,t,ctx) {
+    var index = ctx.state.index;
+    if(index != this.currentIndex) {
+        console.log("am schimbat" + this.currentIndex + " cu " +  index);
+        this.currentIndex = index;
+    }
+  },
+
 
   renderPage: function(page) {
     var swiperHeight = this.props.containerHeight - this.props.headHeight;
@@ -83,7 +87,8 @@ var OrderMenu = React.createClass({
           p2         : p2,
           productClicked : this.props.productClicked,
 
-          height     : -1.5 + (this.props.containerHeight - this.props.headHeight) / (8/2)
+          height     : -1.5 + (this.props.containerHeight - this.props.headHeight) / (8/2),
+          openedProdId: this.state.openedProdId,
       };
       return (
             <OrderLine {...props}/>
