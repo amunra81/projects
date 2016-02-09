@@ -110,7 +110,7 @@ var OrderDetails = React.createClass({
   renderProduct: function(item,userId,i){
      var imgSource = i%2!=0?imgs.darkRow:imgs.lightRow;
      return (
-          <TouchableOpacity key={item.itemId} onPress={() => { 
+          <TouchableHighlight key={item.itemId} onPress={() => { 
             console.log(`s-a clickuit pe ${item.pname} + ${userId}!`); 
             this.props.orderItemClicked(item,userId);
           }}>
@@ -122,7 +122,7 @@ var OrderDetails = React.createClass({
                     {item.pprice} RON
                 </Text>
             </Image>
-        </TouchableOpacity>
+        </TouchableHighlight>
       );
   },
 

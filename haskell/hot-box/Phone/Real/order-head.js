@@ -33,7 +33,7 @@ var OrderHead = React.createClass({
   },
 
   renderView: function() {
-      var total =  this.props.total;    
+      var total =  this.props.total?this.props.total.toFixed(2):0.00;
       return (
         <View style={styles.subcontainer}>
             <View style={{flexDirection:'row',alignItems:'flex-end'}}>
@@ -41,7 +41,7 @@ var OrderHead = React.createClass({
                     ZVON 
                 </Text>
                 <Text style={styles.titleLight}>
-                    {' Coffee ' + this.props.refreshed  } 
+                    {' Coffee ' } 
                 </Text>
             </View>
             <View style={{flexDirection:'row',alignItems:'center'}}>
