@@ -3,3 +3,4 @@ state/
 tags
 cabal.config
 cabal.sandbox.config
+node_modules/
