@@ -17,7 +17,7 @@ var {
 } = React;
 
 var Navigation      = require('./Play/navigation'       );
-var {Playground}    = require('./Play/some-animation'   );
+var Playground      = require('./Play/some-animation'   );
 var Responder       = require('./Play/responder'        );
 var LongView        = require('./Play/longview'         );
 var OrderDetails    = require('./Real/order-details'    );
