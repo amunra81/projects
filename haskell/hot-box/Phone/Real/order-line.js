@@ -84,7 +84,7 @@ var OrderLine = React.createClass({
   },
   renderAction: function(caption,style,onPress) {
     return (
-    <TouchableHighlight style={[styles.paravan,style,{flex:0.25,flexDirection:'row',justifyContent:'center',alignItems:'center'}]} onPress={onPress}>
+    <TouchableHighlight style={[styles.paravan,style,{flex:0.3,flexDirection:'row',justifyContent:'center',alignItems:'center'}]} onPress={onPress}>
         <Text style={styles.signText}> {caption} </Text>
     </TouchableHighlight>
   );},

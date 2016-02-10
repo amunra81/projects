@@ -66,11 +66,7 @@ var styles = StyleSheet.create({
         borderTopWidth:1,
         flexDirection:'column',
         height:85, // THIS IS FIXED!!!!
-        //backgroundColor: '#f9dcff',
-        //backgroundColor: '#35363a',
         backgroundColor: 'rgba(52, 53, 57,1.9)',
-        //backgroundColor: 'transparent',
-        //opacity:0.79,
         
         shadowColor: "#000000",
         shadowOpacity: 0.8,
