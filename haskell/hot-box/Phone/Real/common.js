@@ -35,6 +35,18 @@ var Common = {
       return eval(str);
   },
 
+  getLastIdFromProductId: function (segments,prodId,userId){
+      var items = segments.filter(x => x.userId == userId)[0].items;
+
+      if(!items)
+          throw "No items";
+
+      return items
+      .filter(x => x.prodId == prodId)
+      .reduce((prev,current) => prev.itemId <= current.itemId?current:prev,{itemId:0})
+      .itemId;
+  },
+
   transformDetails: function(order) {
     var approved = xs => !xs.any(x=>x.status == "InList");
     var {segments,menu} = order;
@@ -71,6 +83,8 @@ var Common = {
           }
       });
   },
+
+  
 
   transformDataSource: function(order,userId) {
       var segs = Common.transformDetails(order);

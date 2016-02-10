@@ -63,23 +63,31 @@ var OrderLine = React.createClass({
     var placeHolder = `https://unsplash.it/640/240?image=${p.product.id}1`;
     var detailView = [styles.detailView,closed?styles.closedDetailView:styles.openedDetailView];
     var wraperStyle = closed?styles.closedView:styles.openedView; 
+    var textStyle = [styles.captionText,{flex:1}];
     //⍝⊖…⇱⇲  ⨁ ⨂ ⊕
     return (
-        <TouchableHighlight style={wraperStyle} onPress={ ()=> onPressed(p.product)}>
-            <Image  style={[styles.listItem,{height:this.props.height}]} 
-                source={{uri:placeHolder}}>
-                <View style={styles.emptyDetailView}/>
-                <View style={detailView}>
-                    {this.renderCircle(p.count)}
-                    <Text style={styles.captionText} > {p.product.name} </Text>
-                    
-                    <Text style={styles.signText}> {'⨁ ⨂'} </Text>
-
-                </View>
-            </Image>
-        </TouchableHighlight>
+    <TouchableHighlight style={wraperStyle} onPress={ ()=> onPressed(p.product)}>
+        <Image  style={[styles.listItem,{height:this.props.height}]} 
+            source={{uri:placeHolder}}>
+            <View style={styles.emptyDetailView}>
+            </View>
+            <View style={detailView}>
+                {this.renderCircle(p.count)}
+                <Text style={textStyle} > {p.product.name} </Text>
+                { !closed?this.renderAction('⨁',{paddingTop:10},()=>this.props.productClicked(p.product)):null}
+                { !closed?this.renderAction('⨂',{paddingTop:10},()=> this.props.productDelete(p.product.id)):null}
+                { !closed?this.renderAction('…',):null}
+            </View>
+        </Image>
+    </TouchableHighlight>
     );
   },
+  renderAction: function(caption,style,onPress) {
+    return (
+    <TouchableHighlight style={[styles.paravan,style,{flex:0.25,flexDirection:'row',justifyContent:'center',alignItems:'center'}]} onPress={onPress}>
+        <Text style={styles.signText}> {caption} </Text>
+    </TouchableHighlight>
+  );},
   renderCircle : function(count) {
     if(count && count > 0)
         return (
@@ -92,28 +100,6 @@ var OrderLine = React.createClass({
     else 
         return null;
 
-  },
-  _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-    // Should we become active when the user presses down on the circle?
-    return true;
-  },
-
-  _handleMoveShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-    // Should we become active when the user moves a touch over the circle?
-    return true;
-  },
-
-  _handlePanResponderGrant: function(e: Object, gestureState: Object) {
-    this._oldGestureY = gestureState.dy;
-    this._highlight(this.pager);
-  },
-
-  _handlePanResponderMove: function(e: Object, gestureState: Object) {
-    //this._circleStyles.style.left = this._previousLeft + gestureState.dx;
-    this._circleStyles.style.top = this._previousTop + gestureState.dy;
-    //console.log(gestureState);
-    this._updatePosition();
-    this._updateMove(gestureState);
   },
 });
 
@@ -160,18 +146,22 @@ var styles = StyleSheet.create({
   },
   detailView: {
     flexDirection: 'row',
+    justifyContent:'space-between',
+    //alignItems:'stretch',
+    backgroundColor: 'rgba(21,21,23,0.70)',
     borderColor:'black',
     borderTopWidth:0.5,
     borderBottomWidth:0.5,
-    backgroundColor: 'rgba(21,21,23,0.70)',
   },
+
 
   captionText: {
     color: 'rgba(256,256,256,1)',
     fontFamily:'Nexa Bold',
     fontSize:15,
-    paddingRight:10,
-    paddingLeft: 10,
+    paddingLeft: 5,
+    //paddingTop: 10,
+    alignSelf: 'center',
   },
   signText: {
       //flex:1,
@@ -189,13 +179,15 @@ var styles = StyleSheet.create({
       height:20,
       backgroundColor:'rgba(240,64,59,0.9)',
       borderRadius:10,
-      marginLeft:140,
-      marginTop:-15,
       justifyContent: 'center',
       alignItems: 'center',
       borderColor: 'rgba(21,21,23,0.5)',
-      //borderWidth: 1,
-      //borderBottomWidth: 0,
+      alignSelf: 'center',
+      marginTop:-2,
+      marginLeft: 5,
+      //position: 'absolute',
+      //top:5,
+      //left:2,
   },
   quantity: {
       marginTop:4,

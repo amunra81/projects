@@ -5,7 +5,7 @@ var React = require('react-native');
 
 var OrderDetails = require('./order-details');
 var OrderHead = require('./order-head');
-var OrderMenu = require('./order-menu-slide');
+var OrderMenu = require('./order-menu');
 
 var {
   StyleSheet,
@@ -19,8 +19,10 @@ var {
   TouchableOpacity,
 } = React;
 
-var {transformDataSource
+var {
+    transformDataSource
     ,snapshot
+    ,getLastIdFromProductId
     } = require('./common');
 
 //var ServerAddress = "localhost";
@@ -116,6 +118,14 @@ var Order = React.createClass({
       this._ensureContentPosition();
   },
 
+  _onDeleteProduct: function(id){
+      var itemId = getLastIdFromProductId(this.state.ds.details,id,this.state.userId);
+      if(itemId)
+          this.fetchData(this._withAction().removeItem(itemId,this.state.userId));
+      else
+          console.log("nothing to remove");
+  },
+
   _onDetailsColapse: function(){
       LayoutAnimation.spring();
       this._topOpened = false;
@@ -156,6 +166,7 @@ var Order = React.createClass({
     // Props for inner children
     var orderMenuProps = {
           productClicked    : this._onProductSelected  
+        , productDelete     : this._onDeleteProduct  
         , ds                : this.state.ds.menu
         , style             : {backgroundColor:'transparent',top:this.state.headHeight}
         , containerHeight   : this.state.containerHeight

@@ -87,6 +87,7 @@ var OrderMenu = React.createClass({
           p1         : p1,
           p2         : p2,
           productClicked : this.props.productClicked,
+          productDelete  : this.props.productDelete,
 
           height     : -1.5 + (this.props.containerHeight - this.props.headHeight) / (8/2),
           openedProdId: this.state.openedProdId,
