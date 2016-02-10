@@ -22,7 +22,7 @@ var OrderLine = React.createClass({
   },
 
   renderView:function () {
-    return (<View {...this.props} style={[styles.center,styles.container]}>
+    return (<View  style={[styles.center,styles.container]}>
                 {this.props.p2?this.renderPairs():this.renderSingle()}
               </View>);
   },
@@ -47,7 +47,7 @@ var OrderLine = React.createClass({
           this.props.toogleProductId && this.props.toogleProductId(p.id);
       };
 
-        return (
+      return (
           <View style={[styles.containerBlur]}>
                 {this.renderProduct(p1,this.isClosed(p1),onPressed)}
                 {this.renderProduct(p2,this.isClosed(p2),onPressed)}
@@ -63,7 +63,7 @@ var OrderLine = React.createClass({
     var placeHolder = `https://unsplash.it/640/240?image=${p.product.id}1`;
     var detailView = [styles.detailView,closed?styles.closedDetailView:styles.openedDetailView];
     var wraperStyle = closed?styles.closedView:styles.openedView; 
-
+    //⍝⊖…⇱⇲  ⨁ ⨂ ⊕
     return (
         <TouchableHighlight style={wraperStyle} onPress={ ()=> onPressed(p.product)}>
             <Image  style={[styles.listItem,{height:this.props.height}]} 
@@ -71,10 +71,10 @@ var OrderLine = React.createClass({
                 <View style={styles.emptyDetailView}/>
                 <View style={detailView}>
                     {this.renderCircle(p.count)}
+                    <Text style={styles.captionText} > {p.product.name} </Text>
+                    
+                    <Text style={styles.signText}> {'⨁ ⨂'} </Text>
 
-                    <Text style={styles.captionText} >
-                        {p.product.name}
-                    </Text>
                 </View>
             </Image>
         </TouchableHighlight>
@@ -143,22 +143,23 @@ var styles = StyleSheet.create({
       backgroundColor:'transparent',
   },
   closedView: {
-      flex:0.1,
+      flex:0.00001,
   },
   openedView: {
       flex:1,
   },
   openedDetailView: {
-    flex:2,
+    flex:2.2,
     //marginBottom:10,
   },
   closedDetailView: {
     flex:0.8,
     marginBottom:10,
+    //justifyContent: 'center',
+    //alignItems:'center',
   },
   detailView: {
-    alignItems:'center',
-    justifyContent: 'center',
+    flexDirection: 'row',
     borderColor:'black',
     borderTopWidth:0.5,
     borderBottomWidth:0.5,
@@ -171,6 +172,13 @@ var styles = StyleSheet.create({
     fontSize:15,
     paddingRight:10,
     paddingLeft: 10,
+  },
+  signText: {
+      //flex:1,
+    fontFamily: 'Apple Symbols',
+    color: 'rgba(256,256,256,1)',
+    //fontFamily:'Nexa Bold',
+    fontSize:28,
   },
   itemText: {
       //flex:1,

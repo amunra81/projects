@@ -35,6 +35,7 @@
 		A933D2CA1C6A391300807C71 /* BlurViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C41C6A391300807C71 /* BlurViewManager.m */; };
 		A933D2CB1C6A391300807C71 /* VibrancyView.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C61C6A391300807C71 /* VibrancyView.m */; };
 		A933D2CC1C6A391300807C71 /* VibrancyViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C81C6A391300807C71 /* VibrancyViewManager.m */; };
+		A933D2CE1C6B656A00807C71 /* Apple Symbols.ttc in Resources */ = {isa = PBXBuildFile; fileRef = A933D2CD1C6B652100807C71 /* Apple Symbols.ttc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,7 @@
 		A933D2C61C6A391300807C71 /* VibrancyView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VibrancyView.m; sourceTree = "<group>"; };
 		A933D2C71C6A391300807C71 /* VibrancyViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VibrancyViewManager.h; sourceTree = "<group>"; };
 		A933D2C81C6A391300807C71 /* VibrancyViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VibrancyViewManager.m; sourceTree = "<group>"; };
+		A933D2CD1C6B652100807C71 /* Apple Symbols.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Apple Symbols.ttc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -340,6 +342,7 @@
 		A933D2991C6A375D00807C71 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A933D2CD1C6B652100807C71 /* Apple Symbols.ttc */,
 				A933D2BC1C6A37E000807C71 /* Nexa Bold.otf */,
 				A933D2BD1C6A37E000807C71 /* Nexa Light.otf */,
 				A933D2A61C6A37C000807C71 /* Dosis-ExtraBold.ttf */,
@@ -572,6 +575,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A933D2AC1C6A37C000807C71 /* Dosis-Book.ttf in Resources */,
+				A933D2CE1C6B656A00807C71 /* Apple Symbols.ttc in Resources */,
 				A933D2AB1C6A37C000807C71 /* Dosis-Bold.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				A933D2BE1C6A37E000807C71 /* Nexa Bold.otf in Resources */,
