@@ -62,18 +62,18 @@ var OrderLine = React.createClass({
   renderProduct: function(p,closed,onPressed) {
     var placeHolder = `https://unsplash.it/640/240?image=${p.product.id}1`;
     var detailView = [styles.detailView,closed?styles.closedDetailView:styles.openedDetailView];
-    var wraperStyle = closed?styles.closedView:styles.openedView; 
-    var textStyle = [styles.captionText,{flex:1}];
+    var wraperStyle = closed?styles.closedWrapper:styles.openedWrapper; 
+    var textStyle = [styles.captionText,closed?styles.closedText:styles.openedText];
     //⍝⊖…⇱⇲  ⨁ ⨂ ⊕
     return (
     <TouchableHighlight style={wraperStyle} onPress={ ()=> onPressed(p.product)}>
-        <Image  style={[styles.listItem,{height:this.props.height}]} 
+        <Image  style={[styles.image,{height:this.props.height}]} 
             source={{uri:placeHolder}}>
             <View style={styles.emptyDetailView}>
             </View>
             <View style={detailView}>
                 {this.renderCircle(p.count)}
-                <Text style={textStyle} > {p.product.name} </Text>
+                <Text style={textStyle} >{p.product.name}{closed?"":`\r\n~ ${p.product.price} lei ~`} </Text>
                 { !closed?this.renderAction('⨁',{paddingTop:10},()=>this.props.productClicked(p.product)):null}
                 { !closed?this.renderAction('⨂',{paddingTop:10},()=> this.props.productDelete(p.product.id)):null}
                 { !closed?this.renderAction('…',):null}
@@ -115,7 +115,7 @@ var styles = StyleSheet.create({
     flexDirection: 'row',
     width: 320,
   },
-  listItem: {
+  image: {
       backgroundColor: '#EFF9F9',
       //pentru text
       justifyContent:'flex-end',
@@ -128,10 +128,10 @@ var styles = StyleSheet.create({
       flex:2,
       backgroundColor:'transparent',
   },
-  closedView: {
+  closedWrapper: {
       flex:0.00001,
   },
-  openedView: {
+  openedWrapper: {
       flex:1,
   },
   openedDetailView: {
@@ -153,15 +153,20 @@ var styles = StyleSheet.create({
     borderTopWidth:0.5,
     borderBottomWidth:0.5,
   },
-
-
   captionText: {
+    flex:1,
     color: 'rgba(256,256,256,1)',
     fontFamily:'Nexa Bold',
     fontSize:15,
     paddingLeft: 5,
-    //paddingTop: 10,
+  },
+  openedText: {
     alignSelf: 'center',
+    //paddingTop: 20,
+  },
+  closedText: {
+    alignSelf: 'center',
+    //paddingTop: 10,
   },
   signText: {
       //flex:1,
