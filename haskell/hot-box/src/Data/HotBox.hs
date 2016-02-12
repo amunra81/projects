@@ -52,7 +52,9 @@ data Product = Product { _prodId        :: Id Product
                        }
                deriving (Show,Eq, Ord, Data, Typeable)
 
+type UserFullName = String
 data User = User { _userId :: Id User
+                 , _userFullName :: UserFullName
                  } deriving (Show,Eq, Ord, Data, Typeable)
 
 data OrderItemStatus = InList | Approved | Payed 
@@ -109,6 +111,7 @@ instance FromJSON OrderId where
 instance FromJSON User where
     parseJSON (Object v) =  
         User <$> v .: "id"
+             <*> v .: "fullname"
 
 instance FromJSON OrderSegment where
         parseJSON (Object v) =
@@ -162,7 +165,7 @@ instance ToJSON Product where
     toJSON (Product i xs p img) = object ["id" .= i,"name" .= xs,"price" .= p, "image" .= img]
 
 instance ToJSON User where
-    toJSON (User id) = object ["id" .= id]
+    toJSON (User id fullName) = object ["id" .= id,"fullName" .= fullName]
 
 instance ToJSON OrderItemStatus where
     toJSON = toJSON . show 

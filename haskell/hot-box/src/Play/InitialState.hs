@@ -41,9 +41,13 @@ allRestaurants = map toRest [rest1,rest2,rest3,rest4]
 
 -- USERS
 
-toUser = User . UserId
-allUsers = map toUser [1..4]
-
+toUser (id,name)= User (UserId id) name
+allUsers = map toUser [(1,"Catalin Arghiroiu")
+                      ,(2,"Bogdan Manole")
+                      ,(3,"Andra Bologa")
+                      ,(4,"Andrei Ungureanu")
+                      ,(5,"Mihnea Chirila")
+                      ]
 -- ORDERS
 
 toOrder restList users (oid,rid,tid,segments) =
