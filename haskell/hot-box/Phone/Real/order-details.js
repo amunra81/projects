@@ -26,7 +26,8 @@ var OrderDetails = React.createClass({
         restId : this.props.restId,
         tableId : this.props.tableId,
         dataSource : null,
-        loaded: false
+        loaded: false,
+        inTransition: false,
         };
   },
 
@@ -68,6 +69,9 @@ var OrderDetails = React.createClass({
         </Image>
         </View>
       );
+  },
+
+  renderTopBar: function() {
   },
 
   renderGeneralAction: function (text,name,onPress){

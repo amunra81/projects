@@ -45,7 +45,7 @@ var Phone = React.createClass({
   },
   renderApp: function() {
       
-      //return <Order restId={1} tableId={1} userId={2}/>;
+      return <Order restId={1} tableId={1} userId={2}/>;
 
       //return <LongView />;
       //return <Playground />;
@@ -57,7 +57,7 @@ var Phone = React.createClass({
       //return <SwiperPag />;
       //return <TText />;
       //return <TKit />;
-      return <CountDown />;
+      //return <CountDown />;
   }
 
 //end React.createClas
