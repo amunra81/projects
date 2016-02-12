@@ -52,7 +52,9 @@ var Common = {
     var {segments,menu} = order;
     var segs = segments.map( x => {
         return {
+            //TODO:replace redundant userId
             userId : x.user.id,
+            user: x.user,
             items: Linq.from(x.items)
                 .groupBy(x => x.product.id).select(x=>
                 { return {prodId:x.key()

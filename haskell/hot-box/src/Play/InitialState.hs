@@ -65,9 +65,9 @@ toOrder restList users (oid,rid,tid,segments) =
               toUserOrder :: (Int,[(Int,Int)]) -> OrderSegment
               toUserOrder (uid,products) = 
                 OrderSegment { _segmentUser = findUser uid
-                          , _nextOrderItemId = OrderItemId 20
-                          , _segmentItems = segmentItems products
-                          }
+                             , _nextOrderItemId = OrderItemId 20
+                             , _segmentItems = segmentItems products
+                             }
               findUser uid = fromJust $ List.find (\x -> _userId x == UserId uid) users
               segmentItems = map (\(i,j) -> OrderItem (OrderItemId i) (menu !! j) InList)
 

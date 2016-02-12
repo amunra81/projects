@@ -27,7 +27,7 @@ var OrderDetails = React.createClass({
         tableId : this.props.tableId,
         dataSource : null,
         loaded: false,
-        inTransition: false,
+        inAction: false,
         };
   },
 
@@ -61,44 +61,46 @@ var OrderDetails = React.createClass({
       return (
         <View>
         <View style={styles.user} >
-            <Text style={styles.userCaption}>Bogdan Manole</Text>
+            {this.state.inAction?this.renderInAction():this.renderTopBar()}
         </View>
         <Image style={[styles.actions]} source={imgs.actionsBar}>
-            <Text style={styles.actionItem}> { '> Call the Waiter <' } </Text>
-            <Text style={styles.actionItem}> { '> Check please <' } </Text>
+            {this.renderCallTheWaiter()}
+            {this.renderCheckPlease()}
         </Image>
         </View>
       );
   },
 
   renderTopBar: function() {
+     return  <Text style={styles.userCaption}> {this._getProperSegment().user.fullName} </Text>;
   },
 
-  renderGeneralAction: function (text,name,onPress){
-      return (
-            <View name={name} style={{flex:1,alignItems:'center'}}>
-                <TouchableOpacity onPress={onPress}>
-                    <Text> {text} </Text>
-                </TouchableOpacity>
-            </View>
-      );
+  renderInAction: function() {
+
   },
 
-  renderActions: function() {
-      return (
-          <View style={[styles.actions,styles.center]}>
-              {this.renderGeneralAction('[Approve]','approve',this.props.onApprove)}
-              {this.renderGeneralAction('[Waiter]','approve',this.props.onWaiterRequest)}
-              {this.renderGeneralAction('[Check please]','approve',this.props.onCheckRequest)}
-          </View>
-      );
+  renderCheckPlease:function() {
+      return this.renderGeneralAction("Check please");
+  },
+  renderCallTheWaiter:function() {
+      return this.renderGeneralAction("Call the waiter");
+  },
+
+  renderGeneralAction: function (text,onPress){
+      return ( <Text style={styles.actionItem}>{`> ${text} <`}</Text> );
+  },
+
+
+  _getProperSegment: function() {
+      //TODO: nasol
+      return this.props.ds.filter( x => x.userId == this.props.userId)[0];
   },
 
   renderBody: function() {
-      var data = this.props.ds.filter( x => x.userId == this.props.userId);
+      var data = this._getProperSegment();
       return (
           <View style={styles.order}>
-              {this.renderSegment(data[0])}
+              {this.renderSegment(data)}
           </View>
       );
   },
@@ -151,20 +153,10 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    //flexDirection: 'column',
-    //justifyContent: 'space-around',
-    //alignItems: 'center',
-    //flexWrap:'nowrap',
-    //paddingTop:20,
-    //position:'relative',
     backgroundColor:'transparent'
   },
   order: {
     flex: 1,
-    //backgroundColor: '#ffe7dc',
-    //backgroundColor: '#eeeeef',
-    //backgroundColor: '#ebebf2',
-    //backgroundColor: '#eaeaf3',
   },
   products: {
       paddingLeft: 20,
