@@ -24,7 +24,7 @@ var OrderLine = React.createClass({
   renderView:function () {
     return (<View  style={[styles.center,styles.container]}>
                 {this.props.p2?this.renderPairs():this.renderSingle()}
-              </View>);
+            </View>);
   },
 
   renderSingle: function() {
@@ -73,7 +73,7 @@ var OrderLine = React.createClass({
             </View>
             <View style={detailView}>
                 {this.renderCircle(p.count)}
-                <Text style={textStyle} >{p.product.name}{closed?"":`\r\n~ ${p.product.price} lei ~`} </Text>
+                <Text style={textStyle}>{p.product.name}{closed?"":`\r\n~ ${p.product.price} lei ~`} </Text>
                 { !closed?this.renderAction('⨁',{paddingTop:10},()=>this.props.productClicked(p.product)):null}
                 { !closed?this.renderAction('⨂',{paddingTop:10},()=> this.props.productDelete(p.product.id)):null}
                 { !closed?this.renderAction('…',):null}
@@ -82,12 +82,14 @@ var OrderLine = React.createClass({
     </TouchableHighlight>
     );
   },
+
   renderAction: function(caption,style,onPress) {
     return (
     <TouchableHighlight style={[styles.paravan,style,{flex:0.3,flexDirection:'row',justifyContent:'center',alignItems:'center'}]} onPress={onPress}>
         <Text style={styles.signText}> {caption} </Text>
     </TouchableHighlight>
   );},
+
   renderCircle : function(count) {
     if(count && count > 0)
         return (

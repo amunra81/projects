@@ -29,6 +29,8 @@ var Swiper          = require('./Play/swiper'           );
 var SwiperPag       = require('./Play/pagination-swipe' );
 var TText           = require('./Play/text-transparent' );
 var TKit            = require('./Play/shadow'           );
+var CountDown       = require('./Play/count-down'       );
+
 var HTOP = 20;
 
 var Phone = React.createClass({
@@ -43,7 +45,7 @@ var Phone = React.createClass({
   },
   renderApp: function() {
       
-      return <Order restId={1} tableId={1} userId={2}/>;
+      //return <Order restId={1} tableId={1} userId={2}/>;
 
       //return <LongView />;
       //return <Playground />;
@@ -55,6 +57,7 @@ var Phone = React.createClass({
       //return <SwiperPag />;
       //return <TText />;
       //return <TKit />;
+      return <CountDown />;
   }
 
 //end React.createClas
