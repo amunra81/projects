@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var Enumerable = require('linq');
-var {merge,without} = require('./common');
+var {merge,without,animate} = require('./common');
 var numeral = require('numeral');
 //var Display = require('react-native-device-display');
 
@@ -15,10 +15,13 @@ var {
   TouchableOpacity,
   TouchableHighlight,
   View,
+  Animated,
+  PanResponder,
 } = React;
 
 var HeadContainer = View;
 
+var SECOND_TEXT_SIZE = 28;
 var OrderDetails = React.createClass({
   //mandatory
   getInitialState: function() {
@@ -28,6 +31,9 @@ var OrderDetails = React.createClass({
         dataSource : null,
         loaded: false,
         inAction: false,
+        actionCaption: null,
+        actionSecond:0,
+        actionSecondSize:new Animated.Value(SECOND_TEXT_SIZE),
         };
   },
 
@@ -60,36 +66,108 @@ var OrderDetails = React.createClass({
   renderTop: function() {
       return (
         <View>
-        <View style={styles.user} >
             {this.state.inAction?this.renderInAction():this.renderTopBar()}
-        </View>
-        <Image style={[styles.actions]} source={imgs.actionsBar}>
-            {this.renderCallTheWaiter()}
-            {this.renderCheckPlease()}
-        </Image>
+            <Image style={[styles.actions]} source={imgs.actionsBar}>
+                {this.renderCallTheWaiter()}
+                {this.renderCheckPlease()}
+            </Image>
         </View>
       );
   },
 
   renderTopBar: function() {
-     return  <Text style={styles.userCaption}> {this._getProperSegment().user.fullName} </Text>;
-  },
+    return (
+    <View style={styles.user} >
+        <Text style={styles.userCaption}>{this._getProperSegment().user.fullName}</Text>
+    </View>
+  );},
 
   renderInAction: function() {
-
-  },
+    var textProps = {
+        style : [styles.userCaption,{fontSize:this.state.actionSecondSize}]
+    };
+    return (
+    <View style={styles.inAction} >
+        <Text style={styles.userCaption}>{this.state.actionCaption}</Text>
+        <View style={{height:40,justifyContent:'center'}}>
+            <Animated.Text {...textProps}>{this.state.actionSecond}</Animated.Text>
+        </View>
+    </View>
+  );},
 
   renderCheckPlease:function() {
-      return this.renderGeneralAction("Check please");
+      return this.renderGeneralAction("Check please",()=>{
+          this.setState({
+              inAction:true,
+              actionCaption:"Check request in ...", 
+              actionSecond:10,
+          });
+          setTimeout(this.startAnimation);
+      },
+      ()=>{
+          this.state.actionSecondSize.stopAnimation();
+          this.setState({ inAction:false });
+      });
   },
+
+  startAnimation: function(arg) {
+    animate(this.state.actionSecondSize,4,(arg)=> {
+        if(!arg.finished || !this.state.inAction) return; //exit
+
+        this.setState({actionSecond: this.state.actionSecond -1});
+        animate(this.state.actionSecondSize,SECOND_TEXT_SIZE,(arg)=>{
+
+            if(!arg.finished || !this.state.inAction) return;  //exit
+
+            setTimeout(() => this.startAnimation(),700)
+
+        }).timing();
+    }).timing();
+  },
+
   renderCallTheWaiter:function() {
-      return this.renderGeneralAction("Call the waiter");
+      return this.renderGeneralAction("Call the waiter",()=>{
+          this.state.actionSecondSize.stopAnimation();
+          this.setState({ inAction:false });
+      });
+
   },
 
-  renderGeneralAction: function (text,onPress){
-      return ( <Text style={styles.actionItem}>{`> ${text} <`}</Text> );
-  },
+  renderGeneralAction: function (text,onPress,onCancell){
 
+    var panResponder = PanResponder.create({
+    //_handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
+        onStartShouldSetPanResponder  : (e: Object,gestureState: Object): boolean => {
+            return true;
+        },
+        onMoveShouldSetPanResponder   : (e: Object,gestureState: Object): boolean => {
+            return false;
+        },
+        onPanResponderGrant           : (e: Object,gestureState: Object): boolean => {
+            console.log('grant');
+            onPress && onPress();
+        },
+        onPanResponderMove            : (e: Object,gestureState: Object): boolean => {
+            console.log(e);
+            return false;
+        },
+        onPanResponderRelease         : (e: Object,gestureState: Object): boolean => {
+            console.log('released');
+            onCancell && onCancell();
+        },
+        onPanResponderTerminate       : (e: Object,gestureState: Object): boolean => {
+            onCancell && onCancell();
+            alert('terminate');
+        },
+    });
+    //<TouchableOpacity onPress={onPress}>
+    //</TouchableOpacity>
+    return ( 
+            <View style={{alignSelf:'stretch',justifyContent:'center'}}
+                {...panResponder.panHandlers}>
+            <Text style={styles.actionItem}>{`> ${text} <`}</Text> 
+        </View>
+  );},
 
   _getProperSegment: function() {
       //TODO: nasol
@@ -199,6 +277,11 @@ var styles = StyleSheet.create({
       width:ROW_WIDTH,
   },
   user : {
+      height:80,
+      alignItems:'center',
+      justifyContent:'center'
+  },
+  inAction : {
       height:80,
       alignItems:'center',
       justifyContent:'center'

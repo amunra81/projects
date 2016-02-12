@@ -1,6 +1,9 @@
 'use strict';
 var Linq = require('linq');
 
+var {Animated,Easing} = require('react-native');
+
+
 var Common = {
 
   mapInPairs: function(ar,render,index) {
@@ -86,8 +89,6 @@ var Common = {
       });
   },
 
-  
-
   transformDataSource: function(order,userId) {
       var segs = Common.transformDetails(order);
       var menu = Common.transformMenu(order,segs.filter(x=>x.userId == userId)[0]);
@@ -100,7 +101,41 @@ var Common = {
           total:total,
           menu:menu,
       };
-  }
+  },
+
+  animate: function(value,toValue,callback) {
+      return {
+          timing : (duration) => {
+            Animated.timing(                          
+                value,                 
+                {
+                    toValue: toValue,                         
+                    duration: !duration?150:duration,                          // default 500 ms
+                    easing: Easing.out(Easing.linear),
+                    delay: 0
+                }).start(callback);         
+          },
+          decay : () => {
+            Animated.decay(           
+                value,                 
+                {
+                    toValue: toValue,                       
+                    velocity: 0.1,                          
+                    deceleration: 0.997
+                }).start(callback);    
+          },
+          spring : () => {
+            Animated.spring(           
+                value,                 
+                {
+                    toValue: toValue,                       
+                    friction: 5,  //default 7                          
+                    tension: 40   // default 40
+                }).start(callback);    
+          }
+      }
+  },
+
 };
 
 module.exports = Common;
