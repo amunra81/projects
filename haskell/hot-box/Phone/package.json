@@ -12,6 +12,8 @@
     "numeral": "^1.5.3",
     "react-native": "^0.20.0-rc1",
     "react-native-blur": "^0.7.9",
+    "react-native-simple-sound": "^1.0.0",
+    "react-native-sound": "^0.7.3",
     "react-native-swiper": "^1.4.3"
   }
 }

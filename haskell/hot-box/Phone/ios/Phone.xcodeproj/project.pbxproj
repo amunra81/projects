@@ -36,6 +36,8 @@
 		A933D2CB1C6A391300807C71 /* VibrancyView.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C61C6A391300807C71 /* VibrancyView.m */; };
 		A933D2CC1C6A391300807C71 /* VibrancyViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A933D2C81C6A391300807C71 /* VibrancyViewManager.m */; };
 		A933D2CE1C6B656A00807C71 /* Apple Symbols.ttc in Resources */ = {isa = PBXBuildFile; fileRef = A933D2CD1C6B652100807C71 /* Apple Symbols.ttc */; };
+		A9ABB0A81C6FB29900B87F44 /* libRNSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9ABB0A71C6FB1F200B87F44 /* libRNSound.a */; };
+		A9ABB0AF1C6FB5CD00B87F44 /* libRNSimpleSound.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A9ABB0AE1C6FB5C200B87F44 /* libRNSimpleSound.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -116,6 +118,20 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
+		A9ABB0A61C6FB1F200B87F44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9ABB0981C6FB1F200B87F44 /* RNSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 19825A1E1BD4A89800EE0337;
+			remoteInfo = RNSound;
+		};
+		A9ABB0AD1C6FB5C200B87F44 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9ABB0A91C6FB5C200B87F44 /* RNSimpleSound.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 27D4F42F1BED747600C15668;
+			remoteInfo = RNSimpleSound;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -158,6 +174,8 @@
 		A933D2C71C6A391300807C71 /* VibrancyViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VibrancyViewManager.h; sourceTree = "<group>"; };
 		A933D2C81C6A391300807C71 /* VibrancyViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VibrancyViewManager.m; sourceTree = "<group>"; };
 		A933D2CD1C6B652100807C71 /* Apple Symbols.ttc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Apple Symbols.ttc"; sourceTree = "<group>"; };
+		A9ABB0981C6FB1F200B87F44 /* RNSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSound.xcodeproj; path = "../node_modules/react-native-sound/RNSound.xcodeproj"; sourceTree = "<group>"; };
+		A9ABB0A91C6FB5C200B87F44 /* RNSimpleSound.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSimpleSound.xcodeproj; path = "../node_modules/react-native-simple-sound/RNSimpleSound.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +190,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9ABB0AF1C6FB5CD00B87F44 /* libRNSimpleSound.a in Frameworks */,
+				A9ABB0A81C6FB29900B87F44 /* libRNSound.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -264,6 +284,8 @@
 		13B07FAE1A68108700A75B9A /* Phone */ = {
 			isa = PBXGroup;
 			children = (
+				A9ABB0A91C6FB5C200B87F44 /* RNSimpleSound.xcodeproj */,
+				A9ABB0981C6FB1F200B87F44 /* RNSound.xcodeproj */,
 				A933D2C01C6A390500807C71 /* Blur */,
 				A933D2991C6A375D00807C71 /* Fonts */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -369,6 +391,22 @@
 				A933D2C81C6A391300807C71 /* VibrancyViewManager.m */,
 			);
 			name = Blur;
+			sourceTree = "<group>";
+		};
+		A9ABB0991C6FB1F200B87F44 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9ABB0A71C6FB1F200B87F44 /* libRNSound.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9ABB0AA1C6FB5C200B87F44 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9ABB0AE1C6FB5C200B87F44 /* libRNSimpleSound.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -480,6 +518,14 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = A9ABB0AA1C6FB5C200B87F44 /* Products */;
+					ProjectRef = A9ABB0A91C6FB5C200B87F44 /* RNSimpleSound.xcodeproj */;
+				},
+				{
+					ProductGroup = A9ABB0991C6FB1F200B87F44 /* Products */;
+					ProjectRef = A9ABB0981C6FB1F200B87F44 /* RNSound.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -558,6 +604,20 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A9ABB0A71C6FB1F200B87F44 /* libRNSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSound.a;
+			remoteRef = A9ABB0A61C6FB1F200B87F44 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A9ABB0AE1C6FB5C200B87F44 /* libRNSimpleSound.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNSimpleSound.a;
+			remoteRef = A9ABB0AD1C6FB5C200B87F44 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

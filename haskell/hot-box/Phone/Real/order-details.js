@@ -19,10 +19,20 @@ var {
   PanResponder,
 } = React;
 
+//var Sound = require('react-native-simple-sound');
+
 var HeadContainer = View;
 
 var SECOND_TEXT_SIZE = 28;
 var OrderDetails = React.createClass({
+  componentDidMount: function(){
+        //Sound.enable(true); // Enable sound
+        //Sound.prepare('./sounds/chime_bell_ding.wav'); // Preload the sound file 'tap.aac' in the app bundle
+        //Sound.play(); // Play the sound 'tap.aac'
+        //Sound.pause(); // Pause the sound
+        //Sound.play(); // Resume playing the sound
+        //Sound.stop(); // Stop and reset the sound.
+  },
   //mandatory
   getInitialState: function() {
     return { 
@@ -84,13 +94,13 @@ var OrderDetails = React.createClass({
 
   renderInAction: function() {
     var textProps = {
-        style : [styles.userCaption,{fontSize:this.state.actionSecondSize}]
+        style : [styles.actionText,{fontSize:this.state.actionSecondSize}]
     };
     return (
     <View style={styles.inAction} >
-        <Text style={styles.userCaption}>{this.state.actionCaption}</Text>
+        <Text style={styles.actionText}>{this.state.actionCaption}</Text>
         <View style={{height:40,justifyContent:'center'}}>
-            <Animated.Text {...textProps}>{this.state.actionSecond}</Animated.Text>
+            <Animated.Text {...textProps}>{this.state.actionSecond?this.state.actionSecond:"done"}</Animated.Text>
         </View>
     </View>
   );},
@@ -99,10 +109,10 @@ var OrderDetails = React.createClass({
       return this.renderGeneralAction("Check please",()=>{
           this.setState({
               inAction:true,
-              actionCaption:"Check request in ...", 
-              actionSecond:10,
+              actionCaption:"Requesting check in", 
+              actionSecond:5,
           });
-          setTimeout(this.startAnimation);
+          setTimeout(() => this.startAnimation(()=>console.log("done")));
       },
       ()=>{
           this.state.actionSecondSize.stopAnimation();
@@ -110,27 +120,34 @@ var OrderDetails = React.createClass({
       });
   },
 
-  startAnimation: function(arg) {
-    animate(this.state.actionSecondSize,4,(arg)=> {
-        if(!arg.finished || !this.state.inAction) return; //exit
+  startAnimation: function(callback) {
+        if(this.state.actionSecond>0)
+            animate(this.state.actionSecondSize,4,(arg)=> {
+                if(!arg.finished || !this.state.inAction) return; //exit
+                    this.setState({actionSecond: this.state.actionSecond -1});
+                    animate(this.state.actionSecondSize,SECOND_TEXT_SIZE,(arg)=>{
+                    if(!arg.finished || !this.state.inAction) return;  //exit
+                        setTimeout(() => this.startAnimation(callback),this.state.actionSecond?700:0)
 
-        this.setState({actionSecond: this.state.actionSecond -1});
-        animate(this.state.actionSecondSize,SECOND_TEXT_SIZE,(arg)=>{
-
-            if(!arg.finished || !this.state.inAction) return;  //exit
-
-            setTimeout(() => this.startAnimation(),700)
-
-        }).timing();
-    }).timing();
+                }).timing();
+            }).timing();
+        else
+            this.state.inAction && callback && callback();
   },
 
   renderCallTheWaiter:function() {
       return this.renderGeneralAction("Call the waiter",()=>{
+          this.setState({
+              inAction:true,
+              actionCaption:"Calling the waiter in", 
+              actionSecond:5,
+          });
+          setTimeout(() => this.startAnimation(()=>console.log("done")));
+      },
+      ()=>{
           this.state.actionSecondSize.stopAnimation();
           this.setState({ inAction:false });
       });
-
   },
 
   renderGeneralAction: function (text,onPress,onCancell){
@@ -140,24 +157,24 @@ var OrderDetails = React.createClass({
         onStartShouldSetPanResponder  : (e: Object,gestureState: Object): boolean => {
             return true;
         },
-        onMoveShouldSetPanResponder   : (e: Object,gestureState: Object): boolean => {
-            return false;
-        },
+        //onMoveShouldSetPanResponder   : (e: Object,gestureState: Object): boolean => {
+            //return false;
+        //},
         onPanResponderGrant           : (e: Object,gestureState: Object): boolean => {
             console.log('grant');
             onPress && onPress();
         },
-        onPanResponderMove            : (e: Object,gestureState: Object): boolean => {
-            console.log(e);
-            return false;
-        },
+        //onPanResponderMove            : (e: Object,gestureState: Object): boolean => {
+            ////console.log(e);
+            //return false;
+        //},
         onPanResponderRelease         : (e: Object,gestureState: Object): boolean => {
             console.log('released');
             onCancell && onCancell();
         },
         onPanResponderTerminate       : (e: Object,gestureState: Object): boolean => {
             onCancell && onCancell();
-            alert('terminate');
+            //alert('terminate');
         },
     });
     //<TouchableOpacity onPress={onPress}>
@@ -292,7 +309,15 @@ var styles = StyleSheet.create({
       fontFamily:'Dosis-light',
       textShadowColor: 'black',
       textShadowOffset:{width:0,height:1},
-      textShadowRadius:3
+      textShadowRadius:1
+  },
+  actionText :{
+      fontSize:20,
+      color:'#debdc2',
+      fontFamily:'Dosis-light',
+      textShadowColor: 'black',
+      textShadowOffset:{width:0,height:1},
+      textShadowRadius:1
   }
 });
 //dcffe7

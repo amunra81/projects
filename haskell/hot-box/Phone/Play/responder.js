@@ -50,13 +50,8 @@ var PanResponderExample = React.createClass({
 
   render: function() {
     return (
-      <View
-        style={styles.container}>
-        <View
-          ref={(item) => {
-            this.circle = item;
-          }}
-          style={styles.circle}
+      <View style={styles.container}>
+        <View ref={(item) => { this.circle = item; }} style={styles.circle}
           {...this._panResponder.panHandlers}
         />
       </View>
