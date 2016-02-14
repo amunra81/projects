@@ -64,7 +64,7 @@ var OrderLine = React.createClass({
     var detailView = [styles.detailView,closed?styles.closedDetailView:styles.openedDetailView];
     var wraperStyle = closed?styles.closedWrapper:styles.openedWrapper; 
     var textStyle = [styles.captionText,closed?styles.closedText:styles.openedText];
-    //⍝⊖…⇱⇲  ⨁ ⨂ ⊕
+    //⍝⊖…⇱⇲  ⨁ ⨂ ⊕⊖
     return (
     <TouchableHighlight style={wraperStyle} onPress={ ()=> onPressed(p.product)}>
         <Image  style={[styles.image,{height:this.props.height}]} 

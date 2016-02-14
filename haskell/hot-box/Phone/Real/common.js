@@ -74,6 +74,19 @@ var Common = {
     return segs;
   },
 
+  transformRequests: function(order,userId) {
+    var checkRequested  = order.requests.filter( x => x.request == 'CheckRequest' && !x.response).length > 0;
+    var userSegment     = order.segments.filter( x => x.user.id == userId)[0];
+    var validForSendingRequest = Linq.from(userSegment.items).any(x => x.status == 'InList');
+    var hasApprovedItems = () => Linq.from(userSegment.items).any(x => x.status == 'Approved');
+
+    return {
+        valirdForWaiterRequest: true,
+        validForSendingRequest:validForSendingRequest,
+        validForCheckReq:!checkRequested && hasApprovedItems(),
+    }
+  },
+
   transformMenu:function(order,formatedSegment) {
       var itemsMap = new Map();
 
@@ -100,6 +113,7 @@ var Common = {
           details:segs,
           total:total,
           menu:menu,
+          request: Common.transformRequests(order,userId),
       };
   },
 

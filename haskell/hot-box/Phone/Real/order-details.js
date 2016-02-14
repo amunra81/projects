@@ -78,7 +78,7 @@ var OrderDetails = React.createClass({
         <View>
             {this.state.inAction?this.renderInAction():this.renderTopBar()}
             <Image style={[styles.actions]} source={imgs.actionsBar}>
-                {this.renderCallTheWaiter()}
+                {this.renderSendOrder()}
                 {this.renderCheckPlease()}
             </Image>
         </View>
@@ -135,6 +135,22 @@ var OrderDetails = React.createClass({
             this.state.inAction && callback && callback();
   },
 
+  renderSendOrder:function() {
+      return this.renderGeneralAction("Send order",()=>{
+          this.setState({
+              inAction:true,
+              actionCaption:"Sending the order in", 
+              actionSecond:5,
+          });
+          setTimeout(() => this.startAnimation(
+              ()=> this.props.onApprove()
+          ));
+      },
+      ()=>{
+          this.state.actionSecondSize.stopAnimation();
+          this.setState({ inAction:false });
+      });
+  },
   renderCallTheWaiter:function() {
       return this.renderGeneralAction("Call the waiter",()=>{
           this.setState({
@@ -209,6 +225,7 @@ var OrderDetails = React.createClass({
   },
 
   renderProduct: function(item,userId,i){
+      //⧀⧁
      var imgSource = i%2!=0?imgs.darkRow:imgs.lightRow;
      return (
           <TouchableHighlight key={item.itemId} onPress={() => { 
@@ -216,12 +233,8 @@ var OrderDetails = React.createClass({
             this.props.orderItemClicked(item,userId);
           }}>
             <Image source={imgSource} style={styles.row}>
-                <Text style={styles.itemText}>
-                    {item.count} x {item.pname} 
-                </Text>
-                <Text style={styles.itemText}>
-                    {item.pprice} RON
-                </Text>
+                <Text style={styles.itemText}>{item.count} x {item.pname}</Text>
+                <Text style={styles.itemText}>{item.pprice} RON</Text>
             </Image>
         </TouchableHighlight>
       );
@@ -272,11 +285,6 @@ var styles = StyleSheet.create({
       paddingLeft:10,
       paddingRight:10,
       width:ROW_WIDTH,
-  },
-  itemText : {
-      fontSize: 16,
-      fontFamily: 'Dosis-Light',
-      color:'#debdc2',
   },
   itemText : {
       fontSize: 16,
