@@ -119,7 +119,7 @@ var Order = React.createClass({
   },
 
   _onDeleteProduct: function(id){
-      var itemId = getLastIdFromProductId(this.state.ds.details,id,this.state.userId);
+      var itemId = getLastIdFromProductId(this.state.ds.details.segs,id,this.state.userId);
       if(itemId)
           this.fetchData(this._withAction().removeItem(itemId,this.state.userId));
       else
