@@ -117,7 +117,7 @@ var OrderDetails = React.createClass({
       ()=>{
           this.state.actionSecondSize.stopAnimation();
           this.setState({ inAction:false });
-      });
+      },this.props.ds.reqs.validForCheckReq);
   },
 
   startAnimation: function(callback) {
@@ -149,7 +149,7 @@ var OrderDetails = React.createClass({
       ()=>{
           this.state.actionSecondSize.stopAnimation();
           this.setState({ inAction:false });
-      });
+      },this.props.ds.reqs.validForSendingRequest);
   },
   renderCallTheWaiter:function() {
       return this.renderGeneralAction("Call the waiter",()=>{
@@ -166,7 +166,7 @@ var OrderDetails = React.createClass({
       });
   },
 
-  renderGeneralAction: function (text,onPress,onCancell){
+  renderGeneralAction: function (text,onPress,onCancell,enabled){
 
     var panResponder = PanResponder.create({
     //_handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
@@ -198,13 +198,13 @@ var OrderDetails = React.createClass({
     return ( 
             <View style={{alignSelf:'stretch',justifyContent:'center'}}
                 {...panResponder.panHandlers}>
-            <Text style={styles.actionItem}>{`> ${text} <`}</Text> 
+            <Text style={[styles.actionItem,enabled?"":styles.actionItemDisabled]}>{`> ${text} <`}</Text> 
         </View>
   );},
 
   _getProperSegment: function() {
       //TODO: nasol
-      return this.props.ds.filter( x => x.userId == this.props.userId)[0];
+      return this.props.ds.segs.filter( x => x.userId == this.props.userId)[0];
   },
 
   renderBody: function() {
@@ -225,6 +225,7 @@ var OrderDetails = React.createClass({
   },
 
   renderProduct: function(item,userId,i){
+      var textStyle = [styles.itemText,item.approved?null:styles.itemTextUnapporved]
       //⧀⧁
      var imgSource = i%2!=0?imgs.darkRow:imgs.lightRow;
      return (
@@ -233,8 +234,8 @@ var OrderDetails = React.createClass({
             this.props.orderItemClicked(item,userId);
           }}>
             <Image source={imgSource} style={styles.row}>
-                <Text style={styles.itemText}>{item.count} x {item.pname}</Text>
-                <Text style={styles.itemText}>{item.pprice} RON</Text>
+                <Text style={textStyle}>{item.count} x {item.pname}</Text>
+                <Text style={textStyle}>{item.pprice} RON</Text>
             </Image>
         </TouchableHighlight>
       );
@@ -274,7 +275,12 @@ var styles = StyleSheet.create({
       fontSize: 16,
       color: 'white',
       fontFamily : 'Dosis-Book',
-      //fontStyle: 'Bold'
+      textShadowColor: 'black',
+      textShadowOffset:{width:0,height:0.1},
+      textShadowRadius:1
+  },
+  actionItemDisabled : {
+      color: '#909090',
   },
   actions : {
       height:40,
@@ -290,6 +296,12 @@ var styles = StyleSheet.create({
       fontSize: 16,
       fontFamily: 'Dosis-Light',
       color:'#debdc2',
+  },
+  itemTextUnapporved : {
+      fontFamily: 'Dosis-Book',
+      textShadowColor: 'black',
+      textShadowOffset:{width:0.5,height:1},
+      textShadowRadius:0.5
   },
   row : {
       height:40,

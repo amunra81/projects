@@ -50,7 +50,7 @@ var Common = {
       .itemId;
   },
 
-  transformDetails: function(order) {
+  transformDetails: function(order,userId) {
     var approved = xs => !xs.any(x=>x.status == "InList");
     var {segments,menu} = order;
     var segs = segments.map( x => {
@@ -71,7 +71,9 @@ var Common = {
                 }).toArray(),
         };
     });
-    return segs;
+    return { segs : segs,
+             reqs: Common.transformRequests(order,userId),
+    };
   },
 
   transformRequests: function(order,userId) {
@@ -81,7 +83,7 @@ var Common = {
     var hasApprovedItems = () => Linq.from(userSegment.items).any(x => x.status == 'Approved');
 
     return {
-        valirdForWaiterRequest: true,
+        validForWaiterRequest: true,
         validForSendingRequest:validForSendingRequest,
         validForCheckReq:!checkRequested && hasApprovedItems(),
     }
@@ -103,17 +105,16 @@ var Common = {
   },
 
   transformDataSource: function(order,userId) {
-      var segs = Common.transformDetails(order);
-      var menu = Common.transformMenu(order,segs.filter(x=>x.userId == userId)[0]);
+      var details = Common.transformDetails(order,userId);
+      var menu = Common.transformMenu(order,details.segs.filter(x=>x.userId == userId)[0]);
 
       //calculate total
       var userSeg = order.segments.filter(x=> x.user.id == userId)[0];
       var total = userSeg.items.map(x=>x.product.price).reduce((p,c) => p+c,0);
       return {
-          details:segs,
+          details:details,
           total:total,
           menu:menu,
-          request: Common.transformRequests(order,userId),
       };
   },
 
