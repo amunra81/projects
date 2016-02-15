@@ -280,7 +280,12 @@ var styles = StyleSheet.create({
       textShadowRadius:1
   },
   actionItemDisabled : {
-      color: '#909090',
+      fontFamily : 'Dosis-Medium',
+      fontSize: 16,
+      //color: '#909090',
+      color: '#6f424e',
+      textShadowOffset:{width:0.2,height:0.2},
+      textShadowRadius:1
   },
   actions : {
       height:40,
