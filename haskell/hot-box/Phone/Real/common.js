@@ -118,6 +118,21 @@ var Common = {
       };
   },
 
+  getMoreInfo: function(ds,prodId,userId) {
+      var items = ds.details.segs.filter(x => x.user.id == userId)[0].items;
+      var details = items.filter( x => x.prodId == prodId);
+
+      var product = Linq.from(ds.menu).selectMany( x=> x.data).first( x => x.product.id == prodId);
+
+      console.log(product);
+      console.log(details);
+      return {
+          details: details,
+          product: product,
+      };
+
+  },
+
   animate: function(value,toValue,callback) {
       return {
           timing : (duration) => {

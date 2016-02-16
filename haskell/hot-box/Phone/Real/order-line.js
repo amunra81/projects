@@ -76,7 +76,7 @@ var OrderLine = React.createClass({
                 <Text style={textStyle}>{p.product.name}{closed?"":`\r\n~ ${p.product.price} lei ~`} </Text>
                 { !closed?this.renderAction('⨁',{paddingTop:10},()=>this.props.productClicked(p.product)):null}
                 { !closed?this.renderAction('⨂',{paddingTop:10},()=> this.props.productDelete(p.product.id)):null}
-                { !closed?this.renderAction('…',):null}
+                { !closed?this.renderAction('…',null,()=> this.props.moreInfo(p.product.id)):null}
             </View>
         </Image>
     </TouchableHighlight>

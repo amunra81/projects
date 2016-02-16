@@ -6,6 +6,7 @@ var React = require('react-native');
 var OrderDetails = require('./order-details');
 var OrderHead = require('./order-head');
 var OrderMenu = require('./order-menu');
+var ProductDetails = require('./product-detail');
 
 var {
   StyleSheet,
@@ -23,6 +24,7 @@ var {
     transformDataSource
     ,snapshot
     ,getLastIdFromProductId
+    ,getMoreInfo
     } = require('./common');
 
 //var ServerAddress = "localhost";
@@ -158,10 +160,30 @@ var Order = React.createClass({
       return (
         <View style={styles.container} onLayout={this._onContainerLayout}>
             {properView}
+            {this.state.selectedProduct && this.renderMoreInfo()}
         </View>
       );
   },
-  
+
+  renderMoreInfo : function() {
+      var props = {
+          onClose : () => {
+              LayoutAnimation.easeInEaseOut();
+              this.setState({ selectedProduct: null});
+          },
+          ...this.state.selectedProduct
+      };
+      return (
+          <ProductDetails {...props}/>
+      );
+  },
+
+  _onMoreInfoPressed : function(prodId) {
+     LayoutAnimation.easeInEaseOut();
+     var product = getMoreInfo(this.state.ds,prodId,this.state.userId);
+     this.setState({selectedProduct:product});
+  },
+
   renderView: function() {
     // Props for inner children
     var orderMenuProps = {
@@ -171,12 +193,14 @@ var Order = React.createClass({
         , style             : {backgroundColor:'transparent',top:this.state.headHeight}
         , containerHeight   : this.state.containerHeight
         , headHeight        : this.state.headHeight
+        , moreInfo          : this._onMoreInfoPressed
     };
 
                 //containerHeight:-1,
                 //headHeight:-1,
     var orderDetailsProps = {
-          orderItemClicked  : this._orderItemClicked  
+          //orderItemClicked  : this._orderItemClicked  
+          orderItemClicked  : (item) => this._onMoreInfoPressed(item.prodId)
         , ds                : this.state.ds.details
         , userId            : this.state.userId
         , onApprove         : this._onApprove
@@ -199,7 +223,7 @@ var Order = React.createClass({
             <OrderDetails   {...orderDetailsProps } />
             <Image source={imgs.bgDomolitComplet} style={{overflow:'visible'}}>
                <OrderMenu      {...orderMenuProps    } />
-                <OrderHead      {...orderHeadProps    } />
+               <OrderHead      {...orderHeadProps    } />
             </Image>
         </Animated.View>
     );

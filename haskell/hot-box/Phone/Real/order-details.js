@@ -117,7 +117,8 @@ var OrderDetails = React.createClass({
       ()=>{
           this.state.actionSecondSize.stopAnimation();
           this.setState({ inAction:false });
-      },this.props.ds.reqs.validForCheckReq);
+      },this.props.ds.reqs.validForCheckReq
+      ,[styles.actionItemDisabled,styles.actionItemDisabledRight]);
   },
 
   startAnimation: function(callback) {
@@ -149,7 +150,8 @@ var OrderDetails = React.createClass({
       ()=>{
           this.state.actionSecondSize.stopAnimation();
           this.setState({ inAction:false });
-      },this.props.ds.reqs.validForSendingRequest);
+      },this.props.ds.reqs.validForSendingRequest
+       ,[styles.actionItemDisabled,styles.actionItemDisabledLeft]);
   },
   renderCallTheWaiter:function() {
       return this.renderGeneralAction("Call the waiter",()=>{
@@ -166,7 +168,7 @@ var OrderDetails = React.createClass({
       });
   },
 
-  renderGeneralAction: function (text,onPress,onCancell,enabled){
+  renderGeneralAction: function (text,onPress,onCancell,enabled,disableStyle){
 
     var panResponder = PanResponder.create({
     //_handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
@@ -198,7 +200,7 @@ var OrderDetails = React.createClass({
     return ( 
             <View style={{alignSelf:'stretch',justifyContent:'center'}}
                 {...panResponder.panHandlers}>
-            <Text style={[styles.actionItem,enabled?"":styles.actionItemDisabled]}>{`> ${text} <`}</Text> 
+            <Text style={[styles.actionItem,enabled?"":disableStyle]}>{`> ${text} <`}</Text> 
         </View>
   );},
 
@@ -273,17 +275,28 @@ var styles = StyleSheet.create({
   },
   actionItem : {
       fontSize: 16,
-      color: 'white',
+      //color: 'white',
+      color:'#efdfe1',
       fontFamily : 'Dosis-Book',
       textShadowColor: 'black',
-      textShadowOffset:{width:0,height:0.1},
+      textShadowOffset:{width:0.5,height:0.7},
       textShadowRadius:1
   },
+  actionItemDisabledLeft: {
+      color: '#6f424e',
+  },
+
+  actionItemDisabledRight: {
+      color: '#8a4756',
+  },
+
   actionItemDisabled : {
       fontFamily : 'Dosis-Medium',
       fontSize: 16,
       //color: '#909090',
-      color: '#6f424e',
+      //color: '#6f424e',
+      //color: '#974b5c',
+      //color: '#8a4756',
       textShadowOffset:{width:0.2,height:0.2},
       textShadowRadius:1
   },

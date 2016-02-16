@@ -91,7 +91,8 @@ var OrderMenu = React.createClass({
 
           height     : -1.5 + (this.props.containerHeight - this.props.headHeight) / (8/2),
           openedProdId: this.state.openedProdId,
-          toogleProductId : this._toogleProdId
+          toogleProductId : this._toogleProdId,
+          moreInfo  : this.props.moreInfo,
       };
       return (
             <OrderLine {...props}/>
