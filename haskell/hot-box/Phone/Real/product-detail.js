@@ -10,6 +10,7 @@ var {
   View,
   Animated,
   TouchableOpacity,
+  Image,
 } = React;
 
 var BlurView = require('react-native-blur').BlurView;
@@ -26,9 +27,9 @@ var ProductDetails = React.createClass({
       return ( 
 
         <View style={styles.container}>
+           {this.renderTop()}
             <VibrancyView blurType="dark" style={styles.wrapper} > 
                 <View style={{backgroundColor:'transparent',height:20,opacity:0.5}}/>
-                {this.renderTop()}
                 {this.renderDetails()}
                 {this.renderActions()}
             </VibrancyView>
@@ -42,17 +43,20 @@ var ProductDetails = React.createClass({
     return <View style={styles.separator}/>;
   },
   renderTop: function() {
+      var product = this.props.product.product;
+      var placeHolder = `https://unsplash.it/640/240?image=${product.id}1`;
       return (
-
       <View style={styles.top}>
-        <Text style={styles.text}>TOP</Text>
+          <Image source={{uri:placeHolder}} style={{flex:1,alignSelf:'stretch'}}/>
       </View>
       );
   },
   renderDetails: function() {
       return (
       <View style={styles.details}>
-          <Text style={styles.text}>TOP</Text>
+          <Text style={styles.text}>
+         One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.
+          </Text>
       </View>
       );
   },
@@ -96,8 +100,9 @@ var styles = StyleSheet.create({
         flex:1,
     },
     top:{
-        height:100,
+        height:200,
         //backgroundColor: 'rgba(52, 53, 57,1.9)',
+        backgroundColor:'red',
     },
     details:{
         flex:1,
